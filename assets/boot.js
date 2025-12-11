@@ -173,4 +173,47 @@
   window.addEventListener('boot:done', ()=>{
     try{ runMagicEffect(); }catch(e){}
   }, {passive:true});
+
+  // Mouse parallax for hero: smooth, rAF-based, respects prefers-reduced-motion
+  (function(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let raf = null;
+    let lastX = 0, lastY = 0;
+    const root = document.documentElement;
+    function onMove(e){
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+      const rect = hero.getBoundingClientRect();
+      const cx = rect.left + rect.width/2;
+      const cy = rect.top + rect.height/2;
+      const x = ((e.clientX || (window.innerWidth/2)) - cx) / rect.width; // -0.5..0.5
+      const y = ((e.clientY || (window.innerHeight/2)) - cy) / rect.height;
+      lastX = x; lastY = y;
+      if (raf) return;
+      raf = requestAnimationFrame(()=>{
+        raf = null;
+        const title = document.querySelector('.title');
+        const glow = document.querySelector('.glow');
+        const cta = document.querySelector('.cta');
+        const tx = lastX * 18; // px
+        const ty = lastY * 18; // px
+        if (title) title.style.transform = `translate3d(${tx}px, ${ty*0.6}px, 0) translateZ(0)`;
+        if (glow) glow.style.transform = `translate3d(${tx*0.6}px, ${ty*0.4}px, 0) rotate(18deg)`;
+        if (cta) cta.style.transform = `translate3d(${tx*0.25}px, ${ty*0.35}px, 0)`;
+      });
+    }
+    function onLeave(){
+      if (raf) cancelAnimationFrame(raf); raf = null;
+      const title = document.querySelector('.title');
+      const glow = document.querySelector('.glow');
+      const cta = document.querySelector('.cta');
+      if (title) title.style.transform = '';
+      if (glow) glow.style.transform = '';
+      if (cta) cta.style.transform = '';
+    }
+    document.addEventListener('mousemove', onMove, {passive:true});
+    document.addEventListener('mouseleave', onLeave, {passive:true});
+    // also reset on touchstart to avoid stuck transforms
+    document.addEventListener('touchstart', onLeave, {passive:true});
+  })();
 })();

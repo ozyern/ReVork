@@ -131,6 +131,21 @@ html,body{
   .glow, .title, .card, .step, .boot-ring::before{animation:none}
 }
 
+/* Mouse hover / parallax smoothing */
+.hero{position:relative;overflow:visible}
+.title{transition:transform 420ms cubic-bezier(.2,.9,.2,1)}
+.glow{transition:transform 700ms cubic-bezier(.2,.9,.2,1), opacity 420ms ease}
+.card, .step{transition:transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease}
+.cta{transition:transform 240ms cubic-bezier(.2,.9,.2,1), box-shadow 240ms ease}
+
+/* Subtle pointer effect for interactive items */
+.card:hover, .step:hover{transform:translateY(-8px) scale(1.01)}
+.cta:hover{transform:translateY(-6px) scale(1.03)}
+
+@media (prefers-reduced-motion: reduce){
+  .title, .glow, .card, .step, .cta{transition:none}
+}
+
 /* Subtle glass borders for site boxes */
 .card, .step, .cta, .back{
   border: 1px solid rgba(255,255,255,0.06);
