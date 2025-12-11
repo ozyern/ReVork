@@ -6,10 +6,24 @@
     div.id = 'boot-overlay';
     div.className = 'boot-overlay';
     div.setAttribute('role','presentation');
+    // determine a friendly target label for the current page
+    function pageLabel(){
+      try{
+        const p = (location.pathname||'').split('/').pop() || 'index.html';
+        if(p === '' || p === 'index.html') return 'Opening Home';
+        if(p === 'home.html') return 'Opening Home';
+        if(p === 'get-started.html') return 'Opening Get Started';
+        // fallback to document.title or filename
+        const title = (document && document.title) ? document.title.replace(/\s*—.*$/,'') : p;
+        return 'Opening ' + title;
+      }catch(e){ return 'Opening site'; }
+    }
+
+    const subtitle = pageLabel();
     div.innerHTML = `
       <div class="boot-inner">
         <div class="boot-logo">Python Notes</div>
-        <div class="boot-sub">-Aditya</div>
+        <div class="boot-sub">${subtitle}</div>
         <div class="boot-ring" aria-hidden="true">
           <svg class="spinner" viewBox="0 0 50 50" role="img" aria-label="Loading">
             <circle class="path" cx="25" cy="25" r="20" fill="none" stroke="#ff4081" stroke-width="4" stroke-linecap="round"></circle>
@@ -44,6 +58,8 @@
         if (e.target !== overlay) return;
         overlay.removeEventListener('transitionend', onEnd);
         try{ overlay.remove(); }catch(e){}
+        // notify listeners that boot overlay finished
+        try{ window.dispatchEvent(new CustomEvent('boot:done')); }catch(e){}
       };
       overlay.addEventListener('transitionend', onEnd, {passive:true});
     };
