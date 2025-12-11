@@ -3,9 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Redirecting…</title>
-    <meta http-equiv="refresh" content="0;url=home.html">
-    <script>location.replace('home.html');</script>
+    <title>Welcome — redirecting…</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="assets/boot.css?v=2">
+    <script src="assets/boot.js?v=2" defer></script>
+    <script>
+      // wait for boot to finish, then redirect
+      window.addEventListener('boot:done', ()=>{
+        location.replace('home.html');
+      }, {once:true});
+      // fallback: if boot doesn't run, redirect after 1500ms
+      setTimeout(()=>{ if(location.pathname.endsWith('index.html')||location.pathname==='/') location.replace('home.html'); }, 1500);
+    </script>
   </head>
   <body>
     <p>Redirecting to <a href="home.html">home</a>…</p>
