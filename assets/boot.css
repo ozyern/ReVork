@@ -105,3 +105,20 @@ html,body{
 }
 .cta, .step, .back{transition:transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms cubic-bezier(.2,.9,.2,1), opacity 180ms ease}
 .boot-inner{transition:transform 360ms cubic-bezier(.2,.9,.2,1), opacity 360ms cubic-bezier(.2,.9,.2,1)}
+
+/* Subtle glass borders for site boxes */
+.card, .step, .cta, .back{
+  border: 1px solid rgba(255,255,255,0.06);
+  outline: 1px solid rgba(255,255,255,0.015);
+  border-radius: 10px;
+}
+.card:hover, .step:hover, .cta:hover, .back:hover{
+  border-color: rgba(255,111,163,0.14);
+  box-shadow: 0 20px 48px rgba(2,6,23,0.6), inset 0 1px rgba(255,255,255,0.02);
+}
+
+/* stronger focus for keyboard navigation */
+.card:focus-within, .step:focus-within, .cta:focus, .back:focus{
+  box-shadow: 0 22px 60px rgba(2,6,23,0.72), 0 0 0 4px rgba(255,111,163,0.06);
+  border-color: rgba(255,111,163,0.18);
+}
