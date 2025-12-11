@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Python Notes">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ff6fa3"/>
+      <stop offset="100%" stop-color="#007aff"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" rx="12" fill="#071022" />
+  <circle cx="32" cy="24" r="18" fill="url(#g)" opacity="0.95" />
+  <text x="32" y="38" font-family="Orbitron,Inter,Arial" font-weight="700" font-size="18" fill="#ffffff" text-anchor="middle">PN</text>
+</svg>
