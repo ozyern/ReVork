@@ -30,10 +30,15 @@
       .boot-inner{display:flex;flex-direction:column;align-items:center;gap:10px}
       .boot-logo{font-family:'Orbitron',Inter,system-ui,Segoe UI,Roboto,Arial;font-weight:900;color:#ff4081;font-size:clamp(20px,6vw,48px);letter-spacing:1px;opacity:0;transform:translateY(6px) scale(.98);animation:bootLogo 900ms cubic-bezier(.2,.9,.2,1) forwards .15s}
       .boot-sub{color:rgba(255,255,255,0.6);font-size:13px;opacity:0;transform:translateY(6px);animation:bootLogo 900ms cubic-bezier(.2,.9,.2,1) forwards .25s}
-      .boot-loader{display:flex;gap:8px;margin-top:8px}
-      .boot-loader span{display:block;width:8px;height:8px;background:linear-gradient(90deg,#ff4081,#007aff);border-radius:50%;opacity:.75;transform:scale(.8);animation:bootPulse 900ms infinite ease-in-out}
-      .boot-loader span:nth-child(2){animation-delay:120ms}
-      .boot-loader span:nth-child(3){animation-delay:240ms}
+      /* modern circular spinner */
+      .boot-ring{display:flex;align-items:center;justify-content:center;margin-top:12px}
+      .spinner{width:56px;height:56px;display:block}
+      .spinner .path{stroke:#ff4081;stroke-linecap:round;stroke-dasharray:89,200;stroke-dashoffset:0;animation:dash 1.4s ease-in-out infinite, spin 2s linear infinite;transform-origin:50% 50%}
+      @keyframes spin{100%{transform:rotate(360deg)}}
+      @keyframes dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:100,200;stroke-dashoffset:-15px}100%{stroke-dasharray:89,200;stroke-dashoffset:-124px}}
+      @media (prefers-reduced-motion: reduce){
+        .spinner .path{animation:none}
+      }
       @keyframes bootLogo{to{opacity:1;transform:translateY(0) scale(1)}}
       @keyframes bootPulse{0%{transform:scale(.8);opacity:.6}50%{transform:scale(1.1);opacity:1}100%{transform:scale(.8);opacity:.6}}
     </style>
@@ -43,8 +48,10 @@
       <div class="boot-inner">
         <div class="boot-logo">Python Notes</div>
         <div class="boot-sub">-Aditya</div>
-        <div class="boot-loader" aria-hidden="true">
-          <span></span><span></span><span></span>
+        <div class="boot-ring" aria-hidden="true">
+          <svg class="spinner" viewBox="0 0 50 50" role="img" aria-label="Loading">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke="#ff4081" stroke-width="4" stroke-linecap="round"></circle>
+          </svg>
         </div>
       </div>
     </div>
