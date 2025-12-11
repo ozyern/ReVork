@@ -92,3 +92,16 @@
   .spinner .path{animation:none}
   .boot-inner::before{animation:none}
 }
+
+/* Additional smoothing hints */
+html,body{
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  transform:translateZ(0);
+}
+.boot-overlay, .boot-inner, .cta, .step, .back{
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+.cta, .step, .back{transition:transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms cubic-bezier(.2,.9,.2,1), opacity 180ms ease}
+.boot-inner{transition:transform 360ms cubic-bezier(.2,.9,.2,1), opacity 360ms cubic-bezier(.2,.9,.2,1)}

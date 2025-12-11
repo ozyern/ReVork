@@ -6,9 +6,13 @@
     <title>Python Notes</title>
     <meta name="description" content="Python Notes">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="assets/boot.css">
     <style>
       :root{--bg1:#0b0f1a;--bg2:#0d0b2a;--accent:#ff4081;--muted:rgba(255,255,255,0.7)}
+      /* smoother defaults */
+      html{scroll-behavior:smooth}
       html,body{height:100%;}
       body{
         margin:0;
@@ -56,6 +60,7 @@
         backdrop-filter: blur(6px);
         font-weight:600;
       }
+      .cta{will-change:transform,opacity}
       .glow{
         position:absolute;
         inset:auto auto -140px -140px;
