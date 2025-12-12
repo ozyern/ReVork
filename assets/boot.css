@@ -206,3 +206,48 @@ html,body{
   .home-page, .home-page body, .home-page html{ overflow:hidden !important; touch-action:none !important; height:100vh !important; }
   .home-page .hero{ min-height:100vh; overflow:hidden; }
 }
+
+/* Mobile: place headings at the top (not centered) while preserving visuals */
+@media (max-width:720px){
+  /* Home page hero becomes top-aligned */
+  .home-page .hero{
+    display:flex;
+    align-items:flex-start;
+    justify-content:flex-start;
+    text-align:left;
+    padding-top:28px;
+    padding-left:20px;
+    padding-right:20px;
+    box-sizing:border-box;
+  }
+  .home-page .title{font-size: clamp(28px,8vw,56px); line-height:1.05; margin:0 0 6px 0;}
+  .home-page .sub, .home-page .credit{ text-align:left; margin-left:0; }
+  .home-page .cta{ margin-top:18px }
+
+  /* Ensure other pages' headings are top-aligned on mobile */
+  .container h1, h1{ text-align:left; margin-top:8px; }
+  .container{ padding-top:12px; }
+}
+
+/* Further mobile perf: stop animations, transitions and filters on touch/small screens
+   We keep the visual styles but make them static to avoid jank on high-refresh phones. */
+@media (max-width:720px){
+  .glow, .title, .card, .step, .boot-ring::before, .boot-inner::before, .boot-inner::after,
+  .boot-logo, .boot-sub, .spinner, .spinner .path, .cta::after{
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+    will-change: auto !important;
+  }
+
+  /* Keep appearance but lower shadow / glow cost */
+  .card, .step, .cta{ box-shadow: 0 6px 14px rgba(2,6,23,0.45) !important; }
+  .boot-ring::before{ display:none !important }
+
+  /* Ensure boot visuals are fully visible (no entrance anim) but visually similar */
+  .boot-logo, .boot-sub{ opacity:1 !important; transform:none !important }
+
+  /* Reduce paint cost for spinner */
+  .spinner{ filter:none !important }
+  .spinner .path{ stroke-opacity:0.95 }
+}
