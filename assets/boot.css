@@ -25,7 +25,7 @@
 }
 
 .boot-inner{
-  padding:22px 28px;
+  padding:28px 36px;
   border-radius:18px;
   position:relative;
   background:linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012));
@@ -71,7 +71,7 @@
   font-family:Orbitron,Inter,system-ui,Segoe UI,Roboto,Arial;
   font-weight:900;
   color:#ff6fa3;
-  font-size:clamp(20px,6vw,72px);
+  font-size:clamp(28px,8vw,72px);
   letter-spacing:1px;
   text-transform:none;
   opacity:0;
@@ -80,19 +80,19 @@
   text-shadow:0 10px 30px rgba(255,111,163,0.12), 0 30px 80px rgba(0,0,0,0.65);
 }
 
-.boot-sub{color:rgba(255,255,255,0.78);font-size:13px;opacity:0;transform:translateY(6px);animation:bootLogo 900ms cubic-bezier(.2,.9,.2,1) forwards .25s}
+.boot-sub{color:rgba(255,255,255,0.78);font-size:14px;opacity:0;transform:translateY(6px);animation:bootLogo 900ms cubic-bezier(.2,.9,.2,1) forwards .25s}
 
 /* Modern circular spinner with glass glow */
-.boot-ring{display:flex;align-items:center;justify-content:center;margin-top:12px;position:relative}
+.boot-ring{display:flex;align-items:center;justify-content:center;margin-top:16px;position:relative}
 .boot-ring::before{
   content:"";
   position:absolute;
-  width:84px;height:84px;border-radius:50%;
+  width:100px;height:100px;border-radius:50%;
   background:radial-gradient(circle at 30% 30%, rgba(255,111,163,0.06), transparent 30%), radial-gradient(circle at 70% 70%, rgba(0,122,255,0.04), transparent 40%);
   filter:blur(8px);
   pointer-events:none;
 }
-.spinner{width:56px;height:56px;display:block;filter:drop-shadow(0 8px 30px rgba(0,0,0,0.6))}
+.spinner{width:68px;height:68px;display:block;filter:drop-shadow(0 8px 30px rgba(0,0,0,0.6))}
 .spinner .path{stroke:#ff74a3;stroke-linecap:round;stroke-dasharray:89,200;stroke-dashoffset:0;animation:dash 1.4s ease-in-out infinite, spin 2s linear infinite;transform-origin:50% 50%;filter:drop-shadow(0 8px 28px rgba(255,111,163,0.12))}
 
 @keyframes spin{100%{transform:rotate(360deg)}}
@@ -220,7 +220,7 @@ html,body{
     padding-right:20px;
     box-sizing:border-box;
   }
-  .home-page .title{font-size: clamp(28px,8vw,72px); line-height:1.02; margin:0 0 8px 0;}
+  .home-page .title{font-size: clamp(48px,12vw,120px); line-height:1.02; margin:0 0 16px 0;}
   .home-page .sub, .home-page .credit{ text-align:center; margin-left:0; }
   .home-page .cta{ margin-top:18px }
 
