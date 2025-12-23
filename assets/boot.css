@@ -93,7 +93,7 @@
   pointer-events:none;
 }
 .spinner{width:56px;height:56px;display:block;filter:drop-shadow(0 8px 30px rgba(0,0,0,0.6))}
-.spinner .path{stroke:#ff74a3;stroke-linecap:round;stroke-dasharray:89,200;stroke-dashoffset:0;animation:dash 1.4s ease-in-out infinite, spin 2s linear infinite;transform-origin:50% 50%;-webkit-transform-origin:50% 50%;transform-box:fill-box;filter:drop-shadow(0 8px 28px rgba(255,111,163,0.12))}
+.spinner .path{stroke:#ff74a3;stroke-linecap:round;stroke-dasharray:89,200;stroke-dashoffset:0;animation:dash 1.4s ease-in-out infinite, spin 2s linear infinite;transform-origin:50% 50%;filter:drop-shadow(0 8px 28px rgba(255,111,163,0.12))}
 
 @keyframes spin{100%{transform:rotate(360deg)}}
 @keyframes dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:100,200;stroke-dashoffset:-15px}100%{stroke-dasharray:89,200;stroke-dashoffset:-124px}}
@@ -214,8 +214,6 @@ html,body{
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
-    gap:12px;
     text-align:center;
     padding-top:24px;
     padding-left:20px;
@@ -235,7 +233,7 @@ html,body{
    We keep the visual styles but make them static to avoid jank on high-refresh phones. */
 @media (max-width:720px){
   .glow, .title, .card, .step, .boot-ring::before, .boot-inner::before, .boot-inner::after,
-  .boot-logo, .boot-sub, .cta::after{
+  .boot-logo, .boot-sub, .spinner, .spinner .path, .cta::after{
     animation: none !important;
     transition: none !important;
     filter: none !important;
