@@ -233,11 +233,15 @@ html,body{
    We keep the visual styles but make them static to avoid jank on high-refresh phones. */
 @media (max-width:720px){
   .glow, .title, .card, .step, .boot-ring::before, .boot-inner::before, .boot-inner::after,
-  .boot-logo, .boot-sub, .spinner, .spinner .path, .cta::after{
+  .boot-logo, .boot-sub, .cta::after{
     animation: none !important;
     transition: none !important;
     filter: none !important;
     will-change: auto !important;
+  }
+  /* Keep spinner animation visible on mobile */
+  .spinner, .spinner .path{
+    animation: spin 2s linear infinite, dash 1.4s ease-in-out infinite !important;
   }
 
   /* Keep appearance but lower shadow / glow cost */
