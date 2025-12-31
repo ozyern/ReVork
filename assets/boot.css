@@ -105,12 +105,233 @@
   .boot-inner::before{animation:none}
 }
 
-/* Additional smoothing hints */
+/* Base styles with dark gaming background */
+*{margin:0;padding:0;box-sizing:border-box}
 html,body{
+  min-height:100vh;
+  background:#000;
+  color:#fff;
+  font-family:'Orbitron',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   transform:translateZ(0);
 }
+
+/* Dark gradient background with gaming aesthetic */
+body{
+  background:radial-gradient(ellipse at 50% 0%, rgba(255,64,129,0.08), transparent 60%),
+             radial-gradient(ellipse at 100% 50%, rgba(0,122,255,0.06), transparent 50%),
+             radial-gradient(ellipse at 0% 50%, rgba(138,43,226,0.05), transparent 50%),
+             linear-gradient(180deg, #000 0%, #0a0a0f 50%, #000 100%);
+  background-attachment:fixed;
+}
+
+/* Animated background pattern */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
+  opacity:0.3;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Animated glow orbs in background */
+body::after{
+  content:'';
+  position:fixed;
+  width:600px;
+  height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,64,129,0.1), transparent 70%);
+  top:20%;
+  left:10%;
+  filter:blur(80px);
+  animation:floatOrb 20s ease-in-out infinite;
+  pointer-events:none;
+  z-index:0;
+}
+
+@keyframes floatOrb{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(100px,-50px) scale(1.1)}
+  66%{transform:translate(-50px,100px) scale(0.9)}
+}
+
+/* Hero section - main landing area */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:100px 20px 60px;
+  text-align:center;
+  z-index:1;
+  overflow:visible;
+}
+
+/* Glow effect behind hero title */
+.glow{
+  position:absolute;
+  width:800px;
+  height:400px;
+  border-radius:50%;
+  background:radial-gradient(ellipse, rgba(255,64,129,0.25), rgba(138,43,226,0.15) 40%, transparent 70%);
+  filter:blur(100px);
+  top:35%;
+  left:50%;
+  transform:translateX(-50%);
+  pointer-events:none;
+  z-index:-1;
+  animation:driftX 10s ease-in-out infinite;
+  will-change:transform,filter;
+}
+
+/* Main title */
+.title{
+  font-size:clamp(60px,10vw,140px);
+  font-weight:900;
+  margin:0 0 24px;
+  background:linear-gradient(135deg, #fff 0%, #ff6fa3 50%, #8a2be2 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  text-shadow:0 0 80px rgba(255,64,129,0.5);
+  letter-spacing:-0.02em;
+  line-height:1.1;
+  animation:floatY 8s ease-in-out infinite;
+  will-change:transform;
+}
+
+/* Subtitle */
+.sub{
+  font-size:clamp(16px,2.5vw,22px);
+  color:rgba(255,255,255,0.8);
+  max-width:700px;
+  margin:0 auto 12px;
+  font-weight:400;
+  line-height:1.6;
+}
+
+/* Credit text */
+.credit{
+  font-size:14px;
+  color:rgba(255,111,163,0.7);
+  margin-top:8px;
+  font-weight:500;
+}
+
+/* CTA Buttons */
+.cta{
+  display:inline-block;
+  padding:16px 32px;
+  background:linear-gradient(135deg, rgba(255,64,129,0.15), rgba(138,43,226,0.1));
+  border:1px solid rgba(255,111,163,0.3);
+  color:#fff;
+  text-decoration:none;
+  border-radius:12px;
+  font-weight:700;
+  font-size:15px;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter:blur(10px);
+  box-shadow:0 8px 32px rgba(255,64,129,0.2), inset 0 1px rgba(255,255,255,0.1);
+  transition:transform 240ms cubic-bezier(.2,.9,.2,1), box-shadow 240ms ease, border-color 240ms ease;
+}
+
+.cta::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(255,64,129,0.2), rgba(138,43,226,0.15));
+  opacity:0;
+  transition:opacity 300ms ease;
+}
+
+.cta::after{
+  content:'';
+  position:absolute;
+  left:-100%;
+  top:0;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform:skewX(-18deg);
+  transition:left 600ms ease;
+}
+
+.cta:hover{
+  transform:translateY(-4px) scale(1.02);
+  border-color:rgba(255,111,163,0.5);
+  box-shadow:0 12px 48px rgba(255,64,129,0.4), inset 0 1px rgba(255,255,255,0.15);
+}
+
+.cta:hover::before{opacity:1}
+.cta:hover::after{left:100%}
+
+/* Container for content pages */
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:100px 24px 60px;
+  position:relative;
+  z-index:1;
+}
+
+.container h1{
+  font-size:clamp(48px,8vw,80px);
+  font-weight:900;
+  margin:0 0 40px;
+  background:linear-gradient(135deg, #fff, #ff6fa3);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  text-align:center;
+}
+
+/* Cards and Steps */
+.card, .step{
+  background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:16px;
+  padding:32px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+  transition:transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease;
+  animation:floatY 9s ease-in-out infinite;
+  will-change:transform;
+}
+
+.card:hover, .step:hover{
+  transform:translateY(-8px) scale(1.01);
+  box-shadow:0 20px 48px rgba(2,6,23,0.6), inset 0 1px rgba(255,255,255,0.02);
+  border-color:rgba(255,111,163,0.14);
+}
+
+.back{
+  display:inline-block;
+  padding:12px 24px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  color:#fff;
+  text-decoration:none;
+  border-radius:10px;
+  font-weight:600;
+  transition:all 220ms ease;
+}
+
+.back:hover{
+  background:rgba(255,111,163,0.1);
+  border-color:rgba(255,111,163,0.3);
+  transform:translateY(-2px);
+}
+
 .boot-overlay, .boot-inner, .cta, .step, .back{
   will-change: transform, opacity;
   backface-visibility: hidden;
