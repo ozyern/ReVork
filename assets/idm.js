@@ -366,3 +366,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Optional: could enforce referrer check here
   }
 });
+
+// Global function for ROM download pages to trigger IDM downloads
+function startIDMDownload(url, filename) {
+  // Direct navigation is the only reliable way for IDM to intercept
+  // IDM monitors all page navigation to download URLs
+  window.location.href = url;
+}
