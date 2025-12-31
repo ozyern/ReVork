@@ -275,20 +275,19 @@ document.addEventListener('DOMContentLoaded', function () {
       showInfo('✓ Starting download from Sourceforge...');
       progressContainer.style.display = 'none';
       
-      // Create hidden iframe to trigger download
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = fileUrl;
-      document.body.appendChild(iframe);
+      // Open in a small popup window
+      const popup = window.open(fileUrl, 'sourceforgeDownload', 
+        'width=600,height=400,toolbar=no,menubar=no,scrollbars=yes');
       
-      // Remove iframe after download starts
+      if (popup) {
+        showSuccess('✓ Download started in popup window!');
+      } else {
+        showError('Popup blocked. Please allow popups and try again.');
+      }
+      
       setTimeout(() => {
-        document.body.removeChild(iframe);
-        showSuccess('✓ Download started! Check your browser downloads.');
-        setTimeout(() => {
-          status.style.display = 'none';
-        }, 3000);
-      }, 2000);
+        status.style.display = 'none';
+      }, 3000);
       
       return;
     }
