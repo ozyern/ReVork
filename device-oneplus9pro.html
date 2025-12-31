@@ -230,5 +230,11 @@
     </main>
 
     <script src="assets/boot.js?v=2"></script>
+    <script>
+      // Highlight "Devices" page for device-specific pages
+      document.querySelectorAll('.nav-link').forEach(link => {
+        if(link.getAttribute('href') === 'devices.html') link.classList.add('active');
+      });
+    </script>
   </body>
 </html>

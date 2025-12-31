@@ -197,7 +197,7 @@
   })();
 })();
 
-// Site-wide UI helpers (menu + theme toggle)
+// Site-wide UI helpers (menu + theme toggle + page highlight)
 document.addEventListener('DOMContentLoaded', ()=>{
   const menuToggle = document.querySelector('.menu-toggle');
   const siteNav = document.querySelector('.site-nav');
@@ -214,6 +214,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
     document.querySelectorAll('.nav-link').forEach(link=>link.addEventListener('click', closeNav));
   }
+
+  // Highlight current page in navigation
+  const currentPage = location.pathname.split('/').pop() || 'home.html';
+  document.querySelectorAll('.nav-link').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === currentPage || (currentPage === '' && href === 'home.html') || (currentPage === 'index.html' && href === 'home.html')) {
+      link.classList.add('active');
+    }
+  });
 
   const toggleBtn = document.querySelector('.theme-toggle');
   const body = document.body;

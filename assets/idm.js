@@ -23,13 +23,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const fileUrl = urlIn.value.trim();
     if(!fileUrl){ status.textContent = 'Please provide a URL.'; return; }
     
-    // Only allow downloads from our website domain
-    const allowedDomains = ['qvznr.github.io', 'localhost', '127.0.0.1'];
+    // Only allow downloads from SourceForge (coloxy project specifically)
+    const allowedDomain = 'sourceforge.net';
     try{
       const urlObj = new URL(fileUrl);
-      const isAllowed = allowedDomains.some(domain => urlObj.hostname === domain || urlObj.hostname.endsWith('.' + domain));
-      if(!isAllowed){
-        status.textContent = 'Error: Downloads are only allowed from qvznr.github.io';
+      if(!urlObj.hostname.includes('sourceforge.net') || !urlObj.pathname.includes('coloxy')){
+        status.textContent = 'Error: Downloads are only allowed from https://sourceforge.net/projects/coloxy';
         status.style.color = '#ff6fa3';
         return;
       }
