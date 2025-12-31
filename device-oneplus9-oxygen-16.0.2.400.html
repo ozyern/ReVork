@@ -108,12 +108,17 @@
   </main>
 
   <script src="assets/boot.js"></script>
-  <script src="assets/idm.js"></script>
+  <script src="assets/idm.js?v=2"></script>
   <script>
     function downloadROM() {
       const url = `https://sourceforge.net/projects/coloxy/files/OxygenOS%2016/16.0.2.400/OnePlus%209.zip/download`;
       const filename = 'OnePlus_9_OxygenOS_16.0.2.400.zip';
-      startIDMDownload(url, filename);
+      
+      if (typeof startIDMDownload === 'function') {
+        startIDMDownload(url, filename);
+      } else {
+        window.open(url, '_blank');
+      }
     }
   </script>
 </body>
