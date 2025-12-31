@@ -273,16 +273,17 @@ document.addEventListener('DOMContentLoaded', function () {
     
     if (isSourceforge) {
       status.style.display = 'block';
-      showInfo('✓ Redirecting to download...');
+      showInfo('✓ Starting download...');
       progressContainer.style.display = 'none';
       
-      // Direct navigation - this is the ONLY way IDM can properly intercept
-      // IDM monitors navigation events, not programmatic downloads
-      setTimeout(() => {
-        window.location.href = fileUrl;
-      }, 500);
+      // Open in new window - IDM will intercept this
+      window.open(fileUrl, '_blank');
       
-      showSuccess('✓ Starting download... IDM will catch this!');
+      showSuccess('✓ Download started! IDM will catch this!');
+      
+      setTimeout(() => {
+        status.style.display = 'none';
+      }, 5000);
       
       return;
     }
