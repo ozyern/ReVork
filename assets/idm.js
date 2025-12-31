@@ -265,40 +265,59 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // For Sourceforge URLs and any external downloads, trigger download via hidden iframe
-    // This allows IDM to catch the download properly
+    // For Sourceforge URLs and any external downloads, trigger download via multiple methods
+    // to ensure IDM catches it
     const isSourceforge = fileUrl.includes('sourceforge.net') || 
                          fileUrl.includes('dl.sourceforge.net') ||
                          fileUrl.includes('use_mirror');
     
     if (isSourceforge) {
       status.style.display = 'block';
-      showInfo('✓ Starting download from Sourceforge...');
+      showInfo('✓ Starting download...');
       progressContainer.style.display = 'none';
       
-      // Remove any existing download iframe
+      // Method 1: Create a temporary anchor element and click it
+      // This is the most reliable way for IDM to catch downloads
+      const link = document.createElement('a');
+      link.href = fileUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      
+      // Extract filename from URL if available
+      const filename = nameIn.value.trim() || fileUrl.split('/').pop().split('?')[0] || 'download';
+      link.download = filename;
+      
+      // Add to DOM temporarily
+      document.body.appendChild(link);
+      
+      // Trigger the download
+      link.click();
+      
+      // Remove the link after a brief delay
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 100);
+      
+      // Also try iframe method as backup (some IDM configurations prefer this)
       const existingFrame = document.getElementById('downloadFrame');
       if (existingFrame) {
         existingFrame.remove();
       }
       
-      // Create a hidden iframe to trigger the download
-      // This method allows IDM to intercept the download
       const iframe = document.createElement('iframe');
       iframe.id = 'downloadFrame';
       iframe.style.display = 'none';
       iframe.src = fileUrl;
       document.body.appendChild(iframe);
       
-      showSuccess('✓ Download started! IDM should catch this download.');
-      
-      // Clean up iframe after a delay
       setTimeout(() => {
         const frame = document.getElementById('downloadFrame');
         if (frame) {
           frame.remove();
         }
       }, 10000);
+      
+      showSuccess('✓ Download triggered! IDM should catch this download.');
       
       setTimeout(() => {
         status.style.display = 'none';
