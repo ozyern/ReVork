@@ -232,6 +232,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // Download form submission
   form.addEventListener('submit', async function (ev) {
     ev.preventDefault();
+    ev.stopPropagation();
+    
     const fileUrl = urlIn.value.trim();
     if (!fileUrl) {
       showError('Please provide a URL.');
@@ -245,6 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const filename = nameIn.value.trim() || fileUrl.split('/').pop() || 'download.bin';
+    status.style.display = 'block';
     showInfo('Starting download...');
     downloadBtn.disabled = true;
     openBtn.disabled = true;
@@ -312,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
       openBtn.disabled = false;
       testMirrorsBtn.disabled = false;
     }
-  });
+  }, false);
 
   // Prevent direct IDM access (must come from ROM page)
   const referrer = document.referrer;
