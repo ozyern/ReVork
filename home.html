@@ -22,9 +22,12 @@
           <a href="home.html" class="nav-link">Home</a>
           <a href="roms.html" class="nav-link">Roms</a>
           <a href="devices.html" class="nav-link">Devices</a>
-          <a href="installation.html" class="nav-link">Installation</a>
+          <a href="installation.html" class="nav-link">Installation Guide</a>
           <a href="idm.html" class="nav-link">IDM</a>
         </nav>
+        <div class="header-actions">
+          <button class="theme-toggle" aria-label="Toggle theme">☀️</button>
+        </div>
       </div>
     </header>
 
@@ -33,33 +36,12 @@
       <h1 class="title">ColorOS Ports</h1>
       <p class="sub">ColorOS 16 / OxygenOS 16 Ports for <a href="devices.html" style="color: #00d9ff; text-decoration: none; border-bottom: 1px solid #00d9ff;">supported devices</a>.</p>
       <p class="credit">- Adityas</p>
-      <div style="margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <div class="cta-row">
         <a class="cta" href="roms.html">Browse Roms</a>
         <a class="cta" href="installation.html">Installation Guide</a>
-        <a class="cta" href="idm.html">Open IDM</a>
       </div>
     </main>
 
     <script src="assets/boot.js?v=2"></script>
-    <script>
-      // Mobile menu toggle
-      const menuToggle = document.querySelector('.menu-toggle');
-      const siteNav = document.querySelector('.site-nav');
-      if(menuToggle) {
-        menuToggle.addEventListener('click', function() {
-          this.classList.toggle('active');
-          siteNav.classList.toggle('active');
-          document.body.style.overflow = siteNav.classList.contains('active') ? 'hidden' : '';
-        });
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-link').forEach(link => {
-          link.addEventListener('click', () => {
-            menuToggle.classList.remove('active');
-            siteNav.classList.remove('active');
-            document.body.style.overflow = '';
-          });
-        });
-      }
-    </script>
   </body>
 </html>

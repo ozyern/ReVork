@@ -196,3 +196,40 @@
     document.addEventListener('touchstart', onLeave, {passive:true});
   })();
 })();
+
+// Site-wide UI helpers (menu + theme toggle)
+document.addEventListener('DOMContentLoaded', ()=>{
+  const menuToggle = document.querySelector('.menu-toggle');
+  const siteNav = document.querySelector('.site-nav');
+  if (menuToggle && siteNav) {
+    const closeNav = () => {
+      menuToggle.classList.remove('active');
+      siteNav.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+    menuToggle.addEventListener('click', ()=>{
+      menuToggle.classList.toggle('active');
+      siteNav.classList.toggle('active');
+      document.body.style.overflow = siteNav.classList.contains('active') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.nav-link').forEach(link=>link.addEventListener('click', closeNav));
+  }
+
+  const toggleBtn = document.querySelector('.theme-toggle');
+  const body = document.body;
+  const setTheme = (mode) => {
+    const useLight = mode === 'light';
+    body.classList.toggle('light-mode', useLight);
+    if (toggleBtn) toggleBtn.textContent = useLight ? '🌙' : '☀️';
+    localStorage.setItem('theme-preference', useLight ? 'light' : 'dark');
+  };
+  if (toggleBtn) {
+    const stored = localStorage.getItem('theme-preference');
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    setTheme(stored || (prefersLight ? 'light' : 'dark'));
+    toggleBtn.addEventListener('click', ()=>{
+      const next = body.classList.contains('light-mode') ? 'dark' : 'light';
+      setTheme(next);
+    });
+  }
+});

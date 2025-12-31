@@ -171,9 +171,12 @@
           <a href="home.html" class="nav-link">Home</a>
           <a href="roms.html" class="nav-link">Roms</a>
           <a href="devices.html" class="nav-link">Devices</a>
-          <a href="installation.html" class="nav-link">Installation</a>
+          <a href="installation.html" class="nav-link">Installation Guide</a>
           <a href="idm.html" class="nav-link">IDM</a>
         </nav>
+        <div class="header-actions">
+          <button class="theme-toggle" aria-label="Toggle theme">☀️</button>
+        </div>
       </div>
     </header>
 
@@ -192,7 +195,7 @@
           <div class="rom-card">
             <h3>ColorOS 16 Official Build</h3>
             <p>Latest stable ColorOS 16 China ROM for OnePlus 9 Pro. Features the complete ColorOS experience with all official optimizations.</p>
-            <a href="https://sourceforge.net/projects/coloxy/" class="download-btn" target="_blank" rel="noopener">
+            <a href="idm.html?url=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fcoloxy%2Ffiles%2FOnePlus%25209%2520Pro%2FColorOS%252016%2Flatest%2Fdownload&name=OnePlus9Pro-ColorOS16.zip" class="download-btn">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
               </svg>
@@ -206,7 +209,7 @@
           <div class="rom-card">
             <h3>OxygenOS 16 Port</h3>
             <p>OxygenOS 16 port for OnePlus 9 Pro. Enjoy the clean OxygenOS interface with enhanced performance and features.</p>
-            <a href="https://sourceforge.net/projects/coloxy/files/OnePlus%209%20Pro/OxygenOS%2016/" class="download-btn" target="_blank" rel="noopener">
+            <a href="idm.html?url=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fcoloxy%2Ffiles%2FOnePlus%25209%2520Pro%2FOxygenOS%252016%2Flatest%2Fdownload&name=OnePlus9Pro-OxygenOS16.zip" class="download-btn">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
               </svg>
@@ -227,24 +230,5 @@
     </main>
 
     <script src="assets/boot.js?v=2"></script>
-    <script>
-      // Mobile menu toggle
-      const menuToggle = document.querySelector('.menu-toggle');
-      const siteNav = document.querySelector('.site-nav');
-      if(menuToggle) {
-        menuToggle.addEventListener('click', function() {
-          this.classList.toggle('active');
-          siteNav.classList.toggle('active');
-          document.body.style.overflow = siteNav.classList.contains('active') ? 'hidden' : '';
-        });
-        document.querySelectorAll('.nav-link').forEach(link => {
-          link.addEventListener('click', () => {
-            menuToggle.classList.remove('active');
-            siteNav.classList.remove('active');
-            document.body.style.overflow = '';
-          });
-        });
-      }
-    </script>
   </body>
 </html>
