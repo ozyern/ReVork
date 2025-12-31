@@ -255,3 +255,25 @@ html,body{
   .spinner{ filter:none !important }
   .spinner .path{ stroke-opacity:0.95 }
 }
+
+/* Site header / centered nav */
+.site-header{
+  position:fixed;
+  left:0;right:0;top:0;
+  z-index:1200;
+  padding:12px 8px;
+  background:linear-gradient(180deg, rgba(2,3,6,0.28), rgba(2,3,6,0.12));
+  backdrop-filter: blur(6px) saturate(120%);
+}
+.header-inner{max-width:1200px;margin:0 auto;position:relative;padding:0 18px;height:48px;display:flex;align-items:center}
+.logo{position:absolute;left:18px;font-family:Orbitron,Inter,system-ui,Segoe UI,Roboto,Arial;font-weight:900;color:#ff6fa3;font-size:18px;letter-spacing:0.6px}
+.site-nav{margin:0 auto;display:flex;gap:20px;align-items:center}
+.nav-link{color:rgba(255,255,255,0.86);text-decoration:none;font-weight:700;padding:6px 10px;border-radius:8px;transition:background .18s,transform .12s}
+.nav-link:hover{background:rgba(255,111,163,0.06);transform:translateY(-2px)}
+
+/* small screens: compress header */
+@media (max-width:640px){
+  .logo{left:12px;font-size:15px}
+  .site-nav{gap:10px}
+  .nav-link{font-size:13px;padding:6px 8px}
+}

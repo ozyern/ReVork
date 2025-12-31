@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Installation Guide — ColorOS Ports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/boot.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="logo">ColorOS Ports</div>
+        <nav class="site-nav">
+          <a href="home.html" class="nav-link">Home</a>
+          <a href="roms.html" class="nav-link">Roms</a>
+          <a href="installation.html" class="nav-link">Installation Guide</a>
+          <a href="idm.html" class="nav-link">IDM</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" style="max-width:900px;margin:110px auto;padding:24px;">
+      <h1>Installation Guide</h1>
+      <ol>
+        <li>Unlock bootloader — follow device-specific steps from manufacturer.</li>
+        <li>Install a custom recovery (TWRP) or the recommended recovery for your device.</li>
+        <li>Make a full backup (Nandroid) and back up important data.</li>
+        <li>Wipe system/data/cache as recommended by the ROM author.</li>
+        <li>Flash the ROM zip and any vendor or firmware packages required.</li>
+        <li>Reboot and follow first-run setup.</li>
+      </ol>
+      <p style="color:rgba(255,255,255,0.75)">This guide is intentionally concise — follow device-specific instructions in each ROM's release notes.</p>
+    </main>
+
+    <script src="assets/boot.js?v=2"></script>
+  </body>
+</html>

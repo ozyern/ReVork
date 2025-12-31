@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>IDM — ColorOS Ports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/boot.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="logo">ColorOS Ports</div>
+        <nav class="site-nav">
+          <a href="home.html" class="nav-link">Home</a>
+          <a href="roms.html" class="nav-link">Roms</a>
+          <a href="installation.html" class="nav-link">Installation Guide</a>
+          <a href="idm.html" class="nav-link">IDM</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" style="max-width:800px;margin:110px auto;padding:24px;">
+      <h1>IDM (Downloader)</h1>
+      <p>Paste a direct file URL and an optional filename, then click <strong>Download</strong>. Note: cross-origin restrictions may prevent some downloads.</p>
+
+      <form id="idmForm" style="display:grid;gap:10px;">
+        <label>File URL
+          <input id="fileUrl" type="url" placeholder="https://example.com/file.zip" required style="width:100%;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);color:#fff">
+        </label>
+        <label>Filename (optional)
+          <input id="fileName" type="text" placeholder="myfile.zip" style="width:100%;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);color:#fff">
+        </label>
+        <div style="display:flex;gap:10px">
+          <button id="downloadBtn" class="cta" type="submit">Download</button>
+          <button id="openBtn" class="cta" type="button">Open URL</button>
+        </div>
+      </form>
+
+      <div id="status" style="margin-top:12px;color:rgba(255,255,255,0.78)"></div>
+    </main>
+
+    <script src="assets/idm.js"></script>
+    <script src="assets/boot.js?v=2"></script>
+  </body>
+</html>
