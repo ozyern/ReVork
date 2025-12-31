@@ -1,0 +1,5 @@
+<h2>👤 About Me</h2>
+
+<p>I’m Aditya, better known online as <strong>Qvznr</strong>, an elite modder and firmware developer passionate about pushing hardware beyond its limits. My work focuses on <strong>porting flagship features to legacy devices</strong> and making advanced audio/visual experiences accessible to everyone. This website exists as a hub to share my public ports for <em>OnePlus devices</em> — including the OnePlus 9 Pro, 9, 8 Pro, and 8 — so the community can benefit from my builds without barriers.</p>
+
+<p>Beyond just technical tweaks, I treat every release as part of a larger creative saga: branded splash screens, dramatic changelogs, and lore that transform firmware into legend. My goal is not only to optimize performance but also to <strong>democratize access to premium features</strong>, empowering users to experience the best of their devices. Whether it’s panel overclocking, firmware-level timing adjustments, or neon-branded storytelling, I bring originality and impact to every project.</p>
