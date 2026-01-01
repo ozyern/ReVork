@@ -241,4 +241,133 @@ document.addEventListener('DOMContentLoaded', ()=>{
       setTheme(next);
     });
   }
+
+  // AI Chat Assistant Widget
+  const chatWidget = document.createElement('div');
+  chatWidget.className = 'ai-chat-widget';
+  chatWidget.innerHTML = `
+    <button class="ai-chat-button" aria-label="Open AI Assistant">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+      </svg>
+    </button>
+    <div class="ai-chat-window">
+      <div class="ai-chat-header">
+        <div class="ai-chat-header-title">
+          <div class="ai-chat-avatar">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            </svg>
+          </div>
+          <div class="ai-chat-info">
+            <h3>ColorOS Ports AI</h3>
+            <p>Ask me anything!</p>
+          </div>
+        </div>
+        <button class="ai-chat-close" aria-label="Close chat">&times;</button>
+      </div>
+      <div class="ai-chat-messages" id="ai-chat-messages">
+        <div class="ai-message ai">
+          <div class="ai-message-avatar">🤖</div>
+          <div class="ai-message-content">
+            Hi! I'm your ColorOS Assistant. I can help you with ROM installation, device compatibility, and any questions about ColorOS/OxygenOS ports. How can I assist you today?
+          </div>
+        </div>
+      </div>
+      <div class="ai-chat-input-area">
+        <input type="text" class="ai-chat-input" placeholder="Type your message..." aria-label="Chat message">
+        <button class="ai-chat-send">Send</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(chatWidget);
+
+  const chatButton = chatWidget.querySelector('.ai-chat-button');
+  const chatWindow = chatWidget.querySelector('.ai-chat-window');
+  const chatClose = chatWidget.querySelector('.ai-chat-close');
+  const chatInput = chatWidget.querySelector('.ai-chat-input');
+  const chatSend = chatWidget.querySelector('.ai-chat-send');
+  const chatMessages = chatWidget.querySelector('#ai-chat-messages');
+
+  chatButton.addEventListener('click', () => {
+    chatWindow.classList.toggle('active');
+    if (chatWindow.classList.contains('active')) {
+      chatInput.focus();
+    }
+  });
+
+  chatClose.addEventListener('click', () => {
+    chatWindow.classList.remove('active');
+  });
+
+  function addMessage(text, isUser = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `ai-message ${isUser ? 'user' : 'ai'}`;
+    messageDiv.innerHTML = `
+      <div class="ai-message-avatar">${isUser ? '👤' : '🤖'}</div>
+      <div class="ai-message-content">${text}</div>
+    `;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function getBotResponse(userMessage) {
+    const msg = userMessage.toLowerCase();
+    
+    // Installation related
+    if (msg.includes('install') || msg.includes('flash') || msg.includes('how to')) {
+      return 'To install ColorOS/OxygenOS ROM:<br>1. Unlock bootloader<br>2. Boot into OrangeFox recovery<br>3. Wipe System, Data, Cache<br>4. Flash the ROM ZIP<br>5. Reboot<br><br>Check our <a href="installation.html" style="color:#00d9ff;">Installation Guide</a> for detailed steps!';
+    }
+    
+    // Device compatibility
+    if (msg.includes('device') || msg.includes('support') || msg.includes('compatible')) {
+      return 'We support OnePlus 8, 8 Pro, 9, and 9 Pro devices. Check the <a href="devices.html" style="color:#00d9ff;">Devices page</a> for more details!';
+    }
+    
+    // ROM download
+    if (msg.includes('download') || msg.includes('rom') || msg.includes('link')) {
+      return 'You can download ColorOS 16 and OxygenOS 16 ROMs from our <a href="roms.html" style="color:#00d9ff;">ROMs page</a>. Choose your device and preferred ROM version!';
+    }
+    
+    // OnePlus 13
+    if (msg.includes('oneplus 13') || msg.includes('op13') || msg.includes('13')) {
+      return 'OnePlus 13 is shown on our site as a preview, but we don\'t currently support it for porting. Stay tuned for future updates!';
+    }
+    
+    // Recovery
+    if (msg.includes('recovery') || msg.includes('orangefox') || msg.includes('twrp')) {
+      return 'We recommend using OrangeFox recovery for flashing ColorOS/OxygenOS ROMs. Download it from our installation guide and boot using: <code>fastboot boot orangefox.img</code>';
+    }
+    
+    // Bootloader
+    if (msg.includes('bootloader') || msg.includes('unlock')) {
+      return 'You need an unlocked bootloader to install custom ROMs. This process varies by device. Make sure to backup your data before unlocking as it will wipe your device!';
+    }
+    
+    // Default response
+    return 'I can help you with ROM installation, device compatibility, downloads, and general questions about ColorOS/OxygenOS ports. What would you like to know?';
+  }
+
+  function sendMessage() {
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    // Add user message
+    addMessage(message, true);
+    chatInput.value = '';
+
+    // Simulate typing delay
+    setTimeout(() => {
+      const response = getBotResponse(message);
+      addMessage(response, false);
+    }, 500);
+  }
+
+  chatSend.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  });
 });
