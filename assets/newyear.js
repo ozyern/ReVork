@@ -6,10 +6,10 @@
 
   // Configuration
   const CONFIG = {
-    confettiCount: 10,
-    fireworksInterval: 8000,
-    sparkleCount: 5,
-    snowflakeCount: 4,
+    confettiCount: 5,
+    fireworksInterval: 10000,
+    sparkleCount: 3,
+    snowflakeCount: 2,
     targetDate: new Date('2026-01-01T00:00:00').getTime()
   };
 
@@ -137,12 +137,12 @@
       setTimeout(createConfettiPiece, Math.random() * 2000);
     }
 
-    // Continue creating confetti (very infrequently)
+    // Continue creating confetti (minimal for 120fps)
     setInterval(() => {
-      if (Math.random() > 0.92) {
+      if (Math.random() > 0.95) {
         createConfettiPiece();
       }
-    }, 1200);
+    }, 2000);
   }
 
   // Fireworks animation
@@ -174,7 +174,7 @@
     }
 
     function createExplosion(x, y, color) {
-      const particleCount = 15;
+      const particleCount = 10;
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
@@ -226,12 +226,12 @@
       setTimeout(() => sparkle.remove(), 4000);
     }
 
-    // Create sparkles periodically (very infrequently)
+    // Create sparkles periodically (minimal for 120fps)
     setInterval(() => {
-      if (Math.random() > 0.95) {
+      if (Math.random() > 0.97) {
         createSparkle();
       }
-    }, 1500);
+    }, 2500);
   }
 
   // Snowfall animation
@@ -257,10 +257,10 @@
     }
 
     setInterval(() => {
-      if (Math.random() > 0.95) {
+      if (Math.random() > 0.97) {
         createSnowflake();
       }
-    }, 2000);
+    }, 3000);
   }
 
   // Trigger celebration effect
