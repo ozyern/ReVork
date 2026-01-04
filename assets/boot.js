@@ -1,5 +1,11 @@
 // Insert boot overlay markup and behavior
 (function(){
+  'use strict';
+  // Disable boot overlay, magic effects, and parallax to avoid scroll lag.
+  const ENABLE_BOOT_EFFECTS = false;
+  if (!ENABLE_BOOT_EFFECTS) {
+    return;
+  }
   const DURATION = 500; // ms
   function createOverlay(){
     const div = document.createElement('div');
