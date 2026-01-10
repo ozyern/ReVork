@@ -8,29 +8,39 @@
 </head>
 <body>
 
-<!-- ===== Header ===== -->
-<header class="glass-header">
-  <div class="logo">COLOROS PORTS</div>
-  <nav>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="roms.html" class="active">Explore ROMs</a></li>
-      <li><a href="devices.html">Supported Device</a></li>
-      <li><a href="installation.html">Installation Guide</a></li>
-    </ul>
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="logo">ColorOS Ports</div>
+
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="roms.html" class="active">Explore ROMs</a>
+    <a href="devices.html">Supported Device</a>
+    <a href="installation.html">Installation Guide</a>
   </nav>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </header>
+
+<nav class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="roms.html">Explore ROMs</a>
+  <a href="devices.html">Supported Device</a>
+  <a href="installation.html">Installation Guide</a>
+</nav>
 
 <!-- ===== ROM HERO ===== -->
 <section class="rom-hero">
 
-  <!-- BIG BACKGROUND TEXT -->
-  <div class="rom-bg-text">ROM</div>
+  <!-- BIG ROM BACKGROUND -->
+  <div class="rom-bg">ROM</div>
 
   <!-- CENTER TEXT -->
-  <div class="rom-center-text">
-    <p>Choose your ROM base, then pick a device to download via IDM</p>
-    <span>Ported by Aditya</span>
+  <div class="rom-center">
+    Choose your ROM base, then pick a device to download via IDM
   </div>
 
   <!-- ROM CARDS -->
@@ -67,5 +77,7 @@
   </div>
 </section>
 
+<script src="assets/ai-assistant.js"></script>
+<script src="assets/boot.js?v=2"></script>
 </body>
 </html>

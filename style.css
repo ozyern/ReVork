@@ -778,42 +778,47 @@ footer {
   overflow: hidden;
 }
 
-.rom-bg-text {
+.rom-bg {
   position: absolute;
-  top: 180px;
+  top: 160px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 300px;
+  font-size: clamp(220px, 30vw, 360px);
   font-weight: 900;
-  letter-spacing: 20px;
-  color: rgba(255,255,255,0.05);
+  letter-spacing: 24px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.12),
+    rgba(255,255,255,0.02)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter: blur(0.4px);
+  opacity: 0.75;
   pointer-events: none;
   user-select: none;
+  z-index: 1;
 }
 
-.rom-center-text {
+.rom-center {
+  position: relative;
+  margin-top: 260px;
   text-align: center;
-  color: #aaa;
-  margin-bottom: 100px;
-}
-
-.rom-center-text p {
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-.rom-center-text span {
-  display: block;
-  margin-top: 10px;
-  font-size: 12px;
-  opacity: 0.6;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.7);
+  z-index: 2;
 }
 
 .rom-cards {
+  position: relative;
   display: flex;
   justify-content: center;
   gap: 80px;
   flex-wrap: wrap;
+  z-index: 3;
 }
 
 .rom-card {
