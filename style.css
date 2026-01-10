@@ -387,6 +387,15 @@ body {
   color: #fff;
 }
 
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  pointer-events: none;
+}
+
 /* ===== HEADER ===== */
 .header {
   position: fixed;
@@ -478,19 +487,57 @@ body {
   z-index: 1;
 }
 
-.hero-right::before {
+/* ===== LIGHT BLEND EFFECT ===== */
+
+.light-wrap {
+  position: relative;
+}
+
+.light-wrap::before {
   content: "";
   position: absolute;
-  inset: -60px;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(111,186,255,0.25), transparent 45%),
-    url('assets/light.jpg') center/contain no-repeat;
-  opacity: 0.45;
-  mix-blend-mode: screen;
-  filter: saturate(1.05) blur(2px);
-  pointer-events: none;
-  z-index: 0;
+  inset: -120px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.15) 35%,
+    rgba(0,0,0,0.9) 70%
+  );
+  filter: blur(40px);
+  z-index: -1;
+}
+
+.light-wrap::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 80px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,0.25),
+    transparent 70%
+  );
+  filter: blur(20px);
+}
+
+.hero-right img {
+  width: 420px;
+  mask-image: radial-gradient(
+    circle at center,
+    black 60%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    black 60%,
+    transparent 100%
+  );
+  filter:
+    drop-shadow(0 0 80px rgba(255,255,255,0.4))
+    drop-shadow(0 0 160px rgba(255,255,255,0.15));
 }
 
 .scroll {
