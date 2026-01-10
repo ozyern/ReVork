@@ -510,13 +510,14 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible;
 }
 
 .light-wrap {
   position: relative;
-  width: 1100px;
-  height: auto;
-  max-width: none;     /* IMPORTANT */
+  width: 1000px;          /* ACTUAL BIG SIZE */
+  max-width: none;
+  pointer-events: none;
 }
 
 .light-wrap img {
@@ -524,26 +525,40 @@ header {
   height: auto;
   display: block;
 
-  transform: scale(1.35); /* REAL SCALING */
-  transform-origin: center;
+  /* REAL size increase */
+  transform: scale(1.25);
 
+  /* Blend + cinematic look */
   filter:
-    brightness(1.2)
+    brightness(1.25)
     contrast(1.1)
-    drop-shadow(0 0 140px rgba(255,255,255,0.45));
+    saturate(0.9);
+
+  /* FLOOR FADE */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 60%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 60%,
+    transparent 100%
+  );
 }
 
 /* BACKGROUND GLOW */
 .light-wrap::before {
   content: "";
   position: absolute;
-  inset: -250px; /* BIG glow radius */
+  inset: -300px;
   background: radial-gradient(
     ellipse at center,
     rgba(255,255,255,0.35),
+    rgba(255,255,255,0.12) 40%,
     transparent 70%
   );
-  filter: blur(80px);
+  filter: blur(90px);
   z-index: -1;
 }
 
