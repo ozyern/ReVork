@@ -545,3 +545,84 @@ footer {
   padding: 40px;
   color: #666;
 }
+
+/* ===== Home Responsive ===== */
+@media (max-width: 960px) {
+  .header {
+    padding: 20px 28px;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+    margin-left: 16px;
+  }
+
+  .hero {
+    flex-direction: column;
+    gap: 40px;
+    padding: 140px 24px 80px;
+    text-align: center;
+  }
+
+  .hero-left {
+    max-width: 100%;
+  }
+
+  .hero-left h1 {
+    font-size: 3rem;
+  }
+
+  .hero-right img {
+    width: 320px;
+  }
+
+  .scroll {
+    position: static;
+    writing-mode: horizontal-tb;
+    transform: none;
+    margin-top: 16px;
+    right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 16px 20px;
+  }
+
+  .hero {
+    padding: 130px 18px 70px;
+  }
+
+  .hero-left h1 {
+    font-size: 2.4rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .desc {
+    font-size: 0.92rem;
+  }
+
+  .secondary h2 {
+    font-size: 2.4rem;
+  }
+
+  .features {
+    flex-direction: column;
+    padding: 60px 20px;
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+}

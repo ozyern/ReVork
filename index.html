@@ -1,82 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ColorOS Ports</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- ===== Header ===== -->
-  <header class="header">
-    <div class="logo">ColorOS Ports</div>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="installation.html">Guide</a>
-      <a href="devices.html">Devices</a>
-      <a href="roms.html">ROMs</a>
-    </nav>
-    <button class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </header>
 
-  <nav class="mobile-menu" id="mobileMenu">
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="logo">ColorOS Ports</div>
+
+  <nav class="nav" id="navLinks">
     <a href="index.html">Home</a>
-    <a href="installation.html">Guide</a>
-    <a href="devices.html">Devices</a>
-    <a href="roms.html">ROMs</a>
+    <a href="roms.html">Explore ROMs</a>
+    <a href="devices.html">Supported Device</a>
+    <a href="#" class="download-btn">Download</a>
   </nav>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
 
-  <!-- ===== Hero Section ===== -->
-  <section class="hero">
-    <div class="hero-left">
-      <span class="badge">Actively Maintained</span>
-      <h1>Legends Never Die</h1>
-      <p>Bringing a New Life to Older OnePlus Devices</p>
-      <p class="subtext">A community-driven ROM porting platform focused on transparency, performance optimization, and long-term device support</p>
-    </div>
+<nav class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="roms.html">Explore ROMs</a>
+  <a href="devices.html">Supported Device</a>
+  <a href="#" class="download-btn">Download</a>
+</nav>
 
-    <div class="hero-right">
-      <img src="3081f987-992c-4e2b-893c-3328559764f9.png" alt="Hero Illustration">
-      <div class="scroll-down">Scroll Down ↓</div>
-    </div>
-  </section>
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="status">● Actively Maintained</span>
 
-  <!-- ===== Secondary Hero ===== -->
-  <section class="secondary-hero">
-    <span class="badge">Ready Dive in New OS</span>
-    <h2>Enjoy New Era</h2>
-    <h1>In Your Beast</h1>
-    <p>Experience the New Ui, New Feature without any Compromises in Performance and Stability</p>
-  </section>
+    <h1>Legends Never Die</h1>
 
-  <!-- ===== Features Section ===== -->
-  <section class="features">
-    <div class="feature-card">
-      <div class="icon">&lt;/&gt;</div>
-      <h3>Optimized OxygenOS Port Development</h3>
-      <p>Clean OxygenOS ports optimized for performance, stability, and daily usability on older devices.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🔔</div>
-      <h3>Active Community-Driven Development</h3>
-      <p>Development guided by real user feedback, testing reports, and continuous performance improvements.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🐞</div>
-      <h3>Open Bug & Issue Tracking</h3>
-      <p>Known bugs, limitations, and workarounds are clearly documented for complete user transparency.</p>
-    </div>
-  </section>
+    <p class="tagline">
+      Bringing a New Life to Older OnePlus Devices
+    </p>
 
-  <!-- ===== Footer ===== -->
-  <footer>
-    <p>&copy; 2026 ColorOS Ports. All rights reserved.</p>
-  </footer>
+    <p class="desc">
+      A community-driven ROM porting platform focused on transparency,
+      performance optimization, and long-term device support.
+    </p>
+  </div>
 
-  <script src="script.js"></script>
+  <div class="hero-right">
+    <img src="assets/light.jpg" alt="Light Portal" />
+    <div class="scroll">Scroll Down ↓</div>
+  </div>
+</section>
+
+<!-- ===== SECOND HERO ===== -->
+<section class="secondary">
+  <span class="status">● Ready Dive in New OS</span>
+  <h3>Enjoy New Era</h3>
+  <h2>In Your Beast</h2>
+  <p>
+    Experience the New UI and Features without any compromise
+    in performance and stability.
+  </p>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="features">
+
+  <div class="card">
+    <div class="icon">&lt;/&gt;</div>
+    <h4>Optimized OxygenOS Port Development</h4>
+    <p>
+      Clean OxygenOS ports optimized for performance,
+      stability, and daily usability.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="icon">🔔</div>
+    <h4>Active Community-Driven Development</h4>
+    <p>
+      Development guided by real user feedback and
+      continuous performance improvements.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="icon">🐞</div>
+    <h4>Open Bug & Issue Tracking</h4>
+    <p>
+      Known bugs and limitations are clearly documented
+      for full transparency.
+    </p>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 ColorOS Ports. All rights reserved.
+</footer>
+
+<script>
+// Mobile nav toggle
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+});
+
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+  });
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.header') && !e.target.closest('.mobile-menu')) {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+  }
+});
+</script>
+
 </body>
 </html>
