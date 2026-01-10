@@ -622,6 +622,7 @@ header {
 .secondary {
   text-align: center;
   padding: 100px 20px;
+  background: #000;
 }
 
 .secondary h3 {
