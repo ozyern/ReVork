@@ -29,10 +29,16 @@ body {
   width: 100%;
   padding: 28px 64px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   z-index: 100;
   background: linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
+  position: relative;
+}
+
+.header .hamburger {
+  position: absolute;
+  left: 28px;
 }
 
 .logo {
@@ -117,23 +123,27 @@ body {
   position: fixed;
   top: 70px;
   left: 0;
-  right: 0;
+  height: 100vh;
+  width: 100%;
   background: rgba(15,15,20,0.7);
   backdrop-filter: blur(40px) saturate(180%);
-  border-bottom: 1px solid rgba(255,255,255,0.18);
+  border-right: 1px solid rgba(255,255,255,0.18);
   z-index: 99;
-  animation: slideDown .3s ease;
+  animation: slideFromLeft .3s ease;
   box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 0;
 }
 
-@keyframes slideDown {
+@keyframes slideFromLeft {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateX(-100%);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
@@ -143,7 +153,7 @@ body {
 }
 
 .mobile-menu a {
-  padding: 16px 28px;
+  padding: 20px 28px;
   font-size: 14px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -155,6 +165,7 @@ body {
   display: flex;
   align-items: center;
   backdrop-filter: blur(10px);
+  width: 100%;
 }
 
 .mobile-menu a:hover,
@@ -424,7 +435,7 @@ code {
   .guide-card {
     padding: 48px 24px;
     margin-bottom: 40px;
-    min-height: 600px;
+    min-height: 700px;
   }
 
   .guide-card h2 {
@@ -481,7 +492,7 @@ code {
   .guide-card {
     padding: 40px 16px;
     border-radius: 16px;
-    min-height: 550px;
+    min-height: 650px;
   }
 
   .guide-card h2 {
