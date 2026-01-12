@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Installation Guide — ColorOS Ports</title>
+<title>Installation Guide — Reimagine</title>
 <link rel="icon" href="assets/favicon.jpg" type="image/png">
 
 <!-- Fonts -->
@@ -394,7 +394,7 @@ code {
 
 <!-- ===== HEADER ===== -->
 <header class="header">
-  <div class="logo">ColorOS Ports</div>
+  <div class="logo">Reimagine</div>
 
   <nav class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
@@ -561,7 +561,7 @@ function requestNotificationPermission() {
   if ('Notification' in window && Notification.permission === 'default') {
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
-        new Notification('ColorOS Ports', {
+        new Notification('Reimagine', {
           body: 'Push notifications enabled!',
           icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect fill="%23000" width="192" height="192"/><text x="50%" y="50%" font-size="100" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">CO</text></svg>'
         });
