@@ -31,17 +31,17 @@
     .hero-light {
       position: absolute;
       top: 0;
-      right: 0;
-      bottom: 0;
       left: 0;
 
-      width: 110vw;
+      width: 120vw;
       height: 110vh;
 
       object-fit: cover;
-      object-position: right center;
 
-      transform: translateX(5%) scale(1.05);
+      /* THIS IS THE IMPORTANT PART */
+      object-position: 85% center;
+
+      transform: translateX(12%) scale(1.05);
 
       z-index: 1;
       pointer-events: none;
