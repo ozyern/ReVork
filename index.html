@@ -81,6 +81,7 @@
       font-size: 13px;
       color: #a8ff9e;
       margin-bottom: 24px;
+      font-family: 'Poppins', sans-serif;
     }
 
     .status .dot {
@@ -98,10 +99,17 @@
       line-height: 1;
       letter-spacing: -0.5px;
       white-space: nowrap;
-      color: #fff;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,1) 0%,
+        rgba(255,255,255,0.85) 40%,
+        rgba(255,255,255,0.6) 100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       text-shadow:
-        0 10px 40px rgba(0,0,0,0.8),
-        0 0 20px rgba(255,255,255,0.05);
+        0 10px 40px rgba(0,0,0,0.8);
       margin: 0 0 24px 0;
     }
 
@@ -118,14 +126,11 @@
     .desc {
       font-family: 'Poppins', sans-serif;
       font-size: 15px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.55);
-      max-width: 520px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.5);
+      max-width: 580px;
       margin-top: 12px;
-    }
-
-    .status {
-      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
     }
 
     /* ===== Scroll ===== */
