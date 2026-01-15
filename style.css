@@ -852,36 +852,41 @@ footer {
 
 /* ===== ROM PAGE ===== */
 .rom-hero {
+  height: 100vh;
+  display: grid;
+  place-items: center;
   position: relative;
-  height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
-  z-index: 1;
 }
 
-/* BIG BACKGROUND ROM TEXT */
-.rom-bg-text {
+.bg-text {
   position: absolute;
-  font-size: 28vw;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.07);
+  font-size: 26vw;
+  font-weight: 900;
+  letter-spacing: -10px;
+  font-family: "Anton", sans-serif;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.18),
+    rgba(255,255,255,0.02)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   pointer-events: none;
-  user-select: none;
 }
 
-/* CENTERED OVERLAY TEXT */
-.rom-overlay-text {
-  position: absolute;
-  font-size: 14px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
-  z-index: 2;
+.hero-content {
+  position: relative;
   text-align: center;
-  bottom: 80px;
+  z-index: 2;
+}
+
+.hero-line {
+  font-size: 15px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  text-align: center;
 }
 
 .rom-cards {
