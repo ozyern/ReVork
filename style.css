@@ -1054,6 +1054,82 @@ footer {
   .light-wrap { display:block; max-width: 360px; margin: 0 auto; }
 }
 
+/* Dynamic Island - mobile only */
+@media (max-width: 820px) {
+  /* island container near header center */
+  .dynamic-island {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1400;
+    pointer-events: auto;
+  }
+
+  .dynamic-island .island-pill {
+    width: 56px;
+    height: 34px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    transition: width 260ms cubic-bezier(.2,.9,.2,1), height 260ms, transform 200ms;
+    overflow: hidden;
+  }
+
+  .dynamic-island .island-pill.expanded {
+    width: min(86%, 320px);
+    height: 72px;
+    border-radius: 14px;
+  }
+
+  .dynamic-island .island-content {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    width: 100%;
+  }
+
+  .dynamic-island .island-pill.expanded .island-content {
+    display: flex;
+  }
+
+  .dynamic-island .island-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg,#fff,#ddd);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #111;
+    font-weight: 700;
+    flex: 0 0 auto;
+  }
+
+  .dynamic-island .island-text {
+    color: #fff;
+    opacity: 0.95;
+    font-size: 0.95rem;
+    line-height: 1.1;
+    text-align: left;
+  }
+
+  /* make the island tap-friendly */
+  .dynamic-island .island-pill { touch-action: manipulation; }
+}
+
 /* Additional fixes: header centering and element centering on small screens */
 @media (max-width: 820px) {
   /* Fix header positioning and center the logo */

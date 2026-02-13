@@ -247,4 +247,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
       setTheme(next);
     });
   }
+
+  // Load dynamic island script only on mobile/small screens
+  try{
+    const shouldLoadIsland = ('ontouchstart' in window) || window.innerWidth <= 820;
+    if (shouldLoadIsland) {
+      const s = document.createElement('script');
+      s.src = 'assets/island.js';
+      s.defer = true;
+      document.body.appendChild(s);
+    }
+  }catch(e){}
 });
