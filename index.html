@@ -1,368 +1,710 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ReVork | Legends Never Die</title>
-  <link rel="icon" href="assets/favicon.jpg" type="image/png">
-  <link rel="stylesheet" href="style.css" />
-  <link href='https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600&display=swap' rel='stylesheet'>
-  <style>
-    :root {
-      --primary-green: #3cff00;
-      --bg-dark: #000000;
-      --text-muted: rgba(255, 255, 255, 0.65);
-    }
 
-    body {
-      margin: 0;
-      background: var(--bg-dark);
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      overflow-x: hidden;
-    }
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>ReVork</title>
+
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link href='https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500&display=swap' rel='stylesheet'>
+
+  <style>
 
     .hero {
+
       position: relative;
+
       display: flex;
+
       align-items: center;
-      width: 100%; /* Changed from 100vw to prevent horizontal scroll */
+
+      width: 100vw;
+
       min-height: 100vh;
-      padding: 0 4vw;
+
+      padding: 0 0 0 4vw;
+
       overflow: hidden;
-      background: var(--bg-dark);
+
+      background: #000;
+
     }
 
-    /* ===== Background & Visuals ===== */
+
+
+    /* ===== Background ===== */
+
     .hero-bg {
+
       position: absolute;
+
       inset: 0;
-      background: var(--bg-dark);
+
+      background: #000;
+
     }
+
+
+
+    /* ===== Light image (fixed size) ===== */
 
     .hero-light {
+
       position: absolute;
+
       top: 0;
+
       right: 0;
+
+
+
       width: 50vw;
+
       height: 100vh;
+
+
+
       object-fit: contain;
+
       object-position: right center;
+
+
+
       z-index: 1;
+
       pointer-events: none;
+
     }
+
+
+
+    /* ===== Dark Gradient ===== */
 
     .hero-overlay {
+
       position: absolute;
+
       inset: 0;
+
+
+
       background: linear-gradient(
+
         90deg,
+
         rgba(0,0,0,0.95) 0%,
+
         rgba(0,0,0,0.75) 30%,
+
         rgba(0,0,0,0.35) 55%,
+
         rgba(0,0,0,0.1) 75%,
+
         rgba(0,0,0,0) 100%
+
       );
+
+
+
       z-index: 2;
+
       pointer-events: none;
+
     }
+
+
 
     /* ===== Content ===== */
+
     .hero-content {
+
       position: relative;
+
       z-index: 3;
+
       max-width: 900px;
+
+      padding: 0 0 0 0;
+
     }
+
+
+
+
+
+    /* Status badge */
 
     .status {
+
       display: inline-flex;
+
       align-items: center;
+
       gap: 8px;
+
       padding: 6px 14px;
+
       background: rgba(255,255,255,0.08);
+
       border-radius: 999px;
+
       font-size: 12px;
+
       color: #a8ff9e;
-      margin-bottom: 20px;
+
+      margin-bottom: 18px;
+
+      font-family: 'Poppins', sans-serif;
+
     }
+
+
 
     .status .dot {
+
       width: 8px;
+
       height: 8px;
-      background: var(--primary-green);
+
+      background: #3cff00;
+
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--primary-green);
+
     }
+
+
+
+    /* Title */
 
     .hero-title {
+
       font-family: 'Anton', sans-serif;
-      font-size: clamp(55px, 8vw, 104px);
-      line-height: 1;
-      text-transform: uppercase;
-      background: linear-gradient(to bottom, #fff 0%, rgba(255,255,255,0.5) 100%);
+
+      font-size: clamp(60px, 7.4vw, 104px);
+
+      font-weight: 400;
+
+      line-height: 1.1;
+
+      letter-spacing: -0.5px;
+
+      white-space: nowrap;
+
+      background: linear-gradient(
+
+        to bottom,
+
+        rgba(255,255,255,0.95) 0%,
+
+        rgba(255,255,255,0.7) 70%,
+
+        rgba(255,255,255,0.55) 100%
+
+      );
+
       -webkit-background-clip: text;
+
       -webkit-text-fill-color: transparent;
-      margin: 0 0 15px 0;
+
+      background-clip: text;
+
+      margin: 0 0 18px 0;
+
     }
+
+
+
+    /* Subtitle */
 
     .subtitle {
-      font-size: 18px;
-      color: rgba(255,255,255,0.8);
-      margin-bottom: 25px;
-      font-weight: 400;
-    }
 
-    /* Specific Multi-line Alignment requested */
-    .desc {
+      font-family: 'Poppins', sans-serif;
+
       font-size: 15px;
-      line-height: 1.8;
-      color: var(--text-muted);
-      max-width: 550px;
-      margin-bottom: 35px;
-      font-weight: 300;
+
+      color: rgba(255,255,255,0.7);
+
+      margin-top: 0;
+
+      margin-bottom: 16px;
+
+      font-weight: 400;
+
+      letter-spacing: 0.2px;
+
     }
 
-    /* CTA Button */
-    .cta-group {
-      display: flex;
-      gap: 15px;
-    }
 
-    .btn-primary {
-      padding: 14px 28px;
-      background: #fff;
-      color: #000;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 600;
+
+    /* Description */
+
+    .desc {
+
+      font-family: 'Poppins', sans-serif;
+
       font-size: 14px;
-      transition: transform 0.2s ease, background 0.2s ease;
+
+      line-height: 1.6;
+
+      color: rgba(255,255,255,0.65);
+
+      max-width: 520px;
+
+      margin-top: 0;
+
+      font-weight: 300;
+
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      background: var(--primary-green);
-    }
 
-    /* ===== Scroll Indicator ===== */
+
+    /* ===== Scroll ===== */
+
     .scroll-down {
+
       position: fixed;
-      right: 4vw;
+
+      right: 60px;
+
       top: 50%;
+
       transform: translateY(-50%);
+
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
+
       gap: 15px;
+
       z-index: 50;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+
     }
+
+
 
     .scroll-down.hidden {
-      opacity: 0;
-      visibility: hidden;
+
+      display: none;
+
     }
+
+
 
     .scroll-arrow {
+
       width: 24px;
+
       height: 40px;
-      border: 2px solid rgba(255,255,255,0.2);
+
+      border: 2px solid rgba(255,255,255,0.4);
+
       border-radius: 12px;
+
       position: relative;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
     }
+
+
 
     .scroll-arrow::after {
+
       content: '';
-      position: absolute;
-      top: 8px;
-      left: 50%;
+
       width: 2px;
+
       height: 8px;
-      background: #fff;
-      transform: translateX(-50%);
+
+      background: rgba(255,255,255,0.8);
+
       border-radius: 2px;
+
       animation: scrollBounce 2s infinite;
+
     }
+
+
 
     @keyframes scrollBounce {
-      0%, 100% { transform: translate(-50%, 0); opacity: 0; }
-      50% { transform: translate(-50%, 8px); opacity: 1; }
+
+      0% {
+
+        transform: translateY(-6px);
+
+        opacity: 1;
+
+      }
+
+      50% {
+
+        opacity: 1;
+
+      }
+
+      100% {
+
+        transform: translateY(6px);
+
+        opacity: 0;
+
+      }
+
     }
+
+
 
     .scroll-label {
-      font-size: 10px;
-      letter-spacing: 3px;
+
+      font-size: 11px;
+
+      letter-spacing: 2px;
+
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+
+      color: rgba(255,255,255,0.5);
+
       writing-mode: vertical-rl;
+
       transform: rotate(180deg);
+
+      opacity: 0.7;
+
     }
 
-    /* Secondary Section */
-    .secondary {
-      padding: 100px 4vw;
-      text-align: center;
-      background: #050505;
-    }
 
-    .secondary h2 {
-      font-family: 'Anton';
-      font-size: clamp(40px, 5vw, 70px);
-      margin: 10px 0;
-      color: #fff;
-    }
-
-    /* Features Grid */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 60px 4vw;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.03);
-      padding: 40px;
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 12px;
-      transition: border 0.3s ease;
-    }
-
-    .card:hover {
-      border-color: var(--primary-green);
-    }
-
-    footer {
-      padding: 40px;
-      text-align: center;
-      font-size: 12px;
-      color: rgba(255,255,255,0.3);
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
 
     @media (max-width: 768px) {
-      .hero { padding: 0 20px; }
-      .hero-title { font-size: 50px; }
-      .scroll-down { display: none; }
-      .cta-group { flex-direction: column; }
+
+      .hero-content {
+
+        padding: 80px 20px;
+
+      }
+
+
+
+      .hero-title {
+
+        font-size: 48px;
+
+      }
+
+
+
+      .subtitle {
+
+        font-size: 16px;
+
+      }
+
+
+
+      .desc {
+
+        font-size: 14px;
+
+      }
+
+
+
+      .scroll-down {
+
+        right: 20px;
+
+      }
+
+
+
+      .scroll-arrow {
+
+        width: 20px;
+
+        height: 32px;
+
+      }
+
+
+
+      .scroll-label {
+
+        font-size: 10px;
+
+      }
+
     }
+
   </style>
+
 </head>
+
 <body>
 
+
+
+<!-- ===== HEADER ===== -->
+
 <header class="header">
+
   <div class="logo">ReVork</div>
+
+
+
   <nav class="nav" id="navLinks">
+
     <a href="index.html" class="active">Home</a>
+
     <a href="roms.html">Explore ROMs</a>
-    <a href="devices.html">Supported Devices</a>
-    <a href="installation.html">Installation Guide</a>
+
+    <a href="devices.html">Supported Device</a>
+
+    <a href="installation.html" > Installation Guide</a>
+
   </nav>
+
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
+
+    <span></span>
+
+    <span></span>
+
+    <span></span>
+
   </button>
+
 </header>
 
+
+
 <nav class="mobile-menu" id="mobileMenu">
+
   <a href="index.html">Home</a>
+
   <a href="roms.html">Explore ROMs</a>
-  <a href="devices.html">Supported Devices</a>
-  <a href="installation.html">Installation Guide</a>
+
+  <a href="devices.html">Supported Device</a>
+
+  <a href="installation.html" > Installation Guide</a>
+
 </nav>
 
+
+
 <div class="scroll-down" id="scrollDown">
+
   <div class="scroll-arrow"></div>
+
   <span class="scroll-label">Scroll</span>
+
 </div>
 
+
+
+<!-- ===== HERO ===== -->
+
 <section class="hero">
+
   <div class="hero-bg"></div>
-  <img src="assets/light.png" class="hero-light" alt="Effect Overlay">
+
+  <img src="assets/light.png" class="hero-light" alt="Light">
+
   <div class="hero-overlay"></div>
 
+
+
   <div class="hero-content">
+
     <span class="status">
+
       <span class="dot"></span> Actively Maintained
+
     </span>
 
-    <h1 class="hero-title">Legends <br> Never Die</h1>
+
+
+    <h1 class="hero-title">Legends Never Die</h1>
+
+
 
     <p class="subtitle">
+
       Bringing a New Life to Older OnePlus Devices
+
     </p>
 
-    <div class="desc">
-      A community-driven ROM porting platform focused on transparency,<br>
-      performance optimization, and long-term device support.
-    </div>
 
-    <div class="cta-group">
-      <a href="roms.html" class="btn-primary">Explore ROMs</a>
-    </div>
+
+    <p class="desc">
+
+      A community-driven ROM porting platform focused on transparency, performance optimization, and long-term device support <br>
+
+      .
+
+    </p>
+
   </div>
+
+
+
 </section>
+
+
+
+<!-- ===== SECOND HERO ===== -->
 
 <section class="secondary">
-  <p style="letter-spacing: 3px; text-transform: uppercase; font-size: 11px; color: var(--primary-green); margin-bottom: 12px;">Ported By Aditya</p>
-  <h3 style="font-weight: 400; color: rgba(255,255,255,0.6); margin: 0;">Enjoy A New Era</h3>
+
+  <p style="letter-spacing: 2px; text-transform: uppercase; font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 12px;">Ported By Aditya</p>
+
+  <span class="status">● Ready Dive in New OS</span>
+
+  <h3 style="margin-top: 18px; margin-bottom: 10px; color: rgba(255,255,255,0.7); letter-spacing: 1px;">Enjoy New Era</h3>
+
   <h2>In Your Beast</h2>
-  <p style="max-width: 600px; margin: 20px auto; color: var(--text-muted);">
-    Experience the New UI and Features without any compromise in performance and stability.
+
+  <p>
+
+    Experience the New UI New Feature without any compromise
+
+    in performance and stability.
+
   </p>
+
 </section>
+
+
+
+<!-- ===== FEATURES ===== -->
 
 <section class="features">
-  <div class="card">
-    <div class="icon" style="font-size: 24px; margin-bottom: 15px;">&lt;/&gt;</div>
-    <h4>Optimized Ports</h4>
-    <p>Clean OxygenOS ports optimized for performance, stability, and daily usability.</p>
-  </div>
+
+
 
   <div class="card">
-    <div class="icon" style="font-size: 24px; margin-bottom: 15px;">🔔</div>
-    <h4>Community Driven</h4>
-    <p>Development guided by real user feedback and continuous performance improvements.</p>
+
+    <div class="icon">&lt;/&gt;</div>
+
+    <h4>Optimized OxygenOS Port Development</h4>
+
+    <p>
+
+      Clean OxygenOS ports optimized for performance,
+
+      stability, and daily usability.
+
+    </p>
+
   </div>
 
+
+
   <div class="card">
-    <div class="icon" style="font-size: 24px; margin-bottom: 15px;">🐞</div>
-    <h4>Fully Transparent</h4>
-    <p>Known bugs and limitations are clearly documented for full transparency.</p>
+
+    <div class="icon">🔔</div>
+
+    <h4>Active Community-Driven Development</h4>
+
+    <p>
+
+      Development guided by real user feedback and
+
+      continuous performance improvements.
+
+    </p>
+
   </div>
+
+
+
+  <div class="card">
+
+    <div class="icon">🐞</div>
+
+    <h4>Open Bug & Issue Tracking</h4>
+
+    <p>
+
+      Known bugs and limitations are clearly documented
+
+      for full transparency.
+
+    </p>
+
+  </div>
+
+
+
 </section>
 
+
+
 <footer>
+
   © 2026 ReVork. All rights reserved.
+
 </footer>
 
+
+
 <script>
-// Smooth hide scroll indicator
-window.addEventListener('scroll', () => {
+
+function handleScrollIndicator() {
+
   const indicator = document.getElementById('scrollDown');
-  if (window.scrollY > 100) {
-    indicator.classList.add('hidden');
-  } else {
-    indicator.classList.remove('hidden');
-  }
-});
+
+  if (!indicator) return;
+
+
+
+  window.addEventListener('scroll', () => {
+
+    if (window.scrollY > 100) {
+
+      indicator.classList.add('hidden');
+
+    } else {
+
+      indicator.classList.remove('hidden');
+
+    }
+
+  });
+
+}
+
+
+
+window.addEventListener('load', handleScrollIndicator);
+
+
 
 // Mobile nav toggle
+
 const hamburger = document.getElementById('hamburger');
+
 const mobileMenu = document.getElementById('mobileMenu');
 
+
+
 hamburger.addEventListener('click', () => {
+
   hamburger.classList.toggle('active');
+
   mobileMenu.classList.toggle('active');
+
 });
 
-// Close menu on click
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.header') && !e.target.closest('.mobile-menu')) {
-    hamburger.classList.remove('active');
-    mobileMenu.classList.remove('active');
-  }
-});
-</script>
-
-</body>
-</html>
