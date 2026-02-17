@@ -22,7 +22,7 @@
           <div class="island-content">
             <div class="island-icon">R</div>
             <div class="island-text">
-              <div style="font-weight:700">Reimagine</div>
+              <div style="font-weight:700">ReVork</div>
               <div style="font-size:0.85rem; opacity:.85">Tap for actions</div>
             </div>
           </div>
@@ -43,7 +43,7 @@
           <div class="island-content">
             <div class="island-icon">R</div>
             <div class="island-text">
-              <div style="font-weight:700">Reimagine</div>
+              <div style="font-weight:700">ReVork</div>
               <div style="font-size:0.85rem; opacity:.85">Tap for actions</div>
             </div>
           </div>
