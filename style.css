@@ -802,6 +802,7 @@ footer {
 @media (max-width: 600px) {
   .header {
     padding: 16px 20px;
+    width: calc(100% - 16px);
   }
 
   .logo {
