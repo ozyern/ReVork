@@ -1,66 +1,36 @@
-<span class="outline glitch" data-text="Level Up">Level Up</span>
-
-<style>
-  /* Existing styles... */
-
-  .hero h1 span.outline {
-      /* original styles */
-  }
-
-  .glitch {
-      position: relative;
-      color: white;
-      /* other necessary styles for .glitch */
-  }
-  .glitch::before,
-  .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-      clip: rect(0, 900px, 0, 0);
-      color: red;
-      animation: glitch-skew 1s infinite;
-  }
-
-  /* Hover animations */
-  .glitch:hover::before {
-      animation: glitch-shift 0.2s forwards;
-  }
-
-  .glitch:hover::after {
-      animation: glitch-clip-1 0.2s forwards;
-  }
-
-  @keyframes glitch-skew {
-      0% { transform: skew(0.1deg); }
-      50% { transform: skew(-0.1deg); }
-      100% { transform: skew(0.1deg); }
-  }
-
-  @keyframes glitch-shift {
-      0% { transform: translate(0); }
-      50% { transform: translate(-3px); }
-      100% { transform: translate(0); }
-  }
-
-  @keyframes glitch-clip-1 {
-      0% { clip: rect(0, 900px, 0, 0); }
-      50% { clip: rect(0, 900px, 0, 50%); }
-      100% { clip: rect(0, 900px, 0, 0); }
-  }
-
-  @keyframes glitch-clip-2 {
-      0% { clip: rect(0, 900px, 0, 0); }
-      50% { clip: rect(0, 900px, 0, 50%); }
-      100% { clip: rect(0, 900px, 0, 0); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-      .glitch::before,
-      .glitch::after {
-          animation: none;
-      }
-  }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Title Here</title>
+    <style>
+        /* Add your CSS styles here */
+        @keyframes glitch {
+            0% { opacity: 1; }
+            20% { opacity: 0.8; }
+            40% { opacity: 0.5; }
+            60% { opacity: 1; }
+            80% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .hero {
+            position: relative;
+            overflow: hidden;
+            animation: glitch 1.5s infinite;
+        }
+        .hero:hover {
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Welcome to the Level Up Experience</h1>
+        <p>Hover over me to see the glitch effect!</p>
+    </div>
+    <script>
+        // Add your JavaScript here
+    </script>
+</body>
+</html>
