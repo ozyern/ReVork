@@ -32,7 +32,6 @@
     cursor: default;
   }
 
-  /* ===== NOISE OVERLAY ===== */
   body::before {
     content: '';
     position: fixed;
@@ -43,7 +42,6 @@
     opacity: 0.4;
   }
 
-  /* ===== NAV ===== */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -148,8 +146,7 @@
     50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
   }
 
-
-.hero-tag {
+  .hero-tag {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -185,10 +182,102 @@
   }
 
   .hero h1 span.red { color: var(--red); }
+
+  /* ===== GLITCH EFFECT — purple block-tear style ===== */
   .hero h1 span.outline {
     -webkit-text-stroke: 2px rgba(255,255,255,0.3);
     color: transparent;
+    position: relative;
+    display: inline-block;
+    cursor: default;
   }
+
+  .hero h1 span.outline::before,
+  .hero h1 span.outline::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    color: transparent;
+    opacity: 0;
+    pointer-events: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: inherit;
+    letter-spacing: inherit;
+  }
+
+  /* violet channel */
+  .hero h1 span.outline::before {
+    -webkit-text-stroke: 2px #BF5FFF;
+  }
+
+  /* deep purple channel */
+  .hero h1 span.outline::after {
+    -webkit-text-stroke: 2px #7B2FFF;
+  }
+
+  .hero h1 span.outline:hover {
+    animation: glitch-body 0.55s steps(1) infinite;
+  }
+
+  .hero h1 span.outline:hover::before {
+    opacity: 1;
+    animation: glitch-layer1 0.55s steps(1) infinite;
+  }
+
+  .hero h1 span.outline:hover::after {
+    opacity: 1;
+    animation: glitch-layer2 0.55s steps(1) infinite;
+  }
+
+  @keyframes glitch-body {
+    0%   { transform: translate(0);        clip-path: none; filter: none; }
+    8%   { transform: translate(-4px,0);   clip-path: inset(8% 0 78% 0);  filter: brightness(1.5) hue-rotate(200deg); }
+    16%  { transform: translate(5px,0);    clip-path: inset(52% 0 22% 0); filter: brightness(0.7); }
+    24%  { transform: translate(0);        clip-path: none; filter: none; }
+    32%  { transform: translate(-7px,0);   clip-path: inset(28% 0 48% 0); filter: saturate(4) hue-rotate(270deg); }
+    40%  { transform: translate(0);        clip-path: none; filter: none; }
+    48%  { transform: translate(6px,-2px); clip-path: inset(63% 0 8% 0);  filter: brightness(1.8) hue-rotate(240deg); }
+    56%  { transform: translate(-3px,0);   clip-path: inset(4% 0 88% 0);  filter: none; }
+    64%  { transform: translate(0);        clip-path: none; filter: none; }
+    72%  { transform: translate(5px,1px);  clip-path: inset(38% 0 38% 0); filter: hue-rotate(310deg) brightness(1.4); }
+    80%  { transform: translate(0);        clip-path: none; filter: none; }
+    88%  { transform: translate(-6px,0);   clip-path: inset(18% 0 62% 0); filter: saturate(5) hue-rotate(255deg); }
+    100% { transform: translate(0);        clip-path: none; filter: none; }
+  }
+
+  @keyframes glitch-layer1 {
+    0%   { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    8%   { clip-path: inset(4% 0 72% 0);  transform: translate(-10px,0); }
+    16%  { clip-path: inset(58% 0 18% 0); transform: translate(8px,0); }
+    24%  { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    32%  { clip-path: inset(22% 0 58% 0); transform: translate(-12px,0); }
+    40%  { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    48%  { clip-path: inset(68% 0 8% 0);  transform: translate(9px,0); }
+    56%  { clip-path: inset(12% 0 78% 0); transform: translate(-7px,0); }
+    64%  { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    72%  { clip-path: inset(42% 0 32% 0); transform: translate(11px,0); }
+    80%  { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    88%  { clip-path: inset(14% 0 68% 0); transform: translate(-9px,0); }
+    100% { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+  }
+
+  @keyframes glitch-layer2 {
+    0%   { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    8%   { clip-path: inset(38% 0 42% 0); transform: translate(11px,0); }
+    16%  { clip-path: inset(78% 0 8% 0);  transform: translate(-8px,0); }
+    24%  { clip-path: inset(14% 0 72% 0); transform: translate(6px,0); }
+    32%  { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    40%  { clip-path: inset(48% 0 28% 0); transform: translate(-11px,0); }
+    48%  { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    56%  { clip-path: inset(28% 0 52% 0); transform: translate(10px,0); }
+    64%  { clip-path: inset(72% 0 12% 0); transform: translate(-6px,0); }
+    72%  { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    80%  { clip-path: inset(18% 0 62% 0); transform: translate(12px,0); }
+    88%  { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+    100% { clip-path: inset(0 0 100% 0);  transform: translate(0); }
+  }
+  /* ===== END GLITCH ===== */
 
   .hero-sub {
     max-width: 540px;
@@ -249,7 +338,6 @@
     border-color: rgba(255,255,255,0.2);
   }
 
-  /* Stats bar */
   .stats-bar {
     display: flex;
     gap: 3rem;
@@ -259,9 +347,7 @@
     animation: fadeSlideDown 0.8s 0.4s ease both;
   }
 
-  .stat {
-    text-align: center;
-  }
+  .stat { text-align: center; }
 
   .stat-num {
     font-family: 'Syne', sans-serif;
@@ -287,7 +373,6 @@
     align-self: stretch;
   }
 
-  /* ===== FLOATING PHONE ===== */
   .phone-showcase {
     padding: 6rem 5%;
     display: flex;
@@ -324,7 +409,7 @@
     flex-direction: column;
   }
 
-.phone-status {
+  .phone-status {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -410,7 +495,6 @@
     filter: blur(20px);
   }
 
-  /* ===== SUPPORTED DEVICES ===== */
   .section {
     padding: 6rem 5%;
     max-width: 1200px;
@@ -478,8 +562,7 @@
 
   .device-card:hover::before { opacity: 1; }
 
-
-.device-icon {
+  .device-icon {
     width: 44px; height: 44px;
     background: linear-gradient(135deg, rgba(255,60,56,0.15), rgba(255,107,53,0.08));
     border: 1px solid rgba(255,60,56,0.2);
@@ -532,7 +615,6 @@
     box-shadow: 0 0 8px rgba(16,185,129,0.6);
   }
 
-  /* ===== FEATURES ===== */
   .features-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -588,7 +670,6 @@
     font-weight: 300;
   }
 
-  /* ===== HOW IT WORKS ===== */
   .how-bg {
     background: var(--bg2);
     border-top: 1px solid var(--glass-border);
@@ -656,7 +737,6 @@
     font-weight: 300;
   }
 
-  /* ===== VERSIONS TABLE ===== */
   .versions-table {
     margin-top: 3rem;
     border: 1px solid var(--glass-border);
@@ -664,8 +744,7 @@
     overflow: hidden;
   }
 
-
-.table-header {
+  .table-header {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1.5fr;
     padding: 1rem 1.5rem;
@@ -742,7 +821,6 @@
     box-shadow: 0 0 16px rgba(255,60,56,0.2);
   }
 
-  /* ===== FAQ ===== */
   .faq-list {
     margin-top: 3rem;
     display: flex;
@@ -799,7 +877,6 @@
     padding: 0 1.5rem 1.2rem;
   }
 
-  /* ===== CTA ===== */
   .cta-section {
     padding: 8rem 5%;
     text-align: center;
@@ -833,14 +910,13 @@
     font-weight: 300;
   }
 
-  /* ===== FOOTER ===== */
   footer {
     border-top: 1px solid var(--glass-border);
     padding: 3rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: gap;
+    flex-wrap: wrap;
     gap: 1rem;
   }
 
@@ -851,8 +927,7 @@
     letter-spacing: 0.04em;
   }
 
-
-.footer-links {
+  .footer-links {
     display: flex;
     gap: 1.5rem;
   }
@@ -866,7 +941,6 @@
   }
   .footer-links a:hover { color: var(--text); }
 
-  /* ===== ANIMATIONS ===== */
   @keyframes fadeSlideDown {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -882,7 +956,6 @@
     transform: translateY(0);
   }
 
-  /* ===== TICKER ===== */
   .ticker-wrap {
     overflow: hidden;
     border-top: 1px solid var(--glass-border);
@@ -916,7 +989,6 @@
 
   .ticker-item span { color: var(--red); }
 
-  /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .hamburger { display: flex; }
@@ -933,33 +1005,18 @@
       border-bottom: 1px solid var(--glass-border);
     }
 
-    .features-layout {
-      grid-template-columns: 1fr;
-    }
+    .features-layout { grid-template-columns: 1fr; }
+    .phone-showcase { flex-direction: column; gap: 3rem; }
 
-    .phone-showcase {
-      flex-direction: column;
-      gap: 3rem;
-    }
-
-    .table-header, .table-row {
-      grid-template-columns: 2fr 1fr;
-    }
+    .table-header, .table-row { grid-template-columns: 2fr 1fr; }
 
     .table-header span:nth-child(3),
     .table-header span:nth-child(4),
     .table-row > *:nth-child(3),
-    .table-row > *:nth-child(4) {
-      display: none;
-    }
+    .table-row > *:nth-child(4) { display: none; }
 
     .steps-grid::after { display: none; }
-
-    footer {
-      flex-direction: column;
-      text-align: center;
-    }
-
+    footer { flex-direction: column; text-align: center; }
     .stats-bar { gap: 1.5rem; }
     .stat-divider { display: none; }
   }
@@ -969,7 +1026,6 @@
     .devices-grid { grid-template-columns: 1fr; }
   }
 
-  /* ===== DOWNLOAD MODAL ===== */
   .modal-overlay {
     display: none;
     position: fixed;
@@ -1037,8 +1093,7 @@
     gap: 0.8rem;
   }
 
-
-.dl-option {
+  .dl-option {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1067,10 +1122,7 @@
     color: var(--muted);
   }
 
-  .dl-arrow {
-    color: var(--red);
-    font-size: 1.1rem;
-  }
+  .dl-arrow { color: var(--red); font-size: 1.1rem; }
 
   .modal-warning {
     margin-top: 1.2rem;
@@ -1087,7 +1139,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">
     <div class="logo-dot"></div>
@@ -1105,38 +1156,33 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-tag">🔥 OxygenOS & ColorOS 16 Now Available</div>
   <h1>
-    <span class="outline">Level Up</span><br>
+    <span class="outline" data-text="Level Up">Level Up</span><br>
     Your <span class="red">OnePlus</span>
   </h1>
   <p class="hero-sub">
-    Official-quality OxygenOS 16 ports for older OnePlus devices. Your OnePlus 8 & 9  deserve the best Android experience — without compromise.
+    Official-quality OxygenOS 16 ports for older OnePlus devices. Your OnePlus 8 & 9 deserve the best Android experience — without compromise.
   </p>
   <div class="hero-btns">
-    <a href="#downloads" class="btn-primary">
-      ⬇️ Download ROM &nbsp;→
-    </a>
-    <a href="#devices" class="btn-secondary">
-      View Devices
-    </a>
+    <a href="#downloads" class="btn-primary">⬇️ Download ROM &nbsp;→</a>
+    <a href="#devices" class="btn-secondary">View Devices</a>
   </div>
   <div class="stats-bar">
     <div class="stat">
-      <div class="stat-num">50K+</div>
+      <div class="stat-num">2K+</div>
       <div class="stat-label">Downloads</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat">
-      <div class="stat-num">12</div>
+      <div class="stat-num">5</div>
       <div class="stat-label">Devices Supported</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat">
-      <div class="stat-num">OOS 16</div>
+      <div class="stat-num">OxygenOS/ColorOS 16</div>
       <div class="stat-label">Latest Build</div>
     </div>
     <div class="stat-divider"></div>
@@ -1147,71 +1193,46 @@
   </div>
 </section>
 
-<!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker-track">
-    <div class="ticker-item">OnePlus 8 <span>OOS 15 STABLE</span></div>
-    <div class="ticker-item">OnePlus 8 Pro <span>OOS 16 BETA</span></div>
-    <div class="ticker-item">OnePlus 9 <span>OOS 15 STABLE</span></div>
-    <div class="ticker-item">OnePlus 9 Pro <span>OOS 16 STABLE</span></div>
-    <div class="ticker-item">OnePlus 8T <span>OOS 15 STABLE</span></div>
-    <div class="ticker-item">OnePlus 10 Pro <span>OOS 16 BETA</span></div>
-    <div class="ticker-item">OnePlus 9R <span>OOS 15 STABLE</span></div>
-    <div class="ticker-item">Kernel 5.15 <span>UPSTREAMED</span></div>
-    <div class="ticker-item">OnePlus 8 <span>OOS 15 STABLE</span></div>
-    <div class="ticker-item">OnePlus 8 Pro <span>OOS 16 BETA</span></div>
-    <div class="ticker-item">OnePlus 9 <span>OOS 15 STABLE</span></div>
-    <div class="ticker-item">OnePlus 9 Pro <span>OOS 16 STABLE</span></div>
-    <div class="ticker-item">OnePlus 8T <span>OOS 15 STABLE</span></div>
-    <div class="ticker-item">OnePlus 10 Pro <span>OOS 16 BETA</span></div>
-    <div class="ticker-item">OnePlus 9R <span>OOS 15 STABLE</span></div>
-    <div class="ticker-item">Kernel 5.15 <span>UPSTREAMED</span></div>
+    <div class="ticker-item">OnePlus 8 <span>OxygenOS 16 STABLE</span></div>
+    <div class="ticker-item">OnePlus 8 Pro <span>OxygenOS 16</span></div>
+    <div class="ticker-item">OnePlus 9 <span>OxygenOS 16</span></div>
+    <div class="ticker-item">OnePlus 9 Pro <span>OxygenOS 16</span></div>
+    <div class="ticker-item">OnePlus 8 <span>OxygenOS 16</span></div>
+    <div class="ticker-item">OnePlus 8 Pro <span>OxygenOS 16</span></div>
+    <div class="ticker-item">OnePlus 9 <span>OxygenOS 16</span></div>
+    <div class="ticker-item">OnePlus 9 Pro <span>OxygenOS 16</span></div>
+
   </div>
 </div>
 
-
-<!-- PHONE SHOWCASE -->
 <div class="phone-showcase">
   <div style="max-width: 460px;" class="reveal">
     <div class="section-tag">What You Get</div>
     <h2 class="section-title">OxygenOS 16 on Your <span style="color:var(--red)">OnePlus 8 Pro</span></h2>
     <p style="color:var(--muted); line-height:1.7; margin-top:1rem; font-weight:300;">Experience the latest OxygenOS features — dynamic island-inspired notifications, AI Circle to Search, refreshed Always-On Display, and lightning-fast fluid animations — all brought to devices Qualcomm and OnePlus abandoned.</p>
     <div style="margin-top:2rem; display:flex; flex-direction:column; gap:0.7rem;">
-      <div style="display:flex; align-items:center; gap:0.8rem; font-size:0.85rem;">
-        <span style="color:var(--red)">✓</span> <span>Full Google Mobile Services (GMS)</span>
-      </div>
-      <div style="display:flex; align-items:center; gap:0.8rem; font-size:0.85rem;">
-        <span style="color:var(--red)">✓</span> <span>Signed bootloader support</span>
-      </div>
-      <div style="display:flex; align-items:center; gap:0.8rem; font-size:0.85rem;">
-        <span style="color:var(--red)">✓</span> <span>OTA-style incremental updates</span>
-      </div>
-      <div style="display:flex; align-items:center; gap:0.8rem; font-size:0.85rem;">
-        <span style="color:var(--red)">✓</span> <span>VoLTE & VoWiFi working</span>
-      </div>
+      <div style="display:flex; align-items:center; gap:0.8rem; font-size:0.85rem;"><span style="color:var(--red)">✓</span> <span>Full Google Mobile Services (GMS)</span></div>
+      <div style="display:flex; align-items:center; gap:0.8rem; font-size:0.85rem;"><span style="color:var(--red)">✓</span> <span>Signed bootloader support</span></div>
+      <div style="display:flex; align-items:center; gap:0.8rem; font-size:0.85rem;"><span style="color:var(--red)">✓</span> <span>OTA-style incremental updates</span></div>
+      <div style="display:flex; align-items:center; gap:0.8rem; font-size:0.85rem;"><span style="color:var(--red)">✓</span> <span>VoLTE & VoWiFi working</span></div>
     </div>
   </div>
   <div style="position:relative;">
     <div class="phone-mockup">
       <div class="phone-notch"></div>
       <div class="phone-screen">
-        <div class="phone-status">
-          <span>9:41</span>
-          <span>📶 🔋</span>
-        </div>
+        <div class="phone-status"><span>9:41</span><span>📶 🔋</span></div>
         <div class="phone-content">
           <div class="version-badge">OXYGENEOS 16</div>
           <div class="oos-version">OnePlus 8 Pro</div>
           <div style="font-family:'DM Mono',monospace; font-size:0.55rem; color:var(--muted); padding:0 0.4rem;">Android 16 • Build OPE2210</div>
           <div class="phone-apps">
-            <div class="app-icon"></div>
-            <div class="app-icon"></div>
-            <div class="app-icon"></div>
-            <div class="app-icon"></div>
-            <div class="app-icon"></div>
-            <div class="app-icon"></div>
-            <div class="app-icon"></div>
-            <div class="app-icon"></div>
+            <div class="app-icon"></div><div class="app-icon"></div>
+            <div class="app-icon"></div><div class="app-icon"></div>
+            <div class="app-icon"></div><div class="app-icon"></div>
+            <div class="app-icon"></div><div class="app-icon"></div>
           </div>
         </div>
       </div>
@@ -1220,8 +1241,6 @@
   </div>
 </div>
 
-
-<!-- DEVICES -->
 <section class="section" id="devices">
   <div class="reveal">
     <div class="section-tag">Supported Hardware</div>
@@ -1229,87 +1248,51 @@
     <p class="section-sub">From the Snapdragon 865 era to 888 — we've got your device covered with active maintenance and regular updates.</p>
   </div>
   <div class="devices-grid">
-    <div class="device-card reveal" onclick="openModal('OnePlus 8','IN2010')">
+    <div class="device-card reveal" onclick="openModal('OnePlus 8','IN2013')">
       <div class="device-status"></div>
       <div class="device-icon">📱</div>
       <div class="device-name">OnePlus 8</div>
-      <div class="device-code">Codename: instantnoodle (IN2010)</div>
-      <div class="device-versions">
-        <span class="version-tag">OOS 15</span>
-        <span class="version-tag">OOS 16 Beta</span>
-      </div>
+      <div class="device-code">Codename: instantnoodle (IN2013)</div>
+      <div class="device-versions"><span class="version-tag">OxygenOS 16</span><span class="version-tag">ColorOS 16</span></div>
     </div>
-    <div class="device-card reveal" onclick="openModal('OnePlus 8 Pro','IN2020')">
+    <div class="device-card reveal" onclick="openModal('OnePlus 8 Pro','IN2023')">
       <div class="device-status"></div>
       <div class="device-icon">📱</div>
       <div class="device-name">OnePlus 8 Pro</div>
-      <div class="device-code">Codename: instantnoodlep (IN2020)</div>
-      <div class="device-versions">
-        <span class="version-tag">OOS 15</span>
-        <span class="version-tag">OOS 16 Beta</span>
-      </div>
+      <div class="device-code">Codename: instantnoodlep (IN2023)</div>
+      <div class="device-versions"><span class="version-tag">OxygenOS 16</span><span class="version-tag">ColorOS 16</span></div>
     </div>
     <div class="device-card reveal" onclick="openModal('OnePlus 8T','KB2000')">
       <div class="device-status"></div>
       <div class="device-icon">📱</div>
       <div class="device-name">OnePlus 8T</div>
       <div class="device-code">Codename: kebab (KB2000)</div>
-      <div class="device-versions">
-        <span class="version-tag">OOS 15</span>
-      </div>
+      <div class="device-versions"><span class="version-tag">OOS 15</span></div>
     </div>
-    <div class="device-card reveal" onclick="openModal('OnePlus 9','LE2110')">
+    <div class="device-card reveal" onclick="openModal('OnePlus 9','LE2113')">
       <div class="device-status"></div>
       <div class="device-icon">📱</div>
       <div class="device-name">OnePlus 9</div>
       <div class="device-code">Codename: lemonade (LE2110)</div>
-      <div class="device-versions">
-        <span class="version-tag">OOS 15</span>
-        <span class="version-tag">OOS 16</span>
-      </div>
+  <div class="device-versions"><span class="version-tag">OxygenOS 16</span><span class="version-tag">ColorOS 16</span></div>
     </div>
-    <div class="device-card reveal" onclick="openModal('OnePlus 9 Pro','LE2120')">
+    <div class="device-card reveal" onclick="openModal('OnePlus 9 Pro','LE2123')">
       <div class="device-status"></div>
       <div class="device-icon">📱</div>
       <div class="device-name">OnePlus 9 Pro</div>
-      <div class="device-code">Codename: lemonadep (LE2120)</div>
-      <div class="device-versions">
-        <span class="version-tag">OOS 15</span>
-        <span class="version-tag">OOS 16</span>
-      </div>
-    </div>
-    <div class="device-card reveal" onclick="openModal('OnePlus 9R','LEBAO')">
-      <div class="device-status"></div>
-      <div class="device-icon">📱</div>
-      <div class="device-name">OnePlus 9R</div>
-      <div class="device-code">Codename: lemonades (LEBAO)</div>
-      <div class="device-versions">
-        <span class="version-tag">OOS 15</span>
-      </div>
+      <div class="device-code">Codename: lemonadep (LE2123)</div>
+       <div class="device-versions"><span class="version-tag">OxygenOS 16</span><span class="version-tag">ColorOS 16</span></div>
     </div>
     <div class="device-card reveal" onclick="openModal('OnePlus 9RT','MT2111')">
       <div class="device-status"></div>
       <div class="device-icon">📱</div>
       <div class="device-name">OnePlus 9RT</div>
       <div class="device-code">Codename: martini (MT2111)</div>
-      <div class="device-versions">
-        <span class="version-tag">OOS 15</span>
-      </div>
+      <div class="device-versions"><span class="version-tag">OOS 15</span></div>
     </div>
-    <div class="device-card reveal" onclick="openModal('OnePlus 10 Pro','NE2210')">
-      <div class="device-status" style="background:#F59E0B; box-shadow:0 0 8px rgba(245,158,11,0.6);"></div>
-      <div class="device-icon">📱</div>
-      <div class="device-name">OnePlus 10 Pro</div>
-      <div class="device-code">Codename: waipio (NE2210)</div>
-      <div class="device-versions">
-        <span class="version-tag">OOS 16 Beta</span>
-      </div>
-    </div>
-  </div>
+ 
 </section>
 
-
-<!-- FEATURES -->
 <section class="section" id="features">
   <div class="reveal">
     <div class="section-tag">Why Choose Us</div>
@@ -1321,7 +1304,7 @@
         <div class="feature-icon">⚡️</div>
         <div class="feature-text">
           <h4>Snapdragon Tuned</h4>
-          <p>Custom kernel with SD865/888 specific optimizations. Better thermals, lower latency, improved gaming performance vs stock OOS.</p>
+          <p>Custom kernel with SD865/888 specific optimizations. Better thermals, lower latency, improved gaming performance vs stock OxygenOS.</p>
         </div>
       </div>
       <div class="feature-item reveal">
@@ -1335,20 +1318,19 @@
         <div class="feature-icon">📷</div>
         <div class="feature-text">
           <h4>Camera Fully Working</h4>
-          <h4></h4>
-          <p>Hasselblad tuning, Nightscape, Pro mode, 4K 60fps — all sensors working with OOS 16's new computational photography stack.</p>
+          <p>Hasselblad tuning, Nightscape, Pro mode, 4K 60fps — all sensors working with OnePlus' new camera features.</p>
         </div>
       </div>
       <div class="feature-item reveal">
         <div class="feature-icon">🔋</div>
         <div class="feature-text">
-          <h4>Warp Charge Intact</h4>
-          <p>65W/67W Warp Charge works out of the box. No workarounds, no degraded charging speeds.</p>
+          <h4>SuperVOOC Charge</h4>
+          <p>65W/67W SuperVOOC Charge works out of the box. No workarounds, no degraded charging speeds.</p>
         </div>
       </div>
     </div>
     <div class="reveal" style="background:var(--bg2); border:1px solid var(--glass-border); border-radius:20px; padding:2rem;">
-      <div class="section-tag">What's New in OOS 16</div>
+      <div class="section-tag">What's New in OxygenOS 16</div>
       <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:1rem;">
         <div style="padding:1rem; background:var(--bg3); border-radius:10px; border-left:3px solid var(--red);">
           <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:0.9rem;">AI-Powered Search</div>
@@ -1371,8 +1353,6 @@
   </div>
 </section>
 
-
-<!-- HOW IT WORKS -->
 <div class="how-bg">
   <div style="max-width:1200px; margin:0 auto;">
     <div class="reveal" style="text-align:center;">
@@ -1398,18 +1378,17 @@
       <div class="step reveal">
         <div class="step-num">04</div>
         <h4>Wipe & Flash</h4>
-        <p>In recovery, wipe Data/Cache/Dalvik. Flash the ROM zip, then flash GApps if not bundled.</p>
+        <p>In recovery, wipe Data/Cache/Dalvik. Flash the ROM.zip.</p>
       </div>
       <div class="step reveal">
         <div class="step-num">05</div>
         <h4>Boot & Enjoy</h4>
-        <p>First boot takes 3–5 minutes. Setup your device and experience OOS 15/16 on your legacy OnePlus.</p>
+        <p>First boot takes 3–5 minutes. Setup your device and experience OxygenOS 16 on your legacy OnePlus.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- DOWNLOADS TABLE -->
 <section class="section" id="downloads">
   <div class="reveal">
     <div class="section-tag">All Builds</div>
@@ -1418,58 +1397,40 @@
   </div>
   <div class="versions-table reveal">
     <div class="table-header">
-      <span>Device</span>
-      <span>OOS Build</span>
-      <span>Status</span>
-      <span>Download</span>
+      <span>Device</span><span>OxygenOS Build</span><span>Status</span><span>Download</span>
     </div>
     <div class="table-row">
       <div class="table-device">OnePlus 8 (instantnoodle)</div>
-      <div class="table-oos">15.0.0.511</div>
+      <div class="table-oos">16.0.3.503</div>
       <div class="table-status stable"><div class="status-dot"></div>Stable</div>
-      <a href="#" class="dl-btn" onclick="openModal('OnePlus 8','IN2010'); return false;">⬇️ Flash</a>
+      <a href="#" class="dl-btn" onclick="openModal('OnePlus 8','IN2013'); return false;">⬇️ Flash</a>
     </div>
     <div class="table-row">
       <div class="table-device">OnePlus 8 Pro (instantnoodlep)</div>
-      <div class="table-oos">16.0.0.200</div>
+       <div class="table-oos">16.0.3.503</div>
       <div class="table-status beta"><div class="status-dot"></div>Beta</div>
-      <a href="#" class="dl-btn" onclick="openModal('OnePlus 8 Pro','IN2020'); return false;">⬇️ Flash</a>
+      <a href="#" class="dl-btn" onclick="openModal('OnePlus 8 Pro','IN2023'); return false;">⬇️ Flash</a>
     </div>
     <div class="table-row">
       <div class="table-device">OnePlus 8T (kebab)</div>
-      <div class="table-oos">15.0.0.498</div>
+      <div class="table-oos">16.0.3.503</div>
       <div class="table-status stable"><div class="status-dot"></div>Stable</div>
-      <a href="#" class="dl-btn" onclick="openModal('OnePlus 8T','KB2000'); return false;">⬇️ Flash</a>
+      <a href="#" class="dl-btn" onclick="openModal('OnePlus 8T','KB2003'); return false;">⬇️ Flash</a>
     </div>
     <div class="table-row">
       <div class="table-device">OnePlus 9 (lemonade)</div>
-      <div class="table-oos">15.0.0.522</div>
+      <div class="table-oos">16.0.3.503</div>
       <div class="table-status stable"><div class="status-dot"></div>Stable</div>
-      <a href="#" class="dl-btn" onclick="openModal('OnePlus 9','LE2110'); return false;">⬇️ Flash</a>
+      <a href="#" class="dl-btn" onclick="openModal('OnePlus 9','LE2113'); return false;">⬇️ Flash</a>
     </div>
     <div class="table-row">
       <div class="table-device">OnePlus 9 Pro (lemonadep)</div>
-      <div class="table-oos">16.0.0.215</div>
+      <div class="table-oos">16.0.3.503</div>
       <div class="table-status stable"><div class="status-dot"></div>Stable</div>
-      <a href="#" class="dl-btn" onclick="openModal('OnePlus 9 Pro','LE2120'); return false;">⬇️ Flash</a>
+      <a href="#" class="dl-btn" onclick="openModal('OnePlus 9 Pro','LE2123'); return false;">⬇️ Flash</a>
     </div>
-    <div class="table-row">
-      <div class="table-device">OnePlus 9R (lemonades)</div>
-      <div class="table-oos">15.0.0.499</div>
-      <div class="table-status stable"><div class="status-dot"></div>Stable</div>
-      <a href="#" class="dl-btn" onclick="openModal('OnePlus 9R','LEBAO'); return false;">⬇️ Flash</a>
-    </div>
-    <div class="table-row">
-
-<div class="table-device">OnePlus 10 Pro (waipio)</div>
-      <div class="table-oos">16.0.0.188</div>
-      <div class="table-status beta"><div class="status-dot"></div>Beta</div>
-      <a href="#" class="dl-btn" onclick="openModal('OnePlus 10 Pro','NE2210'); return false;">⬇️ Flash</a>
-    </div>
-  </div>
 </section>
 
-<!-- FAQ -->
 <section class="section" id="faq">
   <div class="reveal">
     <div class="section-tag">Common Questions</div>
@@ -1477,84 +1438,52 @@
   </div>
   <div class="faq-list">
     <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Will my warranty be voided?
-        <span class="faq-arrow">▼</span>
-      </div>
+      <div class="faq-q" onclick="toggleFaq(this)">Will my warranty be voided?<span class="faq-arrow">▼</span></div>
       <div class="faq-a">Unlocking the bootloader voids the manufacturer warranty on most devices. However, since OnePlus has already dropped support for these devices, this is rarely a practical concern. You can always relock the bootloader and restore stock firmware if needed.</div>
     </div>
     <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Is SafetyNet / Play Integrity passing?
-        <span class="faq-arrow">▼</span>
-      </div>
+      <div class="faq-q" onclick="toggleFaq(this)">Is SafetyNet / Play Integrity passing?<span class="faq-arrow">▼</span></div>
       <div class="faq-a">Yes! Our builds pass Play Integrity (MEETS_DEVICE_INTEGRITY) out of the box. Banking apps, Netflix, and other apps requiring attestation work correctly. We use a combination of certified keys and the latest attestation bypass techniques.</div>
     </div>
     <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Can I update over-the-air (OTA)?
-        <span class="faq-arrow">▼</span>
-      </div>
+      <div class="faq-q" onclick="toggleFaq(this)">Can I update over-the-air (OTA)?<span class="faq-arrow">▼</span></div>
       <div class="faq-a">Stable builds support incremental OTA updates from within Settings → Software Update, just like official firmware. Beta builds require manual flashing via recovery for now, but OTA support is coming soon.</div>
     </div>
     <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Will I lose all my data?
-        <span class="faq-arrow">▼</span>
-      </div>
+      <div class="faq-q" onclick="toggleFaq(this)">Will I lose all my data?<span class="faq-arrow">▼</span></div>
       <div class="faq-a">If you're coming from stock OxygenOS or a different ROM, yes — a clean wipe is required for first installation. We strongly recommend backing up your data with ADB backup or Google One before proceeding.</div>
     </div>
     <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        What doesn't work (known issues)?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-a">On OP8/8T: USB-C DisplayPort output is partially functional. On OP10 Pro (beta): Wi-Fi hotspot may occasionally drop. Everything else — camera, charging, fingerprint, NFC, Bluetooth — works reliably. Full changelogs are in our Telegram group.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">What doesn't work (known issues)?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a">On OP8/8T: USB-C DisplayPort output is partially functional. On OP10 Pro (beta): Wi-Fi hotspot may occasionally drop. Everything else — camera, charging, fingerprint, NFC, Bluetooth — works reliably.</div>
     </div>
     <div class="faq-item reveal">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        How is this different from LineageOS or crDroid?
-        <span class="faq-arrow">▼</span>
-      </div>
+      <div class="faq-q" onclick="toggleFaq(this)">How is this different from LineageOS or crDroid?<span class="faq-arrow">▼</span></div>
       <div class="faq-a">Unlike AOSP-based ROMs, our ports run the actual OxygenOS system — same Hasselblad camera app, same Shelf, same animations, same icon pack, same Always-On Display. You get the real OOS experience, not an approximation of it.</div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <section class="cta-section">
   <div class="reveal">
     <h2>Your Phone<br>Deserves <span style="color:var(--red)">Better.</span></h2>
     <p>Stop waiting for an update that'll never come. Take control.</p>
-    <a href="#downloads" class="btn-primary" style="font-size:1.1rem; padding:1.1rem 2.8rem; margin: 0 auto;">
-      ⬇️ Download ReVork Port Now
-    </a>
+    <a href="#downloads" class="btn-primary" style="font-size:1.1rem; padding:1.1rem 2.8rem; margin: 0 auto;">⬇️ Download ReVork Port Now</a>
   </div>
   <div style="margin-top:3rem; display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap;" class="reveal">
-    <a href="#" style="color:var(--muted); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.75rem; display:flex; align-items:center; gap:0.5rem;">
-      💬 Telegram Group
-    </a>
-    <a href="#" style="color:var(--muted); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.75rem; display:flex; align-items:center; gap:0.5rem;">
-      📂 GitHub Source
-    </a>
-    <a href="#" style="color:var(--muted); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.75rem; display:flex; align-items:center; gap:0.5rem;">
-      🐛 Bug Reports
-    </a>
-    <a href="#" style="color:var(--muted); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.75rem; display:flex; align-items:center; gap:0.5rem;">
-      ☕️ Support Dev
-    </a>
+    <a href="#" style="color:var(--muted); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.75rem; display:flex; align-items:center; gap:0.5rem;">💬 Telegram Group</a>
+    <a href="#" style="color:var(--muted); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.75rem; display:flex; align-items:center; gap:0.5rem;">📂 GitHub Source</a>
+    <a href="#" style="color:var(--muted); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.75rem; display:flex; align-items:center; gap:0.5rem;">🐛 Bug Reports</a>
+    <a href="#" style="color:var(--muted); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.75rem; display:flex; align-items:center; gap:0.5rem;">☕️ Support Dev</a>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="logo" style="font-size:1rem;">
     <div class="logo-dot"></div>
-    OOS<span style="color:var(--red)">Port</span>
+    Re<span style="color:var(--red)">Vork</span>
   </div>
-  <div class="footer-note">
-    Not affiliated with OnePlus or Oppo. For enthusiasts, by enthusiasts.
-  </div>
+  <div class="footer-note">Not affiliated with OnePlus or Oppo. For enthusiasts, by enthusiasts.</div>
   <div class="footer-links">
     <a href="#">Telegram</a>
     <a href="#">GitHub</a>
@@ -1563,7 +1492,6 @@
   </div>
 </footer>
 
-<!-- DOWNLOAD MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -1571,43 +1499,30 @@
     <div class="modal-device" id="modal-device"></div>
     <div class="dl-options">
       <div class="dl-option">
-        <div class="dl-option-info">
-          <h5>OxygenOS 15 — Stable</h5>
-          <span>~4.8 GB • OPE2210 • MD5 verified</span>
-        </div>
+        <div class="dl-option-info"><h5>OxygenOS 15 — Stable</h5><span>~4.8 GB • OPE2210 • MD5 verified</span></div>
         <span class="dl-arrow">⬇️</span>
       </div>
       <div class="dl-option">
-        <div class="dl-option-info">
-          <h5>OxygenOS 16 — Beta</h5>
-          <span>~5.2 GB • OPR2210 • MD5 verified</span>
-        </div>
+        <div class="dl-option-info"><h5>OxygenOS 16 — Beta</h5><span>~5.2 GB • OPR2210 • MD5 verified</span></div>
         <span class="dl-arrow">⬇️</span>
       </div>
       <div class="dl-option">
-        <div class="dl-option-info">
-          <h5>OrangeFox Recovery</h5>
-          <span>~65 MB • Required for flashing</span>
-        </div>
+        <div class="dl-option-info"><h5>OrangeFox Recovery</h5><span>~65 MB • Required for flashing</span></div>
         <span class="dl-arrow">⬇️</span>
       </div>
     </div>
-    <div class="modal-warning">
-      ⚠️ Unlocking your bootloader will wipe your device. Back up data first. By downloading, you accept that you proceed at your own risk.
-    </div>
+    <div class="modal-warning">⚠️ Unlocking your bootloader will wipe your device. Back up data first. By downloading, you accept that you proceed at your own risk.</div>
   </div>
 </div>
 
 <script>
-  // NAV
   function toggleMenu() {
     document.getElementById('navLinks').classList.toggle('open');
   }
 
-  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
+    entries.forEach((e) => {
       if (e.isIntersecting) {
         setTimeout(() => e.target.classList.add('visible'), 60);
         observer.unobserve(e.target);
@@ -1616,7 +1531,6 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
-  // FAQ
   function toggleFaq(el) {
     const item = el.parentElement;
     const isOpen = item.classList.contains('open');
@@ -1624,7 +1538,6 @@
     if (!isOpen) item.classList.add('open');
   }
 
-  // Modal
   function openModal(name, code) {
     document.getElementById('modal-title').textContent = 'Download for ' + name;
     document.getElementById('modal-device').textContent = 'Codename / Model: ' + code;
@@ -1635,32 +1548,10 @@
     document.getElementById('modal').classList.remove('open');
   }
 
-
-document.getElementById('modal').addEventListener('click', function(e) {
+  document.getElementById('modal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
 
-  // Animate stat numbers
-  function animateNumber(el, target, suffix='') {
-    let start = 0;
-    const step = target / 50;
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { el.textContent = target + suffix; clearInterval(timer); return; }
-      el.textContent = Math.floor(start) + suffix;
-    }, 30);
-  }
-
-  const statObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateNumber(e.target, parseInt(e.target.dataset.target), e.target.dataset.suffix || '');
-        statObserver.unobserve(e.target);
-      }
-    });
-  });
-
-  // Nav active state on scroll
   window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
     nav.style.boxShadow = window.scrollY > 40 ? '0 4px 40px rgba(0,0,0,0.4)' : '';
