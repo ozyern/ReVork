@@ -50,27 +50,24 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.2rem 5%;
-    background: rgba(8,10,15,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 5%;
+    background: #000000;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
   .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.25rem;
-    letter-spacing: -0.03em;
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
 
+  .logo img {
+    height: 40px;
+    width: auto;
+  }
+
   .logo-dot {
-    width: 10px; height: 10px;
-    background: var(--red);
-    border-radius: 50%;
-    animation: pulse-dot 2s ease-in-out infinite;
+    display: none;
   }
 
   @keyframes pulse-dot {
@@ -80,29 +77,38 @@
 
   .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
     list-style: none;
   }
 
+  .nav-links li {
+    display: flex;
+    align-items: center;
+  }
+
   .nav-links a {
-    color: var(--muted);
+    color: #ffffff;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
     transition: color 0.2s;
-    font-family: 'DM Mono', monospace;
+    font-family: 'DM Sans', sans-serif;
     letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
-  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover { color: var(--red); }
 
   .nav-cta {
-    background: var(--red);
-    color: white !important;
-    padding: 0.5rem 1.2rem;
-    border-radius: 6px;
-    font-family: 'DM Mono', monospace !important;
+    background: transparent;
+    color: #ffffff !important;
+    padding: 0;
+    border-radius: 0;
+    font-family: 'DM Sans', sans-serif !important;
   }
-  .nav-cta:hover { background: var(--red2); color: white !important; }
+  .nav-cta:hover { 
+    background: transparent; 
+    color: var(--red) !important;
+  }
 
   .hamburger {
     display: none;
@@ -113,7 +119,7 @@
   }
   .hamburger span {
     width: 24px; height: 2px;
-    background: var(--text);
+    background: #ffffff;
     border-radius: 2px;
     transition: all 0.3s;
   }
@@ -603,13 +609,14 @@
 <!-- NAV -->
 <nav>
   <div class="logo">
-    ReVork<span class="logo-dot"></span>
+    <img src="./assets/das.png" alt="ReVork Logo">
   </div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#features">Features</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#specs">Specs</a></li>
-    <li><a href="#downloads" class="nav-cta">Download</a></li>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#installation">Installation Guide</a></li>
+    <li><a href="#downloads">Downloads</a></li>
+    <li><a href="#devices">Devices</a></li>
+    <li><a href="#roms">ROMs</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span>
