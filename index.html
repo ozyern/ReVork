@@ -3,17 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OxygenOS 16 — ReVork</title>
+<title>ReVork — Next-Gen Porting Technology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red: #F50514;
-    --text: #FFFFFF;
-    --bg: #000000;
+    --red: #FF3C38;
+    --red2: #FF6B35;
+    --bg: #080A0F;
+    --bg2: #0E1118;
+    --bg3: #161B24;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --text: #F0F2F5;
+    --muted: #6B7280;
+    --accent: #00D4FF;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   html { scroll-behavior: smooth; }
 
   body {
@@ -21,6 +29,17 @@
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     overflow-x: hidden;
+    cursor: default;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
   }
 
   /* ===== NAV ===== */
@@ -31,15 +50,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem 5%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    border-bottom: 2px solid var(--red);
+    padding: 1rem 5%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   }
 
   .logo {
     position: absolute;
     left: 5%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .logo img {
@@ -47,47 +70,76 @@
     width: auto;
   }
 
+  .logo-dot {
+    display: none;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.7; }
+  }
+
   .nav-links {
     display: flex;
     gap: 3rem;
     list-style: none;
+    align-items: center;
+  }
+
+  .nav-links li {
+    display: flex;
+    align-items: center;
   }
 
   .nav-links a {
-    color: var(--text);
+    color: #ffffff;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    transition: color 0.2s;
+    transition: color 0.2s, text-shadow 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { 
+    color: var(--red);
+    text-shadow: 0 0 10px rgba(255, 60, 56, 0.5);
   }
 
-  .nav-links a:hover {
-    color: var(--red);
+  .nav-cta {
+    background: transparent;
+    color: #ffffff !important;
+    padding: 0;
+    border-radius: 0;
+    font-family: 'DM Sans', sans-serif !important;
+  }
+  .nav-cta:hover { 
+    background: transparent; 
+    color: var(--red) !important;
   }
 
   .hamburger {
     display: none;
-    position: absolute;
-    right: 5%;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 5px;
     cursor: pointer;
+    padding: 4px;
   }
-
   .hamburger span {
-    width: 25px;
-    height: 2px;
-    background: var(--text);
+    width: 24px; height: 2px;
+    background: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s;
   }
 
   /* ===== HERO CAROUSEL ===== */
   .hero-carousel {
-    height: 100vh;
+    position: relative;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-    position: relative;
+    padding: 8rem 5% 4rem;
     overflow: hidden;
   }
 
@@ -106,11 +158,10 @@
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 4rem;
-    padding: 5rem;
+    justify-content: space-between;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.8s ease-in-out;
+    padding: 0 5%;
   }
 
   .carousel-slide.active {
@@ -118,138 +169,574 @@
   }
 
   .slide-image {
-    flex: 1;
+    flex: 0 0 45%;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    z-index: 10;
+    animation: slideInLeft 0.8s ease-out;
+  }
+
+  @keyframes slideInLeft {
+    from { 
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   .slide-image img {
     max-width: 100%;
+    max-height: 600px;
     height: auto;
-    max-height: 80vh;
     object-fit: contain;
+    filter: drop-shadow(0 40px 100px rgba(255,60,56,0.3));
   }
 
   .slide-content {
-    flex: 1;
+    flex: 0 0 45%;
+    z-index: 10;
+    animation: slideInRight 0.8s ease-out;
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .carousel-indicators {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
+    z-index: 20;
   }
 
-  .hero-title {
-    font-size: 4rem;
-    font-weight: 800;
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
+  .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    border: 2px solid rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
-  .hero-subtitle {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: var(--red);
-    font-style: italic;
-  }
-
-  .hero-cta {
-    display: inline-block;
-    padding: 1rem 2.5rem;
+  .indicator.active {
     background: var(--red);
-    color: white;
-    text-decoration: none;
-    border-radius: 0.5rem;
-    font-weight: 700;
-    transition: all 0.3s;
-    width: fit-content;
-  }
-
-  .hero-cta:hover {
-    background: #d60410;
-    transform: translateY(-2px);
+    border-color: var(--red);
+    width: 30px;
+    border-radius: 5px;
   }
 
   .carousel-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 2rem;
-    color: var(--red);
+    z-index: 20;
     cursor: pointer;
-    user-select: none;
-    z-index: 10;
-    transition: transform 0.2s;
+    font-size: 2rem;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.3s;
+    padding: 1rem;
   }
 
   .carousel-nav:hover {
-    transform: translateY(-50%) scale(1.2);
+    color: var(--red);
   }
 
   .carousel-prev {
-    left: 3%;
+    left: 2%;
   }
 
   .carousel-next {
-    right: 3%;
+    right: 2%;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .section {
+    padding: 6rem 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 600px;
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+
+  /* ===== FEATURES GRID ===== */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .feature-card {
+    background: var(--bg2);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,60,56,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 16px;
+  }
+
+  .feature-card:hover {
+    border-color: rgba(255,60,56,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .feature-card:hover::before { opacity: 1; }
+
+  .feature-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, rgba(255,60,56,0.15), rgba(255,107,53,0.08));
+    border: 1px solid rgba(255,60,56,0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .feature-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ===== PROJECTS SECTION ===== */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .project-card {
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .project-card:hover {
+    border-color: rgba(255,60,56,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .project-image {
+    width: 100%;
+    height: 240px;
+    background: linear-gradient(135deg, rgba(255,60,56,0.1), rgba(255,107,53,0.05));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--red);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .project-content {
+    padding: 2rem;
+  }
+
+  .project-content h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-content p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--red);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: gap 0.2s;
+  }
+
+  .project-link:hover {
+    gap: 0.8rem;
+  }
+
+  /* ===== SPECS SECTION ===== */
+  .specs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .specs-category {
+    background: var(--bg2);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .specs-category h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--red);
+  }
+
+  .specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .spec-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .spec-icon {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, rgba(255,60,56,0.2), rgba(255,107,53,0.1));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  .spec-item p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* ===== STATS SECTION ===== */
+  .stats-section {
+    padding: 4rem 5%;
+    margin-top: 3rem;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--red), var(--red2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 5%;
+  }
+
+  footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-section h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-section ul {
+    list-style: none;
+  }
+
+  .footer-section ul li {
+    margin-bottom: 0.7rem;
+  }
+
+  .footer-section a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .footer-section a:hover {
+    color: var(--text);
+  }
+
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 3rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-bottom p {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--red), var(--red2));
+    color: white;
+    padding: 0.9rem 2.2rem;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 40px rgba(255,60,56,0.3);
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 60px rgba(255,60,56,0.5);
+  }
+
+  .btn-secondary {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.2s;
+    backdrop-filter: blur(10px);
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.2);
   }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
-    .carousel-slide {
-      flex-direction: column;
-      gap: 2rem;
-      padding: 3rem 2rem;
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    nav {
+      padding: 1rem 5%;
     }
 
-    .slide-image {
-      order: -1;
+    .section {
+      padding: 4rem 5%;
     }
 
-    .slide-image img {
-      max-height: 50vh;
-    }
-
-    .hero-title {
+    .section-title {
       font-size: 2rem;
     }
 
-    .hero-subtitle {
-      font-size: 1.3rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    nav {
-      padding: 1rem 3%;
-    }
-
-    .nav-links {
-      display: none;
-    }
-
-    .hamburger {
-      display: flex;
+    .hero-carousel {
+      padding: 6rem 5% 2rem;
     }
 
     .carousel-slide {
       flex-direction: column;
-      gap: 1.5rem;
-      padding: 2rem 1rem;
+    }
+
+    .slide-image {
+      flex: 0 0 auto;
+      margin-bottom: 2rem;
+      max-height: 400px;
+    }
+
+    .slide-content {
+      flex: 0 0 auto;
+      padding: 0;
     }
 
     .hero-title {
-      font-size: 1.5rem;
+      font-size: 2.2rem;
     }
 
     .hero-subtitle {
-      font-size: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .hero-variants {
+      grid-template-columns: 1fr;
     }
 
     .carousel-nav {
       font-size: 1.5rem;
+      padding: 0.5rem;
+    }
+
+    .carousel-prev {
+      left: 1%;
+    }
+
+    .carousel-next {
+      right: 1%;
     }
   }
 
+  @media (max-width: 480px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .specs-container {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-num {
+      font-size: 1.8rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
 </style>
 </head>
 <body>
@@ -261,6 +748,10 @@
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#home">Home</a></li>
+    <li><a href="#installation">Installation Guide</a></li>
+    <li><a href="#downloads">Downloads</a></li>
+    <li><a href="#devices">Devices</a></li>
+    <li><a href="#roms">ROMs</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span>
@@ -272,28 +763,321 @@
 <!-- HERO CAROUSEL -->
 <section class="hero-carousel">
   <div class="carousel-container" id="carousel">
+    <!-- Slide 1 -->
     <div class="carousel-slide active">
       <div class="slide-image">
         <img src="./assets/oos16_preview.png" alt="OxygenOS 16">
       </div>
       <div class="slide-content">
+        <div class="hero-tag">📱 Next-Generation Porting</div>
         <h1 class="hero-title">OxygenOS 16</h1>
         <h2 class="hero-subtitle">Rule Them All</h2>
-        <a href="#" class="hero-cta">Download Now</a>
+        <p class="hero-description">Premium Android Experience for Legacy Devices</p>
+
+        <div class="hero-variants">
+          <div class="variant-card">
+            <div class="variant-name">Standard</div>
+            <div class="variant-specs">Android 14</div>
+          </div>
+          <div class="variant-card">
+            <div class="variant-name">Advanced</div>
+            <div class="variant-specs">Enhanced Build</div>
+          </div>
+        </div>
+
+        <div class="hero-price">
+          Download <strong>Free</strong>
+        </div>
+
+        <div class="hero-stores">
+          <span class="store-label">Get it from:</span>
+          <div class="store-links">
+            <a href="#">GitHub</a>
+            <a href="#">Telegram</a>
+          </div>
+        </div>
+
+        <a href="#downloads" class="hero-cta">Download Now</a>
       </div>
     </div>
+
+    <!-- Navigation buttons -->
     <span class="carousel-nav carousel-prev" onclick="prevSlide()">❮</span>
     <span class="carousel-nav carousel-next" onclick="nextSlide()">❯</span>
+
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+      <span class="indicator active" onclick="currentSlide(0)"></span>
+    </div>
   </div>
 </section>
 
+<!-- ENGINEERED FOR PERFORMANCE -->
+<section class="section" id="features">
+  <div class="section-tag">Performance</div>
+  <h2 class="section-title">Engineered for Performance</h2>
+  <p class="section-sub">Every feature designed to deliver maximum power and reliability</p>
+  
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Advanced Porting</h3>
+      <p>State-of-the-art porting technology that brings new life to your devices with optimized performance.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">🚀</div>
+      <h3>Lightning Fast</h3>
+      <p>Experience blazing fast speeds with our optimized kernel and system configurations.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Stable & Secure</h3>
+      <p>Built with security in mind. Regular updates and community-driven improvements.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <h3>Wide Support</h3>
+      <p>Support for a growing range of devices. Join our community to expand compatibility.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS SECTION -->
+<section class="section" id="projects">
+  <div class="section-tag">What We Do</div>
+  <h2 class="section-title">Our Projects</h2>
+  <p class="section-sub">Discover what we're working on</p>
+  
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-image">
+        <img src="https://images.unsplash.com/photo-1665661897184-e61ee20dec8b?w=500&h=300&fit=crop" alt="Mobile Port">
+      </div>
+      <div class="project-badge">Active</div>
+      <div class="project-content">
+        <h3>Mobile Port</h3>
+        <p>Bringing the latest Android to legacy devices with full feature parity and optimizations.</p>
+        <a href="#" class="project-link">Learn More →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-image">
+        <img src="https://images.unsplash.com/photo-1760842543713-108c3cadbba1?w=500&h=300&fit=crop" alt="Kernel Development">
+      </div>
+      <div class="project-badge">Active</div>
+      <div class="project-content">
+        <h3>Kernel Development</h3>
+        <p>Custom kernel optimizations for peak performance and battery life on legacy hardware.</p>
+        <a href="#" class="project-link">Learn More →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-image">
+        <img src="https://images.unsplash.com/photo-1690439433990-2ab0a307356d?w=500&h=300&fit=crop" alt="Driver Suite">
+      </div>
+      <div class="project-badge">Beta</div>
+      <div class="project-content">
+        <h3>Driver Suite</h3>
+        <p>Comprehensive driver support for maximum compatibility across different device variants.</p>
+        <a href="#" class="project-link">Learn More →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL SPECIFICATIONS -->
+<section class="section" id="specs">
+  <div class="section-tag">Under the Hood</div>
+  <h2 class="section-title">Technical Specifications</h2>
+  <p class="section-sub">Built on cutting-edge technology stack</p>
+  
+  <div class="specs-container">
+    <div class="specs-category">
+      <h4>System</h4>
+      <div class="specs-list">
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Android 14 Base</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Linux Kernel 5.15+</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Custom Recovery Support</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>OTA Update System</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="specs-category">
+      <h4>Performance</h4>
+      <div class="specs-list">
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Optimized Scheduler</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Custom CPU Governor</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>GPU Overclocking Support</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>RAM Management</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="specs-category">
+      <h4>Features</h4>
+      <div class="specs-list">
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Full Hardware Support</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Camera HAL3</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Audio Enhancements</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Battery Optimization</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="specs-category">
+      <h4>Security</h4>
+      <div class="specs-list">
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>SELinux Enforcing</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Verified Boot</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Regular Security Patches</p>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">✓</div>
+          <p>Privacy Protection</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Supported Devices</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">10K+</div>
+      <div class="stat-label">Active Users</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">99.9%</div>
+      <div class="stat-label">Stability</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">Community Support</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="section" id="downloads">
+  <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Ready to Upgrade?</h2>
+  <p class="section-sub" style="text-align: center; margin: 0 auto 2rem;">Download the latest OxygenOS 16 build for your device</p>
+  <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+    <a href="#" class="btn-primary">⬇️ Download ROM</a>
+    <a href="#projects" class="btn-secondary">Learn More</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width: 1400px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+      <div class="footer-section">
+        <div class="logo" style="font-size: 1.1rem; margin-bottom: 1rem;">
+          ReVork<span class="logo-dot"></span>
+        </div>
+        <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">Bringing next-generation porting technology to legacy devices. Join our community and be part of the revolution.</p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#specs">Technical Specs</a></li>
+          <li><a href="#downloads">Downloads</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Telegram</a></li>
+          <li><a href="#">Discord</a></li>
+          <li><a href="#">Forum</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Changelog</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="border-top: 1px solid var(--glass-border); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+      <p style="color: var(--muted); font-size: 0.85rem;">© 2026 ReVork. All rights reserved.</p>
+      <p style="color: var(--muted); font-size: 0.85rem;">Made with ❤️ by the ReVork Team</p>
+    </div>
+  </div>
+</footer>
+
 <script>
+  // NAV
   function toggleMenu() {
     const navLinks = document.getElementById('navLinks');
     navLinks.classList.toggle('open');
   }
 
+  // CAROUSEL
   let currentSlideIndex = 0;
+  
   function nextSlide() {
     const slides = document.querySelectorAll('.carousel-slide');
     currentSlideIndex = (currentSlideIndex + 1) % slides.length;
@@ -306,13 +1090,52 @@
     showSlide(currentSlideIndex);
   }
 
+  function currentSlide(n) {
+    currentSlideIndex = n;
+    showSlide(currentSlideIndex);
+  }
+
   function showSlide(n) {
     const slides = document.querySelectorAll('.carousel-slide');
+    const indicators = document.querySelectorAll('.indicator');
+    
     slides.forEach(slide => slide.classList.remove('active'));
+    indicators.forEach(indicator => indicator.classList.remove('active'));
+    
     if (n >= slides.length) currentSlideIndex = 0;
     if (n < 0) currentSlideIndex = slides.length - 1;
+    
     slides[currentSlideIndex].classList.add('active');
+    indicators[currentSlideIndex].classList.add('active');
   }
+
+  // Auto-play carousel (optional - remove if not wanted)
+  setInterval(() => {
+    nextSlide();
+  }, 5000);
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'fadeSlideDown 0.8s ease both';
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav active state on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.boxShadow = window.scrollY > 40 ? '0 4px 40px rgba(0,0,0,0.4)' : '';
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('navLinks').classList.remove('open');
+    }
+  });
 </script>
 </body>
 </html>
