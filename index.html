@@ -49,13 +49,17 @@
     z-index: 100;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 1rem 5%;
-    background: #000000;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   }
 
   .logo {
+    position: absolute;
+    left: 5%;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -77,8 +81,9 @@
 
   .nav-links {
     display: flex;
-    gap: 2.5rem;
+    gap: 3rem;
     list-style: none;
+    align-items: center;
   }
 
   .nav-links li {
@@ -91,12 +96,15 @@
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 500;
-    transition: color 0.2s;
+    transition: color 0.2s, text-shadow 0.2s;
     font-family: 'DM Sans', sans-serif;
     letter-spacing: 0.02em;
     text-transform: uppercase;
   }
-  .nav-links a:hover { color: var(--red); }
+  .nav-links a:hover { 
+    color: var(--red);
+    text-shadow: 0 0 10px rgba(255, 60, 56, 0.5);
+  }
 
   .nav-cta {
     background: transparent;
