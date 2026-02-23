@@ -132,17 +132,27 @@
     transition: all 0.3s;
   }
 
+  /* ===== ANNOUNCEMENT BANNER ===== */
+  .announcement {
+    background: var(--red);
+    color: white;
+    padding: 0.8rem;
+    text-align: center;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 99;
+  }
+
   /* ===== HERO ===== */
   .hero {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
+    justify-content: space-between;
     padding: 8rem 5% 4rem;
     position: relative;
     overflow: hidden;
+    background: linear-gradient(135deg, #080A0F 0%, #0E1118 100%);
   }
 
   .hero-glow {
@@ -150,16 +160,24 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 800px; height: 600px;
-    background: radial-gradient(ellipse, rgba(255,60,56,0.15) 0%, transparent 70%);
+    width: 1000px; height: 800px;
+    background: radial-gradient(ellipse, rgba(255,60,56,0.1) 0%, transparent 70%);
     pointer-events: none;
     animation: glow-pulse 4s ease-in-out infinite;
     z-index: 0;
   }
 
-  .hero-preview-container {
-    position: relative;
+  .hero-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 10;
+    position: relative;
+  }
+
+  .hero-preview-container {
+    width: 100%;
     animation: fadeSlideDown 0.8s ease both;
     display: flex;
     align-items: center;
@@ -169,10 +187,158 @@
   .hero-preview-img {
     max-width: 100%;
     width: 100%;
-    max-width: 900px;
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 40px 100px rgba(255,60,56,0.3));
+  }
+
+  .hero-right {
+    flex: 1;
+    z-index: 10;
+    position: relative;
+    padding: 0 3rem;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #00D4FF, var(--red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-subtitle {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: white;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+
+  .hero-description {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .hero-variants {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .variant-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,60,56,0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .variant-card:hover {
+    background: rgba(255,60,56,0.1);
+    border-color: rgba(255,60,56,0.5);
+  }
+
+  .variant-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .variant-specs {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .hero-price {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+
+  .hero-price strong {
+    font-size: 1.5rem;
+    color: var(--red);
+    font-weight: 800;
+  }
+
+  .hero-stores {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin: 2rem 0 2rem 0;
+    flex-wrap: wrap;
+  }
+
+  .store-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .store-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .store-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  .store-links a:hover {
+    color: var(--red);
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--red), var(--red2));
+    color: white;
+    padding: 1rem 3rem;
+    border: 2px solid var(--red);
+    border-radius: 50px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 40px rgba(255,60,56,0.4);
   }
 
   @keyframes glow-pulse {
@@ -584,7 +750,30 @@
     }
 
     .hero {
+      flex-direction: column;
       padding: 6rem 5% 2rem;
+    }
+
+    .hero-left {
+      flex: 1;
+      margin-bottom: 2rem;
+    }
+
+    .hero-right {
+      flex: 1;
+      padding: 0;
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+    }
+
+    .hero-variants {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -633,11 +822,51 @@
   </div>
 </nav>
 
+<!-- ANNOUNCEMENT BANNER -->
+<div class="announcement">
+  🔥 OxygenOS 16 Sideload Available Now - Premium Performance for Your Device!
+</div>
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
-  <div class="hero-preview-container">
-    <img src="./assets/oos16_preview.png" alt="OxygenOS 16 Preview" class="hero-preview-img">
+  
+  <div class="hero-left">
+    <div class="hero-preview-container">
+      <img src="./assets/oos16_preview.png" alt="OxygenOS 16" class="hero-preview-img">
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-tag">📱 Next-Generation Porting</div>
+    <h1 class="hero-title">OxygenOS 16</h1>
+    <h2 class="hero-subtitle">Rule Them All</h2>
+    <p class="hero-description">Premium Android Experience for Legacy Devices</p>
+
+    <div class="hero-variants">
+      <div class="variant-card">
+        <div class="variant-name">Standard</div>
+        <div class="variant-specs">Android 14</div>
+      </div>
+      <div class="variant-card">
+        <div class="variant-name">Advanced</div>
+        <div class="variant-specs">Enhanced Build</div>
+      </div>
+    </div>
+
+    <div class="hero-price">
+      Download <strong>Free</strong>
+    </div>
+
+    <div class="hero-stores">
+      <span class="store-label">Get it from:</span>
+      <div class="store-links">
+        <a href="#">GitHub</a>
+        <a href="#">Telegram</a>
+      </div>
+    </div>
+
+    <a href="#downloads" class="hero-cta">Download Now</a>
   </div>
 </section>
 
