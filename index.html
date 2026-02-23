@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReVork — Next-Gen Porting Technology</title>
+<title>ReVork</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -189,8 +189,8 @@
   }
 
   .slide-image img {
-    max-width: 90%;
-    max-height: 90vh;
+    max-width: 95%;
+    max-height: 100vh;
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 40px 100px rgba(255,60,56,0.3));
@@ -803,6 +803,44 @@
       </div>
     </div>
 
+    <!-- Slide 2 -->
+    <div class="carousel-slide">
+      <div class="slide-image">
+        <img src="./assets/cos16_preview.png" alt="ColorOS 16">
+      </div>
+      <div class="slide-content">
+        <div class="hero-tag">📱 Next-Generation Porting</div>
+        <h1 class="hero-title">ColorOS 16</h1>
+        <h2 class="hero-subtitle">Rule Them All</h2>
+        <p class="hero-description">Premium Android Experience for Legacy Devices</p>
+
+        <div class="hero-variants">
+          <div class="variant-card">
+            <div class="variant-name">Standard</div>
+            <div class="variant-specs">Android 14</div>
+          </div>
+          <div class="variant-card">
+            <div class="variant-name">Advanced</div>
+            <div class="variant-specs">Enhanced Build</div>
+          </div>
+        </div>
+
+        <div class="hero-price">
+          Download <strong>Free</strong>
+        </div>
+
+        <div class="hero-stores">
+          <span class="store-label">Get it from:</span>
+          <div class="store-links">
+            <a href="#">GitHub</a>
+            <a href="#">Telegram</a>
+          </div>
+        </div>
+
+        <a href="#downloads" class="hero-cta">Download Now</a>
+      </div>
+    </div>
+
     <!-- Navigation buttons -->
     <span class="carousel-nav carousel-prev" onclick="prevSlide()">❮</span>
     <span class="carousel-nav carousel-next" onclick="nextSlide()">❯</span>
@@ -810,6 +848,7 @@
     <!-- Indicators -->
     <div class="carousel-indicators">
       <span class="indicator active" onclick="currentSlide(0)"></span>
+      <span class="indicator" onclick="currentSlide(1)"></span>
     </div>
   </div>
 </section>
