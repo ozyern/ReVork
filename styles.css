@@ -48,14 +48,15 @@ button {
 .nav-wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0.75rem 1.5rem;
+    position: relative;
 }
 
 .logo {
-    flex: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .logo-img {
@@ -67,6 +68,8 @@ button {
     display: none;
     align-items: center;
     gap: 2.5rem;
+    position: absolute;
+    right: 5rem;
 }
 
 .nav-link {
@@ -112,7 +115,7 @@ button {
 @media (min-width: 1024px) {
     .logo {
         flex: initial;
-        justify-content: flex-start;
+        justify-content: center;
     }
     
     .nav-menu {
