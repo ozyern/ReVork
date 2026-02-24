@@ -1,1182 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReVork</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --red: #FF3C38;
-    --red2: #FF6B35;
-    --bg: #080A0F;
-    --bg2: #0E1118;
-    --bg3: #161B24;
-    --glass: rgba(255,255,255,0.04);
-    --glass-border: rgba(255,255,255,0.08);
-    --text: #F0F2F5;
-    --muted: #6B7280;
-    --accent: #00D4FF;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-    cursor: default;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
-
-  /* ===== NAV ===== */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 5%;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  }
-
-  .logo {
-    position: absolute;
-    left: 5%;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .logo img {
-    height: 40px;
-    width: auto;
-  }
-
-  .logo-dot {
-    display: none;
-  }
-
-  @keyframes pulse-dot {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.4); opacity: 0.7; }
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 3rem;
-    list-style: none;
-    align-items: center;
-  }
-
-  .nav-links li {
-    display: flex;
-    align-items: center;
-  }
-
-  .nav-links a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: color 0.2s, text-shadow 0.2s;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-  }
-  .nav-links a:hover { 
-    color: var(--red);
-    text-shadow: 0 0 10px rgba(255, 60, 56, 0.5);
-  }
-
-  .nav-cta {
-    background: transparent;
-    color: #ffffff !important;
-    padding: 0;
-    border-radius: 0;
-    font-family: 'DM Sans', sans-serif !important;
-  }
-  .nav-cta:hover { 
-    background: transparent; 
-    color: var(--red) !important;
-  }
-
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-  }
-  .hamburger span {
-    width: 24px; height: 2px;
-    background: #ffffff;
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
-
-  /* ===== HERO CAROUSEL ===== */
-  .hero-carousel {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8rem 5% 4rem;
-    overflow: hidden;
-  }
-
-  .carousel-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .carousel-slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    padding: 0 5%;
-  }
-
-  .carousel-slide.active {
-    opacity: 1;
-  }
-
-  .slide-image {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    animation: slideInLeft 0.8s ease-out;
-  }
-
-  @keyframes slideInLeft {
-    from { 
-      opacity: 0;
-      transform: translateX(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .slide-image img {
-    max-width: 95%;
-    max-height: 100vh;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 40px 100px rgba(255,60,56,0.3));
-  }
-
-  .slide-content {
-    display: none;
-    flex: 0 0 45%;
-    z-index: 10;
-    animation: slideInRight 0.8s ease-out;
-  }
-
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .carousel-indicators {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 1rem;
-    z-index: 20;
-  }
-
-  .indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.3);
-    border: 2px solid rgba(255,255,255,0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .indicator.active {
-    background: var(--red);
-    border-color: var(--red);
-    width: 30px;
-    border-radius: 5px;
-  }
-
-  .carousel-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 20;
-    cursor: pointer;
-    font-size: 2rem;
-    color: rgba(255,255,255,0.6);
-    transition: color 0.3s;
-    padding: 1rem;
-  }
-
-  .carousel-nav:hover {
-    color: var(--red);
-  }
-
-  .carousel-prev {
-    left: 2%;
-  }
-
-  .carousel-next {
-    right: 2%;
-  }
-
-  @keyframes glow-pulse {
-    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-  }
-
-  @keyframes fadeSlideDown {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .section {
-    padding: 6rem 5%;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .section-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--red);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-    margin-bottom: 1.5rem;
-  }
-
-  .section-sub {
-    color: var(--muted);
-    font-size: 1rem;
-    line-height: 1.65;
-    max-width: 600px;
-    font-weight: 300;
-    margin-bottom: 3rem;
-  }
-
-  /* ===== FEATURES GRID ===== */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .feature-card {
-    background: var(--bg2);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 2rem;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,60,56,0.05), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-    border-radius: 16px;
-  }
-
-  .feature-card:hover {
-    border-color: rgba(255,60,56,0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  }
-
-  .feature-card:hover::before { opacity: 1; }
-
-  .feature-icon {
-    width: 48px; height: 48px;
-    background: linear-gradient(135deg, rgba(255,60,56,0.15), rgba(255,107,53,0.08));
-    border: 1px solid rgba(255,60,56,0.2);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
-  .feature-card h3 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .feature-card p {
-    color: var(--muted);
-    font-size: 0.9rem;
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  /* ===== PROJECTS SECTION ===== */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .project-card {
-    background: linear-gradient(135deg, var(--bg2), var(--bg3));
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-
-  .project-card:hover {
-    border-color: rgba(255,60,56,0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  }
-
-  .project-image {
-    width: 100%;
-    height: 240px;
-    background: linear-gradient(135deg, rgba(255,60,56,0.1), rgba(255,107,53,0.05));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .project-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(10px);
-    padding: 0.4rem 0.9rem;
-    border-radius: 20px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--red);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .project-content {
-    padding: 2rem;
-  }
-
-  .project-content h3 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .project-content p {
-    color: var(--muted);
-    font-size: 0.9rem;
-    line-height: 1.65;
-    margin-bottom: 1.5rem;
-    font-weight: 300;
-  }
-
-  .project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--red);
-    text-decoration: none;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: gap 0.2s;
-  }
-
-  .project-link:hover {
-    gap: 0.8rem;
-  }
-
-  /* ===== SPECS SECTION ===== */
-  .specs-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .specs-category {
-    background: var(--bg2);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 2rem;
-  }
-
-  .specs-category h4 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    color: var(--red);
-  }
-
-  .specs-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-  }
-
-  .spec-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .spec-icon {
-    width: 24px;
-    height: 24px;
-    background: linear-gradient(135deg, rgba(255,60,56,0.2), rgba(255,107,53,0.1));
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    flex-shrink: 0;
-    margin-top: 0.2rem;
-  }
-
-  .spec-item p {
-    color: var(--muted);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    font-weight: 300;
-  }
-
-  /* ===== STATS SECTION ===== */
-  .stats-section {
-    padding: 4rem 5%;
-    margin-top: 3rem;
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .stat-item {
-    text-align: center;
-  }
-
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, var(--red), var(--red2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
-  }
-
-  .stat-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  /* ===== FOOTER ===== */
-  footer {
-    background: var(--bg2);
-    border-top: 1px solid var(--glass-border);
-    padding: 4rem 5%;
-  }
-
-  footer-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-  }
-
-  .footer-section h4 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .footer-section ul {
-    list-style: none;
-  }
-
-  .footer-section ul li {
-    margin-bottom: 0.7rem;
-  }
-
-  .footer-section a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s;
-  }
-
-  .footer-section a:hover {
-    color: var(--text);
-  }
-
-  .footer-bottom {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding-top: 3rem;
-    border-top: 1px solid var(--glass-border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-  }
-
-  .footer-bottom p {
-    color: var(--muted);
-    font-size: 0.85rem;
-  }
-
-  /* ===== BUTTONS ===== */
-  .btn-primary {
-    background: linear-gradient(135deg, var(--red), var(--red2));
-    color: white;
-    padding: 0.9rem 2.2rem;
-    border-radius: 8px;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 40px rgba(255,60,56,0.3);
-    border: none;
-    cursor: pointer;
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 60px rgba(255,60,56,0.5);
-  }
-
-  .btn-secondary {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    color: var(--text);
-    padding: 0.9rem 2rem;
-    border-radius: 8px;
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    transition: all 0.2s;
-    backdrop-filter: blur(10px);
-  }
-  .btn-secondary:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.2);
-  }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-
-    nav {
-      padding: 1rem 5%;
-    }
-
-    .section {
-      padding: 4rem 5%;
-    }
-
-    .section-title {
-      font-size: 2rem;
-    }
-
-    .hero-carousel {
-      padding: 6rem 5% 2rem;
-    }
-
-    .carousel-slide {
-      flex-direction: column;
-    }
-
-    .slide-image {
-      flex: 1;
-      margin-bottom: 0;
-      max-height: 60vh;
-    }
-
-    .slide-content {
-      display: none;
-      flex: 0 0 auto;
-      padding: 0;
-    }
-
-    .hero-title {
-      font-size: 2.2rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.5rem;
-    }
-
-    .hero-variants {
-      grid-template-columns: 1fr;
-    }
-
-    .carousel-nav {
-      font-size: 1.5rem;
-      padding: 0.5rem;
-    }
-
-    .carousel-prev {
-      left: 1%;
-    }
-
-    .carousel-next {
-      right: 1%;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .features-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .projects-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .specs-container {
-      grid-template-columns: 1fr;
-    }
-
-    .stat-num {
-      font-size: 1.8rem;
-    }
-
-    .footer-bottom {
-      flex-direction: column;
-      text-align: center;
-    }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReVork - Porting Project</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="container">
+            <div class="nav-wrapper">
+                <!-- Logo - Centered on Mobile, Left on Desktop -->
+                <div class="logo">
+                    <img src="favicon.png" alt="ReVork" class="logo-img">
+                </div>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">
-    <img src="./assets/favicon.png" alt="ReVork Logo">
-  </div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#installation">Installation Guide</a></li>
-    <li><a href="#downloads">Downloads</a></li>
-    <li><a href="#devices">Devices</a></li>
-    <li><a href="#roms">ROMs</a></li>
-  </ul>
-  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</nav>
+                <!-- Desktop Menu -->
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link">HOME</a>
+                    <a href="#installation-guide" class="nav-link">INSTALLATION GUIDE</a>
+                    <a href="#downloads" class="nav-link">DOWNLOADS</a>
+                    <a href="#devices" class="nav-link">DEVICES</a>
+                    <a href="#roms" class="nav-link">ROMS</a>
+                </div>
 
-<!-- HERO CAROUSEL -->
-<section class="hero-carousel">
-  <div class="carousel-container" id="carousel">
-    <!-- Slide 1 -->
-    <div class="carousel-slide active">
-      <div class="slide-image">
-        <img src="./assets/oos16_preview.png" alt="OxygenOS 16">
-      </div>
-      <div class="slide-content">
-        <div class="hero-tag">📱 Next-Generation Porting</div>
-        <h1 class="hero-title">OxygenOS 16</h1>
-        <h2 class="hero-subtitle">Rule Them All</h2>
-        <p class="hero-description">Premium Android Experience for Legacy Devices</p>
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                    <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                    <svg class="close-icon hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
 
-        <div class="hero-variants">
-          <div class="variant-card">
-            <div class="variant-name">Standard</div>
-            <div class="variant-specs">Android 14</div>
-          </div>
-          <div class="variant-card">
-            <div class="variant-name">Advanced</div>
-            <div class="variant-specs">Enhanced Build</div>
-          </div>
+            <!-- Mobile Menu -->
+            <div class="mobile-menu hidden" id="mobileMenu">
+                <a href="#home" class="mobile-nav-link">HOME</a>
+                <a href="#installation-guide" class="mobile-nav-link">INSTALLATION GUIDE</a>
+                <a href="#downloads" class="mobile-nav-link">DOWNLOADS</a>
+                <a href="#devices" class="mobile-nav-link">DEVICES</a>
+                <a href="#roms" class="mobile-nav-link">ROMS</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Slideshow -->
+    <section class="hero-slideshow" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="slideshow-wrapper">
+                <div class="slide active">
+                    <img src="oos16_preview.png" alt="ReVork Device" class="device-img">
+                </div>
+                <div class="slide">
+                    <img src="Ycos16_preview.png" alt="ReVork Device" class="device-img">
+                </div>
+                <div class="slide">
+                    <img src="oos16_preview.png" alt="ReVork Device" class="device-img">
+                </div>
+            </div>
         </div>
 
-        <div class="hero-price">
-          Download <strong>Free</strong>
+        <!-- Slide Indicators -->
+        <div class="slide-indicators">
+            <button class="indicator active" data-slide="0"></button>
+            <button class="indicator" data-slide="1"></button>
+            <button class="indicator" data-slide="2"></button>
         </div>
+    </section>
 
-        <div class="hero-stores">
-          <span class="store-label">Get it from:</span>
-          <div class="store-links">
-            <a href="#">GitHub</a>
-            <a href="#">Telegram</a>
-          </div>
+    <!-- Features Section -->
+    <section class="features-section" id="about">
+        <div class="features-bg"></div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    Engineered for <span class="text-red">Performance</span>
+                </h2>
+                <p class="section-subtitle">
+                    Every feature designed to deliver maximum power and reliability
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-glow"></div>
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                <rect x="9" y="9" width="6" height="6"></rect>
+                                <line x1="9" y1="1" x2="9" y2="4"></line>
+                                <line x1="15" y1="1" x2="15" y2="4"></line>
+                                <line x1="9" y1="20" x2="9" y2="23"></line>
+                                <line x1="15" y1="20" x2="15" y2="23"></line>
+                                <line x1="20" y1="9" x2="23" y2="9"></line>
+                                <line x1="20" y1="14" x2="23" y2="14"></line>
+                                <line x1="1" y1="9" x2="4" y2="9"></line>
+                                <line x1="1" y1="14" x2="4" y2="14"></line>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">ADVANCED PORTING</h3>
+                        <p class="feature-desc">State-of-the-art porting technology that brings new life to your devices with optimized performance.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-glow"></div>
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">LIGHTNING FAST</h3>
+                        <p class="feature-desc">Experience blazing fast speeds with our optimized kernel and system configurations.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-glow"></div>
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">STABLE & SECURE</h3>
+                        <p class="feature-desc">Built with security in mind. Regular updates and community-driven improvements.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-glow"></div>
+                    <div class="feature-content">
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">WIDE SUPPORT</h3>
+                        <p class="feature-desc">Support for a growing range of devices. Join our community to expand compatibility.</p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <a href="#downloads" class="hero-cta">Download Now</a>
-      </div>
-    </div>
+    <!-- Tech Specs Section -->
+    <section class="tech-specs-section" id="tech">
+        <div class="accent-line-top"></div>
+        <div class="accent-line-bottom"></div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    Technical <span class="text-red">Specifications</span>
+                </h2>
+                <p class="section-subtitle">
+                    Built on cutting-edge technology stack
+                </p>
+            </div>
 
-    <!-- Slide 2 -->
-    <div class="carousel-slide">
-      <div class="slide-image">
-        <img src="./assets/cos16_preview.png" alt="ColorOS 16">
-      </div>
-      <div class="slide-content">
-        <div class="hero-tag">📱 Next-Generation Porting</div>
-        <h1 class="hero-title">ColorOS 16</h1>
-        <h2 class="hero-subtitle">Rule Them All</h2>
-        <p class="hero-description">Premium Android Experience for Legacy Devices</p>
+            <div class="specs-grid">
+                <div class="spec-card">
+                    <h3 class="spec-category">SYSTEM</h3>
+                    <ul class="spec-list">
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Android 14 Base</span>
+                        </li>
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Custom Kernel</span>
+                        </li>
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>OTA Updates</span>
+                        </li>
+                    </ul>
+                </div>
 
-        <div class="hero-variants">
-          <div class="variant-card">
-            <div class="variant-name">Standard</div>
-            <div class="variant-specs">Android 14</div>
-          </div>
-          <div class="variant-card">
-            <div class="variant-name">Advanced</div>
-            <div class="variant-specs">Enhanced Build</div>
-          </div>
+                <div class="spec-card">
+                    <h3 class="spec-category">PERFORMANCE</h3>
+                    <ul class="spec-list">
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Optimized RAM</span>
+                        </li>
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>CPU Tweaks</span>
+                        </li>
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>GPU Boost</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="spec-card">
+                    <h3 class="spec-category">FEATURES</h3>
+                    <ul class="spec-list">
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Root Access</span>
+                        </li>
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Custom Recovery</span>
+                        </li>
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Magisk Support</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="spec-card">
+                    <h3 class="spec-category">SECURITY</h3>
+                    <ul class="spec-list">
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>SELinux Enforcing</span>
+                        </li>
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Verified Boot</span>
+                        </li>
+                        <li class="spec-item">
+                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Regular Patches</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Performance Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">50+</div>
+                    <div class="stat-label">SUPPORTED DEVICES</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">10K+</div>
+                    <div class="stat-label">ACTIVE USERS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">99.9%</div>
+                    <div class="stat-label">STABILITY</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">COMMUNITY SUPPORT</div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="hero-price">
-          Download <strong>Free</strong>
-        </div>
-
-        <div class="hero-stores">
-          <span class="store-label">Get it from:</span>
-          <div class="store-links">
-            <a href="#">GitHub</a>
-            <a href="#">Telegram</a>
-          </div>
-        </div>
-
-        <a href="#downloads" class="hero-cta">Download Now</a>
-      </div>
-    </div>
-
-    <!-- Navigation buttons -->
-    <span class="carousel-nav carousel-prev" onclick="prevSlide()">❮</span>
-    <span class="carousel-nav carousel-next" onclick="nextSlide()">❯</span>
-
-    <!-- Indicators -->
-    <div class="carousel-indicators">
-      <span class="indicator active" onclick="currentSlide(0)"></span>
-      <span class="indicator" onclick="currentSlide(1)"></span>
-    </div>
-  </div>
-</section>
-
-<!-- ENGINEERED FOR PERFORMANCE -->
-<section class="section" id="features">
-  <div class="section-tag">Performance</div>
-  <h2 class="section-title">Engineered for Performance</h2>
-  <p class="section-sub">Every feature designed to deliver maximum power and reliability</p>
-  
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">⚡</div>
-      <h3>Advanced Porting</h3>
-      <p>State-of-the-art porting technology that brings new life to your devices with optimized performance.</p>
-    </div>
-    
-    <div class="feature-card">
-      <div class="feature-icon">🚀</div>
-      <h3>Lightning Fast</h3>
-      <p>Experience blazing fast speeds with our optimized kernel and system configurations.</p>
-    </div>
-    
-    <div class="feature-card">
-      <div class="feature-icon">🔒</div>
-      <h3>Stable & Secure</h3>
-      <p>Built with security in mind. Regular updates and community-driven improvements.</p>
-    </div>
-    
-    <div class="feature-card">
-      <div class="feature-icon">🌍</div>
-      <h3>Wide Support</h3>
-      <p>Support for a growing range of devices. Join our community to expand compatibility.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS SECTION -->
-<section class="section" id="projects">
-  <div class="section-tag">What We Do</div>
-  <h2 class="section-title">Our Projects</h2>
-  <p class="section-sub">Discover what we're working on</p>
-  
-  <div class="projects-grid">
-    <div class="project-card">
-      <div class="project-image">
-        <img src="https://images.unsplash.com/photo-1665661897184-e61ee20dec8b?w=500&h=300&fit=crop" alt="Mobile Port">
-      </div>
-      <div class="project-badge">Active</div>
-      <div class="project-content">
-        <h3>Mobile Port</h3>
-        <p>Bringing the latest Android to legacy devices with full feature parity and optimizations.</p>
-        <a href="#" class="project-link">Learn More →</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-image">
-        <img src="https://images.unsplash.com/photo-1760842543713-108c3cadbba1?w=500&h=300&fit=crop" alt="Kernel Development">
-      </div>
-      <div class="project-badge">Active</div>
-      <div class="project-content">
-        <h3>Kernel Development</h3>
-        <p>Custom kernel optimizations for peak performance and battery life on legacy hardware.</p>
-        <a href="#" class="project-link">Learn More →</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-image">
-        <img src="https://images.unsplash.com/photo-1690439433990-2ab0a307356d?w=500&h=300&fit=crop" alt="Driver Suite">
-      </div>
-      <div class="project-badge">Beta</div>
-      <div class="project-content">
-        <h3>Driver Suite</h3>
-        <p>Comprehensive driver support for maximum compatibility across different device variants.</p>
-        <a href="#" class="project-link">Learn More →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TECHNICAL SPECIFICATIONS -->
-<section class="section" id="specs">
-  <div class="section-tag">Under the Hood</div>
-  <h2 class="section-title">Technical Specifications</h2>
-  <p class="section-sub">Built on cutting-edge technology stack</p>
-  
-  <div class="specs-container">
-    <div class="specs-category">
-      <h4>System</h4>
-      <div class="specs-list">
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Android 14 Base</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Linux Kernel 5.15+</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Custom Recovery Support</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>OTA Update System</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="specs-category">
-      <h4>Performance</h4>
-      <div class="specs-list">
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Optimized Scheduler</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Custom CPU Governor</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>GPU Overclocking Support</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>RAM Management</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="specs-category">
-      <h4>Features</h4>
-      <div class="specs-list">
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Full Hardware Support</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Camera HAL3</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Audio Enhancements</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Battery Optimization</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="specs-category">
-      <h4>Security</h4>
-      <div class="specs-list">
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>SELinux Enforcing</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Verified Boot</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Regular Security Patches</p>
-        </div>
-        <div class="spec-item">
-          <div class="spec-icon">✓</div>
-          <p>Privacy Protection</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS SECTION -->
-<section class="stats-section">
-  <div class="stats-grid">
-    <div class="stat-item">
-      <div class="stat-num">50+</div>
-      <div class="stat-label">Supported Devices</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">10K+</div>
-      <div class="stat-label">Active Users</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">99.9%</div>
-      <div class="stat-label">Stability</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">24/7</div>
-      <div class="stat-label">Community Support</div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA SECTION -->
-<section class="section" id="downloads">
-  <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Ready to Upgrade?</h2>
-  <p class="section-sub" style="text-align: center; margin: 0 auto 2rem;">Download the latest OxygenOS 16 build for your device</p>
-  <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-    <a href="#" class="btn-primary">⬇️ Download ROM</a>
-    <a href="#projects" class="btn-secondary">Learn More</a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div style="max-width: 1400px; margin: 0 auto;">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
-      <div class="footer-section">
-        <div class="logo" style="font-size: 1.1rem; margin-bottom: 1rem;">
-          ReVork<span class="logo-dot"></span>
-        </div>
-        <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">Bringing next-generation porting technology to legacy devices. Join our community and be part of the revolution.</p>
-      </div>
-
-      <div class="footer-section">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#specs">Technical Specs</a></li>
-          <li><a href="#downloads">Downloads</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section">
-        <h4>Community</h4>
-        <ul>
-          <li><a href="#">GitHub</a></li>
-          <li><a href="#">Telegram</a></li>
-          <li><a href="#">Discord</a></li>
-          <li><a href="#">Forum</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section">
-        <h4>Resources</h4>
-        <ul>
-          <li><a href="#">Documentation</a></li>
-          <li><a href="#">Changelog</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Support</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div style="border-top: 1px solid var(--glass-border); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-      <p style="color: var(--muted); font-size: 0.85rem;">© 2026 ReVork. All rights reserved.</p>
-      <p style="color: var(--muted); font-size: 0.85rem;">Made with ❤️ by the ReVork Team</p>
-    </div>
-  </div>
-</footer>
-
-<script>
-  // NAV
-  function toggleMenu() {
-    const navLinks = document.getElementById('navLinks');
-    navLinks.classList.toggle('open');
-  }
-
-  // CAROUSEL
-  let currentSlideIndex = 0;
-  
-  function nextSlide() {
-    const slides = document.querySelectorAll('.carousel-slide');
-    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-    showSlide(currentSlideIndex);
-  }
-
-  function prevSlide() {
-    const slides = document.querySelectorAll('.carousel-slide');
-    currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
-    showSlide(currentSlideIndex);
-  }
-
-  function currentSlide(n) {
-    currentSlideIndex = n;
-    showSlide(currentSlideIndex);
-  }
-
-  function showSlide(n) {
-    const slides = document.querySelectorAll('.carousel-slide');
-    const indicators = document.querySelectorAll('.indicator');
-    
-    slides.forEach(slide => slide.classList.remove('active'));
-    indicators.forEach(indicator => indicator.classList.remove('active'));
-    
-    if (n >= slides.length) currentSlideIndex = 0;
-    if (n < 0) currentSlideIndex = slides.length - 1;
-    
-    slides[currentSlideIndex].classList.add('active');
-    indicators[currentSlideIndex].classList.add('active');
-  }
-
-  // Auto-play carousel (optional - remove if not wanted)
-  setInterval(() => {
-    nextSlide();
-  }, 5000);
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.section');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.animation = 'fadeSlideDown 0.8s ease both';
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
-
-  // Nav active state on scroll
-  window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    nav.style.boxShadow = window.scrollY > 40 ? '0 4px 40px rgba(0,0,0,0.4)' : '';
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      document.getElementById('navLinks').classList.remove('open');
-    }
-  });
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
