@@ -3,10 +3,11 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
+/* Image and Asset Protection */
 .no-select { user-select: none; -webkit-user-drag: none; pointer-events: none; }
 img { -webkit-user-drag: none; user-drag: none; }
 
-/* Rockstar Navigation */
+/* Transparent Rockstar Header */
 .rs-nav { position: absolute; top: 0; width: 100%; z-index: 1000; padding: 40px 60px; background: transparent; }
 .nav-container { display: flex; justify-content: center; align-items: center; position: relative; }
 .nav-logo { position: absolute; left: 0; }
@@ -15,50 +16,54 @@ img { -webkit-user-drag: none; user-drag: none; }
 .nav-links a { color: #fff; text-decoration: none; font-family: 'Archivo Black'; font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; }
 .nav-right { position: absolute; right: 0; font-size: 20px; color: #fff; }
 
-/* Hero Slider */
+/* Rockstar Hero Slider */
 .hero { height: 100vh; position: relative; overflow: hidden; }
 .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1s ease-in-out; display: flex; align-items: flex-end; justify-content: flex-start; }
 .slide.active { opacity: 1; }
 
-/* ROCKSTAR BUTTON POSITION (Bottom-Left) */
-.hero-content-wrapper { padding: 0 0 100px 150px; /* Aligns with the 'O' in OxygenOS image */ width: 100%; }
+/* ROCKSTAR BOTTOM-LEFT BUTTON POSITION */
+.hero-content-anchor { 
+    padding: 0 0 120px 180px; /* Aligns precisely with the logo text in your PNG */
+    width: 100%; 
+}
+
 .rs-btn { 
     display: inline-block;
-    padding: 14px 55px; 
+    padding: 14px 60px; 
     border: 1px solid rgba(255,255,255,0.4); 
     background: rgba(255,255,255,0.05); 
     backdrop-filter: blur(15px); 
     -webkit-backdrop-filter: blur(15px); 
     color: #fff; 
     text-decoration: none; 
-    border-radius: 30px; /* Rounded pill like Rockstar */
+    border-radius: 40px; /* Rockstar Pill Shape */
     font-weight: 700; 
     font-size: 16px; 
     text-transform: uppercase;
-    transition: 0.3s; 
+    transition: all 0.3s ease; 
     pointer-events: auto;
 }
 .rs-btn:hover { background: #fff; color: #000; border-color: #fff; transform: scale(1.05); }
 
-/* ROCKSTAR PILL SLIDER */
+/* ROCKSTAR PILL SLIDER CONTROLS */
 .rs-slider-controls { position: absolute; bottom: 50px; right: 80px; display: flex; align-items: center; gap: 20px; z-index: 1000; }
 .control-btn { background: none; border: none; cursor: pointer; outline: none; }
 .rs-indicators { display: flex; gap: 12px; }
-.rs-indicator { width: 65px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 10px; position: relative; overflow: hidden; cursor: pointer; }
+.rs-indicator { width: 65px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 10px; position: relative; overflow: hidden; }
 .rs-progress-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #fff; border-radius: 10px; }
 
-/* Sections & Footer */
+/* Grid and Protected Banner */
 .version-grid { padding: 60px 5%; display: flex; gap: 30px; }
 .v-card { flex: 1; }
-.glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); padding: 40px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; }
-.label { font-size: 11px; font-weight: 900; color: #888; text-transform: uppercase; }
+.glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); padding: 45px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; }
+.label { font-size: 11px; font-weight: 900; color: #888; text-transform: uppercase; margin-bottom: 5px; }
 
 .revork-full-banner { width: 100vw; margin-left: calc(-50vw + 50%); line-height: 0; }
 .revork-full-banner img { width: 100%; height: auto; display: block; }
 
+/* Photo-Matched Footer */
 .footer-divider-container { width: 100vw; margin-left: calc(-50vw + 50%); line-height: 0; }
-.footer-divider { width: 100%; display: block; opacity: 0.4; }
-
-.site-footer { padding: 40px 80px; display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 13px; font-weight: 600; background: #000; }
-.lang-img { height: 18px; filter: brightness(0.7); }
-.footer-logo { width: 35px; opacity: 0.6; }
+.footer-divider { width: 100%; display: block; opacity: 0.35; }
+.site-footer { padding: 50px 80px; display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 13px; font-weight: 600; background: #000; }
+.lang-img { height: 16px; filter: brightness(0.6); }
+.footer-logo { width: 38px; opacity: 0.55; }
