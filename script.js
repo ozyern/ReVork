@@ -7,13 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let current = 0;
     let timer;
     let isPaused = false;
-    const duration = 5000; // Time in milliseconds
+    const duration = 5000;
 
     function updateSlider(idx) {
-        // Reset all active slides
         slides.forEach(s => s.classList.remove('active'));
-        
-        // Hard reset all progress bars to 0 with NO transition
         indicators.forEach(ind => {
             ind.classList.remove('active');
             const bar = ind.querySelector('.rs-progress-bar');
@@ -21,11 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
             bar.style.width = '0%';
         });
 
-        // Activate current slide/indicator
         slides[idx].classList.add('active');
         indicators[idx].classList.add('active');
 
-        // Apply linear fill after a tiny delay
         setTimeout(() => {
             if (!isPaused) {
                 const activeBar = indicators[idx].querySelector('.rs-progress-bar');
@@ -39,8 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startCycle() {
         timer = setInterval(() => {
-            let next = (current + 1) % slides.length;
-            updateSlider(next);
+            updateSlider((current + 1) % slides.length);
         }, duration);
     }
 
@@ -48,15 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isPaused) {
             clearInterval(timer);
             const activeBar = indicators[current].querySelector('.rs-progress-bar');
-            // Freeze bar where it is
-            const currentWidth = window.getComputedStyle(activeBar).width;
             activeBar.style.transition = 'none';
-            activeBar.style.width = currentWidth;
-            pausePath.setAttribute('d', 'M8 5v14l11-7z'); // Play icon
+            activeBar.style.width = window.getComputedStyle(activeBar).width;
+            pausePath.setAttribute('d', 'M8 5v14l11-7z');
         } else {
             updateSlider(current); 
             startCycle();
-            pausePath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'); // Pause icon
+            pausePath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
         }
         isPaused = !isPaused;
     });
@@ -69,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Start everything
     updateSlider(0);
     startCycle();
 });
