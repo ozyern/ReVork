@@ -3,67 +3,96 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-/* Navigation */
-.rs-nav { position: absolute; top: 0; width: 100%; z-index: 1000; padding: 40px 60px; background: transparent; }
+/* Image Protection Classes */
+.no-select {
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+/* Rockstar Navigation */
+.rs-nav {
+    position: absolute;
+    top: 0; width: 100%; z-index: 1000;
+    padding: 40px 60px; background: transparent;
+}
 .nav-container { display: flex; justify-content: center; align-items: center; position: relative; }
 .nav-logo { position: absolute; left: 0; }
-.nav-logo img { width: 32px; }
+.nav-logo img { width: 32px; pointer-events: auto; }
 .nav-links { display: flex; list-style: none; gap: 35px; }
-.nav-links a { color: #fff; text-decoration: none; font-family: 'Archivo Black'; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
-.nav-right { position: absolute; right: 0; font-size: 20px; }
+.nav-links a { 
+    color: #fff; text-decoration: none; font-family: 'Archivo Black'; 
+    font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; 
+}
+.nav-right { position: absolute; right: 0; font-size: 20px; color: #fff; }
 
-/* Hero & Slider */
-.hero { height: 100vh; position: relative; overflow: hidden; }
-.slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s; display: flex; align-items: center; justify-content: center; }
+/* Hero Slider */
+.hero { height: 100vh; position: relative; overflow: hidden; background: #000; }
+.slide { 
+    position: absolute; inset: 0; 
+    background-size: cover; background-position: center;
+    opacity: 0; transition: opacity 1s ease-in-out;
+}
 .slide.active { opacity: 1; }
 
-/* Button Positioning - Adjust margin-top to align with your image text */
-.btn-container { margin-top: 180px; }
-.rs-btn { 
-    padding: 12px 45px; 
-    border: 1px solid rgba(255,255,255,0.4); 
-    background: rgba(255,255,255,0.05); 
-    backdrop-filter: blur(15px); 
-    -webkit-backdrop-filter: blur(15px); 
-    color: #fff; 
-    text-decoration: none; 
-    border-radius: 8px; 
-    font-weight: 600; 
-    transition: 0.3s; 
+.btn-container { 
+    height: 100%; display: flex; align-items: center; justify-content: center;
+    margin-top: 180px; /* Adjust this to align with the text in your images */
+}
+
+.rs-btn {
+    padding: 12px 45px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #fff; text-decoration: none; border-radius: 8px;
+    font-weight: 600; font-size: 15px; transition: 0.3s;
+    pointer-events: auto;
 }
 .rs-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
-/* Rockstar Progress Mover Physics */
-.rs-slider-controls { position: absolute; bottom: 50px; right: 60px; display: flex; align-items: center; gap: 15px; z-index: 100; }
-.control-btn { background: none; border: none; cursor: pointer; }
-.rs-indicators { display: flex; gap: 10px; }
-.rs-indicator { width: 55px; height: 3px; background: rgba(255,255,255,0.2); position: relative; overflow: hidden; border-radius: 2px; }
-.rs-progress-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #fff; }
-.rs-indicator.active .rs-progress-bar { width: 100%; transition: width 5000ms linear; }
+/* Rockstar Progress Bar Mover */
+.rs-slider-controls {
+    position: absolute; bottom: 50px; right: 80px;
+    display: flex; align-items: center; gap: 20px; z-index: 1000;
+}
+.control-btn { background: none; border: none; cursor: pointer; outline: none; }
+.rs-indicators { display: flex; gap: 12px; }
+.rs-indicator { 
+    width: 65px; height: 4px; background: rgba(255,255,255,0.2); 
+    position: relative; overflow: hidden; border-radius: 4px; cursor: pointer;
+}
+.rs-progress-bar { 
+    position: absolute; left: 0; top: 0; height: 100%; width: 0%; 
+    background: #fff; border-radius: 4px; 
+}
 
-/* Full Width Banner */
+/* Full Width Sections */
+.version-grid { padding: 60px 5%; display: flex; gap: 30px; }
+.v-card { flex: 1; }
+.glass-card { 
+    background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); 
+    padding: 40px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; 
+}
+.label { font-size: 11px; font-weight: 900; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+
 .revork-full-banner { width: 100vw; margin-left: calc(-50vw + 50%); line-height: 0; margin-top: 40px; }
 .revork-full-banner img { width: 100%; height: auto; display: block; }
 
-/* Footer Styling */
-.footer-divider-container { width: 100%; text-align: center; background: #000; }
-.footer-divider { width: 100%; height: auto; display: block; opacity: 0.3; }
-
+/* Footer */
+.footer-divider-container { width: 100vw; margin-left: calc(-50vw + 50%); }
+.footer-divider { width: 100%; display: block; opacity: 0.3; }
 .site-footer { 
-    padding: 40px 60px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    color: #666; 
-    font-size: 13px; 
-    font-weight: 600; 
-    background: #000;
+    padding: 40px 80px; display: flex; justify-content: space-between; align-items: center; 
+    color: #666; font-size: 13px; font-weight: 600; background: #000; 
 }
-.lang-img { height: 20px; filter: brightness(0.7); }
+.lang-img { height: 18px; filter: brightness(0.7); }
 .footer-logo { width: 35px; opacity: 0.6; }
-
-/* Version Grid */
-.version-grid { padding: 60px 5%; display: flex; gap: 30px; }
-.v-card { flex: 1; }
-.glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); padding: 40px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; }
-.label { font-size: 11px; font-weight: 900; color: #888; text-transform: uppercase; margin-bottom: 5px; }

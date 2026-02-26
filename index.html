@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReVork</title>
+    <title>ReVork | OxygenOS & ColorOS</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,14 +11,18 @@
 
     <nav class="rs-nav">
         <div class="nav-container">
-            <div class="nav-logo"><img src="assets/favicon.png" alt="X"></div>
+            <div class="nav-logo">
+                <img src="assets/favicon.png" alt="X" draggable="false">
+            </div>
             <ul class="nav-links">
                 <li><a href="#">ROMs</a></li>
                 <li><a href="#">Newswire</a></li>
                 <li><a href="#">Downloads</a></li>
                 <li><a href="#">Installation Guide</a></li>
             </ul>
-            <div class="nav-right"><span>✈</span></div>
+            <div class="nav-right">
+                <span class="icon-tele">✈</span>
+            </div>
         </div>
     </nav>
 
@@ -42,11 +46,17 @@
 
         <div class="rs-slider-controls">
             <button id="pauseBtn" class="control-btn">
-                <svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                <svg viewBox="0 0 24 24" fill="white" width="18" height="18">
+                    <path id="pausePath" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
             </button>
             <div class="rs-indicators">
-                <div class="rs-indicator active" data-index="0"><div class="rs-progress-bar"></div></div>
-                <div class="rs-indicator" data-index="1"><div class="rs-progress-bar"></div></div>
+                <div class="rs-indicator active" data-index="0">
+                    <div class="rs-progress-bar"></div>
+                </div>
+                <div class="rs-indicator" data-index="1">
+                    <div class="rs-progress-bar"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -68,21 +78,21 @@
         </div>
     </section>
 
-    <section class="revork-full-banner">
-        <img src="assets/revork.png" alt="Join the ReVork">
+    <section class="revork-full-banner no-select">
+        <img src="assets/revork.png" alt="Join the ReVork" draggable="false" oncontextmenu="return false;">
     </section>
 
-    <div class="footer-divider-container">
-        <img src="assets/divider.png" class="footer-divider" alt="">
+    <div class="footer-divider-container no-select">
+        <img src="assets/divider.png" class="footer-divider" alt="" draggable="false" oncontextmenu="return false;">
     </div>
     
     <footer class="site-footer">
-        <div class="footer-left">
-            <img src="assets/globalenglish.png" alt="Global/English" class="lang-img">
+        <div class="footer-left no-select">
+            <img src="assets/global/english.png" alt="Global/English" class="lang-img" draggable="false" oncontextmenu="return false;">
         </div>
         <div class="footer-center">©ReVork All rights reserved.</div>
-        <div class="footer-right">
-            <img src="assets/favicon.png" alt="X" class="footer-logo">
+        <div class="footer-right no-select">
+            <img src="assets/favicon.png" alt="X" class="footer-logo" draggable="false" oncontextmenu="return false;">
         </div>
     </footer>
 
