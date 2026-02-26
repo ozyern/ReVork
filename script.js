@@ -5,10 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let current = 0;
     let timer;
     let isPaused = false;
+    const slideDuration = 5000;
 
     function updateSlider(idx) {
-        // Reset all slides and bars
+        // Reset slides
         slides.forEach(s => s.classList.remove('active'));
+        
+        // Reset indicators and bars
         indicators.forEach(ind => {
             ind.classList.remove('active');
             const bar = ind.querySelector('.rs-progress-bar');
@@ -16,16 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
             bar.style.transition = 'none';
         });
 
-        // Activate new slide
+        // Activate new slide and indicator
         slides[idx].classList.add('active');
         indicators[idx].classList.add('active');
 
-        // Restart Rockstar-style "mover" bar
-        setTimeout(() => {
-            const activeBar = indicators[idx].querySelector('.rs-progress-bar');
-            activeBar.style.transition = 'width 5000ms linear';
-            activeBar.style.width = '100%';
-        }, 50);
+        // Restart progress bar animation
+        if (!isPaused) {
+            setTimeout(() => {
+                const activeBar = indicators[idx].querySelector('.rs-progress-bar');
+                activeBar.style.transition = `width ${slideDuration}ms linear`;
+                activeBar.style.width = '100%';
+            }, 50);
+        }
 
         current = idx;
     }
@@ -34,19 +39,26 @@ document.addEventListener('DOMContentLoaded', () => {
         timer = setInterval(() => {
             let next = (current + 1) % slides.length;
             updateSlider(next);
-        }, 5000);
+        }, slideDuration);
     }
 
-    pauseBtn.addEventListener('click', () => {
+    function togglePause() {
         if (!isPaused) {
             clearInterval(timer);
-            pauseBtn.textContent = '▶';
+            const activeBar = indicators[current].querySelector('.rs-progress-bar');
+            const computedStyle = window.getComputedStyle(activeBar);
+            activeBar.style.width = computedStyle.width;
+            activeBar.style.transition = 'none';
+            pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M8 5v14l11-7z"/></svg>';
         } else {
+            updateSlider(current);
             startCycle();
-            pauseBtn.textContent = '||';
+            pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
         }
         isPaused = !isPaused;
-    });
+    }
+
+    pauseBtn.addEventListener('click', togglePause);
 
     indicators.forEach((ind, i) => {
         ind.addEventListener('click', () => {
@@ -56,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initial load
+    // Start on load
     updateSlider(0);
     startCycle();
 });
