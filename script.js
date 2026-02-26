@@ -7,13 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let current = 0;
     let timer;
     let isPaused = false;
-    const duration = 5000; // 5 seconds per slide
+    const duration = 5000; // Time in milliseconds
 
     function updateSlider(idx) {
-        // Reset slides
+        // Reset all active slides
         slides.forEach(s => s.classList.remove('active'));
         
-        // Reset indicators and bars
+        // Hard reset all progress bars to 0 with NO transition
         indicators.forEach(ind => {
             ind.classList.remove('active');
             const bar = ind.querySelector('.rs-progress-bar');
@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
             bar.style.width = '0%';
         });
 
-        // Activate current
+        // Activate current slide/indicator
         slides[idx].classList.add('active');
         indicators[idx].classList.add('active');
 
-        // Linear fill animation
+        // Apply linear fill after a tiny delay
         setTimeout(() => {
             if (!isPaused) {
                 const activeBar = indicators[idx].querySelector('.rs-progress-bar');
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isPaused) {
             clearInterval(timer);
             const activeBar = indicators[current].querySelector('.rs-progress-bar');
+            // Freeze bar where it is
             const currentWidth = window.getComputedStyle(activeBar).width;
             activeBar.style.transition = 'none';
             activeBar.style.width = currentWidth;
@@ -68,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Start everything
     updateSlider(0);
     startCycle();
 });

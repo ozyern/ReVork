@@ -3,21 +3,18 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-/* Image Protection Classes */
+/* 1. IMAGE PROTECTION */
 .no-select {
     user-select: none;
     -webkit-user-drag: none;
     pointer-events: none;
 }
-
 img {
     -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
+    user-drag: none;
 }
 
-/* Rockstar Navigation */
+/* 2. ROCKSTAR TRANSPARENT HEADER */
 .rs-nav {
     position: absolute;
     top: 0; width: 100%; z-index: 1000;
@@ -33,7 +30,7 @@ img {
 }
 .nav-right { position: absolute; right: 0; font-size: 20px; color: #fff; }
 
-/* Hero Slider */
+/* 3. HERO SLIDER */
 .hero { height: 100vh; position: relative; overflow: hidden; background: #000; }
 .slide { 
     position: absolute; inset: 0; 
@@ -44,9 +41,8 @@ img {
 
 .btn-container { 
     height: 100%; display: flex; align-items: center; justify-content: center;
-    margin-top: 180px; /* Adjust this to align with the text in your images */
+    margin-top: 180px; /* Adjust to align with text on your images */
 }
-
 .rs-btn {
     padding: 12px 45px;
     border: 1px solid rgba(255,255,255,0.4);
@@ -59,7 +55,7 @@ img {
 }
 .rs-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
-/* Rockstar Progress Bar Mover */
+/* 4. ROCKSTAR PILL SLIDER PHYSICS */
 .rs-slider-controls {
     position: absolute; bottom: 50px; right: 80px;
     display: flex; align-items: center; gap: 20px; z-index: 1000;
@@ -67,15 +63,15 @@ img {
 .control-btn { background: none; border: none; cursor: pointer; outline: none; }
 .rs-indicators { display: flex; gap: 12px; }
 .rs-indicator { 
-    width: 65px; height: 4px; background: rgba(255,255,255,0.2); 
-    position: relative; overflow: hidden; border-radius: 4px; cursor: pointer;
+    width: 65px; height: 6px; background: rgba(255,255,255,0.2); 
+    position: relative; overflow: hidden; border-radius: 10px; cursor: pointer;
 }
 .rs-progress-bar { 
     position: absolute; left: 0; top: 0; height: 100%; width: 0%; 
-    background: #fff; border-radius: 4px; 
+    background: #fff; border-radius: 10px; 
 }
 
-/* Full Width Sections */
+/* 5. SECTIONS & FOOTER */
 .version-grid { padding: 60px 5%; display: flex; gap: 30px; }
 .v-card { flex: 1; }
 .glass-card { 
@@ -87,9 +83,9 @@ img {
 .revork-full-banner { width: 100vw; margin-left: calc(-50vw + 50%); line-height: 0; margin-top: 40px; }
 .revork-full-banner img { width: 100%; height: auto; display: block; }
 
-/* Footer */
-.footer-divider-container { width: 100vw; margin-left: calc(-50vw + 50%); }
-.footer-divider { width: 100%; display: block; opacity: 0.3; }
+.footer-divider-container { width: 100vw; margin-left: calc(-50vw + 50%); line-height: 0; }
+.footer-divider { width: 100%; display: block; opacity: 0.4; }
+
 .site-footer { 
     padding: 40px 80px; display: flex; justify-content: space-between; align-items: center; 
     color: #666; font-size: 13px; font-weight: 600; background: #000; 
