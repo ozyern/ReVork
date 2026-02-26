@@ -3,11 +3,11 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-/* Image and Asset Protection */
+/* Image Protection */
 .no-select { user-select: none; -webkit-user-drag: none; pointer-events: none; }
 img { -webkit-user-drag: none; user-drag: none; }
 
-/* Transparent Rockstar Header */
+/* Rockstar Navigation */
 .rs-nav { position: absolute; top: 0; width: 100%; z-index: 1000; padding: 40px 60px; background: transparent; }
 .nav-container { display: flex; justify-content: center; align-items: center; position: relative; }
 .nav-logo { position: absolute; left: 0; }
@@ -16,20 +16,25 @@ img { -webkit-user-drag: none; user-drag: none; }
 .nav-links a { color: #fff; text-decoration: none; font-family: 'Archivo Black'; font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; }
 .nav-right { position: absolute; right: 0; font-size: 20px; color: #fff; }
 
-/* Rockstar Hero Slider */
-.hero { height: 100vh; position: relative; overflow: hidden; }
-.slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1s ease-in-out; display: flex; align-items: flex-end; justify-content: flex-start; }
+/* Hero Slider */
+.hero { height: 100vh; position: relative; overflow: hidden; background: #000; }
+.slide { 
+    position: absolute; inset: 0; 
+    background-size: cover; background-position: center;
+    opacity: 0; transition: opacity 1s ease-in-out;
+    display: flex; align-items: flex-end; justify-content: flex-start;
+}
 .slide.active { opacity: 1; }
 
-/* ROCKSTAR BOTTOM-LEFT BUTTON POSITION */
+/* ADJUSTED BUTTON POSITIONING - Aligns with Bottom-Left Branding */
 .hero-content-anchor { 
-    padding: 0 0 120px 180px; /* Aligns precisely with the logo text in your PNG */
+    padding: 0 0 100px 145px; /* Positions button exactly under "OxygenOS 16" in your image */
     width: 100%; 
 }
 
 .rs-btn { 
     display: inline-block;
-    padding: 14px 60px; 
+    padding: 12px 55px; 
     border: 1px solid rgba(255,255,255,0.4); 
     background: rgba(255,255,255,0.05); 
     backdrop-filter: blur(15px); 
@@ -38,21 +43,21 @@ img { -webkit-user-drag: none; user-drag: none; }
     text-decoration: none; 
     border-radius: 40px; /* Rockstar Pill Shape */
     font-weight: 700; 
-    font-size: 16px; 
+    font-size: 15px; 
     text-transform: uppercase;
     transition: all 0.3s ease; 
     pointer-events: auto;
 }
 .rs-btn:hover { background: #fff; color: #000; border-color: #fff; transform: scale(1.05); }
 
-/* ROCKSTAR PILL SLIDER CONTROLS */
+/* Rockstar "Pill" Mover Controls */
 .rs-slider-controls { position: absolute; bottom: 50px; right: 80px; display: flex; align-items: center; gap: 20px; z-index: 1000; }
 .control-btn { background: none; border: none; cursor: pointer; outline: none; }
 .rs-indicators { display: flex; gap: 12px; }
 .rs-indicator { width: 65px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 10px; position: relative; overflow: hidden; }
 .rs-progress-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #fff; border-radius: 10px; }
 
-/* Grid and Protected Banner */
+/* Bottom Sections & Footer */
 .version-grid { padding: 60px 5%; display: flex; gap: 30px; }
 .v-card { flex: 1; }
 .glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); padding: 45px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; }
@@ -61,7 +66,6 @@ img { -webkit-user-drag: none; user-drag: none; }
 .revork-full-banner { width: 100vw; margin-left: calc(-50vw + 50%); line-height: 0; }
 .revork-full-banner img { width: 100%; height: auto; display: block; }
 
-/* Photo-Matched Footer */
 .footer-divider-container { width: 100vw; margin-left: calc(-50vw + 50%); line-height: 0; }
 .footer-divider { width: 100%; display: block; opacity: 0.35; }
 .site-footer { padding: 50px 80px; display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 13px; font-weight: 600; background: #000; }
