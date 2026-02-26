@@ -16,11 +16,24 @@ body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow
 .hero { height: 100vh; position: relative; overflow: hidden; }
 .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s; display: flex; align-items: center; justify-content: center; }
 .slide.active { opacity: 1; }
-.btn-container { margin-top: 200px; }
-.rs-btn { padding: 12px 45px; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; transition: 0.3s; }
-.rs-btn:hover { background: #fff; color: #000; }
 
-/* Rockstar Progress Bar Controls */
+/* Button Positioning - Adjust margin-top to align with your image text */
+.btn-container { margin-top: 180px; }
+.rs-btn { 
+    padding: 12px 45px; 
+    border: 1px solid rgba(255,255,255,0.4); 
+    background: rgba(255,255,255,0.05); 
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px); 
+    color: #fff; 
+    text-decoration: none; 
+    border-radius: 8px; 
+    font-weight: 600; 
+    transition: 0.3s; 
+}
+.rs-btn:hover { background: #fff; color: #000; border-color: #fff; }
+
+/* Rockstar Progress Mover Physics */
 .rs-slider-controls { position: absolute; bottom: 50px; right: 60px; display: flex; align-items: center; gap: 15px; z-index: 100; }
 .control-btn { background: none; border: none; cursor: pointer; }
 .rs-indicators { display: flex; gap: 10px; }
@@ -28,16 +41,29 @@ body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow
 .rs-progress-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #fff; }
 .rs-indicator.active .rs-progress-bar { width: 100%; transition: width 5000ms linear; }
 
+/* Full Width Banner */
+.revork-full-banner { width: 100vw; margin-left: calc(-50vw + 50%); line-height: 0; margin-top: 40px; }
+.revork-full-banner img { width: 100%; height: auto; display: block; }
+
+/* Footer Styling */
+.footer-divider-container { width: 100%; text-align: center; background: #000; }
+.footer-divider { width: 100%; height: auto; display: block; opacity: 0.3; }
+
+.site-footer { 
+    padding: 40px 60px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    color: #666; 
+    font-size: 13px; 
+    font-weight: 600; 
+    background: #000;
+}
+.lang-img { height: 20px; filter: brightness(0.7); }
+.footer-logo { width: 35px; opacity: 0.6; }
+
 /* Version Grid */
 .version-grid { padding: 60px 5%; display: flex; gap: 30px; }
 .v-card { flex: 1; }
-.glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; }
+.glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); padding: 40px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; }
 .label { font-size: 11px; font-weight: 900; color: #888; text-transform: uppercase; margin-bottom: 5px; }
-
-/* Full Width Banner */
-.revork-full-banner { width: 100vw; margin-left: calc(-50vw + 50%); line-height: 0; }
-.revork-full-banner img { width: 100%; height: auto; display: block; }
-
-/* Photo-Matched Footer */
-.site-footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 13px; font-weight: 600; border-top: 1px solid #1a1a1a; }
-.footer-logo { width: 40px; filter: grayscale(1); opacity: 0.6; }

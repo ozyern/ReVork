@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             bar.style.width = '0%';
             bar.style.transition = 'none';
         });
+        
         slides[idx].classList.add('active');
         indicators[idx].classList.add('active');
         
@@ -45,6 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
             pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'; 
         }
         isPaused = !isPaused;
+    });
+
+    indicators.forEach((ind, i) => {
+        ind.addEventListener('click', () => {
+            clearInterval(timer);
+            updateSlider(i);
+            if (!isPaused) start();
+        });
     });
 
     updateSlider(0);
