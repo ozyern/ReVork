@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReVork</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,283 +14,154 @@
     <header class="header">
         <nav class="container">
             <div class="nav-wrapper">
-                <!-- Logo - Centered on Mobile, Left on Desktop -->
                 <div class="logo">
                     <img src="./assets/favicon.png" alt="ReVork" class="logo-img">
                 </div>
 
-                <!-- Desktop Menu -->
                 <div class="nav-menu">
-                    <a href="#home" class="nav-link">HOME</a>
-                    <a href="#installation-guide" class="nav-link">INSTALLATION GUIDE</a>
-                    <a href="#downloads" class="nav-link">DOWNLOADS</a>
-                    <a href="#devices" class="nav-link">DEVICES</a>
-                    <a href="#roms" class="nav-link">ROMS</a>
+                    <a href="roms.html" class="nav-link">ROMs</a>
+                    <a href="#newswire" class="nav-link">Newswire</a>
+                    <a href="#downloads" class="nav-link">Downloads</a>
+                    <a href="installation.html" class="nav-link">Installation Guide</a>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-                    <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                    <svg class="close-icon hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                <button class="telegram-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
                     </svg>
                 </button>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div class="mobile-menu hidden" id="mobileMenu">
-                <a href="#home" class="mobile-nav-link">HOME</a>
-                <a href="#installation-guide" class="mobile-nav-link">INSTALLATION GUIDE</a>
-                <a href="#downloads" class="mobile-nav-link">DOWNLOADS</a>
-                <a href="#devices" class="mobile-nav-link">DEVICES</a>
-                <a href="#roms" class="mobile-nav-link">ROMS</a>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Slideshow -->
-    <section class="hero-slideshow" id="home">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div class="slideshow-wrapper">
-                <div class="slide active">
-                    <img src="./assets/oos16_preview.png" alt="ReVork Device" class="device-img">
+    <!-- Hero Section with Slideshow -->
+    <section class="hero-section" id="home">
+        <div class="hero-gradient"></div>
+        <div class="slideshow">
+            <div class="slide active">
+                <div class="slide-content">
+                    <h1 class="hero-title">Oxygen<span class="hero-os">OS</span> <span class="hero-number">16</span></h1>
+                    <a href="#learn-more" class="learn-more-btn">Learn More</a>
                 </div>
-                <div class="slide">
-                    <img src="./assets/cos16_preview.png" alt="ReVork Device" class="device-img">
+            </div>
+            <div class="slide">
+                <div class="slide-content">
+                    <h1 class="hero-title">Color<span class="hero-os">OS</span> <span class="hero-number">16</span></h1>
+                    <a href="#learn-more" class="learn-more-btn">Learn More</a>
                 </div>
-                <div class="slide">
-                    <img src="./assets/oos16_preview.png" alt="ReVork Device" class="device-img">
+            </div>
+            <div class="slide">
+                <div class="slide-content">
+                    <h1 class="hero-title">Oxygen<span class="hero-os">OS</span> <span class="hero-number">16</span></h1>
+                    <a href="#learn-more" class="learn-more-btn">Learn More</a>
                 </div>
             </div>
         </div>
-
-        <!-- Slide Indicators -->
-        <div class="slide-indicators">
-            <button class="indicator active" data-slide="0"></button>
-            <button class="indicator" data-slide="1"></button>
-            <button class="indicator" data-slide="2"></button>
+        
+        <!-- Slide Controls -->
+        <div class="slide-controls">
+            <button class="pause-btn">||</button>
+            <div class="slide-indicators">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+            </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features-section" id="about">
-        <div class="features-bg"></div>
+    <!-- OS Versions Section -->
+    <section class="os-versions-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    Engineered for <span class="text-red">Performance</span>
-                </h2>
-                <p class="section-subtitle">
-                    Every feature designed to deliver maximum power and reliability
-                </p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-glow"></div>
-                    <div class="feature-content">
-                        <div class="feature-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-                                <rect x="9" y="9" width="6" height="6"></rect>
-                                <line x1="9" y1="1" x2="9" y2="4"></line>
-                                <line x1="15" y1="1" x2="15" y2="4"></line>
-                                <line x1="9" y1="20" x2="9" y2="23"></line>
-                                <line x1="15" y1="20" x2="15" y2="23"></line>
-                                <line x1="20" y1="9" x2="23" y2="9"></line>
-                                <line x1="20" y1="14" x2="23" y2="14"></line>
-                                <line x1="1" y1="9" x2="4" y2="9"></line>
-                                <line x1="1" y1="14" x2="4" y2="14"></line>
-                            </svg>
-                        </div>
-                        <h3 class="feature-title">ADVANCED PORTING</h3>
-                        <p class="feature-desc">State-of-the-art porting technology that brings new life to your devices with optimized performance.</p>
+            <div class="os-grid">
+                <div class="os-card">
+                    <h2 class="os-brand">Oxygen<span class="os-text">OS</span> <span class="os-ver">16</span></h2>
+                    <div class="os-divider"></div>
+                    <div class="os-info">
+                        <span class="os-label">OxygenOS</span>
+                        <h3 class="os-version">OxygenOS 16.0.3.503</h3>
+                        <p class="os-status">Out Now</p>
                     </div>
                 </div>
-
-                <div class="feature-card">
-                    <div class="feature-glow"></div>
-                    <div class="feature-content">
-                        <div class="feature-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                            </svg>
-                        </div>
-                        <h3 class="feature-title">LIGHTNING FAST</h3>
-                        <p class="feature-desc">Experience blazing fast speeds with our optimized kernel and system configurations.</p>
+                
+                <div class="os-card">
+                    <div class="os-info">
+                        <span class="os-label color-label">ColorOS</span>
+                        <h3 class="os-version color-version">ColorOS 16.0.3.504</h3>
+                        <p class="os-status">Out Now</p>
                     </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-glow"></div>
-                    <div class="feature-content">
-                        <div class="feature-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="feature-title">STABLE & SECURE</h3>
-                        <p class="feature-desc">Built with security in mind. Regular updates and community-driven improvements.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-glow"></div>
-                    <div class="feature-content">
-                        <div class="feature-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="2" y1="12" x2="22" y2="12"></line>
-                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="feature-title">WIDE SUPPORT</h3>
-                        <p class="feature-desc">Support for a growing range of devices. Join our community to expand compatibility.</p>
+                    <div class="color-badge">
+                        <h2 class="color-title">Color<span class="os-text">OS</span> <span class="color-num">16</span></h2>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Tech Specs Section -->
-    <section class="tech-specs-section" id="tech">
-        <div class="accent-line-top"></div>
-        <div class="accent-line-bottom"></div>
+    <!-- FAQ Section -->
+    <section class="faq-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    Technical <span class="text-red">Specifications</span>
-                </h2>
-                <p class="section-subtitle">
-                    Built on cutting-edge technology stack
-                </p>
-            </div>
-
-            <div class="specs-grid">
-                <div class="spec-card">
-                    <h3 class="spec-category">SYSTEM</h3>
-                    <ul class="spec-list">
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>Android 14 Base</span>
-                        </li>
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>Custom Kernel</span>
-                        </li>
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>OTA Updates</span>
-                        </li>
-                    </ul>
+            <h2 class="faq-title">FAQ</h2>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3 class="faq-question">Is the ROM Rooted?</h3>
+                    <p class="faq-answer">Yes , the ROM is rooted via SukiSu Ultra.</p>
                 </div>
-
-                <div class="spec-card">
-                    <h3 class="spec-category">PERFORMANCE</h3>
-                    <ul class="spec-list">
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>Optimized RAM</span>
-                        </li>
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>CPU Tweaks</span>
-                        </li>
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>GPU Boost</span>
-                        </li>
-                    </ul>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Does the stock camera app work?</h3>
+                    <p class="faq-answer">Yes, if ur device is OnePlus 9 or 9 Pro it will work.</p>
                 </div>
-
-                <div class="spec-card">
-                    <h3 class="spec-category">FEATURES</h3>
-                    <ul class="spec-list">
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>Root Access</span>
-                        </li>
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>Custom Recovery</span>
-                        </li>
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>Magisk Support</span>
-                        </li>
-                    </ul>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Will it work on other region devices like LE2121, LE2125?</h3>
+                    <p class="faq-answer">Yes , it works on all every region devices.</p>
                 </div>
-
-                <div class="spec-card">
-                    <h3 class="spec-category">SECURITY</h3>
-                    <ul class="spec-list">
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>SELinux Enforcing</span>
-                        </li>
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>Verified Boot</span>
-                        </li>
-                        <li class="spec-item">
-                            <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>Regular Patches</span>
-                        </li>
-                    </ul>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Do I need a PC to install the ROM</h3>
+                    <p class="faq-answer">Yes , a PC is required to install the ROM.</p>
                 </div>
-            </div>
-
-            <!-- Performance Stats -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">50+</div>
-                    <div class="stat-label">SUPPORTED DEVICES</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">10K+</div>
-                    <div class="stat-label">ACTIVE USERS</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">99.9%</div>
-                    <div class="stat-label">STABILITY</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">24/7</div>
-                    <div class="stat-label">COMMUNITY SUPPORT</div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Will it wipe my data?</h3>
+                    <p class="faq-answer">If you're coming from stock OxygenOS or a different ROM.</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Join Banner Section -->
+    <section class="join-banner-section">
+        <div class="join-banner">
+            <img src="./assets/join_banner.jpg" alt="Join the ReVork" class="banner-img">
+            <div class="banner-overlay">
+                <h2 class="banner-text">JOIN THE<br>REVORK</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span>Global/English</span>
+                </div>
+                <div class="footer-right">
+                    <p>©ReVork. All rights reserved.</p>
+                </div>
+            </div>
+            <div class="footer-logo">
+                <img src="./assets/favicon.png" alt="ReVork Logo" class="footer-logo-img">
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
