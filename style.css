@@ -4,67 +4,71 @@
 body { background: #000; color: #fff; font-family: 'Inter', sans-serif; }
 
 /* Rockstar Navigation */
-.rockstar-nav {
+.rs-nav {
     position: absolute;
     top: 0; width: 100%;
-    display: flex; justify-content: center; align-items: center;
-    padding: 45px 60px; z-index: 100;
+    z-index: 1000;
+    padding: 35px 60px;
     background: transparent;
 }
+.nav-container { display: flex; justify-content: center; align-items: center; position: relative; }
+.nav-logo { position: absolute; left: 0; }
+.nav-logo img { width: 35px; }
 .nav-links { display: flex; list-style: none; gap: 40px; }
 .nav-links a { 
-    color: #fff; text-decoration: none; 
-    font-family: 'Archivo Black'; font-size: 13px; 
-    text-transform: uppercase; letter-spacing: 1.2px;
+    color: #fff; text-decoration: none; font-family: 'Archivo Black'; 
+    font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; opacity: 0.9;
 }
-.nav-logo { position: absolute; left: 60px; }
-.nav-social { position: absolute; right: 60px; font-size: 20px; color: #fff; }
+.nav-links a:hover { opacity: 1; color: #fccf00; }
+.nav-right { position: absolute; right: 0; font-size: 20px; }
 
 /* Hero Slider */
 .hero { height: 100vh; position: relative; overflow: hidden; }
 .slide { 
     position: absolute; inset: 0; 
     background-size: cover; background-position: center;
+    opacity: 0; transition: opacity 0.8s ease;
     display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity 1s ease-in-out;
 }
 .slide.active { opacity: 1; }
 
-/* Positioning the button over the image graphic */
-.hero-content { 
-    margin-top: 220px; /* Adjust this to move the button up or down */
-    z-index: 10; 
-}
-
-/* Glassmorphism Button */
-.btn-glass {
-    display: inline-block;
+/* Button Positioning */
+.btn-container { margin-top: 180px; } 
+.rs-btn {
     padding: 12px 45px;
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255,255,255,0.4);
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    color: #fff; text-decoration: none; border-radius: 10px;
-    font-weight: 600; font-size: 15px; transition: 0.3s;
+    color: #fff; text-decoration: none; border-radius: 8px;
+    font-family: 'Inter'; font-weight: 600; font-size: 15px;
+    transition: 0.3s;
 }
-.btn-glass:hover { background: rgba(255,255,255,0.2); border-color: #fff; }
+.rs-btn:hover { background: rgba(255,255,255,0.2); border-color: #fff; }
 
-/* Progress Controls */
-.slider-controls { position: absolute; bottom: 60px; right: 80px; display: flex; align-items: center; gap: 20px; z-index: 20; }
-#pauseBtn { background: none; border: none; color: #fff; cursor: pointer; font-size: 18px; }
-.progress-container { display: flex; gap: 12px; }
-.indicator { width: 65px; height: 3px; background: rgba(255,255,255,0.2); position: relative; overflow: hidden; }
-.indicator .bar { position: absolute; height: 100%; width: 0%; background: #fff; }
-.indicator.active .bar { width: 100%; transition: width 5s linear; }
+/* Rockstar Progress Mover */
+.rs-slider-controls {
+    position: absolute; bottom: 50px; right: 80px;
+    display: flex; align-items: center; gap: 20px; z-index: 100;
+}
+.control-btn { background: none; border: none; color: #fff; cursor: pointer; font-size: 16px; }
+.rs-indicators { display: flex; gap: 10px; }
+.rs-indicator { width: 60px; height: 3px; background: rgba(255,255,255,0.2); position: relative; overflow: hidden; }
+.rs-progress-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #fff; }
+
+.rs-indicator.active .rs-progress-bar {
+    width: 100%;
+    transition: width 5000ms linear;
+}
 
 /* Bottom Grid */
-.version-grid { padding: 80px 8%; display: flex; gap: 30px; }
+.version-grid { padding: 80px 8%; display: flex; gap: 40px; }
 .v-card { flex: 1; }
 .glass-card { 
-    background: rgba(255,255,255,0.04); 
+    background: rgba(255,255,255,0.05); 
     backdrop-filter: blur(20px); 
     padding: 40px; 
-    border: 1px solid rgba(255,255,255,0.08); 
+    border: 1px solid rgba(255,255,255,0.1); 
     border-radius: 4px;
 }
 .label { font-weight: 900; font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 8px; }

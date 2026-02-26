@@ -9,39 +9,51 @@
 </head>
 <body>
 
-    <nav class="rockstar-nav">
-        <div class="nav-logo">
-            <img src="assets/favicon.png" alt="Logo" width="35">
+    <nav class="rs-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/favicon.png" alt="X">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">ROMs</a></li>
+                <li><a href="#">Newswire</a></li>
+                <li><a href="#">Downloads</a></li>
+                <li><a href="#">Installation Guide</a></li>
+            </ul>
+            <div class="nav-right">
+                <span class="icon-tele">✈</span>
+            </div>
         </div>
-        <ul class="nav-links">
-            <li><a href="#">ROMs</a></li>
-            <li><a href="#">Newswire</a></li>
-            <li><a href="#">Downloads</a></li>
-            <li><a href="#">Installation Guide</a></li>
-        </ul>
-        <div class="nav-social">✈</div>
     </nav>
 
     <section class="hero">
-        <div class="slides-container">
+        <div class="slider">
             <div class="slide active" style="background-image: url('assets/oos16_home.png');">
-                <div class="hero-content">
-                    <a href="#" class="btn-glass">Learn More</a>
+                <div class="hero-overlay">
+                    <div class="btn-container">
+                        <a href="#" class="rs-btn">Learn More</a>
+                    </div>
                 </div>
             </div>
             
             <div class="slide" style="background-image: url('assets/revork.png');">
-                <div class="hero-content">
-                    <a href="#" class="btn-glass">Join The ReVork</a>
+                <div class="hero-overlay">
+                    <div class="btn-container">
+                        <a href="#" class="rs-btn">Join Now</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="slider-controls">
-            <button id="pauseBtn">||</button>
-            <div class="progress-container">
-                <div class="indicator active" data-index="0"><div class="bar"></div></div>
-                <div class="indicator" data-index="1"><div class="bar"></div></div>
+        <div class="rs-slider-controls">
+            <button id="pauseBtn" class="control-btn">||</button>
+            <div class="rs-indicators">
+                <div class="rs-indicator active" data-index="0">
+                    <div class="rs-progress-bar"></div>
+                </div>
+                <div class="rs-indicator" data-index="1">
+                    <div class="rs-progress-bar"></div>
+                </div>
             </div>
         </div>
     </section>
