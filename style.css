@@ -1,23 +1,22 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #fff; font-family: 'Archivo', sans-serif; overflow-x: hidden; }
 
-/* Asset Protection */
+/* Non-copyable/Non-movable Protections */
 .no-select { user-select: none; -webkit-user-drag: none; pointer-events: none; }
 img { -webkit-user-drag: none; user-drag: none; }
 
-/* Rockstar Header Layout */
+/* Header Layout */
 .rs-nav { position: absolute; top: 0; width: 100%; z-index: 1000; padding: 35px 60px; background: transparent; }
 .nav-container { display: flex; justify-content: center; align-items: center; position: relative; }
 .nav-logo { position: absolute; left: 0; }
-.nav-logo img { width: 52px; pointer-events: auto; }
+.nav-logo img { width: 50px; pointer-events: auto; }
 .nav-links { display: flex; list-style: none; gap: 40px; }
 .nav-links a { 
     color: #fff; text-decoration: none; font-family: 'Archivo Black', sans-serif; 
-    font-size: 13.5px; text-transform: uppercase; letter-spacing: 2.2px; opacity: 0.85; 
+    font-size: 14px; text-transform: uppercase; letter-spacing: 2.2px; opacity: 0.85; 
 }
-.nav-links a:hover { opacity: 1; }
 
-/* Fixed Hero Alignment */
+/* Hero Section & Background Fix */
 .hero { height: 100vh; width: 100vw; position: relative; overflow: hidden; }
 .slide { 
     position: absolute; inset: 0; 
@@ -28,7 +27,7 @@ img { -webkit-user-drag: none; user-drag: none; }
 }
 .slide.active { opacity: 1; }
 
-/* Rockstar Pill Button */
+/* Rockstar Button Positioning */
 .hero-content-anchor { position: absolute; bottom: 12%; left: 8%; pointer-events: auto; }
 .rs-btn { 
     display: inline-block;
@@ -37,18 +36,20 @@ img { -webkit-user-drag: none; user-drag: none; }
     background: rgba(255,255,255,0.05); 
     backdrop-filter: blur(20px); 
     color: #fff; text-decoration: none; border-radius: 50px; 
-    font-weight: 700; font-size: 14.5px; text-transform: uppercase;
+    font-weight: 700; font-size: 15px; text-transform: uppercase;
     transition: 0.3s ease;
 }
 .rs-btn:hover { background: #fff; color: #000; border-color: #fff; transform: scale(1.05); }
 
-/* Rockstar Pill Slider Physics */
+/* Progressive Page Indicators (The "Pill") */
 .rs-slider-controls { position: absolute; bottom: 50px; right: 80px; display: flex; align-items: center; gap: 20px; z-index: 1000; }
 .control-btn { background: none; border: none; cursor: pointer; outline: none; }
 .rs-indicator { width: 68px; height: 6.5px; background: rgba(255, 255, 255, 0.22); border-radius: 12px; position: relative; overflow: hidden; }
 .rs-progress-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #fff; border-radius: 12px; }
 
-/* Footer Styling */
-.site-footer { padding: 55px 85px; display: flex; justify-content: space-between; align-items: center; color: #777; font-size: 13px; font-weight: 600; }
+/* Footer Elements */
+.footer-divider-container { width: 100vw; line-height: 0; }
+.footer-divider { width: 100%; display: block; opacity: 0.35; }
+.site-footer { padding: 55px 85px; display: flex; justify-content: space-between; align-items: center; color: #777; font-size: 13px; font-weight: 600; background: #000; }
 .lang-img-large { height: 32px; filter: brightness(0.8); }
 .footer-logo { width: 45px; opacity: 0.5; }
