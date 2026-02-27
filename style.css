@@ -1,72 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;900&display=swap');
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+body { background: #000; color: #fff; font-family: 'Archivo', sans-serif; overflow-x: hidden; }
 
 /* Protection */
 .no-select { user-select: none; -webkit-user-drag: none; pointer-events: none; }
 img { -webkit-user-drag: none; user-drag: none; }
 
-/* Rockstar Header */
-.rs-nav { position: absolute; top: 0; width: 100%; z-index: 1000; padding: 30px 60px; background: transparent; }
+/* ROCKSTAR HEADER - Exact Typography */
+.rs-nav { position: absolute; top: 0; width: 100%; z-index: 1000; padding: 35px 60px; background: transparent; }
 .nav-container { display: flex; justify-content: center; align-items: center; position: relative; }
 .nav-logo { position: absolute; left: 0; }
-.nav-logo img { width: 50px; pointer-events: auto; transition: 0.2s; }
-.nav-logo img:hover { transform: scale(1.1); }
-.nav-links { display: flex; list-style: none; gap: 45px; }
-.nav-links a { color: #fff; text-decoration: none; font-family: 'Archivo Black'; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; }
+.nav-logo img { width: 52px; pointer-events: auto; }
+.nav-links { display: flex; list-style: none; gap: 40px; }
+.nav-links a { 
+    color: #fff; 
+    text-decoration: none; 
+    font-family: 'Archivo Black', sans-serif; 
+    font-size: 13.5px; 
+    text-transform: uppercase; 
+    letter-spacing: 2.2px; 
+    opacity: 0.85; 
+}
 .nav-links a:hover { opacity: 1; }
 
-/* Hero Slider - FIXED ALIGNMENT */
+/* HERO SLIDER ALIGNMENT - Fixed to 25% to shift image right */
 .hero { height: 100vh; width: 100vw; position: relative; overflow: hidden; }
 .slide { 
     position: absolute; inset: 0; 
     background-size: cover; 
-    /* Shifting image content to the right to make space for left-side branding */
     background-position: 25% center; 
     background-repeat: no-repeat;
     opacity: 0; transition: opacity 1s ease-in-out;
 }
 .slide.active { opacity: 1; }
 
-/* Button Positioning - Rockstar Trailer Style */
-.hero-content-anchor { 
-    position: absolute;
-    bottom: 12%; 
-    left: 10%;
-    pointer-events: auto;
-}
+/* ROCKSTAR BUTTON - Lower-left position below branding */
+.hero-content-anchor { position: absolute; bottom: 12%; left: 10%; pointer-events: auto; }
 .rs-btn { 
     display: inline-block;
-    padding: 14px 65px; 
-    border: 2px solid rgba(255,255,255,0.4); 
+    padding: 15px 70px; 
+    border: 2.5px solid rgba(255,255,255,0.4); 
     background: rgba(255,255,255,0.05); 
-    backdrop-filter: blur(15px); 
-    -webkit-backdrop-filter: blur(15px); 
+    backdrop-filter: blur(20px); 
+    -webkit-backdrop-filter: blur(20px); 
     color: #fff; 
     text-decoration: none; 
-    border-radius: 40px; 
+    border-radius: 50px; 
     font-weight: 700; 
-    font-size: 15px; 
+    font-size: 14.5px; 
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    transition: 0.3s;
+    transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.rs-btn:hover { background: #fff; color: #000; border-color: #fff; transform: scale(1.05); }
+.rs-btn:hover { background: #fff; color: #000; border-color: #fff; transform: scale(1.06); }
 
-/* Rockstar Pill Slider Physics */
+/* ROCKSTAR SLIDER CONTROLS - Exact Pill Physics */
 .rs-slider-controls { position: absolute; bottom: 50px; right: 80px; display: flex; align-items: center; gap: 20px; z-index: 1000; }
-.rs-indicator { width: 65px; height: 6px; background: rgba(255, 255, 255, 0.2); border-radius: 10px; position: relative; overflow: hidden; cursor: pointer; }
-.rs-progress-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #fff; border-radius: 10px; }
+.rs-indicator { width: 68px; height: 6.5px; background: rgba(255, 255, 255, 0.22); border-radius: 12px; position: relative; overflow: hidden; cursor: pointer; }
+.rs-progress-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #fff; border-radius: 12px; }
 
-/* Sections & Footer */
-.version-grid { padding: 80px 5%; display: flex; gap: 30px; }
-.v-card { flex: 1; }
-.glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); padding: 45px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; }
-.label { font-size: 11px; font-weight: 900; color: #888; text-transform: uppercase; margin-bottom: 5px; }
-
-.revork-full-banner img { width: 100vw; height: auto; display: block; }
-.footer-divider { width: 100vw; display: block; opacity: 0.35; }
-
-.site-footer { padding: 50px 80px; display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 13px; font-weight: 600; background: #000; }
-.lang-img-large { height: 28px; filter: brightness(0.8); }
-.footer-logo { width: 40px; opacity: 0.55; }
+/* FOOTER MATCHED TO PHOTO */
+.site-footer { padding: 55px 85px; display: flex; justify-content: space-between; align-items: center; color: #777; font-size: 13px; font-weight: 600; background: #000; }
+.lang-img-large { height: 30px; filter: brightness(0.75); }
+.footer-logo { width: 42px; opacity: 0.5; }
