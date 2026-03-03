@@ -1,55 +1,201 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #000; color: #fff; font-family: 'Archivo', sans-serif; overflow-x: hidden; }
-
-/* Non-copyable/Non-movable Protections */
-.no-select { user-select: none; -webkit-user-drag: none; pointer-events: none; }
-img { -webkit-user-drag: none; user-drag: none; }
-
-/* Header Layout */
-.rs-nav { position: absolute; top: 0; width: 100%; z-index: 1000; padding: 35px 60px; background: transparent; }
-.nav-container { display: flex; justify-content: center; align-items: center; position: relative; }
-.nav-logo { position: absolute; left: 0; }
-.nav-logo img { width: 50px; pointer-events: auto; }
-.nav-links { display: flex; list-style: none; gap: 40px; }
-.nav-links a { 
-    color: #fff; text-decoration: none; font-family: 'Archivo Black', sans-serif; 
-    font-size: 14px; text-transform: uppercase; letter-spacing: 2.2px; opacity: 0.85; 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* Hero Section & Background Fix */
-.hero { height: 100vh; width: 100vw; position: relative; overflow: hidden; }
-.slide { 
-    position: absolute; inset: 0; 
-    background-size: cover; 
-    background-position: 30% center; 
-    background-repeat: no-repeat;
-    opacity: 0; transition: opacity 1s ease-in-out;
+body{
+    background:#000;
+    color:#fff;
+    font-family:"Haverbrooke", sans-serif;
+    overflow-x:hidden;
 }
-.slide.active { opacity: 1; }
 
-/* Rockstar Button Positioning */
-.hero-content-anchor { position: absolute; bottom: 12%; left: 8%; pointer-events: auto; }
-.rs-btn { 
-    display: inline-block;
-    padding: 15px 70px; 
-    border: 2.5px solid rgba(255,255,255,0.4); 
-    background: rgba(255,255,255,0.05); 
-    backdrop-filter: blur(20px); 
-    color: #fff; text-decoration: none; border-radius: 50px; 
-    font-weight: 700; font-size: 15px; text-transform: uppercase;
-    transition: 0.3s ease;
+/* ================= HEADER ================= */
+
+header{
+    position:absolute;
+    top:0;
+    width:100%;
+    padding:25px 60px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    z-index:50;
 }
-.rs-btn:hover { background: #fff; color: #000; border-color: #fff; transform: scale(1.05); }
 
-/* Progressive Page Indicators (The "Pill") */
-.rs-slider-controls { position: absolute; bottom: 50px; right: 80px; display: flex; align-items: center; gap: 20px; z-index: 1000; }
-.control-btn { background: none; border: none; cursor: pointer; outline: none; }
-.rs-indicator { width: 68px; height: 6.5px; background: rgba(255, 255, 255, 0.22); border-radius: 12px; position: relative; overflow: hidden; }
-.rs-progress-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #fff; border-radius: 12px; }
+/* Logo Left */
+.logo img{
+    height:28px;
+}
 
-/* Footer Elements */
-.footer-divider-container { width: 100vw; line-height: 0; }
-.footer-divider { width: 100%; display: block; opacity: 0.35; }
-.site-footer { padding: 55px 85px; display: flex; justify-content: space-between; align-items: center; color: #777; font-size: 13px; font-weight: 600; background: #000; }
-.lang-img-large { height: 32px; filter: brightness(0.8); }
-.footer-logo { width: 45px; opacity: 0.5; }
+/* Nav Centered */
+header nav{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:55px;
+}
+
+header nav a{
+    color:#fff;
+    text-decoration:none;
+    font-size:14px;
+    letter-spacing:.5px;
+    opacity:.75;
+    transition:.3s;
+}
+
+header nav a:hover{
+    opacity:1;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    height:100vh;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero-bg{
+    position:absolute;
+    inset:0;
+    background:url("assets/oos16_home.png") center/cover no-repeat;
+    transform:scale(1.03);
+}
+
+/* Top fade */
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to bottom, rgba(0,0,0,.6), transparent 40%);
+}
+
+/* Bottom cinematic fade */
+.hero::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:55%;
+    background:linear-gradient(to top, rgba(0,0,0,.95), transparent);
+}
+
+/* Slider */
+.slider-control{
+    position:absolute;
+    bottom:40px;
+    right:60px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    z-index:20;
+}
+
+.pause{
+    display:flex;
+    gap:3px;
+}
+
+.pause div{
+    width:3px;
+    height:14px;
+    background:#fff;
+    opacity:.8;
+}
+
+.progress-track{
+    width:120px;
+    height:3px;
+    background:rgba(255,255,255,.25);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    width:0%;
+    height:100%;
+    background:#fff;
+    animation:progressAnim 6s linear infinite;
+}
+
+@keyframes progressAnim{
+    from{width:0%;}
+    to{width:100%;}
+}
+
+.dot{
+    width:5px;
+    height:5px;
+    background:#fff;
+    border-radius:50%;
+    opacity:.7;
+}
+
+/* ================= SUPPORT SECTION ================= */
+
+.support{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+}
+
+.support img{
+    width:100%;
+    display:block;
+}
+
+/* subtle dark overlay for premium look */
+.support::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,.8), transparent 60%);
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#050505;
+    padding:80px 0 50px;
+    border-top:1px solid rgba(255,255,255,.05);
+}
+
+.footer-inner{
+    max-width:1200px;
+    margin:auto;
+    text-align:center;
+}
+
+.footer-logo img{
+    height:28px;
+    margin-bottom:35px;
+    opacity:.9;
+}
+
+.footer-links{
+    display:flex;
+    justify-content:center;
+    gap:50px;
+    margin-bottom:35px;
+}
+
+.footer-links a{
+    text-decoration:none;
+    color:#fff;
+    font-size:14px;
+    opacity:.7;
+    transition:.3s;
+}
+
+.footer-links a:hover{
+    opacity:1;
+}
+
+.footer-copy{
+    font-size:13px;
+    opacity:.4;
+}
