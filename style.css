@@ -189,6 +189,7 @@ header nav a:hover {
 
 /* Hero Content */
 .hero-content {
+  display: none;
   position: absolute;
   top: 50%;
   left: 50%;
