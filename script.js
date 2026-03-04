@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dot.style.setProperty('--progress', '0%');
     });
 
+    // Small delay to trigger animation
     setTimeout(() => {
       dots[currentIndex].style.setProperty('--progress', '100%');
     }, 50);

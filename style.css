@@ -279,3 +279,145 @@ header nav a:hover {
     transition: none !important;
   }
 }
+
+/* NEWSWIRE PAGE – Rockstar-inspired layout */
+
+body.dark-theme {
+  background: #000;
+}
+
+.newswire-main {
+  min-height: 100vh;
+  padding-top: 140px;
+  padding-bottom: 80px;
+}
+
+.latest-news {
+  text-align: center;
+  padding: 0 5vw 80px;
+}
+
+.section-title {
+  font-size: 48px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  opacity: 0.9;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 3px;
+  background: rgba(255,255,255,0.4);
+}
+
+.featured-news {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.featured-logo .big-logo {
+  max-width: 500px;
+  width: 80%;
+  filter: drop-shadow(0 0 40px rgba(255,255,255,0.3));
+}
+
+.featured-text .subtitle {
+  font-size: 28px;
+  letter-spacing: 3px;
+  color: #aaa;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.featured-text .main-headline {
+  font-size: clamp(48px, 8vw, 90px);
+  line-height: 1.05;
+  margin: 0 0 20px;
+  font-weight: bold;
+  letter-spacing: -1px;
+}
+
+.featured-text .date {
+  font-size: 22px;
+  color: #888;
+  letter-spacing: 1px;
+}
+
+/* Older news – horizontal scrollable row */
+.older-news {
+  padding: 60px 5vw;
+  background: linear-gradient(to bottom, #000 0%, #111 100%);
+}
+
+.news-row {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  scrollbar-width: thin;
+}
+
+.news-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.news-row::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+
+.news-item {
+  position: relative;
+  min-width: 360px;
+  height: 240px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+
+.news-item:hover {
+  transform: scale(1.05);
+}
+
+.news-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px 25px;
+  color: white;
+}
+
+.news-overlay h3 {
+  font-size: 22px;
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+.news-overlay p {
+  font-size: 14px;
+  color: #ccc;
+  margin: 0;
+}
