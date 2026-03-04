@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#000000">
   <title>ReVork</title>
 
   <link rel="icon" href="assets/favicon.png">
@@ -17,6 +18,12 @@
     <img src="assets/favicon.png" draggable="false" alt="ReVork Logo">
   </div>
 
+  <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
   <nav>
     <a href="#">ROMS</a>
     <a href="#">DOWNLOADS</a>
@@ -30,6 +37,21 @@
   <div class="slide active" style="background-image:url('assets/oos16_home.png')"></div>
   <div class="slide" style="background-image:url('assets/cos16_home.png')"></div>
   <!-- You can add more <div class="slide"> here later -->
+
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <h1 class="hero-title">ReVork</h1>
+    <p class="hero-subtitle">Custom ROMs Reimagined</p>
+    <div class="hero-ctas">
+      <a href="#" class="cta-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        Download ROMs
+      </a>
+      <a href="installation.html" class="cta-secondary">Installation Guide</a>
+    </div>
+  </div>
 
   <div class="rs-controls">
     <button class="rs-pause-play" aria-label="Pause or Play Slider">
@@ -46,19 +68,63 @@
 <section class="news">
   <div class="news-container">
     <h2>Latest News</h2>
-    <div class="news-grid">
-      <a href="newswire/oxygenos-16-0-3-503.html" class="news-card" style="text-decoration: none; color: inherit;">
-        <div class="news-image" style="background-image: url('assets/16.0.3.503.png');"></div>
-        <h3>OxygenOS 16.0.3.503 Out Now</h3>
-        <p>March 4, 2026</p>
+    <div class="news-layout">
+      <!-- Featured Article (Left) -->
+      <a href="newswire/oxygenos-16-0-3-503.html" class="featured-article">
+        <div class="featured-image" style="background-image: url('assets/16.0.3.503.png');"></div>
+        <div class="featured-content">
+          <span class="featured-category">OXYGENOS 16</span>
+          <h3>OxygenOS 16.0.3.503 Out Now</h3>
+          <p class="featured-date">March 4, 2026</p>
+        </div>
       </a>
-      <!-- Add more news cards here -->
+
+      <!-- News Sidebar (Right) -->
+      <div class="news-sidebar">
+        <a href="newswire/oxygenos-16-0-3-503.html" class="sidebar-card">
+          <img src="assets/16.0.3.503.png" alt="OxygenOS Update" class="sidebar-image">
+          <div class="sidebar-content">
+            <span class="sidebar-category">OXYGENOS 16</span>
+            <h4>OnePlus 9 Series Receives Major Update</h4>
+            <p class="sidebar-date">March 3, 2026</p>
+          </div>
+        </a>
+
+        <a href="#" class="sidebar-card">
+          <img src="assets/oos16_home.png" alt="ColorOS Update" class="sidebar-image">
+          <div class="sidebar-content">
+            <span class="sidebar-category">COLOROS 16</span>
+            <h4>ColorOS 16 Rolling Out to OnePlus Devices</h4>
+            <p class="sidebar-date">March 1, 2026</p>
+          </div>
+        </a>
+
+        <a href="#" class="sidebar-card">
+          <img src="assets/cos16_home.png" alt="Installation Guide" class="sidebar-image">
+          <div class="sidebar-content">
+            <span class="sidebar-category">GUIDES</span>
+            <h4>Complete Installation Guide for Custom ROMs</h4>
+            <p class="sidebar-date">February 28, 2026</p>
+          </div>
+        </a>
+
+        <a href="#" class="sidebar-card">
+          <img src="assets/16.0.3.503.png" alt="Device Support" class="sidebar-image">
+          <div class="sidebar-content">
+            <span class="sidebar-category">UPDATES</span>
+            <h4>OnePlus 8 Series Gets Enhanced Performance</h4>
+            <p class="sidebar-date">February 26, 2026</p>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="support">
-  <img src="assets/revork.png" draggable="false" alt="Support ReVork">
+  <a href="https://t.me/ReVorkHub" target="_blank">
+    <img src="assets/revork.png" draggable="false" alt="Support ReVork">
+  </a>
 </section>
 
 <footer class="rog-footer">

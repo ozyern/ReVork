@@ -1,4 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // ===== MOBILE MENU =====
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const nav = document.querySelector('header nav');
+  const body = document.body;
+
+  if (mobileMenuToggle && nav) {
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenuToggle.classList.toggle('active');
+      nav.classList.toggle('active');
+      body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close menu when clicking on a nav link
+    const navLinks = nav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenuToggle.classList.remove('active');
+        nav.classList.remove('active');
+        body.style.overflow = '';
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('header') && nav.classList.contains('active')) {
+        mobileMenuToggle.classList.remove('active');
+        nav.classList.remove('active');
+        body.style.overflow = '';
+      }
+    });
+  }
+
+  // ===== HERO SLIDER =====
   const slides = document.querySelectorAll('.hero .slide');
   const indicatorsContainer = document.querySelector('.rs-indicators');
   const pausePlayBtn = document.querySelector('.rs-pause-play');
@@ -82,6 +115,41 @@ document.addEventListener('DOMContentLoaded', () => {
   controls.addEventListener('mouseleave', () => {
     if (!isPaused) play();
   });
+
+  // Touch swipe support for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const heroSection = document.querySelector('.hero');
+  
+  if (heroSection) {
+    heroSection.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    heroSection.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+  }
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swipe left - next slide
+        const next = (currentIndex + 1) % slides.length;
+        goToSlide(next);
+      } else {
+        // Swipe right - previous slide
+        const prev = (currentIndex - 1 + slides.length) % slides.length;
+        goToSlide(prev);
+      }
+      pause();
+    }
+  }
 
   // Init
   slides[0].classList.add('active');
