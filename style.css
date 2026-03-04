@@ -104,14 +104,23 @@ header nav a:hover {
   transform: translateY(-2px);
 }
 
-/* Mobile: stack logo + nav vertically, center nav */
+/* Mobile: center logo, hamburger on left */
 @media (max-width: 768px) {
   header {
     padding: 20px 30px;
+    justify-content: center;
+    position: relative;
+  }
+
+  .logo {
+    order: 2;
   }
 
   .mobile-menu-toggle {
     display: flex;
+    position: absolute;
+    left: 30px;
+    order: 1;
   }
 
   header nav {
@@ -293,6 +302,11 @@ header nav a:hover {
   .hero-ctas {
     gap: 14px;
   }
+
+  /* Hide hero content on mobile */
+  .hero-content {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
@@ -308,34 +322,28 @@ header nav a:hover {
 /* Landscape mobile optimization */
 @media (max-width: 900px) and (max-height: 500px) {
   .hero-content {
-    top: 45%;
-  }
-
-  .hero-title {
-    font-size: 36px;
-    margin-bottom: 8px;
-  }
-
-  .hero-subtitle {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-
-  .hero-ctas {
-    flex-direction: row;
-    gap: 12px;
-  }
-
-  .cta-primary,
-  .cta-secondary {
-    padding: 12px 30px;
-    font-size: 12px;
-    min-height: 44px;
+    display: none;
   }
 
   .rs-controls {
     bottom: 15px;
-    right: 15px;
+    padding: 8px 16px;
+  }
+
+  .rs-pause-play {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .rs-dot {
+    width: 40px;
+    height: 3px;
+  }
+
+  .rs-dot.active {
+    width: 40px;
+    height: 3px;
   }
 }
 
@@ -419,6 +427,64 @@ header nav a:hover {
 
 .rs-controls.rs-paused .rs-dot.active::after {
   transition: none;
+}
+
+/* Mobile: Horizontal bar layout centered */
+@media (max-width: 768px) {
+  .rs-controls {
+    bottom: 30px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    background: rgba(40, 40, 40, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 12px 20px;
+    border-radius: 50px;
+    max-width: 90%;
+  }
+
+  .rs-indicators {
+    display: flex;
+    gap: 8px;
+    order: 1;
+  }
+
+  .rs-pause-play {
+    order: 2;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    background: rgba(80, 80, 80, 0.9);
+  }
+
+  .rs-dot {
+    width: 60px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rs-dot:hover {
+    transform: none;
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .rs-dot.active {
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: none;
+  }
+
+  .rs-dot.active::after {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: none;
+  }
 }
 
 /* NEWS */
@@ -710,11 +776,6 @@ header nav a:hover {
   .logo img {
     height: 48px;
   }
-
-  .rs-controls { right: 20px; bottom: 30px; gap: 12px; }
-  .rs-pause-play { width: 38px; height: 38px; font-size: 18px; }
-  .rs-dot { width: 8px; height: 8px; }
-  .rs-dot.active { width: 80px; height: 10px; }
 }
 
 @media (max-width: 480px) {
@@ -723,25 +784,24 @@ header nav a:hover {
   }
 
   .rs-controls {
-    right: 15px;
-    bottom: 20px;
+    padding: 10px 16px;
     gap: 10px;
   }
 
   .rs-pause-play {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     font-size: 16px;
   }
 
   .rs-dot {
-    width: 7px;
-    height: 7px;
+    width: 50px;
+    height: 3px;
   }
 
   .rs-dot.active {
-    width: 60px;
-    height: 9px;
+    width: 50px;
+    height: 3px;
   }
 }
 

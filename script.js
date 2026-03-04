@@ -40,6 +40,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (slides.length === 0) return;
 
+  // Set appropriate background images based on screen size
+  function setBackgroundImages() {
+    const isMobile = window.innerWidth <= 768;
+    slides.forEach(slide => {
+      const desktopImg = slide.getAttribute('data-desktop');
+      const mobileImg = slide.getAttribute('data-mobile');
+      const imageUrl = isMobile ? mobileImg : desktopImg;
+      slide.style.backgroundImage = `url('${imageUrl}')`;
+    });
+  }
+
+  // Set initial images
+  setBackgroundImages();
+
+  // Update on resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      setBackgroundImages();
+    }, 250);
+  });
+
   let currentIndex = 0;
   let intervalId = null;
   let isPaused = false;
