@@ -11,14 +11,13 @@ body{
     overflow-x:hidden;
 }
 
-/* Disable dragging */
 img{
     -webkit-user-drag:none;
     user-select:none;
     pointer-events:none;
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 
 header{
     position:absolute;
@@ -26,9 +25,9 @@ header{
     width:100%;
     padding:30px 100px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    z-index:50;
+    align-items:center;
+    z-index:100;
 }
 
 .logo img{
@@ -44,19 +43,19 @@ header nav{
 }
 
 header nav a{
-    text-decoration:none;
     color:#fff;
+    text-decoration:none;
     font-size:14px;
     letter-spacing:1px;
     opacity:.8;
-    transition:.3s ease;
+    transition:.3s;
 }
 
 header nav a:hover{
     opacity:1;
 }
 
-/* ================= HERO ================= */
+/* HERO SLIDER */
 
 .hero{
     height:100vh;
@@ -64,19 +63,20 @@ header nav a:hover{
     overflow:hidden;
 }
 
-.hero-bg{
+.slide{
     position:absolute;
     inset:0;
-    background:url("assets/oos16_home.png") center/cover no-repeat;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transition:opacity 1s ease-in-out;
 }
 
-.hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(to bottom, rgba(0,0,0,.35), transparent 55%);
+.slide.active{
+    opacity:1;
 }
 
+/* subtle fade bottom */
 .hero::after{
     content:"";
     position:absolute;
@@ -86,62 +86,82 @@ header nav a:hover{
     background:linear-gradient(to top, rgba(0,0,0,.6), transparent);
 }
 
-/* ================= ROCKSTAR CURVED SLIDER ================= */
+/* ROCKSTAR STYLE CONTROL */
 
-.slider-control{
+.rs-slider{
     position:absolute;
     bottom:45px;
     right:100px;
+    width:220px;
 }
 
-.rs-container{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-/* Curved capsule bar */
-.rs-bar{
-    width:170px;
+.rs-track{
     height:6px;
     background:rgba(255,255,255,.25);
     border-radius:50px;
-    overflow:hidden;
     position:relative;
+    overflow:hidden;
 }
 
-.rs-fill{
+.rs-progress{
     height:100%;
     width:0%;
     background:#fff;
     border-radius:50px;
-    animation:rsAnim 6s linear infinite;
+    transition:width 5s linear;
 }
 
-@keyframes rsAnim{
-    from{width:0%;}
-    to{width:100%;}
-}
-
-/* Curved dot */
-.rs-dot{
-    width:10px;
-    height:10px;
+.rs-knob{
+    position:absolute;
+    top:50%;
+    left:0%;
+    width:12px;
+    height:12px;
     background:#fff;
     border-radius:50%;
+    transform:translate(-50%,-50%);
+    transition:left 5s linear;
 }
 
-/* ================= SUPPORT ================= */
+/* NEWS */
+
+.news{
+    padding:120px 100px;
+}
+
+.news-container{
+    max-width:1400px;
+    margin:auto;
+}
+
+.news h2{
+    font-size:28px;
+    margin-bottom:50px;
+}
+
+.news-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:50px;
+}
+
+.news-image{
+    height:240px;
+    background:#111;
+    margin-bottom:20px;
+}
+
+/* SUPPORT */
 
 .support img{
     width:100%;
     display:block;
 }
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 
 .rog-footer{
-    background:#000; /* TRUE BLACK */
+    background:#000;
     padding:80px 100px 50px;
 }
 
@@ -152,7 +172,6 @@ header nav a:hover{
 
 .footer-divider img{
     width:100%;
-    opacity:1; /* no fade so background blends */
 }
 
 .footer-bottom{
@@ -165,7 +184,6 @@ header nav a:hover{
     opacity:.7;
 }
 
-/* Bigger Global English */
 .region img{
     height:32px;
 }
