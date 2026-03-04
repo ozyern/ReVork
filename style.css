@@ -44,6 +44,10 @@ header {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo img {
@@ -110,6 +114,9 @@ header nav a:hover {
     padding: 20px 30px;
     justify-content: center;
     position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
   }
 
   .logo {
@@ -181,15 +188,14 @@ header nav a:hover {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 35%;
-  background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+  height: 30%;
+  background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
   pointer-events: none;
   z-index: 3;
 }
 
 /* Hero Content */
 .hero-content {
-  display: none;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -303,11 +309,6 @@ header nav a:hover {
   .hero-ctas {
     gap: 14px;
   }
-
-  /* Hide hero content on mobile */
-  .hero-content {
-    display: none;
-  }
 }
 
 @media (max-width: 480px) {
@@ -323,94 +324,64 @@ header nav a:hover {
 /* Landscape mobile optimization */
 @media (max-width: 900px) and (max-height: 500px) {
   .hero-content {
-    display: none;
+    top: 55%;
+    transform: translate(-50%, -50%) scale(0.8);
   }
 
   .rs-controls {
-    bottom: 15px;
-    padding: 8px 16px;
+    top: 60px;
+    padding: 0 12px;
   }
 
   .rs-pause-play {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
   }
 
   .rs-dot {
-    width: 40px;
-    height: 3px;
-  }
-
-  .rs-dot.active {
-    width: 40px;
-    height: 3px;
+    height: 2px;
   }
 }
 
-/* CONTROLS */
+/* CONTROLS - Instagram Story Style */
 .rs-controls {
   position: absolute;
-  bottom: 50px;
-  right: 80px;
+  top: 80px;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
   z-index: 50;
-}
-
-.rs-pause-play {
-  width: 44px;
-  height: 44px;
-  background: rgba(20, 20, 20, 0.85);
-  border: none;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 22px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 12px rgba(0,0,0,0.7);
-}
-
-.rs-pause-play:hover {
-  transform: scale(1.12);
-  box-shadow: 0 0 24px rgba(255,255,255,0.2);
+  padding: 0 20px;
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
 }
 
 .rs-indicators {
   display: flex;
-  gap: 14px;
+  gap: 8px;
+  flex: 1;
 }
 
 .rs-dot {
-  width: 10px;
-  height: 10px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 50%;
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: background 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .rs-dot:hover {
-  transform: scale(1.5);
-  background: rgba(255,255,255,0.6);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .rs-dot.active {
-  width: 100px;
-  height: 12px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 999px;
-  box-shadow: 
-    0 0 35px rgba(255,255,255,0.55),
-    inset 0 0 18px rgba(255,255,255,0.35);
-  backdrop-filter: blur(6px);
-  overflow: hidden;
-  transition: all 0.6s ease;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .rs-dot.active::after {
@@ -420,71 +391,59 @@ header nav a:hover {
   left: 0;
   height: 100%;
   width: var(--progress, 0%);
-  background: rgba(255,255,255,0.9);
-  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 2px;
   transition: width 6s linear;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
 }
 
 .rs-controls.rs-paused .rs-dot.active::after {
   transition: none;
 }
 
-/* Mobile: Horizontal bar layout centered */
+.rs-pause-play {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.rs-pause-play:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Mobile: Keep story-style progress bars at top */
 @media (max-width: 768px) {
   .rs-controls {
-    bottom: 30px;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-    background: rgba(40, 40, 40, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 12px 20px;
-    border-radius: 50px;
-    max-width: 90%;
+    top: 70px;
+    padding: 0 16px;
+    gap: 6px;
   }
 
   .rs-indicators {
-    display: flex;
-    gap: 8px;
-    order: 1;
+    gap: 6px;
   }
 
   .rs-pause-play {
-    order: 2;
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-    background: rgba(80, 80, 80, 0.9);
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
   }
 
   .rs-dot {
-    width: 60px;
-    height: 4px;
-    border-radius: 2px;
-    background: rgba(255, 255, 255, 0.3);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .rs-dot:hover {
-    transform: none;
-    background: rgba(255, 255, 255, 0.4);
-  }
-
-  .rs-dot.active {
-    width: 60px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: none;
-  }
-
-  .rs-dot.active::after {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: none;
+    height: 3px;
   }
 }
 
