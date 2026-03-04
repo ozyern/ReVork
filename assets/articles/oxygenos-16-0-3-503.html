@@ -3,69 +3,249 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OxygenOS 16.0.3.503 (Feb 2026) Ported from OnePlus 15 – ReVork</title>
+  <title>OxygenOS 16.0.3.503 – ReVork</title>
 
-  <link rel="icon" href="../assets/favicon.png">
+  <link rel="icon" href="../favicon.png">
   <link href="https://db.onlinewebfonts.com/c/1a5a02144883150dce30ae0877cfb513?family=Haverbrooke" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
 
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000000;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .logo img {
+      height: 56px;
+    }
+
+    header nav {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: clamp(2.5rem, 5vw, 4.5rem);
+    }
+
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1.2px;
+      opacity: 0.85;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      font-family: 'Haverbrooke', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+
+    header nav a:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
     .article-container {
-      max-width: 960px;
-      margin: 140px auto 100px;
-      padding: 0 24px;
-      line-height: 1.72;
-      font-size: 18px;
-      color: #e0e0e0;
+      max-width: 900px;
+      margin: 150px auto 100px;
+      padding: 40px;
+      line-height: 1.8;
+      font-size: 16px;
+      color: #ffffff;
+      border: 1px solid #333333;
+      background: #000000;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+
+    .article-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      font-size: 14px;
+      color: #888888;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+
+    .article-header .red-badge {
+      width: 24px;
+      height: 24px;
+      background: #ff0000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 12px;
     }
 
     .article-container h1 {
-      font-size: 54px;
-      line-height: 1.1;
-      margin-bottom: 16px;
-      letter-spacing: -1px;
-      color: #fff;
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      font-family: 'Haverbrooke', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+
+    .article-container h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 60px 0 24px;
+      color: #ffffff;
+      text-transform: none;
+      letter-spacing: 0;
+      border-bottom: none;
+      padding-bottom: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+
+    .article-container p {
+      margin-bottom: 20px;
+      color: #cccccc;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .article-container strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .article-container ul {
+      margin: 20px 0 20px 24px;
+      list-style: none;
+    }
+
+    .article-container li {
+      margin-bottom: 12px;
+      color: #cccccc;
+      font-size: 16px;
+      line-height: 1.8;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .article-container li:before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #ff0000;
+      font-weight: bold;
     }
 
     .article-meta {
-      font-size: 17px;
-      color: #aaa;
-      margin-bottom: 48px;
+      font-size: 13px;
+      color: #666666;
+      margin-bottom: 32px;
     }
 
     .featured-image {
       width: 100%;
-      border-radius: 16px;
-      margin: 32px 0 48px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-    }
-
-    .article-container h2 {
-      font-size: 36px;
-      margin: 64px 0 24px;
-      color: #fff;
+      border-radius: 8px;
+      margin: 48px 0 64px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      border: 1px solid #333333;
     }
 
     .highlight-box {
-      background: rgba(255,255,255,0.04);
-      border-left: 5px solid #4da6ff;
+      background: rgba(255, 0, 0, 0.05);
+      border: 1px solid #ff0000;
       padding: 24px 32px;
-      margin: 32px 0;
+      margin: 40px 0;
       border-radius: 8px;
-      font-style: italic;
+      color: #cccccc;
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .highlight-box strong {
+      color: #ffffff;
     }
 
     .back-link {
       display: inline-block;
       margin-top: 60px;
-      color: #4da6ff;
-      font-size: 18px;
-      font-weight: bold;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 500;
       text-decoration: none;
+      letter-spacing: 0;
+      border: 1px solid #333333;
+      padding: 10px 20px;
+      border-radius: 6px;
+      transition: all 0.3s;
     }
 
     .back-link:hover {
-      text-decoration: underline;
+      border-color: #ff0000;
+      color: #ff0000;
+    }
+
+    a {
+      color: #ff0000;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    a:hover {
+      color: #ff3333;
+    }
+
+    footer.rog-footer {
+      background: #000;
+      padding: 80px 5vw 50px;
+      font-family: 'Haverbrooke', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+
+    footer.rog-footer .footer-divider {
+      max-width: 1400px;
+      margin: 0 auto 50px;
+    }
+
+    footer.rog-footer .footer-divider img {
+      width: 100%;
+      display: block;
+    }
+
+    footer.rog-footer .footer-bottom {
+      max-width: 1400px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      opacity: 0.75;
+      font-family: 'Haverbrooke', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+
+    footer.rog-footer .region img {
+      height: 34px;
+      display: block;
+    }
+
+    footer.rog-footer .copyright {
+      color: #888888;
+      font-family: 'Haverbrooke', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
     }
   </style>
 </head>
@@ -74,28 +254,28 @@
 
 <header>
   <div class="logo">
-    <img src="../assets/favicon.png" draggable="false" alt="ReVork Logo">
+    <img src="../favicon.png" draggable="false" alt="ReVork Logo">
   </div>
 
   <nav>
     <a href="../index.html">ROMS</a>
     <a href="../index.html">DOWNLOADS</a>
     <a href="../index.html">INSTALL GUIDE</a>
-    <a href="../newswire.html" style="opacity:1; color:#4da6ff;">NEWSWIRE</a>
+    <a href="../newswire.html" style="opacity:1; color:#fff; font-weight:bold;">NEWSWIRE</a>
   </nav>
 </header>
 
 <main class="article-container">
 
-  <h1>OxygenOS 16.0.3.503 (February 2026 Security Patch)<br>Ported from OnePlus 15 – ReVork Edition</h1>
+  <h1>OxygenOS 16.0.3.503</h1> 
 
-  <div class="article-meta">
-    <span class="date">March 4, 2026</span>
-    <span> · ReVork Team</span>
+  <div class="article-header">
+    <div class="red-badge">O</div>
+    <span>ozyern</span> · Mar 4, 2026 · 1 min read
   </div>
 
   <!-- Replace with your real screenshot/banner -->
-  <img src="../assets/articles/oxygenos-16-oneplus-15-banner.jpg" alt="OxygenOS 16 running on ported device" class="featured-image">
+  <img src="../16.0.3.503.png" alt="OxygenOS 16 running on ported device" class="featured-image">
 
   <p><strong>ReVork is proud to release one of our cleanest and most stable ports to date:</strong></p>
 
@@ -125,9 +305,8 @@
   <h2>Known Issues (as of March 4, 2026)</h2>
 
   <ul>
-    <li>Ultra-wide camera may show green/pink tint on some devices (camera HAL workaround coming soon)</li>
-    <li>Game Space / HyperBoost features limited on older chipsets</li>
-    <li>Wireless charging animation missing on non-OnePlus 15 hardware</li>
+    <li>Wired Earphones doesnt work</li>
+    <li>Bypass Charging has works limited due to hardware restrictions</li>
   </ul>
 
   <h2>Download & Installation</h2>
@@ -143,12 +322,12 @@
 
 <footer class="rog-footer">
   <div class="footer-divider">
-    <img src="../assets/divider.png" draggable="false" alt="">
+    <img src="../divider.png" draggable="false" alt="">
   </div>
 
   <div class="footer-bottom">
     <div class="region">
-      <img src="../assets/globalenglish.png" draggable="false" alt="Region selector">
+      <img src="../globalenglish.png" draggable="false" alt="Region selector">
     </div>
 
     <div class="copyright">
