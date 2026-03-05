@@ -205,6 +205,14 @@
 
 // Site-wide UI helpers (menu + theme toggle + page highlight)
 document.addEventListener('DOMContentLoaded', ()=>{
+  const logo = document.querySelector('header .logo');
+  if (logo) {
+    logo.style.cursor = 'pointer';
+    logo.addEventListener('click', ()=>{
+      window.location.href = 'https://ozyern.me';
+    });
+  }
+
   const menuToggle = document.querySelector('.menu-toggle');
   const siteNav = document.querySelector('.site-nav');
   if (menuToggle && siteNav) {

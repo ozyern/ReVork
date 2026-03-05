@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const logo = document.querySelector('header .logo');
+  if (logo) {
+    logo.style.cursor = 'pointer';
+    logo.addEventListener('click', () => {
+      window.location.href = 'https://ozyern.me';
+    });
+  }
+
   // ===== MOBILE MENU =====
   const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
   const nav = document.querySelector('header nav');
