@@ -87,16 +87,17 @@ header nav {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
+  gap: clamp(1.8rem, 4vw, 3.5rem);
 }
 
 header nav a {
   color: #fff;
   text-decoration: none;
-  font-size: 14px;
-  letter-spacing: 1.2px;
+  font-size: 13px;
+  letter-spacing: 0.8px;
   opacity: 0.85;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
 }
 
 header nav a:hover {

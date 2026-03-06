@@ -1,215 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#000000">
+  <title>Supported Devices – ReVork</title>
 
-<title>Devices – ReVork</title>
-<link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="icon" href="assets/favicon.png">
+  <link href="https://db.onlinewebfonts.com/c/1a5a02144883150dce30ae0877cfb513?family=Haverbrooke" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== BASE ===== */
+    body {
+      background: #000;
+      color: #fff;
+      font-family: "Haverbrooke", "Helvetica Neue", Arial, sans-serif;
+      overflow-x: hidden;
+    }
 
-<link rel="stylesheet" href="style.css">
+    /* ===== HERO ===== */
+    .devices-hero {
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-<style>
-/* ===== BASE ===== */
-body {
-  margin: 0;
-  background: #050507;
-  color: white;
-  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont;
-}
+    .bg-text {
+      position: absolute;
+      font-size: 12vw;
+      font-weight: 900;
+      letter-spacing: -10px;
+      font-family: "Haverbrooke", "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.18),
+        rgba(255,255,255,0.02)
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      pointer-events: none;
+    }
 
-/* ===== HERO ===== */
-.devices-hero {
-  height: 100vh;
-  display: grid;
-  place-items: center;
-  position: relative;
-  overflow: hidden;
-}
+    .hero-content {
+      position: relative;
+      text-align: center;
+      z-index: 2;
+    }
 
-.bg-text {
-  position: absolute;
-  font-size: 26vw;
-  font-weight: 900;
-  letter-spacing: -10px;
-  font-family: "Anton", sans-serif;
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.18),
-    rgba(255,255,255,0.02)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  pointer-events: none;
-}
+    .hero-line {
+      font-size: 15px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+    }
 
-.hero-content {
-  position: relative;
-  text-align: center;
-  z-index: 2;
-}
+    .hero-content h2 {
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
 
-.hero-line {
-  font-size: 15px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.85);
-  text-align: center;
-}
+    .hero-content p {
+      opacity: 0.6;
+      font-size: 14px;
+    }
 
-.hero-content h2 {
-  font-weight: 500;
-  letter-spacing: 0.8px;
-  margin-bottom: 8px;
-}
+    /* ===== SCROLL DOWN ANIMATION ===== */
+    .scroll-down {
+      position: fixed;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      z-index: 50;
+    }
 
-.hero-content p {
-  opacity: 0.6;
-  font-size: 14px;
-}
+    .scroll-down.hidden {
+      display: none;
+    }
 
-/* ===== SCROLL DOWN ANIMATION ===== */
-.scroll-down {
-  position: fixed;
-  right: 60px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  z-index: 50;
-}
+    .scroll-arrow {
+      width: 24px;
+      height: 40px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.scroll-down.hidden {
-  display: none;
-}
+    .scroll-arrow::after {
+      content: '';
+      width: 2px;
+      height: 8px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 2px;
+      animation: scrollBounce 2s infinite;
+    }
 
-.scroll-arrow {
-  width: 24px;
-  height: 40px;
-  border: 2px solid rgba(255,255,255,0.4);
-  border-radius: 12px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    @keyframes scrollBounce {
+      0% {
+        transform: translateY(-6px);
+        opacity: 1;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(6px);
+        opacity: 0;
+      }
+    }
 
-.scroll-arrow::after {
-  content: '';
-  width: 2px;
-  height: 8px;
-  background: rgba(255,255,255,0.8);
-  border-radius: 2px;
-  animation: scrollBounce 2s infinite;
-}
+    .scroll-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      opacity: 0.7;
+    }
 
-@keyframes scrollBounce {
-  0% {
-    transform: translateY(-6px);
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(6px);
-    opacity: 0;
-  }
-}
+    /* ===== DEVICES ===== */
+    .devices {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 120px 40px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 80px;
+    }
 
-.scroll-label {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  opacity: 0.7;
-}
+    .device-card {
+      background: linear-gradient(180deg, #0b0b10, #060608);
+      border-radius: 28px;
+      padding: 60px 40px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.4s ease;
+    }
 
-/* ===== DEVICES ===== */
-.devices {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 120px 40px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 80px;
-}
+    .device-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(255,255,255,0.2);
+    }
 
-.device-card {
-  background: linear-gradient(180deg, #0b0b10, #060608);
-  border-radius: 28px;
-  padding: 60px 40px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: all 0.4s ease;
-}
+    .device-card img {
+      height: 340px;
+      object-fit: contain;
+      margin-bottom: 40px;
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
+    }
 
-.device-card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(255,255,255,0.2);
-}
+    .device-card h3 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: 0.8px;
+    }
 
-.device-card img {
-  height: 340px;
-  object-fit: contain;
-  margin-bottom: 40px;
-  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
-}
+    .device-card a {
+      display: inline-block;
+      background: white;
+      color: black;
+      border: none;
+      padding: 14px 44px;
+      border-radius: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-family: "Haverbrooke", "Helvetica Neue", Arial, sans-serif;
+    }
 
-.device-card h3 {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 24px;
-}
+    .device-card a:hover {
+      transform: scale(1.06);
+    }
 
-.device-card button {
-  background: white;
-  color: black;
-  border: none;
-  padding: 14px 44px;
-  border-radius: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    /* ===== MOBILE ===== */
+    @media (max-width: 900px) {
+      .devices {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        padding: 80px 20px;
+      }
 
-.device-card button:hover {
-  transform: scale(1.06);
-}
+      .device-card img {
+        height: 280px;
+      }
 
-/* ===== MOBILE ===== */
-@media (max-width: 900px) {
-  .devices {
-    grid-template-columns: 1fr;
-    gap: 60px;
-    padding: 80px 20px;
-  }
+      .scroll-down {
+        display: none;
+      }
+    }
 
-  .device-card img {
-    height: 280px;
-  }
-}
-</style>
+    @media (max-width: 768px) {
+      .devices-hero {
+        height: 80vh;
+      }
+
+      .bg-text {
+        font-size: 20vw;
+      }
+
+      .hero-line {
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ===== HEADER (USES YOUR EXISTING style.css) ===== -->
-<header class="header">
-  <div class="logo">ReVork</div>
-  <nav class="nav">
-    <a href="index.html">Home</a>
-    <a href="roms.html">Explore ROMs</a>
-    <a class="active" href="devices.html">Supported Device</a>
-    <a href="installation.html">Installation Guide</a>
+<!-- HEADER -->
+<header>
+  <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="logo">
+    <a href="index.html">
+      <img src="assets/favicon.png" draggable="false" alt="ReVork Logo">
+    </a>
+  </div>
+
+  <nav>
+    <div class="nav-item dropdown-parent">
+      <a href="#" class="dropdown-trigger">ROMS <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown-menu">
+        <div class="dropdown-header">
+          <h3>Featured ROM</h3>
+          <a href="#" class="view-all">View All →</a>
+        </div>
+        <div class="rom-grid">
+          <a href="#" class="rom-card">
+            <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
+            <span>OxygenOS 16</span>
+          </a>
+          <a href="#" class="rom-card">
+            <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
+            <span>ColorOS 16</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-nav-featured">
+      <div class="mobile-nav-featured-header">
+        <span>FEATURED ROMS</span>
+        <a href="#" class="mobile-nav-view-all">View All →</a>
+      </div>
+      <div class="mobile-nav-roms">
+        <a href="#" class="mobile-nav-rom-card">
+          <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
+        </a>
+        <a href="#" class="mobile-nav-rom-card">
+          <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
+        </a>
+      </div>
+    </div>
+    <a href="#" class="desktop-nav-link">DOWNLOADS</a>
+    <a href="#" class="desktop-nav-link">INSTALL GUIDE</a>
+    <a href="#" class="desktop-nav-link">NEWSWIRE</a>
+
+    <a href="#" class="mobile-nav-link">NEWSWIRE</a>
+    <a href="#" class="mobile-nav-link">VIDEOS</a>
+    <a href="devices.html" class="mobile-nav-link mobile-nav-link-active">DEVICES</a>
+    <a href="#" class="mobile-nav-link mobile-nav-link-arrow">STORE</a>
+    <a href="#" class="mobile-nav-link mobile-nav-link-arrow">SUPPORT</a>
   </nav>
 </header>
 
@@ -234,36 +303,36 @@ body {
   <div class="device-card">
     <img src="assets/9_img.png" alt="OnePlus 9">
     <h3>OnePlus 9</h3>
-    <button onclick="location.href='roms.html'">
-      DOWNLOAD
-    </button>
   </div>
 
   <div class="device-card">
     <img src="assets/9p_img.png" alt="OnePlus 9 Pro">
     <h3>OnePlus 9 Pro</h3>
-    <button onclick="location.href='roms.html'">
-      DOWNLOAD
-    </button>
   </div>
 
   <div class="device-card">
-    <img src="assets/9rt_img.png" alt="OnePlus 9RT">
-    <h3>OnePlus 9RT</h3>
-    <button onclick="location.href='roms.html'">
-      DOWNLOAD
-    </button>
-  </div>
-
-  <div class="device-card">
-    <img src="assets/8_img.png" alt="OnePlus 8">
-    <h3>OnePlus 8</h3>
-    <button onclick="location.href='roms.html'">
-      DOWNLOAD
-    </button>
+    <img src="assets/8p_img.png" alt="OnePlus 8 Pro">
+    <h3>OnePlus 8 Pro</h3>
   </div>
 
 </section>
+
+<!-- FOOTER -->
+<footer class="rog-footer">
+  <div class="footer-divider">
+    <img src="assets/divider.png" draggable="false" alt="">
+  </div>
+
+  <div class="footer-bottom">
+    <div class="region">
+      <img src="assets/globalenglish.png" draggable="false" alt="Region selector" style="user-select: none; -webkit-user-select: none;">
+    </div>
+
+    <div class="copyright">
+      © 2026 ReVork Project. All rights reserved.
+    </div>
+  </div>
+</footer>
 
 <script>
 // Hide scroll indicator when user scrolls
@@ -283,5 +352,6 @@ function handleScrollIndicator() {
 window.addEventListener('load', handleScrollIndicator);
 </script>
 
+<script src="script.js"></script>
 </body>
 </html>
