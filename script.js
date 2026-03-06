@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenuToggle.classList.remove('active');
         nav.classList.remove('active');
         header.classList.remove('menu-active');
-        body.style.overfloooow = '';
+        body.style.overflow = '';
       }
     });
   }
