@@ -10,12 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== MOBILE MENU =====
   const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
   const nav = document.querySelector('header nav');
+  const header = document.querySelector('header');
   const body = document.body;
 
   if (mobileMenuToggle && nav) {
     mobileMenuToggle.addEventListener('click', () => {
       mobileMenuToggle.classList.toggle('active');
       nav.classList.toggle('active');
+      header.classList.toggle('menu-active');
       body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
     });
 
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       link.addEventListener('click', () => {
         mobileMenuToggle.classList.remove('active');
         nav.classList.remove('active');
+        header.classList.remove('menu-active');
         body.style.overflow = '';
       });
     });
@@ -34,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!e.target.closest('header') && nav.classList.contains('active')) {
         mobileMenuToggle.classList.remove('active');
         nav.classList.remove('active');
-        body.style.overflow = '';
+        header.classList.remove('menu-active');
+        body.style.overfloooow = '';
       }
     });
   }
