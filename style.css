@@ -318,26 +318,32 @@ header nav a:hover {
   .mobile-menu-toggle span {
     width: 18px;
     height: 2px;
-  }
-
-  .mobile-menu-toggle span:nth-child(2),
-  .mobile-menu-toggle span:nth-child(3) {
-    display: none;
+    transition: transform 0.25s ease, opacity 0.2s ease;
   }
 
   .mobile-menu-toggle.active span:nth-child(1) {
-    transform: none;
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
   }
 
   header nav {
     position: fixed;
     inset: 0;
-    transform: none;
+    transform: translateY(10px);
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     gap: 0;
-    background: #000;
+    background: rgba(0, 0, 0, 0.93);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     min-height: 100dvh;
     padding: 106px 0 40px;
     padding-top: max(106px, calc(env(safe-area-inset-top) + 86px));
@@ -345,7 +351,7 @@ header nav a:hover {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease;
     z-index: 99;
   }
 
@@ -353,6 +359,7 @@ header nav a:hover {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
+    transform: translateY(0);
   }
 
   header nav a {
