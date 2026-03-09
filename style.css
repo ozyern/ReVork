@@ -742,15 +742,16 @@ header nav a:hover {
     width: 32px;
     height: 32px;
     font-size: 14px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    border-radius: 0;
     box-shadow: none;
   }
 
   .rs-pause-play:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: transparent;
     transform: scale(1.05);
     box-shadow: none;
   }
