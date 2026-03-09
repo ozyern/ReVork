@@ -30,6 +30,31 @@ html {
   scroll-behavior: smooth;
 }
 
+/* PHONE MOCKUP */
+.phone-mockup {
+  display: none;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+.phone-mockup img {
+  width: 100%;
+  height: 100vh;
+  display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .phone-mockup {
+    display: block;
+    height: 100vh;
+    padding: 0;
+  }
+}
+
 /* HEADER – CENTERED NAV */
 header {
   position: absolute;
