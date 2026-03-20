@@ -2,17 +2,521 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ReVork</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#000000">
+  <title>Newswire – ReVork</title>
 
   <link rel="icon" href="assets/favicon.png">
   <link href="https://db.onlinewebfonts.com/c/1a5a02144883150dce30ae0877cfb513?family=Haverbrooke" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ===== BASE ===== */
+    body {
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ===== HERO ===== */
+    .newswire-hero {
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .newswire-hero::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.03), transparent);
+      border-radius: 50%;
+      top: 20%;
+      right: 10%;
+      animation: float 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .newswire-hero::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.02), transparent);
+      border-radius: 50%;
+      bottom: 10%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(30px); }
+    }
+
+    .bg-text {
+      position: absolute;
+      font-size: 18vw;
+      font-weight: 900;
+      letter-spacing: 2px;
+      font-family: "Anton", sans-serif;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.18),
+        rgba(255,255,255,0.02)
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .hero-label {
+      font-size: 22px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      opacity: 0.6;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    /* ===== SCROLL DOWN ANIMATION ===== */
+    .scroll-down {
+      position: fixed;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      z-index: 50;
+    }
+
+    .scroll-down.hidden {
+      display: none;
+    }
+
+    .scroll-arrow {
+      width: 24px;
+      height: 40px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scroll-arrow::after {
+      content: '';
+      width: 2px;
+      height: 8px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 2px;
+      animation: scrollBounce 2s infinite;
+    }
+
+    @keyframes scrollBounce {
+      0% {
+        transform: translateY(-6px);
+        opacity: 1;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(6px);
+        opacity: 0;
+      }
+    }
+
+    .scroll-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      opacity: 0.7;
+    }
+
+    /* ===== NEWS SECTION ===== */
+    .news-section {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 120px 40px 80px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .section-header h2 {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, rgba(255,255,255,0.8));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-header p {
+      color: rgba(255,255,255,0.6);
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== FEATURED STORY ===== */
+    .featured-story {
+      margin-bottom: 100px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+    }
+
+    .featured-story-card {
+      background: rgba(15, 15, 25, 0.6);
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+      text-decoration: none;
+      color: inherit;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 500px;
+    }
+
+    .featured-story-card:hover {
+      background: rgba(15, 15, 25, 0.8);
+      border-color: rgba(255,255,255,0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      transform: translateY(-5px);
+    }
+
+    .featured-story-image {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-story-content {
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .featured-story-meta {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .featured-story-title {
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .featured-story-description {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .featured-story-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6b6b, #ff8787);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      width: fit-content;
+      margin-bottom: 30px;
+    }
+
+    .featured-read-more {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      transition: all 0.3s ease;
+      width: fit-content;
+    }
+
+    .featured-story-card:hover .featured-read-more {
+      color: #fff;
+      transform: translateX(5px);
+    }
+
+    /* ===== NEWS GRID ===== */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 80px;
+    }
+
+    .news-card {
+      background: rgba(15, 15, 25, 0.6);
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .news-card:hover {
+      background: rgba(15, 15, 25, 0.8);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    }
+
+    .news-image {
+      width: 100%;
+      height: 240px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .news-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #51cf66, #69db7c);
+      color: #000;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    .news-badge.featured {
+      background: linear-gradient(135deg, #ff6b6b, #ff8787);
+      color: #fff;
+    }
+
+    .news-content {
+      padding: 40px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-meta {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .news-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .news-description {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .read-more {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      transition: all 0.3s ease;
+    }
+
+    .news-card:hover .read-more {
+      color: #fff;
+      transform: translateX(5px);
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 1200px) {
+      .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+
+      .featured-story-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .featured-story-image {
+        height: 350px;
+        order: -1;
+      }
+
+      .featured-story-content {
+        padding: 50px 40px;
+      }
+
+      .featured-story-title {
+        font-size: 36px;
+      }
+
+      .featured-story-description {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .news-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .featured-story-content {
+        padding: 40px 30px;
+      }
+
+      .scroll-down {
+        right: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .newswire-hero {
+        height: 80vh;
+      }
+
+      .hero-title {
+        font-size: 48px;
+      }
+
+      .hero-label {
+        font-size: 16px;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+      }
+
+      .news-section {
+        padding: 80px 20px 60px;
+      }
+
+      .section-header h2 {
+        font-size: 32px;
+      }
+
+      .featured-story-image {
+        height: 280px;
+      }
+
+      .featured-story-content {
+        padding: 30px 25px;
+      }
+
+      .featured-story-title {
+        font-size: 28px;
+      }
+
+      .featured-story-description {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .news-grid {
+        gap: 30px;
+      }
+
+      .news-image {
+        height: 200px;
+      }
+
+      .news-content {
+        padding: 25px;
+      }
+
+      .news-title {
+        font-size: 18px;
+      }
+
+      .scroll-down {
+        right: 30px;
+        gap: 10px;
+      }
+    }
+  </style>
 </head>
 
-<body class="dark-theme">
+<body>
 
+<!-- HEADER -->
 <header>
+  <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
   <div class="logo">
     <a href="https://ozyern.me">
       <img src="assets/favicon.png" draggable="false" alt="ReVork Logo">
@@ -20,70 +524,105 @@
   </div>
 
   <nav>
-    <a href="../index.html">ROMS</a>
-    <a href="../devices.html">DEVICES</a>
-    <a href="../index.html">INSTALL GUIDE</a>
-    <a href="../downloads.html" style="opacity:1; color:#fff; font-weight:bold;">DOWNLOADS</a>
-    <a href="newswire.html" style="opacity:1; color:#fff; font-weight:bold;">NEWSWIRE</a>
+    <div class="nav-item dropdown-parent">
+      <a href="#" class="dropdown-trigger">ROMS <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown-menu">
+        <div class="dropdown-header">
+          <h3>Featured ROM</h3>
+          <a href="#" class="view-all">View All →</a>
+        </div>
+        <div class="rom-grid">
+          <a href="#" class="rom-card">
+            <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
+            <span>OxygenOS 16</span>
+          </a>
+          <a href="#" class="rom-card">
+            <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
+            <span>ColorOS 16</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-nav-featured">
+      <div class="mobile-nav-featured-header">
+        <span>FEATURED ROMS</span>
+        <a href="#" class="mobile-nav-view-all">View All →</a>
+      </div>
+      <div class="mobile-nav-roms">
+        <a href="#" class="mobile-nav-rom-card">
+          <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
+        </a>
+        <a href="#" class="mobile-nav-rom-card">
+          <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
+        </a>
+      </div>
+    </div>
+    <a href="index.html" class="desktop-nav-link">HOME</a>
+    <a href="devices.html" class="desktop-nav-link">DEVICES</a>
+    <a href="downloads.html" class="desktop-nav-link">DOWNLOADS</a>
+    <a href="newswire.html" class="desktop-nav-link">NEWSWIRE</a>
+
+    <a href="index.html" class="mobile-nav-link">HOME</a>
+    <a href="devices.html" class="mobile-nav-link">DEVICES</a>
+    <a href="downloads.html" class="mobile-nav-link">DOWNLOADS</a>
+    <a href="newswire.html" class="mobile-nav-link mobile-nav-link-active">NEWSWIRE</a>
   </nav>
 </header>
 
-<main class="newswire-main">
+<!-- ===== HERO ===== -->
+<section class="newswire-hero">
+  <p class="bg-text">NEWSWIRE</p>
+  <div class="hero-content">
+    <p class="hero-label">Latest Updates</p>
+    <h1 class="hero-title">Newswire</h1>
+    <p class="hero-subtitle">Stay updated with the latest ReVork releases</p>
+  </div>
+</section>
 
-  <!-- LATEST NEWS – big featured section -->
-  <section class="latest-news">
-    <div class="latest-container">
-      <h1 class="section-title">LATEST NEWS</h1>
+<!-- ===== SCROLL DOWN ===== -->
+<div class="scroll-down">
+  <div class="scroll-arrow"></div>
+  <p class="scroll-label">Scroll</p>
+</div>
 
-      <div class="featured-news">
-        <div class="featured-logo">
-          <img src="assets/revork-big-logo.png" alt="ReVork Logo Big" class="big-logo"> <!-- replace with your big logo/artwork -->
-        </div>
+<!-- ===== NEWS SECTION ===== -->
+<section class="news-section">
+  <div class="section-header">
+    <h2>All Updates</h2>
+    <p>Latest ROM releases and important announcements</p>
+  </div>
 
-        <div class="featured-text">
-          <p class="subtitle">ReVork v1.0</p>
-          <h2 class="main-headline">
-            ReVork v1 is<br>Now Set to Launch
-          </h2>
-          <p class="date">March 15, 2026</p>
-        </div>
+  <!-- Featured Story -->
+  <div class="featured-story">
+    <a href="newswire/oxygenos-16-0-5-700.html" class="featured-story-card">
+      <div class="featured-story-image" style="background-image: url('assets/16.0.5.700.png');"></div>
+      <div class="featured-story-content">
+        <div class="featured-story-badge">Latest Release</div>
+        <p class="featured-story-meta">OxygenOS Release</p>
+        <h3 class="featured-story-title">OxygenOS 16.0.5.700</h3>
+        <p class="featured-story-description">The newest OxygenOS 16 release with latest improvements and stability enhancements for your device. Bringing the best performance and features to your OnePlus device.</p>
+        <span class="featured-read-more">Read Update →</span>
       </div>
-    </div>
-  </section>
+    </a>
+  </div>
 
-  <!-- Older news – horizontal cards at bottom -->
-  <section class="older-news">
-    <div class="news-row">
-      <div class="news-item">
-        <img src="assets/articles/color-os-16-teaser.jpg" alt="ColorOS 16 Update">
-        <div class="news-overlay">
-          <h3>ColorOS 16 Port Update</h3>
-          <p>February 28, 2026</p>
-        </div>
+  <!-- Other Stories Grid -->
+  <div class="news-grid">
+    <a href="newswire/oxygenos-16-0-3-503.html" class="news-card">
+      <div class="news-image" style="background-image: url('assets/16.0.3.503.png');">
+        <div class="news-badge">Previous</div>
       </div>
-
-      <div class="news-item">
-        <img src="assets/articles/project-start.jpg" alt="Project Start">
-        <div class="news-overlay">
-          <h3>ReVork Development Begins</h3>
-          <p>January 15, 2026</p>
-        </div>
+      <div class="news-content">
+        <p class="news-meta">OxygenOS Release</p>
+        <h3 class="news-title">OxygenOS 16.0.3.503</h3>
+        <p class="news-description">OxygenOS 16 release with performance optimizations and bug fixes for OnePlus devices.</p>
+        <span class="read-more">Read Update →</span>
       </div>
+    </a>
+  </div>
+</section>
 
-      <div class="news-item">
-        <img src="assets/articles/early-builds.jpg" alt="Early Builds">
-        <div class="news-overlay">
-          <h3>First Early Builds Released</h3>
-          <p>December 10, 2025</p>
-        </div>
-      </div>
-
-      <!-- Add more items as needed -->
-    </div>
-  </section>
-
-</main>
-
+<!-- FOOTER -->
 <footer class="rog-footer">
   <div class="footer-divider">
     <img src="assets/divider.png" draggable="false" alt="">
@@ -91,7 +630,7 @@
 
   <div class="footer-bottom">
     <div class="region">
-      <img src="assets/globalenglish.png" draggable="false" alt="Region selector">
+      <img src="assets/globalenglish.png" draggable="false" alt="Region selector" style="user-select: none; -webkit-user-select: none;">
     </div>
 
     <div class="copyright">
@@ -101,5 +640,18 @@
 </footer>
 
 <script src="script.js"></script>
+
+<script>
+  // Hide scroll indicator when user scrolls down
+  const scrollDown = document.querySelector('.scroll-down');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      scrollDown.classList.add('hidden');
+    } else {
+      scrollDown.classList.remove('hidden');
+    }
+  });
+</script>
 </body>
 </html>
