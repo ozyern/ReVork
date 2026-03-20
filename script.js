@@ -146,11 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
     else pause();
   });
 
-  controls.addEventListener('mouseenter', pause);
-  controls.addEventListener('mouseleave', () => {
-    if (!isPaused) play();
-  });
-
   // Touch swipe support for mobile
   let touchStartX = 0;
   let touchEndX = 0;

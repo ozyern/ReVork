@@ -208,15 +208,45 @@
 
     @media (max-width: 768px) {
       .devices-hero {
-        height: 80vh;
+        height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .bg-text {
-        font-size: 20vw;
+        font-size: 14vw;
       }
 
       .hero-line {
-        font-size: 12px;
+        font-size: 10px;
+        letter-spacing: 2px;
+      }
+
+      .devices {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 16px;
+      }
+
+      .device-card {
+        padding: 40px 24px;
+        border-radius: 20px;
+      }
+
+      .device-card img {
+        height: 200px;
+        margin-bottom: 24px;
+      }
+
+      .device-card h3 {
+        font-size: 22px;
+        margin-bottom: 20px;
+      }
+
+      .device-card a {
+        padding: 12px 32px;
+        font-size: 14px;
       }
 
       /* Full-screen mobile menu overlay */
