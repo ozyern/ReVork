@@ -26,6 +26,38 @@
       place-items: center;
       position: relative;
       overflow: hidden;
+      background: #000;
+    }
+
+    .devices-hero::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.03), transparent);
+      border-radius: 50%;
+      top: 20%;
+      right: 10%;
+      animation: float 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .devices-hero::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.02), transparent);
+      border-radius: 50%;
+      bottom: 10%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(30px); }
     }
 
     .bg-text {
@@ -138,29 +170,78 @@
       margin: 0 auto;
       padding: 120px 40px;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 80px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
     }
 
     .device-card {
-      background: linear-gradient(180deg, #0b0b10, #060608);
+      background: linear-gradient(135deg, rgba(15, 15, 25, 0.8), rgba(8, 8, 15, 0.9));
       border-radius: 28px;
       padding: 60px 40px;
       text-align: center;
-      border: 1px solid rgba(255,255,255,0.06);
-      transition: all 0.4s ease;
+      border: 2px solid rgba(255,255,255,0.08);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .device-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #ff6b6b, #ff8787);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    .device-badge.supported {
+      background: linear-gradient(135deg, #51cf66, #69db7c);
+    }
+
+    .device-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(600px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.05), transparent 80%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
     }
 
     .device-card:hover {
-      transform: translateY(-10px);
-      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-12px);
+      border-color: rgba(255,255,255,0.25);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255,255,255,0.1);
+    }
+
+    .device-card:hover::before {
+      opacity: 1;
     }
 
     .device-card img {
       height: 340px;
       object-fit: contain;
       margin-bottom: 40px;
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) brightness(1.05);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    .device-card:hover img {
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.8)) brightness(1.15) saturate(1.1);
+      transform: scale(1.08);
     }
 
     .device-card h3 {
@@ -168,28 +249,150 @@
       font-weight: 600;
       margin-bottom: 24px;
       letter-spacing: 0.8px;
+      background: linear-gradient(135deg, #ffffff, rgba(255,255,255,0.85));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.5s ease;
+      margin-top: auto;
+    }
+
+    .device-info {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .device-card:hover h3 {
+      letter-spacing: 1.2px;
     }
 
     .device-card a {
       display: inline-block;
-      background: white;
-      color: black;
+      background: linear-gradient(135deg, #ffffff, #f0f0f0);
+      color: #000;
       border: none;
       padding: 14px 44px;
       border-radius: 10px;
       font-weight: 700;
       letter-spacing: 1px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
       text-decoration: none;
       font-family: "Haverbrooke", "Helvetica Neue", Arial, sans-serif;
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .device-card a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s ease;
     }
 
     .device-card a:hover {
-      transform: scale(1.06);
+      transform: scale(1.08);
+      box-shadow: 0 12px 28px rgba(255, 255, 255, 0.35);
+    }
+
+    .device-card a:hover::before {
+      left: 100%;
+    }
+
+    /* ===== FEATURES SECTION ===== */
+    .devices-features {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 120px 40px;
+      grid-column: 1 / -1;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 50px;
+      margin-top: 60px;
+    }
+
+    .feature-card {
+      background: rgba(15, 15, 25, 0.6);
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #ffffff, transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .feature-card:hover {
+      background: rgba(15, 15, 25, 0.8);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-8px);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 28px;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
     }
 
     /* ===== MOBILE ===== */
+    @media (max-width: 1200px) {
+      .devices {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 50px;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 900px) {
       .devices {
         grid-template-columns: 1fr;
@@ -199,6 +402,15 @@
 
       .device-card img {
         height: 280px;
+      }
+
+      .device-card:hover {
+        transform: translateY(-8px);
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
       }
 
       .scroll-down {
@@ -232,11 +444,20 @@
       .device-card {
         padding: 40px 24px;
         border-radius: 20px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      }
+
+      .device-card:hover {
+        transform: translateY(-6px);
       }
 
       .device-card img {
         height: 200px;
         margin-bottom: 24px;
+      }
+
+      .device-card:hover img {
+        transform: scale(1.05);
       }
 
       .device-card h3 {
@@ -247,6 +468,10 @@
       .device-card a {
         padding: 12px 32px;
         font-size: 14px;
+      }
+
+      .device-card a:hover {
+        transform: scale(1.06);
       }
 
       /* Full-screen mobile menu overlay */
@@ -478,20 +703,52 @@
 <section class="devices">
 
   <div class="device-card">
-    <img src="assets/9_img.png" alt="OnePlus 9">
-    <h3>OnePlus 9</h3>
-  </div>
-
-  <div class="device-card">
+    <div class="device-badge supported">Fully Supported</div>
     <img src="assets/9p_img.png" alt="OnePlus 9 Pro">
+    <p class="device-info">OnePlus 9 Series</p>
     <h3>OnePlus 9 Pro</h3>
   </div>
 
   <div class="device-card">
+    <div class="device-badge supported">Fully Supported</div>
+    <img src="assets/9_img.png" alt="OnePlus 9">
+    <p class="device-info">OnePlus 9 Series</p>
+    <h3>OnePlus 9</h3>
+  </div>
+
+  <div class="device-card">
+    <div class="device-badge">Limited Support</div>
     <img src="assets/8p_img.png" alt="OnePlus 8 Pro">
+    <p class="device-info">OnePlus 8 Series</p>
     <h3>OnePlus 8 Pro</h3>
   </div>
 
+</section>
+
+<!-- ===== FEATURES SECTION ===== -->
+<section class="devices-features">
+  <div style="text-align: center; margin-bottom: 20px;">
+    <h2 style="font-size: 42px; font-weight: 700; letter-spacing: 1.5px; background: linear-gradient(135deg, #ffffff, rgba(255,255,255,0.8)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 15px;">Why Choose ReVork?</h2>
+    <p style="color: rgba(255,255,255,0.6); font-size: 16px; letter-spacing: 0.5px;">Experience custom ROMs optimized for performance and stability</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Lightning Fast</h3>
+      <p>Optimized kernel and system performance for smoother, quicker experience on your device</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Enhanced Security</h3>
+      <p>Regular security patches and privacy-focused features to keep your data protected</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✨</div>
+      <h3>Custom Features</h3>
+      <p>Exclusive enhancements and customization options not found in stock ROMs</p>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -525,8 +782,59 @@ function handleScrollIndicator() {
   });
 }
 
+// Add mouse tracking glow effect to device cards
+function handleCardGlowEffect() {
+  const cards = document.querySelectorAll('.device-card');
+  
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      card.style.setProperty('--mouse-x', x + 'px');
+      card.style.setProperty('--mouse-y', y + 'px');
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--mouse-x', '50%');
+      card.style.setProperty('--mouse-y', '50%');
+    });
+  });
+}
+
+// Add scroll animation to device and feature cards
+function handleScrollAnimation() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  const cards = document.querySelectorAll('.device-card, .feature-card');
+  cards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(40px)';
+    card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+    observer.observe(card);
+  });
+}
+
 // Initialize on page load
-window.addEventListener('load', handleScrollIndicator);
+window.addEventListener('load', () => {
+  handleScrollIndicator();
+  handleCardGlowEffect();
+  handleScrollAnimation();
+});
 </script>
 
 <script src="script.js"></script>
