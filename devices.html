@@ -474,6 +474,67 @@
         transform: scale(1.06);
       }
 
+      /* ===== SLEEK MOBILE FOOTER ===== */
+      .rog-footer {
+        padding: 50px 20px 40px;
+        background: #000;
+      }
+
+      .footer-divider {
+        margin-bottom: 50px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .footer-divider img {
+        width: 100%;
+        max-width: 380px;
+        height: auto;
+        filter: brightness(1.15) contrast(1.05);
+        opacity: 1;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+        padding: 0;
+      }
+
+      .footer-bottom .region {
+        display: flex;
+        justify-content: center;
+      }
+
+      .region img {
+        height: 38px;
+        filter: brightness(1.05);
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .region img:active {
+        filter: brightness(1.25);
+        transform: scale(1.1);
+      }
+
+      .footer-bottom .copyright {
+        font-size: 11px;
+        font-weight: 500;
+        color: rgba(255,255,255,0.7);
+        letter-spacing: 0.5px;
+        line-height: 1.6;
+      }
+
+      .footer-bottom .copyright span {
+        display: block;
+        font-size: 10px;
+        color: rgba(255,255,255,0.4);
+        letter-spacing: 0.3px;
+        margin-top: 10px;
+        font-weight: 400;
+      }
+
       /* Full-screen mobile menu overlay */
       header.menu-active {
         background: #000;
