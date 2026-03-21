@@ -198,13 +198,29 @@
     }
 
     /* MOBILE */
+    @media (max-width: 1000px) {
+      .installation-main {
+        padding: 80px 30px 80px;
+        max-width: 100%;
+      }
+
+      .installation-main h1 {
+        font-size: 42px;
+      }
+
+      .installation-main h2 {
+        font-size: 26px;
+        margin: 45px 0 25px;
+      }
+    }
+
     @media (max-width: 768px) {
       .installation-hero {
         height: 80vh;
       }
 
       .bg-text {
-        font-size: 16vw;
+        font-size: 18vw;
       }
 
       .hero-title {
@@ -246,6 +262,19 @@
         font-size: 12px;
         padding: 14px;
       }
+
+      .warning-box {
+        padding: 16px;
+      }
+
+      .warning-box strong {
+        font-size: 13px;
+      }
+
+      .note-box {
+        padding: 14px 16px;
+        font-size: 12px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -254,7 +283,7 @@
       }
 
       .bg-text {
-        font-size: 14vw;
+        font-size: 17vw;
       }
 
       .hero-title {
@@ -271,18 +300,58 @@
 
       .installation-main h1 {
         font-size: 28px;
+        margin-bottom: 30px;
       }
 
       .installation-main h2 {
         font-size: 20px;
+        margin: 30px 0 16px;
+      }
+
+      .guide-section {
+        margin-bottom: 40px;
+      }
+
+      .guide-section h3 {
+        font-size: 15px;
+        margin: 25px 0 12px;
       }
 
       .guide-section p {
         font-size: 13px;
+        margin-bottom: 12px;
       }
 
       .guide-section li {
         font-size: 13px;
+        padding-left: 18px;
+        margin-bottom: 8px;
+      }
+
+      .command-block {
+        font-size: 11px;
+        padding: 12px;
+        margin: 12px 0 16px;
+      }
+
+      .warning-box {
+        padding: 14px;
+        margin: 20px 0;
+      }
+
+      .warning-box strong {
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .warning-box p {
+        font-size: 13px;
+      }
+
+      .note-box {
+        padding: 12px 14px;
+        font-size: 12px;
+        margin: 12px 0;
       }
     }
   </style>
@@ -390,7 +459,7 @@
       <li>Go to Settings → About Phone</li>
       <li>Tap Build Number 7 times to unlock Developer Options</li>
       <li>Go back to Settings → Developer Options</li>
-      <li>Enable "USB Debugging"</li>
+      <li>Enable "USB Debugging" & "OEM Unlocking"</li>
       <li>Connect your device to your computer via USB</li>
     </ul>
   </div>
