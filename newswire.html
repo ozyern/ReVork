@@ -492,46 +492,224 @@
         padding: 80px 20px 60px;
       }
 
+      .section-header {
+        margin-bottom: 50px;
+      }
+
       .section-header h2 {
         font-size: 32px;
+        margin-bottom: 12px;
+      }
+
+      .section-header p {
+        font-size: 14px;
+      }
+
+      /* Featured Story - Single Column */
+      .featured-story {
+        margin-bottom: 60px;
+      }
+
+      .featured-story-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        border-radius: 16px;
       }
 
       .featured-story-image {
-        height: 280px;
+        height: 250px;
+        order: -1;
+        border-radius: 16px 16px 0 0;
       }
 
       .featured-story-content {
-        padding: 30px 25px;
+        padding: 28px 20px;
+        order: 1;
+      }
+
+      .featured-story-badge {
+        margin-bottom: 16px;
+        padding: 8px 16px;
+        font-size: 11px;
+      }
+
+      .featured-story-meta {
+        font-size: 11px;
+        margin-bottom: 12px;
       }
 
       .featured-story-title {
-        font-size: 28px;
+        font-size: 24px;
+        margin-bottom: 16px;
+        line-height: 1.3;
       }
 
       .featured-story-description {
-        font-size: 14px;
-        margin-bottom: 20px;
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 18px;
       }
 
+      .featured-read-more {
+        font-size: 11px;
+        letter-spacing: 0.5px;
+      }
+
+      /* News Grid - Single Column */
       .news-grid {
-        gap: 30px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 60px;
+      }
+
+      .news-card {
+        border-radius: 16px;
+        overflow: hidden;
       }
 
       .news-image {
         height: 200px;
+        border-radius: 16px 16px 0 0;
       }
 
       .news-content {
-        padding: 25px;
+        padding: 20px;
+      }
+
+      .news-meta {
+        font-size: 11px;
+        margin-bottom: 10px;
       }
 
       .news-title {
         font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      .news-description {
+        font-size: 13px;
+        margin-bottom: 15px;
+      }
+
+      .read-more {
+        font-size: 11px;
+        letter-spacing: 0.5px;
+      }
+
+      .news-badge {
+        padding: 6px 12px;
+        font-size: 10px;
+        top: 12px;
+        right: 12px;
       }
 
       .scroll-down {
-        right: 30px;
-        gap: 10px;
+        right: 20px;
+        gap: 8px;
+      }
+
+      .scroll-arrow {
+        width: 20px;
+        height: 32px;
+      }
+
+      .scroll-label {
+        font-size: 9px;
+      }
+    }
+
+    /* Extra Small Phones */
+    @media (max-width: 480px) {
+      .newswire-hero {
+        height: 70vh;
+      }
+
+      .bg-text {
+        font-size: 20vw;
+      }
+
+      .hero-label {
+        font-size: 14px;
+        letter-spacing: 3px;
+      }
+
+      .hero-title {
+        font-size: 36px;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      .hero-subtitle {
+        font-size: 14px;
+      }
+
+      .news-section {
+        padding: 60px 16px 50px;
+      }
+
+      .section-header h2 {
+        font-size: 26px;
+        margin-bottom: 10px;
+      }
+
+      .section-header p {
+        font-size: 13px;
+      }
+
+      .featured-story {
+        margin-bottom: 50px;
+      }
+
+      .featured-story-image {
+        height: 200px;
+      }
+
+      .featured-story-content {
+        padding: 24px 16px;
+      }
+
+      .featured-story-title {
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+
+      .featured-story-description {
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 14px;
+      }
+
+      .news-grid {
+        gap: 16px;
+        margin-bottom: 50px;
+      }
+
+      .news-image {
+        height: 160px;
+      }
+
+      .news-content {
+        padding: 16px;
+      }
+
+      .news-meta {
+        font-size: 10px;
+        margin-bottom: 8px;
+      }
+
+      .news-title {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+
+      .news-description {
+        font-size: 12px;
+        margin-bottom: 12px;
+        line-height: 1.5;
+      }
+
+      .scroll-down {
+        right: 16px;
       }
     }
   </style>
@@ -638,6 +816,18 @@
 
   <!-- Other Stories Grid -->
   <div class="news-grid">
+    <a href="newswire/coloros-16-0-5-701.html" class="news-card">
+      <div class="news-image" style="background-image: url('assets/16.0.5.701.png');">
+        <div class="news-badge">ColorOS</div>
+      </div>
+      <div class="news-content">
+        <p class="news-meta">ColorOS Release</p>
+        <h3 class="news-title">ColorOS 16.0.5.701</h3>
+        <p class="news-description">ColorOS 16 release with enhanced performance and new features for your device.</p>
+        <span class="read-more">Read Update →</span>
+      </div>
+    </a>
+
     <a href="newswire/oxygenos-16-0-3-503.html" class="news-card">
       <div class="news-image" style="background-image: url('assets/16.0.3.503.png');">
         <div class="news-badge">Previous</div>
