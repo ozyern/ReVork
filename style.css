@@ -30,7 +30,7 @@
 }
 
 .cursor-glow.clicking {
-  animation: cursor-click 0.25s cubic-bezier(0.4, 0.4, 0.2, 1.4);
+  animation: cursor-click 0.25s cubic-bezier(0.4, 0.4, 0.2, 1.4) forwards;
 }
 
 .cursor-glow svg {
@@ -40,15 +40,13 @@
 
 @keyframes cursor-click {
   0% {
-    box-shadow: 0 0 14px rgba(255, 255, 255, 0.85), 0 0 24px rgba(255, 255, 255, 0.5), 0 4px 8px rgba(0, 0, 0, 0.5);
-    transform: scale(1.15) translateZ(0);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.9), 0 0 28px rgba(255, 255, 255, 0.6), 0 4px 10px rgba(0, 0, 0, 0.6);
   }
   50% {
-    transform: scale(0.85) translateZ(0);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
   }
   100% {
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.5), 0 2px 3px rgba(0, 0, 0, 0.3);
-    transform: scale(1) translateZ(0);
   }
 }
 
@@ -193,6 +191,12 @@ header nav a:hover {
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Arrow rotation when dropdown is active */
+.dropdown-parent.active .dropdown-arrow {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 20px);
@@ -215,6 +219,14 @@ header nav a:hover {
 
 /* Show dropdown on hover - desktop only */
 .dropdown-parent:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Show dropdown when clicked/active */
+.dropdown-parent.active .dropdown-menu {
   opacity: 1;
   visibility: visible;
   pointer-events: all;
@@ -1514,6 +1526,150 @@ header nav.active,
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+/* ===== MINIMAL PAGE ANIMATIONS ===== */
+
+/* Hero fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+.hero-title {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
+}
+
+.hero-subtitle {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s backwards;
+}
+
+.hero-ctas {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s backwards;
+}
+
+/* Nav link hover effect */
+.desktop-nav-link {
+  position: relative;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.desktop-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.6);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.desktop-nav-link:hover::after {
+  width: 100%;
+}
+
+/* CTA button hover effects */
+.cta-primary,
+.cta-secondary {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cta-primary:hover {
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+}
+
+.cta-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px) translateZ(0);
+}
+
+/* Story cards stagger animation and hover effect */
+.story-card {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.story-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.story-card:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+.story-card:hover {
+  transform: translateY(-4px) translateZ(0);
+}
+
+/* Rom card hover animation */
+.rom-card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rom-card:hover {
+  transform: scale(1.05) translateZ(0);
+}
+
+/* Learn more link hover */
+.learn-more {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.learn-more:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Reduce animations on mobile */
+@media (max-width: 768px) {
+  .hero-title,
+  .hero-subtitle,
+  .hero-ctas,
+  .story-card {
+    animation-duration: 0.6s;
+  }
+  
+  .story-card:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  .story-card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .story-card:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title,
+  .hero-subtitle,
+  .hero-ctas,
+  .story-card {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .cta-primary:hover,
+  .cta-secondary:hover,
+  .story-card:hover,
+  .rom-card:hover {
+    transform: none;
+  }
 }
 
 /* Smooth page scroll behavior */

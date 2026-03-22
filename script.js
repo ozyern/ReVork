@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
       nav.classList.toggle('active');
       header.classList.toggle('menu-active');
       body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+      // Close dropdown when toggling mobile menu
+      const dropdownParent = document.querySelector('.dropdown-parent');
+      if (dropdownParent) {
+        dropdownParent.classList.remove('active');
+      }
     });
 
     // Close menu when clicking on a nav link
@@ -29,6 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
         nav.classList.remove('active');
         header.classList.remove('menu-active');
         body.style.overflow = '';
+        // Also close dropdown
+        const dropdownParent = document.querySelector('.dropdown-parent');
+        if (dropdownParent) {
+          dropdownParent.classList.remove('active');
+        }
       });
     });
 
@@ -39,6 +49,39 @@ document.addEventListener('DOMContentLoaded', () => {
         nav.classList.remove('active');
         header.classList.remove('menu-active');
         body.style.overflow = '';
+        // Also close dropdown
+        const dropdownParent = document.querySelector('.dropdown-parent');
+        if (dropdownParent) {
+          dropdownParent.classList.remove('active');
+        }
+      }
+    });
+  }
+
+  // ===== DROPDOWN MENU =====
+  const dropdownTrigger = document.querySelector('.dropdown-trigger');
+  const dropdownParent = document.querySelector('.dropdown-parent');
+
+  if (dropdownTrigger && dropdownParent) {
+    dropdownTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdownParent.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown-parent') && dropdownParent.classList.contains('active')) {
+        dropdownParent.classList.remove('active');
+      }
+    });
+
+    // Close dropdown when clicking on Rom card or link inside
+    const dropdownLinks = dropdownParent.querySelectorAll('a');
+    dropdownLinks.forEach(link => {
+      if (link !== dropdownTrigger) {
+        link.addEventListener('click', () => {
+          dropdownParent.classList.remove('active');
+        });
       }
     });
   }
@@ -305,16 +348,30 @@ if (!isTouchDevice() && !prefersReducedMotion) {
         clearTimeout(activeTimeout);
     }, { passive: true });
 
-    // Click feedback using animation frame for better performance
+    // Click feedback with improved handling to prevent glitches
+    let isClicking = false;
+    
     document.addEventListener('mousedown', () => {
-        if (cursorGlow) {
+        if (cursorGlow && !isClicking) {
+            isClicking = true;
             cursorGlow.classList.add('clicking');
         }
     }, { passive: true });
 
     document.addEventListener('mouseup', () => {
-        if (cursorGlow) {
+        if (cursorGlow && isClicking) {
+            isClicking = false;
             cursorGlow.classList.remove('clicking');
+        }
+    }, { passive: true });
+
+    // Ensure click state is cleared if mouse leaves window during click
+    window.addEventListener('mouseout', (e) => {
+        if (e.target === window || e.relatedTarget === null) {
+            if (cursorGlow && isClicking) {
+                isClicking = false;
+                cursorGlow.classList.remove('clicking');
+            }
         }
     }, { passive: true });
 
