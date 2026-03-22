@@ -1,58 +1,69 @@
-# 🚀 ReVork Website
+# Hi there, I'm Ozyern! 👋 
 
-> **A modern, fast, and responsive web experience.**
+Welcome to the source code for my personal website and developer portfolio, hosted on GitHub Pages: [ozyern.github.io](https://ozyern.github.io) 🚀
 
-Welcome to the official repository for the **ReVork** website! This project houses the frontend code, design assets, and architecture that power the ReVork platform.
-
-![Repo Size](https://img.shields.io/github/repo-size/ozyern/ReVork?style=flat-square&color=blue)
-![Last Commit](https://img.shields.io/github/last-commit/ozyern/ReVork?style=flat-square&color=green)
-![Issues](https://img.shields.io/github/issues/ozyern/ReVork?style=flat-square&color=orange)
+![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fozyern.github.io&label=ozyern.github.io&style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/ozyern/ozyern.github.io?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/ozyern/ozyern.github.io?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)
 
 ---
 
-## 📖 About ReVork
+## 📖 About This Project
 
-*(Briefly describe what ReVork is here. E.g., "ReVork is an innovative platform designed to streamline your workflow..." or "The official landing page for the ReVork digital agency.")*
+This repository contains the source code for my personal corner of the internet. It serves as my digital resume, a showcase of my latest projects, and a place where I occasionally share my thoughts on software development and tech.
 
-Our goal with this repository is to maintain clean, scalable, and highly performant code to ensure the best possible user experience.
-
-### ✨ Key Features
-- **Sleek UI/UX:** 🎨 Designed with modern aesthetics and usability in mind.
-- **Fully Responsive:** 📱 Provides a seamless experience across mobile, tablet, and desktop screens.
-- **Blazing Fast:** ⚡ Optimized assets and efficient routing for quick load times.
-- **Accessible:** ♿ Built following web accessibility guidelines (WCAG).
+### ✨ Features
+- **Responsive Design:** 📱 Looks great on desktops, tablets, and mobile devices.
+- **Project Showcase:** 🛠️ A dedicated section highlighting my best work and open-source contributions.
+- **Dark/Light Mode:** 🌓 (Optional: Mention if you have a theme toggle!)
+- **SEO Optimized:** 🔍 Built to be easily discoverable on the web.
+- **Fast Performance:** ⚡ Lightweight and optimized for quick load times.
 
 ---
 
 ## 🛠️ Tech Stack
 
-This project is built utilizing the following incredible tools:
+*This section highlights the tools and technologies I used to build this site.*
 
-**Core:**
+**Frontend:**
 - ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 - ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 - ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-- *(Optional: Add React, Vue, Svelte, or Next.js badges here)*
+- *(Add React, Vue, Tailwind, or Next.js if you use them!)*
 
-**Styling:**
-- ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) *(or Bootstrap / SASS)*
-
-**Tooling:**
-- ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
-- ![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
+**Hosting & Deployment:**
+- ![GitHub Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)
+- ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Running the Project Locally
 
-Want to run ReVork locally to test it out or contribute? Follow these simple steps:
+Want to explore the code or use it as inspiration? Follow these steps to run the website locally on your machine.
 
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) and npm installed on your machine.
-
-### Installation
-
-1. **Clone the repo:**
+1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/ozyern/ReVork.git](https://github.com/ozyern/ReVork.git)
+   git clone [https://github.com/ozyern/ozyern.github.io.git](https://github.com/ozyern/ozyern.github.io.git)
+Navigate into the directory:
+
+Bash
+cd ozyern.github.io
+Start a local server:
+(If it's plain HTML/JS/CSS, you can use Live Server in VS Code, or a simple Python server)
+
+Bash
+python -m http.server 8000
+(If you are using Jekyll, Node.js, React, etc., update this command to npm start, npm run dev, or bundle exec jekyll serve)
+
+Open in your browser:
+Navigate to http://localhost:8000 🌐
+
+🤝 Connect With Me
+I'm always open to discussing tech, collaborating on open-source projects, or just having a chat! You can find me around the web:
+
+🐦 Twitter / X: @ozyern
+
+
+📄 License
+This project is open-source and available under the MIT License. Feel free to fork it, learn from it, and use it to build your own awesome portfolio—but please change the personal content, images, and links to your own! 😊
