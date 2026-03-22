@@ -201,80 +201,68 @@ let cursorX = 0;
 let cursorY = 0;
 let isVisible = true;
 let activeTimeout;
+let lastUpdateTime = 0;
+let animationFrameId = null;
+let isAnimating = false;
 
-// Smooth easing factor (optimized for 300Hz displays)
-const easing = 0.22;
+// Smooth easing factor
+const easing = 0.16;
+const THROTTLE_MS = 16; // ~60fps
 
 // Initialize cursor position (only on non-touch devices)
 if (cursorGlow && !isTouchDevice()) {
-    cursorGlow.style.transform = 'translate3d(0, 0, 0)';
-    cursorGlow.style.webkitTransform = 'translate3d(0, 0, 0)';
     cursorGlow.style.display = 'block';
     cursorGlow.style.opacity = '1';
-    cursorGlow.style.willChange = 'transform';
 } else if (cursorGlow) {
     cursorGlow.style.display = 'none';
 }
 
 function animateCursor() {
-    // Smooth exponential moving average
-    cursorX += (mouseX - cursorX) * easing;
-    cursorY += (mouseY - cursorY) * easing;
+    const now = performance.now();
     
-    if (cursorGlow && isVisible && !isTouchDevice()) {
-        cursorGlow.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-        cursorGlow.style.webkitTransform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+    if (now - lastUpdateTime >= THROTTLE_MS) {
+        // Smooth exponential moving average
+        cursorX += (mouseX - cursorX) * easing;
+        cursorY += (mouseY - cursorY) * easing;
+        
+        if (cursorGlow && isVisible && !isTouchDevice()) {
+            cursorGlow.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%) translateZ(0)`;
+        }
+        
+        lastUpdateTime = now;
     }
     
-    requestAnimationFrame(animateCursor);
+    animationFrameId = requestAnimationFrame(animateCursor);
 }
 
 // Only attach cursor events on non-touch devices
 if (!isTouchDevice()) {
-    // Force cursor: none on all elements to prevent default cursor from showing
-    const style = document.createElement('style');
-    style.textContent = `
-        * { cursor: none !important; }
-        #cursorGlow {
-            will-change: transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            -webkit-perspective: 1000;
-            perspective: 1000;
-        }
-        .hero, .rom-cards, .devices, body {
-            -webkit-font-smoothing: antialiased;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-        .rom-card, .device-card, .news-card {
-            will-change: transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-    `;
-    document.head.appendChild(style);
     
+    // Throttle mousemove events
+    let lastMoveTime = 0;
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
         isVisible = true;
         
-        if (cursorGlow) {
-            cursorGlow.style.opacity = '1';
-            cursorGlow.style.display = 'block';
-            cursorGlow.style.cursor = 'none';
-            
-            // Add active class on movement
-            if (!cursorGlow.classList.contains('active')) {
-                cursorGlow.classList.add('active');
+        const now = performance.now();
+        if (now - lastMoveTime >= 50) {
+            if (cursorGlow) {
+                cursorGlow.style.opacity = '1';
+                cursorGlow.style.display = 'block';
+                
+                // Add active class on movement with reduced debounce
+                if (!cursorGlow.classList.contains('active')) {
+                    cursorGlow.classList.add('active');
+                }
+                
+                // Debounce active removal
+                clearTimeout(activeTimeout);
+                activeTimeout = setTimeout(() => {
+                    cursorGlow.classList.remove('active');
+                }, 600);
             }
-            
-            // Debounce active removal
-            clearTimeout(activeTimeout);
-            activeTimeout = setTimeout(() => {
-                cursorGlow.classList.remove('active');
-            }, 800);
+            lastMoveTime = now;
         }
     }, { passive: true });
 
@@ -283,64 +271,30 @@ if (!isTouchDevice()) {
         if (cursorGlow) {
             cursorGlow.style.opacity = '1';
             cursorGlow.style.display = 'block';
-            cursorGlow.classList.add('active');
         }
-    });
+    }, { passive: true });
 
     document.addEventListener('mouseleave', () => {
         isVisible = false;
         if (cursorGlow) {
             cursorGlow.style.opacity = '0';
-            cursorGlow.style.display = 'none';
             cursorGlow.classList.remove('active');
             clearTimeout(activeTimeout);
         }
-    });
+    }, { passive: true });
 
     // Click feedback
-    document.addEventListener('mousedown', (e) => {
+    document.addEventListener('mousedown', () => {
         if (cursorGlow) {
             cursorGlow.classList.add('clicking');
-            cursorGlow.style.cursor = 'none';
         }
-    });
+    }, { passive: true });
 
     document.addEventListener('mouseup', () => {
         if (cursorGlow) {
             cursorGlow.classList.remove('clicking');
-            cursorGlow.style.cursor = 'none';
         }
-    });
-
-    document.addEventListener('click', (e) => {
-        isVisible = true;
-        if (cursorGlow) {
-            cursorGlow.style.opacity = '1';
-            cursorGlow.style.display = 'block';
-            cursorGlow.style.cursor = 'none';
-        }
-    });
-
-    // Performance Optimization: Scroll speed optimization
-    let scrolling = false;
-    let scrollTimeout;
-    
-    window.addEventListener('scroll', () => {
-        if (!scrolling) {
-            scrolling = true;
-            document.documentElement.style.scrollBehavior = 'auto';
-        }
-        
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            scrolling = false;
-        }, 150);
     }, { passive: true });
-
-    // Enable GPU acceleration on the document
-    document.documentElement.style.willChange = 'scroll-position';
-    document.body.style.webkitFontSmoothing = 'antialiased';
-    document.body.style.webkitTextSizeAdjust = '100%';
 
     animateCursor();
 }
