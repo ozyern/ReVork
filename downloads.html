@@ -609,7 +609,7 @@
   </section>
 
   <!-- ===== SCROLL DOWN ===== -->
-  <div class="scroll-down">
+  <div class="scroll-down" id="scrollDown">
     <div class="scroll-arrow"></div>
     <p class="scroll-label">Scroll</p>
   </div>
@@ -722,15 +722,20 @@
 
 <script>
   // Hide scroll indicator when user scrolls down
-  const scrollDown = document.querySelector('.scroll-down');
+  function handleScrollIndicator() {
+    const indicator = document.getElementById('scrollDown');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        indicator.classList.add('hidden');
+      } else {
+        indicator.classList.remove('hidden');
+      }
+    });
+  }
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      scrollDown.classList.add('hidden');
-    } else {
-      scrollDown.classList.remove('hidden');
-    }
-  });
+  // Initialize on page load
+  window.addEventListener('load', handleScrollIndicator);
 </script>
 </body>
 </html>
