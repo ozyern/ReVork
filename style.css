@@ -197,7 +197,7 @@ header nav a:hover {
   position: absolute;
   top: calc(100% + 20px);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-10px);
   background: rgba(20, 20, 20, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -207,17 +207,18 @@ header nav a:hover {
   max-width: 90vw;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);\n  transform: translateX(-50%) translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1000;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-@supports (hover: hover) {
-  .dropdown-parent:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-  }
+/* Show dropdown on hover - desktop only */
+.dropdown-parent:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
 }
 
 .mobile-nav-featured {
