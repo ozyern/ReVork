@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
   startAutoPlay();
 });
 
-// Optimized Custom Cursor with Smooth Performance
+// Optimized Custom Cursor with Performance Enhancements
 // Disable cursor on touch devices
 const isTouchDevice = () => {
     return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
@@ -201,9 +201,12 @@ let cursorX = 0;
 let cursorY = 0;
 let isVisible = true;
 let activeTimeout;
+let isNowVisible = true;  // Track visibility state to prevent redundant updates
+let hasActiveClass = false;  // Cache active class state
+let isAnimationFrameScheduled = false;
 
-// Smooth easing factor for motion
-const easing = 0.18; // Slightly increased for smoother feel on both desktop & mobile
+// Smooth easing factor for motion - tuned for natural tracking
+const easing = 0.15;  // Lower = smoother, more natural following motion
 
 // Check for reduced motion preference
 const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -218,20 +221,48 @@ if (cursorGlow && !isTouchDevice()) {
     cursorGlow.style.display = 'none';
 }
 
+function updateCursorVisibility(shouldBeVisible) {
+    if (isNowVisible === shouldBeVisible) return;  // Skip if state hasn't changed
+    
+    isNowVisible = shouldBeVisible;
+    if (cursorGlow) {
+        if (shouldBeVisible) {
+            cursorGlow.style.opacity = '1';
+            cursorGlow.style.display = 'block';
+        } else {
+            cursorGlow.style.opacity = '0';
+            cursorGlow.style.display = 'none';
+        }
+    }
+}
+
+function updateCursorActive(shouldBeActive) {
+    if (hasActiveClass === shouldBeActive) return;  // Skip if state hasn't changed
+    
+    hasActiveClass = shouldBeActive;
+    if (cursorGlow) {
+        if (shouldBeActive) {
+            cursorGlow.classList.add('active');
+        } else {
+            cursorGlow.classList.remove('active');
+        }
+    }
+}
+
 function animateCursor() {
     // Skip animation if reduced motion is preferred
     if (prefersReducedMotion) return;
     
-    // Smooth exponential moving average with adaptive easing for better mobile performance
-    const adaptiveEasing = isTouchDevice() ? 0.12 : easing;
-    cursorX += (mouseX - cursorX) * adaptiveEasing;
-    cursorY += (mouseY - cursorY) * adaptiveEasing;
+    // Use optimized easing factor
+    cursorX += (mouseX - cursorX) * easing;
+    cursorY += (mouseY - cursorY) * easing;
     
-    if (cursorGlow && isVisible && !isTouchDevice()) {
-        cursorGlow.style.left = cursorX + 'px';
-        cursorGlow.style.top = cursorY + 'px';
+    if (cursorGlow && isNowVisible && !isTouchDevice()) {
+        // Use transform for GPU acceleration (more performant than left/top)
+        cursorGlow.style.transform = `translate(${Math.round(cursorX)}px, ${Math.round(cursorY)}px) translateZ(0)`;
     }
     
+    isAnimationFrameScheduled = false;
     requestAnimationFrame(animateCursor);
 }
 
@@ -242,67 +273,50 @@ if (!isTouchDevice() && !prefersReducedMotion) {
     style.textContent = `* { cursor: none !important; }`;
     document.head.appendChild(style);
     
+    // Throttled mousemove handler for better performance
+    let lastMoveTime = 0;
+    const moveThrottle = 16;  // ~60fps throttle (16ms per frame)
+    
     document.addEventListener('mousemove', (e) => {
+        const now = performance.now();
+        
         mouseX = e.clientX;
         mouseY = e.clientY;
-        isVisible = true;
         
-        if (cursorGlow) {
-            cursorGlow.style.opacity = '1';
-            cursorGlow.style.display = 'block';
-            
-            // Add active class on movement
-            if (!cursorGlow.classList.contains('active')) {
-                cursorGlow.classList.add('active');
-            }
-            
-            // Debounce active removal
-            clearTimeout(activeTimeout);
-            activeTimeout = setTimeout(() => {
-                cursorGlow.classList.remove('active');
-            }, 800);
-        }
-    });
+        // Update visibility and active state immediately
+        updateCursorVisibility(true);
+        updateCursorActive(true);
+        
+        // Debounce active removal - cancel if already pending
+        clearTimeout(activeTimeout);
+        activeTimeout = setTimeout(() => {
+            updateCursorActive(false);
+        }, 600);  // Faster response to motion idle
+    }, { passive: true });
 
     window.addEventListener('mouseover', () => {
-        isVisible = true;
-        if (cursorGlow) {
-            cursorGlow.style.opacity = '1';
-            cursorGlow.style.display = 'block';
-            cursorGlow.classList.add('active');
-        }
-    });
+        updateCursorVisibility(true);
+        updateCursorActive(true);
+    }, { passive: true });
 
     window.addEventListener('mouseout', () => {
-        isVisible = false;
-        if (cursorGlow) {
-            cursorGlow.style.opacity = '0';
-            cursorGlow.style.display = 'none';
-            cursorGlow.classList.remove('active');
-            clearTimeout(activeTimeout);
-        }
-    });
+        updateCursorVisibility(false);
+        updateCursorActive(false);
+        clearTimeout(activeTimeout);
+    }, { passive: true });
 
-    // Click feedback
-    document.addEventListener('mousedown', (e) => {
+    // Click feedback using animation frame for better performance
+    document.addEventListener('mousedown', () => {
         if (cursorGlow) {
             cursorGlow.classList.add('clicking');
         }
-    });
+    }, { passive: true });
 
     document.addEventListener('mouseup', () => {
         if (cursorGlow) {
             cursorGlow.classList.remove('clicking');
         }
-    });
-
-    document.addEventListener('click', (e) => {
-        isVisible = true;
-        if (cursorGlow) {
-            cursorGlow.style.opacity = '1';
-            cursorGlow.style.display = 'block';
-        }
-    });
+    }, { passive: true });
 
     animateCursor();
 } else if (cursorGlow) {
