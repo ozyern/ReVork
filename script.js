@@ -187,3 +187,119 @@ document.addEventListener('DOMContentLoaded', () => {
   resetProgress();
   startAutoPlay();
 });
+
+// Optimized Custom Cursor with Smooth Performance
+// Disable cursor on touch devices
+const isTouchDevice = () => {
+    return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+};
+
+const cursorGlow = document.getElementById('cursorGlow');
+let mouseX = 0;
+let mouseY = 0;
+let cursorX = 0;
+let cursorY = 0;
+let isVisible = true;
+let activeTimeout;
+
+// Smooth easing factor
+const easing = 0.16;
+
+// Initialize cursor position (only on non-touch devices)
+if (cursorGlow && !isTouchDevice()) {
+    cursorGlow.style.left = '0px';
+    cursorGlow.style.top = '0px';
+    cursorGlow.style.display = 'block';
+    cursorGlow.style.opacity = '1';
+} else if (cursorGlow) {
+    cursorGlow.style.display = 'none';
+}
+
+function animateCursor() {
+    // Smooth exponential moving average
+    cursorX += (mouseX - cursorX) * easing;
+    cursorY += (mouseY - cursorY) * easing;
+    
+    if (cursorGlow && isVisible && !isTouchDevice()) {
+        cursorGlow.style.left = cursorX + 'px';
+        cursorGlow.style.top = cursorY + 'px';
+    }
+    
+    requestAnimationFrame(animateCursor);
+}
+
+// Only attach cursor events on non-touch devices
+if (!isTouchDevice()) {
+    // Force cursor: none on all elements to prevent default cursor from showing
+    const style = document.createElement('style');
+    style.textContent = `* { cursor: none !important; }`;
+    document.head.appendChild(style);
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        isVisible = true;
+        
+        if (cursorGlow) {
+            cursorGlow.style.opacity = '1';
+            cursorGlow.style.display = 'block';
+            cursorGlow.style.cursor = 'none';
+            
+            // Add active class on movement
+            if (!cursorGlow.classList.contains('active')) {
+                cursorGlow.classList.add('active');
+            }
+            
+            // Debounce active removal
+            clearTimeout(activeTimeout);
+            activeTimeout = setTimeout(() => {
+                cursorGlow.classList.remove('active');
+            }, 800);
+        }
+    });
+
+    document.addEventListener('mouseenter', () => {
+        isVisible = true;
+        if (cursorGlow) {
+            cursorGlow.style.opacity = '1';
+            cursorGlow.style.display = 'block';
+            cursorGlow.classList.add('active');
+        }
+    });
+
+    document.addEventListener('mouseleave', () => {
+        isVisible = false;
+        if (cursorGlow) {
+            cursorGlow.style.opacity = '0';
+            cursorGlow.style.display = 'none';
+            cursorGlow.classList.remove('active');
+            clearTimeout(activeTimeout);
+        }
+    });
+
+    // Click feedback
+    document.addEventListener('mousedown', (e) => {
+        if (cursorGlow) {
+            cursorGlow.classList.add('clicking');
+            cursorGlow.style.cursor = 'none';
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (cursorGlow) {
+            cursorGlow.classList.remove('clicking');
+            cursorGlow.style.cursor = 'none';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        isVisible = true;
+        if (cursorGlow) {
+            cursorGlow.style.opacity = '1';
+            cursorGlow.style.display = 'block';
+            cursorGlow.style.cursor = 'none';
+        }
+    });
+
+    animateCursor();
+}
