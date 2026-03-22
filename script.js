@@ -202,15 +202,16 @@ let cursorY = 0;
 let isVisible = true;
 let activeTimeout;
 
-// Smooth easing factor
-const easing = 0.16;
+// Smooth easing factor (optimized for 300Hz displays)
+const easing = 0.22;
 
 // Initialize cursor position (only on non-touch devices)
 if (cursorGlow && !isTouchDevice()) {
-    cursorGlow.style.left = '0px';
-    cursorGlow.style.top = '0px';
+    cursorGlow.style.transform = 'translate3d(0, 0, 0)';
+    cursorGlow.style.webkitTransform = 'translate3d(0, 0, 0)';
     cursorGlow.style.display = 'block';
     cursorGlow.style.opacity = '1';
+    cursorGlow.style.willChange = 'transform';
 } else if (cursorGlow) {
     cursorGlow.style.display = 'none';
 }
@@ -221,8 +222,8 @@ function animateCursor() {
     cursorY += (mouseY - cursorY) * easing;
     
     if (cursorGlow && isVisible && !isTouchDevice()) {
-        cursorGlow.style.left = cursorX + 'px';
-        cursorGlow.style.top = cursorY + 'px';
+        cursorGlow.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+        cursorGlow.style.webkitTransform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
     }
     
     requestAnimationFrame(animateCursor);
@@ -232,7 +233,26 @@ function animateCursor() {
 if (!isTouchDevice()) {
     // Force cursor: none on all elements to prevent default cursor from showing
     const style = document.createElement('style');
-    style.textContent = `* { cursor: none !important; }`;
+    style.textContent = `
+        * { cursor: none !important; }
+        #cursorGlow {
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-perspective: 1000;
+            perspective: 1000;
+        }
+        .hero, .rom-cards, .devices, body {
+            -webkit-font-smoothing: antialiased;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        .rom-card, .device-card, .news-card {
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+    `;
     document.head.appendChild(style);
     
     document.addEventListener('mousemove', (e) => {
@@ -256,7 +276,7 @@ if (!isTouchDevice()) {
                 cursorGlow.classList.remove('active');
             }, 800);
         }
-    });
+    }, { passive: true });
 
     document.addEventListener('mouseenter', () => {
         isVisible = true;
@@ -300,6 +320,27 @@ if (!isTouchDevice()) {
             cursorGlow.style.cursor = 'none';
         }
     });
+
+    // Performance Optimization: Scroll speed optimization
+    let scrolling = false;
+    let scrollTimeout;
+    
+    window.addEventListener('scroll', () => {
+        if (!scrolling) {
+            scrolling = true;
+            document.documentElement.style.scrollBehavior = 'auto';
+        }
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            scrolling = false;
+        }, 150);
+    }, { passive: true });
+
+    // Enable GPU acceleration on the document
+    document.documentElement.style.willChange = 'scroll-position';
+    document.body.style.webkitFontSmoothing = 'antialiased';
+    document.body.style.webkitTextSizeAdjust = '100%';
 
     animateCursor();
 }

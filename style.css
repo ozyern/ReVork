@@ -1,3 +1,21 @@
+/* ===== GPU ACCELERATION & PERFORMANCE OPTIMIZATION ===== */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* ===== CUSTOM CURSOR ===== */
 .cursor-glow {
   position: fixed;
@@ -5,11 +23,13 @@
   height: 24px;
   pointer-events: none;
   z-index: 99999;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
   opacity: 1;
   left: 0;
   top: 0;
   will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
   transition: filter 0.15s ease-out;
 }
