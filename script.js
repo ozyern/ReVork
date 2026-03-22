@@ -201,13 +201,11 @@ let cursorX = 0;
 let cursorY = 0;
 let isVisible = true;
 let activeTimeout;
-let lastUpdateTime = 0;
 let animationFrameId = null;
-let isAnimating = false;
+let isHoverLink = false;
 
-// Smooth easing factor
-const easing = 0.16;
-const THROTTLE_MS = 16; // ~60fps
+// Optimized easing factor for responsive cursor
+const easing = 0.28; // Increased from 0.16 for snappier response
 
 // Initialize cursor position (only on non-touch devices)
 if (cursorGlow && !isTouchDevice()) {
@@ -218,18 +216,12 @@ if (cursorGlow && !isTouchDevice()) {
 }
 
 function animateCursor() {
-    const now = performance.now();
+    // Smooth exponential moving average
+    cursorX += (mouseX - cursorX) * easing;
+    cursorY += (mouseY - cursorY) * easing;
     
-    if (now - lastUpdateTime >= THROTTLE_MS) {
-        // Smooth exponential moving average
-        cursorX += (mouseX - cursorX) * easing;
-        cursorY += (mouseY - cursorY) * easing;
-        
-        if (cursorGlow && isVisible && !isTouchDevice()) {
-            cursorGlow.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%) translateZ(0)`;
-        }
-        
-        lastUpdateTime = now;
+    if (cursorGlow && isVisible && !isTouchDevice()) {
+        cursorGlow.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%) translateZ(0)`;
     }
     
     animationFrameId = requestAnimationFrame(animateCursor);
@@ -238,31 +230,25 @@ function animateCursor() {
 // Only attach cursor events on non-touch devices
 if (!isTouchDevice()) {
     
-    // Throttle mousemove events
-    let lastMoveTime = 0;
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
         isVisible = true;
         
-        const now = performance.now();
-        if (now - lastMoveTime >= 50) {
-            if (cursorGlow) {
-                cursorGlow.style.opacity = '1';
-                cursorGlow.style.display = 'block';
-                
-                // Add active class on movement with reduced debounce
-                if (!cursorGlow.classList.contains('active')) {
-                    cursorGlow.classList.add('active');
-                }
-                
-                // Debounce active removal
-                clearTimeout(activeTimeout);
-                activeTimeout = setTimeout(() => {
-                    cursorGlow.classList.remove('active');
-                }, 600);
+        if (cursorGlow) {
+            cursorGlow.style.opacity = '1';
+            cursorGlow.style.display = 'block';
+            
+            // Add active class on movement
+            if (!cursorGlow.classList.contains('active')) {
+                cursorGlow.classList.add('active');
             }
-            lastMoveTime = now;
+            
+            // Debounce active removal
+            clearTimeout(activeTimeout);
+            activeTimeout = setTimeout(() => {
+                cursorGlow.classList.remove('active');
+            }, 600);
         }
     }, { passive: true });
 
@@ -279,6 +265,7 @@ if (!isTouchDevice()) {
         if (cursorGlow) {
             cursorGlow.style.opacity = '0';
             cursorGlow.classList.remove('active');
+            cursorGlow.classList.remove('hovering');
             clearTimeout(activeTimeout);
         }
     }, { passive: true });
@@ -295,6 +282,50 @@ if (!isTouchDevice()) {
             cursorGlow.classList.remove('clicking');
         }
     }, { passive: true });
+
+    // Link and button hover detection
+    const interactiveElements = document.querySelectorAll('a, button, input[type="button"], input[type="submit"], [role="button"], .clickable');
+    
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            isHoverLink = true;
+            if (cursorGlow) {
+                cursorGlow.classList.add('hovering');
+            }
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            isHoverLink = false;
+            if (cursorGlow) {
+                cursorGlow.classList.remove('hovering');
+            }
+        });
+    });
+
+    // Also handle dynamically added links
+    const observer = new MutationObserver(() => {
+        const newElements = document.querySelectorAll('a, button, input[type="button"], input[type="submit"], [role="button"], .clickable');
+        newElements.forEach(el => {
+            if (!el.dataset.hasHoverListener) {
+                el.dataset.hasHoverListener = 'true';
+                el.addEventListener('mouseenter', () => {
+                    isHoverLink = true;
+                    if (cursorGlow) {
+                        cursorGlow.classList.add('hovering');
+                    }
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    isHoverLink = false;
+                    if (cursorGlow) {
+                        cursorGlow.classList.remove('hovering');
+                    }
+                });
+            }
+        });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
 
     animateCursor();
 }

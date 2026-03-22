@@ -15,8 +15,22 @@
   filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
 }
 
+.cursor-glow.hovering {
+  filter: drop-shadow(0 0 12px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 24px rgba(255, 0, 0, 0.5));
+  animation: cursor-hover 0.2s ease-out forwards;
+}
+
 .cursor-glow.clicking {
   animation: cursor-click 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cursor-hover {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.4);
+  }
 }
 
 .cursor-glow svg {
