@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OxygenOS 16.0.2.401 — Supported Devices</title>
   <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link href="https://db.onlinewebfonts.com/c/1a5a02144883150dce30ae0877cfb513?family=Haverbrooke" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -22,31 +23,70 @@
 <body>
     <div class="cursor-glow" id="cursorGlow"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L21 11.46L12.21 12.76L11.46 21.57L3 3Z" fill="white" stroke="white" stroke-width="0.5"/></svg></div>
 
-<header class="header">
-  <div class="logo"><a href="https://ozyern.me">ReVork</a></div>
-  <nav class="nav" id="navLinks">
-    <a href="index.html">Home</a>
-    <a href="roms.html" class="active">Explore ROMs</a>
-    <a href="devices.html">Supported Device</a>
-    <a href="installation.html">Installation Guide</a>
-  </nav>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+<header>
+  <button class="mobile-menu-toggle" aria-label="Toggle Menu">
     <span></span>
     <span></span>
     <span></span>
   </button>
-</header>
 
-<nav class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="roms.html">Explore ROMs</a>
-  <a href="devices.html">Supported Device</a>
-  <a href="installation.html">Installation Guide</a>
-</nav>
+  <div class="logo">
+    <a href="https://ozyern.me">
+      <img src="assets/favicon.png" draggable="false" alt="ReVork Logo">
+    </a>
+  </div>
+
+  <nav>
+    <div class="nav-item dropdown-parent">
+      <a href="#" class="dropdown-trigger">ROMS <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown-menu">
+        <div class="dropdown-header">
+          <h3>Featured ROM</h3>
+          <a href="#" class="view-all">View All →</a>
+        </div>
+        <div class="rom-grid">
+          <a href="#" class="rom-card">
+            <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
+            <span>OxygenOS 16</span>
+          </a>
+          <a href="#" class="rom-card">
+            <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
+            <span>ColorOS 16</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-nav-featured">
+      <div class="mobile-nav-featured-header">
+        <span>FEATURED ROMS</span>
+        <a href="#" class="mobile-nav-view-all">View All →</a>
+      </div>
+      <div class="mobile-nav-roms">
+        <a href="#" class="mobile-nav-rom-card">
+          <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
+        </a>
+        <a href="#" class="mobile-nav-rom-card">
+          <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
+        </a>
+      </div>
+    </div>
+    <a href="devices.html" class="desktop-nav-link">DEVICES</a>
+    <a href="downloads.html" class="desktop-nav-link">DOWNLOADS</a>
+    <a href="installation.html" class="desktop-nav-link">INSTALL GUIDE</a>
+    <a href="newswire.html" class="desktop-nav-link">NEWSWIRE</a>
+
+    <a href="index.html" class="mobile-nav-link">HOME</a>
+    <a href="devices.html" class="mobile-nav-link">DEVICES</a>
+    <a href="downloads.html" class="mobile-nav-link">DOWNLOADS</a>
+    <a href="installation.html" class="mobile-nav-link">INSTALL GUIDE</a>
+    <a href="newswire.html" class="mobile-nav-link">NEWSWIRE</a>
+    <a href="https://t.me/ReVorkHub" target="_blank" class="mobile-nav-link mobile-nav-link-arrow">SUPPORT</a>
+  </nav>
+</header>
 
 <section style="padding: 220px 60px 80px; text-align: center;">
   <span style="display: inline-block; font-size: 0.75rem; color: #aaa; background: rgba(255,255,255,0.08); padding: 6px 12px; border-radius: 20px; margin-bottom: 20px;">Stable Version</span>
-  <h1 style="font-size: 3.5rem; margin-bottom: 20px; background: linear-gradient(to bottom, #fff 30%, rgba(255,255,255,0.4)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Version 16.0.2.401</h1>
+  <h1 style="font-family: 'Anton', sans-serif; font-size: 3.5rem; margin-bottom: 20px; background: linear-gradient(to bottom, #fff 30%, rgba(255,255,255,0.4)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Version 16.0.2.401</h1>
   <p style="color: #777; font-size: 1rem;">Select your device to download the ROM</p>
 </section>
 
