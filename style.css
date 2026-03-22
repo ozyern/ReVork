@@ -7,48 +7,50 @@
   z-index: 99999;
   transform: translate(-50%, -50%) translateZ(0);
   opacity: 1;
-  will-change: transform;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  left: 0;
+  top: 0;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: filter 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-glow {
+    transition: none;
+  }
 }
 
 .cursor-glow.active {
-  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
-}
-
-.cursor-glow.hovering {
-  filter: drop-shadow(0 0 12px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 24px rgba(255, 0, 0, 0.5));
-  animation: cursor-hover 0.2s ease-out forwards;
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.5));
 }
 
 .cursor-glow.clicking {
   animation: cursor-click 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes cursor-hover {
-  from {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  to {
-    transform: translate(-50%, -50%) scale(1.4);
-  }
-}
-
 .cursor-glow svg {
   width: 100%;
   height: 100%;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
 }
 
 @keyframes cursor-click {
   0% {
-    filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 28px rgba(255, 255, 255, 0.6));
-    transform: translate(-50%, -50%) scale(1.2);
+    filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 28px rgba(255, 255, 255, 0.6)) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+    transform: scale(1.2) translateZ(0);
   }
   50% {
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: scale(0.9) translateZ(0);
   }
   100% {
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
-    transform: translate(-50%, -50%) scale(1);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+    transform: scale(1) translateZ(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-glow.clicking {
+    animation: none;
   }
 }
 
@@ -184,6 +186,7 @@ header nav a:hover {
 
 .dropdown-parent:hover .dropdown-arrow {
   transform: rotate(180deg);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dropdown-menu {
@@ -200,16 +203,17 @@ header nav a:hover {
   max-width: 90vw;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-  transform: translateX(-50%) translateY(-10px);
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);\n  transform: translateX(-50%) translateY(-10px);
   z-index: 1000;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-.dropdown-parent:hover .dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+@supports (hover: hover) {
+  .dropdown-parent:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 .mobile-nav-featured {
@@ -286,7 +290,7 @@ header nav a:hover {
   border-radius: 12px;
   text-decoration: none;
   color: #fff;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
   width: 280px;
   height: 280px;
@@ -296,12 +300,23 @@ header nav a:hover {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
-.rom-card:hover {
-  background: transparent;
-  transform: translateY(-12px);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.08);
+@supports (hover: hover) {
+  .rom-card:hover {
+    background: transparent;
+    transform: translateY(-12px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.08);
+  }
 }
+
+@supports not (hover: hover) {
+  .rom-card:active {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+
 
 .rom-card::before {
   content: '';
@@ -313,11 +328,13 @@ header nav a:hover {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%);
   z-index: 1;
   border-radius: 16px;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.rom-card:hover::before {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%);
+@supports (hover: hover) {
+  .rom-card:hover::before {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%);
+  }
 }
 
 .rom-card img {
@@ -389,7 +406,7 @@ header nav a:hover {
     width: 18px;
     height: 1.8px;
     border-radius: 999px;
-    transition: transform 0.28s ease, opacity 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .mobile-menu-toggle.active span:nth-child(1) {
@@ -422,7 +439,7 @@ header nav a:hover {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 99;
   }
 
@@ -541,13 +558,26 @@ header nav a:hover {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transition: opacity 1.8s ease-in-out;
+  transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
+  will-change: opacity;
 }
 
 .slide.active {
   opacity: 1;
   z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: opacity 0.5s ease;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
 .hero::after {
@@ -621,11 +651,14 @@ header nav a:hover {
   background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
   color: #fff;
   box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cta-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(255, 107, 157, 0.6);
+@supports (hover: hover) {
+  .cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 107, 157, 0.6);
+  }
 }
 
 .cta-primary:active {
@@ -637,12 +670,15 @@ header nav a:hover {
   color: #fff;
   border: 2px solid rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cta-secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: translateY(-3px);
+@supports (hover: hover) {
+  .cta-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-3px);
+  }
 }
 
 .cta-secondary:active {
@@ -740,13 +776,15 @@ header nav a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 0 12px rgba(0,0,0,0.7);
 }
 
-.rs-pause-play:hover {
-  transform: scale(1.12);
-  box-shadow: 0 0 24px rgba(255,255,255,0.2);
+@supports (hover: hover) {
+  .rs-pause-play:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 24px rgba(255,255,255,0.2);
+  }
 }
 
 .rs-indicators {
@@ -760,7 +798,7 @@ header nav a:hover {
   background: rgba(255,255,255,0.3);
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .rs-dot:hover {
@@ -777,7 +815,7 @@ header nav a:hover {
     inset 0 0 18px rgba(255,255,255,0.35);
   backdrop-filter: blur(6px);
   overflow: hidden;
-  transition: all 0.6s ease;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
@@ -790,7 +828,7 @@ header nav a:hover {
   width: var(--progress, 0%);
   background: rgba(255,255,255,0.9);
   border-radius: 999px;
-  transition: width 6s linear;
+  transition: width 6s cubic-bezier(0.19, 1, 0.22, 1);
   box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
 }
 
@@ -931,12 +969,14 @@ header nav a:hover {
   width: 100%;
   height: 100%;
   background: #111 no-repeat center/cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
-.story-card:hover .story-image {
-  transform: scale(1.05);
+@supports (hover: hover) {
+  .story-card:hover .story-image {
+    transform: scale(1.05);
+  }
 }
 
 .story-overlay {
@@ -946,10 +986,16 @@ header nav a:hover {
   right: 0;
   padding: 20px;
   background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: flex-end;
   height: 100%;
+}
+
+@supports (hover: hover) {
+  .story-card:hover .story-overlay p {
+    color: #fff;
+  }
 }
 
 .story-overlay p {
@@ -960,10 +1006,7 @@ header nav a:hover {
   text-transform: none;
   letter-spacing: 0.3px;
   font-weight: 400;
-}
-
-.story-card:hover .story-overlay p {
-  color: #fff;
+  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Learn More Link */
@@ -980,13 +1023,15 @@ header nav a:hover {
   letter-spacing: 1.5px;
   font-weight: 600;
   opacity: 0.8;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   text-transform: uppercase;
 }
 
-.learn-more:hover {
-  opacity: 1;
-  transform: translateX(5px);
+@supports (hover: hover) {
+  .learn-more:hover {
+    opacity: 1;
+    transform: translateX(5px);
+  }
 }
 
 /* Responsive layout */
@@ -1409,5 +1454,86 @@ body.dark-theme {
 
   .news-overlay h3 {
     font-size: 16px;
+  }
+}
+/* ===== ANIMATION OPTIMIZATIONS FOR BOTH PC & MOBILE ===== */
+
+/* Unified easing curve for all animations */
+:root {
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced mobile support for all animations */
+@media (max-width: 768px) {
+  /* Faster transitions on mobile to feel snappier */
+  .rom-card,
+  .story-card,
+  .news-item {
+    transition: transform 0.25s var(--ease-standard), box-shadow 0.25s var(--ease-standard) !important;
+  }
+
+  /* Faster menu animation on mobile */
+  header nav {
+    transition: opacity 0.25s var(--ease-standard), transform 0.25s var(--ease-standard), visibility 0.25s var(--ease-standard) !important;
+  }
+}
+
+/* Disable hover animations on touch devices */
+@supports not (hover: hover) {
+  .rom-card:active {
+    opacity: 0.95;
+  }
+}
+
+/* Reduce motion support - most important for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* GPU acceleration for smooth animations */
+.slide.active,
+.rs-dot.active::after,
+.dropdown-menu,
+header nav.active,
+.rom-card,
+.story-card,
+.cursor-glow,
+.cta-primary,
+.cta-secondary {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth page scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Mobile-specific: prevent layout shift during animations */
+@media (max-width: 768px) {
+  .hero {
+    overflow: hidden;
+  }
+
+  .news-grid,
+  .rom-grid {
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
   }
 }

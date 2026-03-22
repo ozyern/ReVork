@@ -201,14 +201,17 @@ let cursorX = 0;
 let cursorY = 0;
 let isVisible = true;
 let activeTimeout;
-let animationFrameId = null;
-let isHoverLink = false;
 
-// Optimized easing factor for responsive cursor
-const easing = 0.28; // Increased from 0.16 for snappier response
+// Smooth easing factor for motion
+const easing = 0.18; // Slightly increased for smoother feel on both desktop & mobile
+
+// Check for reduced motion preference
+const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Initialize cursor position (only on non-touch devices)
 if (cursorGlow && !isTouchDevice()) {
+    cursorGlow.style.left = '0px';
+    cursorGlow.style.top = '0px';
     cursorGlow.style.display = 'block';
     cursorGlow.style.opacity = '1';
 } else if (cursorGlow) {
@@ -216,19 +219,28 @@ if (cursorGlow && !isTouchDevice()) {
 }
 
 function animateCursor() {
-    // Smooth exponential moving average
-    cursorX += (mouseX - cursorX) * easing;
-    cursorY += (mouseY - cursorY) * easing;
+    // Skip animation if reduced motion is preferred
+    if (prefersReducedMotion) return;
+    
+    // Smooth exponential moving average with adaptive easing for better mobile performance
+    const adaptiveEasing = isTouchDevice() ? 0.12 : easing;
+    cursorX += (mouseX - cursorX) * adaptiveEasing;
+    cursorY += (mouseY - cursorY) * adaptiveEasing;
     
     if (cursorGlow && isVisible && !isTouchDevice()) {
-        cursorGlow.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%) translateZ(0)`;
+        cursorGlow.style.left = cursorX + 'px';
+        cursorGlow.style.top = cursorY + 'px';
     }
     
-    animationFrameId = requestAnimationFrame(animateCursor);
+    requestAnimationFrame(animateCursor);
 }
 
-// Only attach cursor events on non-touch devices
-if (!isTouchDevice()) {
+// Only attach cursor events on non-touch devices and if motion is not reduced
+if (!isTouchDevice() && !prefersReducedMotion) {
+    // Force cursor: none on all elements to prevent default cursor from showing
+    const style = document.createElement('style');
+    style.textContent = `* { cursor: none !important; }`;
+    document.head.appendChild(style);
     
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
@@ -248,84 +260,52 @@ if (!isTouchDevice()) {
             clearTimeout(activeTimeout);
             activeTimeout = setTimeout(() => {
                 cursorGlow.classList.remove('active');
-            }, 600);
+            }, 800);
         }
-    }, { passive: true });
+    });
 
-    document.addEventListener('mouseenter', () => {
+    window.addEventListener('mouseover', () => {
         isVisible = true;
         if (cursorGlow) {
             cursorGlow.style.opacity = '1';
             cursorGlow.style.display = 'block';
+            cursorGlow.classList.add('active');
         }
-    }, { passive: true });
+    });
 
-    document.addEventListener('mouseleave', () => {
+    window.addEventListener('mouseout', () => {
         isVisible = false;
         if (cursorGlow) {
             cursorGlow.style.opacity = '0';
+            cursorGlow.style.display = 'none';
             cursorGlow.classList.remove('active');
-            cursorGlow.classList.remove('hovering');
             clearTimeout(activeTimeout);
         }
-    }, { passive: true });
+    });
 
     // Click feedback
-    document.addEventListener('mousedown', () => {
+    document.addEventListener('mousedown', (e) => {
         if (cursorGlow) {
             cursorGlow.classList.add('clicking');
         }
-    }, { passive: true });
+    });
 
     document.addEventListener('mouseup', () => {
         if (cursorGlow) {
             cursorGlow.classList.remove('clicking');
         }
-    }, { passive: true });
-
-    // Link and button hover detection
-    const interactiveElements = document.querySelectorAll('a, button, input[type="button"], input[type="submit"], [role="button"], .clickable');
-    
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            isHoverLink = true;
-            if (cursorGlow) {
-                cursorGlow.classList.add('hovering');
-            }
-        });
-        
-        el.addEventListener('mouseleave', () => {
-            isHoverLink = false;
-            if (cursorGlow) {
-                cursorGlow.classList.remove('hovering');
-            }
-        });
     });
 
-    // Also handle dynamically added links
-    const observer = new MutationObserver(() => {
-        const newElements = document.querySelectorAll('a, button, input[type="button"], input[type="submit"], [role="button"], .clickable');
-        newElements.forEach(el => {
-            if (!el.dataset.hasHoverListener) {
-                el.dataset.hasHoverListener = 'true';
-                el.addEventListener('mouseenter', () => {
-                    isHoverLink = true;
-                    if (cursorGlow) {
-                        cursorGlow.classList.add('hovering');
-                    }
-                });
-                
-                el.addEventListener('mouseleave', () => {
-                    isHoverLink = false;
-                    if (cursorGlow) {
-                        cursorGlow.classList.remove('hovering');
-                    }
-                });
-            }
-        });
+    document.addEventListener('click', (e) => {
+        isVisible = true;
+        if (cursorGlow) {
+            cursorGlow.style.opacity = '1';
+            cursorGlow.style.display = 'block';
+        }
     });
-
-    observer.observe(document.body, { childList: true, subtree: true });
 
     animateCursor();
+} else if (cursorGlow) {
+    // Hide cursor on touch devices
+    cursorGlow.style.display = 'none';
 }
