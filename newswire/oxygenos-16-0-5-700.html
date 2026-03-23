@@ -412,12 +412,14 @@
       }
       
       .logo {
-        text-align: center;
-        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       
       .logo img {
         height: 36px;
+        margin: 0 auto;
       }
       
       header nav {
@@ -425,7 +427,27 @@
       }
       
       .mobile-menu-toggle {
-        display: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        position: absolute;
+        left: 3vw;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+        width: auto;
+      }
+      
+      .mobile-menu-toggle span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: #fff;
+        border-radius: 2px;
       }
       
       .article-container {
