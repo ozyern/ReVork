@@ -34,13 +34,31 @@
   </script>
 
   <style>
+    @media (max-width: 1024px) {
+      section {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+      }
+    }
     @media (max-width: 768px) {
       section {
         padding-left: 20px !important;
         padding-right: 20px !important;
       }
-      h1 {
-        font-size: 2.5rem !important;
+      .hero-section {
+        padding: 100px 20px 60px !important;
+      }
+      .version-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    @media (max-width: 480px) {
+      section {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
+      .hero-section {
+        padding: 80px 15px 40px !important;
       }
     }
   </style>
@@ -70,11 +88,11 @@
           <a href="roms.html" class="view-all">View All →</a>
         </div>
         <div class="rom-grid">
-          <a href="#" class="rom-card">
+          <a href="oxygen-versions.html" class="rom-card">
             <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
             <span>OxygenOS 16</span>
           </a>
-          <a href="#" class="rom-card">
+          <a href="coloros-versions.html" class="rom-card">
             <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
             <span>ColorOS 16</span>
           </a>
@@ -87,10 +105,10 @@
         <a href="roms.html" class="mobile-nav-view-all">View All →</a>
       </div>
       <div class="mobile-nav-roms">
-        <a href="#" class="mobile-nav-rom-card">
+        <a href="oxygen-versions.html" class="mobile-nav-rom-card">
           <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
         </a>
-        <a href="#" class="mobile-nav-rom-card">
+        <a href="coloros-versions.html" class="mobile-nav-rom-card">
           <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
         </a>
       </div>
@@ -109,20 +127,29 @@
   </nav>
 </header>
 
-<section style="padding: 220px 60px 100px; text-align: center;">
-  <h1 style="font-family: 'Anton', sans-serif; font-weight: 700; font-size: 3.5rem; margin-bottom: 20px; background: linear-gradient(to bottom, #fff 30%, rgba(255,255,255,0.4)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">OxygenOS 16</h1>
+<section class="hero-section" style="padding: 220px 60px 100px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <img src="assets/oos16_text.png" alt="OxygenOS 16" style="max-width: 500px; height: auto; margin-bottom: 20px; display: inline-block;">
   <p style="color: #777; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Clean, minimalist UI with premium animations and optimized performance</p>
 </section>
 
 <section style="max-width: 1000px; margin: 0 auto; padding: 0 60px 100px;">
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
+  <div class="version-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
     
+    <a href="devices-oxygen-16.0.5.700.html" style="text-decoration: none; color: inherit; padding: 40px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; transition: all .3s ease; display: flex; flex-direction: column; gap: 20px; text-align: center;"
+       onmouseover="this.style.background='rgba(255,255,255,0.06)'; this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 60px rgba(255,255,255,0.1)'"
+       onmouseout="this.style.background='rgba(255,255,255,0.04)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <h2 style="font-family: 'Anton', sans-serif; margin: 0; font-size: 2rem; font-weight: 800;">16.0.5.700</h2>
+      <span style="background: rgba(92,255,92,0.15); color: #5cff5c; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">● Latest</span>
+      <p style="font-family: 'Poppins', sans-serif; margin: 0; color: #aaa; font-size: 0.95rem; line-height: 1.6;">Newest stable build with all optimizations</p>
+      <p style="margin: 0; color: #666; font-size: 0.85rem;">Based on OnePlus 15 Global</p>
+    </a>
+
     <a href="devices-oxygen-16.0.3.503.html" style="text-decoration: none; color: inherit; padding: 40px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; transition: all .3s ease; display: flex; flex-direction: column; gap: 20px; text-align: center;"
        onmouseover="this.style.background='rgba(255,255,255,0.06)'; this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 60px rgba(255,255,255,0.1)'"
        onmouseout="this.style.background='rgba(255,255,255,0.04)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
       <h2 style="font-family: 'Anton', sans-serif; margin: 0; font-size: 2rem; font-weight: 800;">16.0.3.503</h2>
-      <span style="background: rgba(92,255,92,0.15); color: #5cff5c; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">● Latest</span>
-      <p style="font-family: 'Poppins', sans-serif; margin: 0; color: #aaa; font-size: 0.95rem; line-height: 1.6;">Newest stable build with all optimizations</p>
+      <span style="background: rgba(255,255,255,0.08); color: #aaa; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">February Patch</span>
+      <p style="font-family: 'Poppins', sans-serif; margin: 0; color: #aaa; font-size: 0.95rem; line-height: 1.6;">February Patch build with stability updates</p>
       <p style="margin: 0; color: #666; font-size: 0.85rem;">Based on OnePlus 15 Global</p>
     </a>
 
@@ -169,5 +196,6 @@
 
 </body>
 </html>
+
 
 

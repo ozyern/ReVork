@@ -166,8 +166,7 @@ header nav a {
 }
 
 header nav a:hover {
-  opacity: 1;
-  transform: translateY(-2px);
+  color: #ff0000;
 }
 
 /* Dropdown Menu */

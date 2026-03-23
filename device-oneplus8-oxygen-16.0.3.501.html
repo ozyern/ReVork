@@ -5,41 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OxygenOS 16.0.3.501 — OnePlus 8</title>
   <link rel="icon" href="assets/favicon.png" type="image/png">
-  <link rel="stylesheet" href="style.css" />`n  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"> />
+  <link href="https://db.onlinewebfonts.com/c/1a5a02144883150dce30ae0877cfb513?family=Haverbrooke" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Robeaugo:wght@400;600&family=Poppins:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+
+  <style>
+    @media (max-width: 1024px) {
+      section {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+      }
+    }
+    @media (max-width: 768px) {
+      section {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+      }
+      .hero-section {
+        padding: 100px 20px 60px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+      .grid-2-col {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+      }
+    }
+    @media (max-width: 480px) {
+      section {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
+      .hero-section {
+        padding: 80px 15px 40px !important;
+      }
+    }
+  </style>
 </head>
 <body>
     <div class="cursor-glow" id="cursorGlow"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L21 11.46L12.21 12.76L11.46 21.57L3 3Z" fill="white" stroke="white" stroke-width="0.5"/></svg></div>
 
-<header class="header">
-  <div class="logo"><a href="https://ozyern.me">ReVork</a></div>
-  <nav class="nav" id="navLinks">
-    <a href="index.html">Home</a>
-    <a href="roms.html" class="active">Explore ROMs</a>
-    <a href="devices.html">Supported Device</a>
-    <a href="installation.html">Installation Guide</a>
-  </nav>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+<header>
+  <button class="mobile-menu-toggle" aria-label="Toggle Menu">
     <span></span>
     <span></span>
     <span></span>
   </button>
+
+  <div class="logo">
+    <a href="https://ozyern.me">
+      <img src="assets/favicon.png" draggable="false" alt="ReVork Logo">
+    </a>
+  </div>
+
+  <nav>
+    <div class="nav-item dropdown-parent">
+      <a href="#" class="dropdown-trigger">ROMS <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown-menu">
+        <div class="dropdown-header">
+          <h3>Featured ROM</h3>
+          <a href="roms.html" class="view-all">View All →</a>
+        </div>
+        <div class="rom-grid">
+          <a href="oxygen-versions.html" class="rom-card">
+            <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
+            <span>OxygenOS 16</span>
+          </a>
+          <a href="coloros-versions.html" class="rom-card">
+            <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
+            <span>ColorOS 16</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-nav-featured">
+      <div class="mobile-nav-featured-header">
+        <span>FEATURED ROMS</span>
+        <a href="roms.html" class="mobile-nav-view-all">View All →</a>
+      </div>
+      <div class="mobile-nav-roms">
+        <a href="oxygen-versions.html" class="mobile-nav-rom-card">
+          <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
+        </a>
+        <a href="coloros-versions.html" class="mobile-nav-rom-card">
+          <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
+        </a>
+      </div>
+    </div>
+    <a href="devices.html" class="desktop-nav-link">DEVICES</a>
+    <a href="downloads.html" class="desktop-nav-link">DOWNLOADS</a>
+    <a href="installation.html" class="desktop-nav-link">INSTALL GUIDE</a>
+    <a href="newswire.html" class="desktop-nav-link">NEWSWIRE</a>
+
+    <a href="index.html" class="mobile-nav-link">HOME</a>
+    <a href="devices.html" class="mobile-nav-link">DEVICES</a>
+    <a href="downloads.html" class="mobile-nav-link">DOWNLOADS</a>
+    <a href="installation.html" class="mobile-nav-link">INSTALL GUIDE</a>
+    <a href="newswire.html" class="mobile-nav-link">NEWSWIRE</a>
+    <a href="https://t.me/ReVorkHub" target="_blank" class="mobile-nav-link mobile-nav-link-arrow">SUPPORT</a>
+  </nav>
 </header>
 
-<nav class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="roms.html">Explore ROMs</a>
-  <a href="devices.html">Supported Device</a>
-  <a href="installation.html">Installation Guide</a>
-</nav>
-
-<section style="padding: 160px 60px 60px; text-align: center;">
-  <span style="display: inline-block; font-size: 0.75rem; color: #5cff5c; background: rgba(92,255,92,0.15); padding: 6px 12px; border-radius: 20px; margin-bottom: 16px;">● Latest Build</span>
+<section class="hero-section" style="padding: 160px 60px 60px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
   <h1 style="font-size: 3.5rem; margin-bottom: 12px; background: linear-gradient(to bottom, #fff 30%, rgba(255,255,255,0.4)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">OxygenOS 16.0.3.501</h1>
   <p style="color: #777; font-size: 1.1rem;">OnePlus 8</p>
 </section>
 
 <section style="max-width: 1100px; margin: 0 auto; padding: 0 60px 80px;">
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start;">
+  <div class="grid-2-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start;">
     
     <!-- Device Image -->
     <div style="position: relative;">
@@ -56,20 +130,20 @@
         <h2 style="margin: 0 0 20px 0; font-size: 1.4rem; font-weight: 700;">ROM Information</h2>
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.04); border-radius: 10px; border-left: 2px solid rgba(255,255,255,0.2);">
-            <span style="color: #888;">Version</span>
-            <span style="color: #fff; font-weight: 600;">16.0.3.501</span>
+            <span style="color: #888; font-family: 'Anton', sans-serif; font-weight: 700;">Version</span>
+            <span style="color: #fff; font-family: 'Poppins', sans-serif; font-weight: 600;">16.0.3.501</span>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.04); border-radius: 10px; border-left: 2px solid rgba(255,255,255,0.2);">
-            <span style="color: #888;">Device</span>
-            <span style="color: #fff; font-weight: 600;">OnePlus 8</span>
+            <span style="color: #888; font-family: 'Anton', sans-serif; font-weight: 700;">Device</span>
+            <span style="color: #fff; font-family: 'Poppins', sans-serif; font-weight: 600;">OnePlus 8</span>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.04); border-radius: 10px; border-left: 2px solid rgba(255,255,255,0.2);">
-            <span style="color: #888;">Based on</span>
-            <span style="color: #fff; font-weight: 600;">OnePlus 15</span>
+            <span style="color: #888; font-family: 'Anton', sans-serif; font-weight: 700;">Based on</span>
+            <span style="color: #fff; font-family: 'Poppins', sans-serif; font-weight: 600;">OnePlus 15</span>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.04); border-radius: 10px; border-left: 2px solid rgba(255,255,255,0.2);">
-            <span style="color: #888;">Build Type</span>
-            <span style="color: #fff; font-weight: 600;">Global Edition</span>
+            <span style="color: #888; font-family: 'Anton', sans-serif; font-weight: 700;">Build Type</span>
+            <span style="color: #fff; font-family: 'Poppins', sans-serif; font-weight: 600;">Global Edition</span>
           </div>
         </div>
       </div>
@@ -80,19 +154,19 @@
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(255,255,255,0.04); border-radius: 8px;">
             <span style="color: #5cff5c;">✓</span>
-            <span style="color: #aaa; font-size: 0.9rem;">Premium minimalist UI design</span>
+            <span style="color: #aaa; font-size: 0.9rem; font-family: 'Poppins', sans-serif;">Premium minimalist UI design</span>
           </div>
           <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(255,255,255,0.04); border-radius: 8px;">
             <span style="color: #5cff5c;">✓</span>
-            <span style="color: #aaa; font-size: 0.9rem;">Smooth animations & transitions</span>
+            <span style="color: #aaa; font-size: 0.9rem; font-family: 'Poppins', sans-serif;">Smooth animations & transitions</span>
           </div>
           <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(255,255,255,0.04); border-radius: 8px;">
             <span style="color: #5cff5c;">✓</span>
-            <span style="color: #aaa; font-size: 0.9rem;">Optimized performance & battery life</span>
+            <span style="color: #aaa; font-size: 0.9rem; font-family: 'Poppins', sans-serif;">Optimized performance & battery life</span>
           </div>
           <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(255,255,255,0.04); border-radius: 8px;">
             <span style="color: #5cff5c;">✓</span>
-            <span style="color: #aaa; font-size: 0.9rem;">Latest OxygenOS 16 features</span>
+            <span style="color: #aaa; font-size: 0.9rem; font-family: 'Poppins', sans-serif;">Latest OxygenOS 16 features</span>
           </div>
         </div>
       </div>
@@ -188,5 +262,10 @@ function testMirror(mirror) {
 
 </body>
 </html>
+
+
+
+
+
 
 
