@@ -325,6 +325,8 @@
         padding: 16px 4vw;
         justify-content: space-between;
         align-items: center;
+        background: #000000;
+        border-bottom: 1px solid #222222;
       }
       
       .logo img {
@@ -334,7 +336,6 @@
       header nav {
         display: none;
       }
-      
       .article-container {
         margin: 90px auto 60px;
         padding: 20px;
@@ -350,7 +351,7 @@
       
       .article-container h2 {
         font-size: 16px;
-        margin: 32px 0 16px;
+        margin: 28px 0 16px;
       }
       
       .article-container p {
@@ -359,15 +360,25 @@
         margin-bottom: 16px;
       }
       
+      .article-container ul {
+        margin: 16px 0 16px 20px;
+      }
+      
       .article-container li {
         font-size: 15px;
-        line-height: 1.7;
+        line-height: 1.6;
         margin-bottom: 10px;
       }
       
       .article-header {
         font-size: 13px;
         margin-bottom: 20px;
+      }
+      
+      .article-header .red-badge {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
       }
       
       .featured-image {
@@ -385,17 +396,25 @@
       .back-link {
         margin-top: 40px;
         font-size: 14px;
-        padding: 10px 16px;
+        padding: 12px 18px;
+        display: inline-block;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
       }
       
       footer.rog-footer {
-        padding: 50px 4vw 35px;
+        padding: 40px 4vw 30px;
       }
       
       footer.rog-footer .footer-bottom {
         flex-wrap: wrap;
         font-size: 12px;
         gap: 15px;
+      }
+      
+      footer.rog-footer .region img {
+        height: 28px;
       }
     }
 
@@ -424,6 +443,41 @@
       
       header nav {
         display: none !important;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #000000;
+        flex-direction: column;
+        padding: 20px 0;
+        gap: 0;
+        z-index: 999;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+      }
+      
+      header nav.active {
+        display: flex !important;
+      }
+      
+      header nav a {
+        padding: 16px 20px;
+        border-bottom: 1px solid #222222;
+        width: 100%;
+        text-align: left;
+      }
+      
+      header nav .dropdown-parent,
+      header nav .mobile-nav-featured {
+        width: 100%;
+      }
+      
+      header nav .mobile-nav-roms {
+        display: flex;
+        gap: 12px;
+        padding: 12px 20px;
+        flex-wrap: wrap;
       }
       
       .mobile-menu-toggle {
@@ -448,6 +502,19 @@
         height: 2px;
         background: #fff;
         border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+      
+      .mobile-menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(10px, 10px);
+      }
+      
+      .mobile-menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .mobile-menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
       }
       
       .article-container {
@@ -455,6 +522,11 @@
         padding: 16px;
         border: none;
         max-width: 100%;
+      }
+      
+      .rom-text-image {
+        max-width: 90vw !important;
+        margin: 0 auto 20px !important;
       }
       
       .article-container h1 {
@@ -589,7 +661,7 @@
 
 <main class="article-container">
 
-  <img src="../assets/cos16_text.png" alt="ColorOS 16" class="rom-text-image" style="max-width: 400px; height: auto; margin: 0 auto 20px; display: block;">
+  <img src="../assets/cos16_text.png" alt="ColorOS 16" class="rom-text-image" style="max-width: clamp(200px, 80vw, 400px); height: auto; margin: 0 auto 20px; display: block;">
 
   <div class="article-header">
     <div class="red-badge"><img src="../assets/ozyern.jpg" alt="Ozyern"></div>
