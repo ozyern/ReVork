@@ -88,12 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ===== HERO SLIDER =====
   const slides = document.querySelectorAll('.hero .slide');
+  
+  if (slides.length === 0) return;
+  
   const indicatorsContainer = document.querySelector('.rs-indicators');
   const pausePlayBtn = document.querySelector('.rs-pause-play');
   const pauseIcon = pausePlayBtn.querySelector('.icon');
   const controls = document.querySelector('.rs-controls');
-
-  if (slides.length === 0) return;
 
   // Set appropriate background images based on screen size
   function setBackgroundImages() {
