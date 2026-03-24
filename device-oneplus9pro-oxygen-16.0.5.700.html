@@ -194,11 +194,6 @@
     </div>
     <div style="padding: 28px;">
       <p style="color: #aaa; margin: 0 0 20px 0;">Choose your preferred download mirror. IDM will automatically intercept the download.</p>
-      <button onclick="downloadFromSourceforge()" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: #fff; font-weight: 700; cursor: pointer; transition: all .3s; margin-bottom: 12px;"
-              onmouseover="this.style.background='rgba(255,255,255,0.15)'"
-              onmouseout="this.style.background='rgba(255,255,255,0.1)'">
-        📥 SourceForge
-      </button>
       <button onclick="downloadFromGdrive()" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: #fff; font-weight: 700; cursor: pointer; transition: all .3s;"
               onmouseover="this.style.background='rgba(255,255,255,0.15)'"
               onmouseout="this.style.background='rgba(255,255,255,0.1)'">
@@ -247,11 +242,6 @@ function closeModal() {
   const modal = document.getElementById('downloadModal');
   modal.style.display = 'none';
   document.body.style.overflow = '';
-}
-
-function downloadFromSourceforge() {
-  window.open(ROM_URL_SF, '_blank');
-  setTimeout(() => closeModal(), 1000);
 }
 
 function downloadFromGdrive() {
