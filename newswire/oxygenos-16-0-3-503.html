@@ -50,48 +50,6 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
     }
 
-    header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 30px 5vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-    }
-
-    .logo img {
-      height: 56px;
-    }
-
-    header nav {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: clamp(2.5rem, 5vw, 4.5rem);
-    }
-
-    header nav a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 1.2px;
-      opacity: 0.85;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      font-family: 'Haverbrooke', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    }
-
-    header nav a:hover {
-      color: #ff0000;
-    }
-
-    .mobile-menu-toggle {
-      display: none;
-    }
-
     .article-container {
       max-width: 900px;
       margin: 150px auto 100px;
@@ -305,38 +263,9 @@
       .article-container h2 {
         font-size: 18px;
       }
-      
-      header {
-        padding: 20px 3vw;
-      }
-      
-      header nav {
-        gap: clamp(1.5rem, 3vw, 3rem);
-      }
     }
 
     @media (max-width: 768px) {
-      header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        padding: 16px 4vw;
-        justify-content: space-between;
-        align-items: center;
-        background: #000000;
-        border-bottom: 1px solid #222222;
-      }
-      
-      .logo img {
-        height: 44px;
-      }
-      
-      header nav {
-        display: none;
-      }
-      
       .article-container {
         margin: 90px auto 60px;
         padding: 20px;
@@ -402,104 +331,6 @@
     }
 
     @media (max-width: 480px) {
-      header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        padding: 12px 3vw;
-        justify-content: center;
-        z-index: 1000;
-      }
-      
-      .logo {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .logo img {
-        height: 36px;
-        margin: 0 auto;
-      }
-      
-      header nav {
-        display: none !important;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: #000000;
-        flex-direction: column;
-        padding: 20px 0;
-        gap: 0;
-        z-index: 999;
-        max-height: calc(100vh - 60px);
-        overflow-y: auto;
-      }
-      
-      header nav.active {
-        display: flex !important;
-      }
-      
-      header nav a {
-        padding: 16px 20px;
-        border-bottom: 1px solid #222222;
-        width: 100%;
-        text-align: left;
-      }
-      
-      header nav .dropdown-parent,
-      header nav .mobile-nav-featured {
-        width: 100%;
-      }
-      
-      header nav .mobile-nav-roms {
-        display: flex;
-        gap: 12px;
-        padding: 12px 20px;
-        flex-wrap: wrap;
-      }
-      
-      .mobile-menu-toggle {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        position: absolute;
-        left: 3vw;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 8px;
-        z-index: 1001;
-        width: auto;
-      }
-      
-      .mobile-menu-toggle span {
-        display: block;
-        width: 24px;
-        height: 2px;
-        background: #fff;
-        border-radius: 2px;
-        transition: all 0.3s ease;
-      }
-      
-      .mobile-menu-toggle.active span:nth-child(1) {
-        transform: rotate(45deg) translate(10px, 10px);
-      }
-      
-      .mobile-menu-toggle.active span:nth-child(2) {
-        opacity: 0;
-      }
-      
-      .mobile-menu-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -7px);
-      }
-      
       .article-container {
         margin: 70px auto 40px;
         padding: 16px;
