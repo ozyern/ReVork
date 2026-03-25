@@ -1,280 +1,391 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="noindex, follow">
   <title>404 - Page Not Found | ReVork</title>
+
   <link rel="icon" href="assets/favicon.png" type="image/png">
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://db.onlinewebfonts.com/c/1a5a02144883150dce30ae0877cfb513?family=Haverbrooke" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
   <style>
-    body {
-      margin: 0;
-      background: #050507;
-      color: white;
-      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont;
-      overflow: hidden;
+    :root {
+      --error-accent: #ff4d2d;
+      --error-accent-soft: rgba(255, 77, 45, 0.16);
+      --error-highlight: #00e5bf;
+      --error-panel: rgba(8, 10, 14, 0.72);
+      --error-border: rgba(255, 255, 255, 0.18);
+      --error-text-dim: rgba(255, 255, 255, 0.74);
     }
 
-    .error-container {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    body.error-page {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .error-page main {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 120px 20px 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .error-canvas {
+      width: min(960px, 100%);
+      border: 1px solid var(--error-border);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 88% 14%, rgba(0, 229, 191, 0.15), transparent 36%),
+        radial-gradient(circle at 12% 88%, rgba(255, 77, 45, 0.22), transparent 45%),
+        linear-gradient(125deg, rgba(17, 20, 28, 0.92), var(--error-panel));
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
       position: relative;
       overflow: hidden;
+      isolation: isolate;
+      animation: panel-rise 620ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
 
-    /* Massive background text */
-    .bg-404 {
+    .error-canvas::before {
+      content: "";
       position: absolute;
-      font-size: 40vw;
-      font-weight: 900;
-      letter-spacing: -20px;
-      font-family: "Anton", sans-serif;
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.12),
-        rgba(255,255,255,0.02)
-      );
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      inset: -20% -10%;
+      background:
+        repeating-linear-gradient(
+          -14deg,
+          rgba(255, 255, 255, 0.04) 0px,
+          rgba(255, 255, 255, 0.04) 2px,
+          transparent 2px,
+          transparent 14px
+        );
+      opacity: 0.28;
+      z-index: 0;
       pointer-events: none;
-      user-select: none;
-      line-height: 1;
     }
 
-    .error-content {
+    .error-canvas-inner {
       position: relative;
-      z-index: 2;
+      z-index: 1;
+      padding: 52px clamp(22px, 4vw, 56px);
       text-align: center;
-      max-width: 600px;
-      padding: 0 40px;
     }
 
-    .error-badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      color: #ff5c5c;
-      background: rgba(255,92,92,0.15);
-      padding: 6px 12px;
-      border-radius: 20px;
-      margin-bottom: 24px;
-      letter-spacing: 2px;
+    .error-code {
+      font-family: "Anton", sans-serif;
+      font-size: clamp(4.8rem, 24vw, 12rem);
+      letter-spacing: 0.04em;
+      line-height: 0.88;
+      margin: 0;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.16);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.02) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
       text-transform: uppercase;
+      animation: code-flicker 2.6s ease-in-out infinite;
+    }
+
+    .error-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      margin-bottom: 22px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--error-accent-soft);
+      color: #ffd0c6;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 77, 45, 0.34);
     }
 
     .error-title {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin: 0 0 16px 0;
-      background: linear-gradient(to bottom, #fff 30%, rgba(255,255,255,0.5));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-family: "Anton", sans-serif;
-      letter-spacing: 2px;
+      font-family: "Haverbrooke", "Anton", sans-serif;
+      font-size: clamp(2.1rem, 5vw, 4rem);
+      letter-spacing: 0.02em;
+      margin: 0 0 12px;
+      text-wrap: balance;
     }
 
     .error-description {
-      font-size: 1.1rem;
-      color: #888;
-      margin-bottom: 40px;
-      line-height: 1.6;
+      margin: 0 auto;
+      max-width: 620px;
+      color: var(--error-text-dim);
+      font-size: clamp(1rem, 2.2vw, 1.16rem);
+      line-height: 1.72;
     }
 
-    .error-buttons {
+    .error-actions {
+      margin-top: 34px;
       display: flex;
-      gap: 16px;
       justify-content: center;
+      gap: 14px;
       flex-wrap: wrap;
     }
 
-    .btn {
-      padding: 14px 32px;
+    .error-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 170px;
       border-radius: 12px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      padding: 12px 22px;
       text-decoration: none;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      font-size: 0.83rem;
+      border: 1px solid transparent;
+      transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease;
     }
 
-    .btn-primary {
-      background: white;
-      color: black;
+    .error-btn.primary {
+      background: linear-gradient(130deg, var(--error-accent), #ff9a3b);
+      color: #151922;
+      box-shadow: 0 12px 26px rgba(255, 84, 35, 0.33);
     }
 
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+    .error-btn.secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #f3f4f7;
     }
 
-    .btn-secondary {
-      background: rgba(255,255,255,0.08);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.15);
+    .error-btn:hover,
+    .error-btn:focus-visible {
+      transform: translateY(-2px);
     }
 
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.12);
-      transform: translateY(-3px);
+    .error-btn.secondary:hover,
+    .error-btn.secondary:focus-visible {
+      border-color: rgba(0, 229, 191, 0.56);
+      box-shadow: 0 0 0 1px rgba(0, 229, 191, 0.24) inset;
     }
 
-    /* Floating particles */
-    .particle {
+    .error-grid {
+      margin-top: 28px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .error-grid-item {
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 14px 12px;
+      display: grid;
+      gap: 3px;
+    }
+
+    .error-grid-item strong {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .error-grid-item span {
+      font-size: 0.98rem;
+      color: #ffffff;
+    }
+
+    .error-ping {
       position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(255,255,255,0.3);
+      width: 12px;
+      aspect-ratio: 1;
       border-radius: 50%;
-      animation: float 20s infinite;
+      background: var(--error-highlight);
       opacity: 0;
+      filter: blur(0.5px);
+      animation: ping-up 11s linear infinite;
     }
 
-    @keyframes float {
-      0% {
-        transform: translateY(100vh) translateX(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.5;
-      }
-      90% {
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(-100vh) translateX(100px);
-        opacity: 0;
+    .error-ping:nth-child(1) {
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .error-ping:nth-child(2) {
+      left: 28%;
+      animation-delay: 3.2s;
+      width: 10px;
+    }
+
+    .error-ping:nth-child(3) {
+      left: 74%;
+      animation-delay: 1.8s;
+      width: 8px;
+    }
+
+    @media (max-width: 840px) {
+      .error-grid {
+        grid-template-columns: 1fr;
       }
     }
 
-    .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-    .particle:nth-child(2) { left: 20%; animation-delay: 4s; }
-    .particle:nth-child(3) { left: 30%; animation-delay: 8s; }
-    .particle:nth-child(4) { left: 40%; animation-delay: 2s; }
-    .particle:nth-child(5) { left: 50%; animation-delay: 6s; }
-    .particle:nth-child(6) { left: 60%; animation-delay: 10s; }
-    .particle:nth-child(7) { left: 70%; animation-delay: 3s; }
-    .particle:nth-child(8) { left: 80%; animation-delay: 7s; }
-    .particle:nth-child(9) { left: 90%; animation-delay: 1s; }
-
-    /* Mobile responsiveness */
-    @media (max-width: 768px) {
-      .bg-404 {
-        font-size: 50vw;
+    @media (max-width: 700px) {
+      .error-page main {
+        padding-top: 104px;
       }
 
-      .error-title {
-        font-size: 2.5rem;
+      .error-canvas-inner {
+        padding: 38px 18px 30px;
       }
 
-      .error-description {
-        font-size: 1rem;
-      }
-
-      .error-buttons {
+      .error-actions {
         flex-direction: column;
-        align-items: stretch;
       }
 
-      .btn {
+      .error-btn {
         width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .error-code,
+      .error-canvas,
+      .error-ping {
+        animation: none;
+      }
+
+      .error-btn {
+        transition: none;
+      }
+    }
+
+    @keyframes panel-rise {
+      from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes code-flicker {
+      0%,
+      100% {
+        filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+      }
+
+      45% {
+        filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.13));
+      }
+
+      60% {
+        filter: drop-shadow(0 0 24px rgba(255, 77, 45, 0.2));
+      }
+    }
+
+    @keyframes ping-up {
+      0% {
+        transform: translateY(42px) scale(0.3);
+        opacity: 0;
+      }
+
+      12% {
+        opacity: 0.8;
+      }
+
+      50% {
+        opacity: 0.34;
+      }
+
+      100% {
+        transform: translateY(-560px) scale(1.1);
+        opacity: 0;
       }
     }
   </style>
 </head>
-<body>
-    <div class="cursor-glow" id="cursorGlow"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L21 11.46L12.21 12.76L11.46 21.57L3 3Z" fill="white" stroke="white" stroke-width="0.5"/></svg></div>
-
-<!-- Header -->
-<header class="header">
-  <div class="logo"><a href="https://ozyern.me">ReVork</a></div>
-  <nav class="nav" id="navLinks">
-    <a href="index.html">Home</a>
-    <a href="roms.html">Explore ROMs</a>
-    <a href="devices.html">Supported Device</a>
-    <a href="installation.html">Installation Guide</a>
-  </nav>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-</header>
-
-<nav class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="roms.html">Explore ROMs</a>
-  <a href="devices.html">Supported Device</a>
-  <a href="installation.html">Installation Guide</a>
-</nav>
-
-<!-- Error Container -->
-<div class="error-container">
-  <!-- Background 404 -->
-  <div class="bg-404">404</div>
-
-  <!-- Floating particles -->
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-
-  <!-- Content -->
-  <div class="error-content">
-    <span class="error-badge">● Error 404</span>
-    <h1 class="error-title">Page Not Found</h1>
-    <p class="error-description">
-      Looks like you've wandered into uncharted territory. The page you're looking for doesn't exist or has been moved.
-    </p>
-    <div class="error-buttons">
-      <a href="index.html" class="btn btn-primary">Go Home</a>
-      <a href="devices.html" class="btn btn-secondary">Browse Devices</a>
-    </div>
+<body class="error-page">
+  <div class="cursor-glow" id="cursorGlow">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 3L21 11.46L12.21 12.76L11.46 21.57L3 3Z" fill="white" stroke="white" stroke-width="0.5"/>
+    </svg>
   </div>
-</div>
 
-<script src="assets/boot.js"></script>
-<script>
-// Mobile menu toggle
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
+  <header>
+    <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-if (hamburger) {
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-  });
-}
+    <div class="logo">
+      <a href="https://ozyern.me">
+        <img src="assets/favicon.png" draggable="false" alt="ReVork Logo">
+      </a>
+    </div>
 
-if (mobileMenu) {
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      mobileMenu.classList.remove('active');
-    });
-  });
-}
+    <nav>
+      <a href="index.html" class="desktop-nav-link">HOME</a>
+      <a href="roms.html" class="desktop-nav-link">ROMS</a>
+      <a href="devices.html" class="desktop-nav-link">DEVICES</a>
+      <a href="downloads.html" class="desktop-nav-link">DOWNLOADS</a>
+      <a href="installation.html" class="desktop-nav-link">INSTALL GUIDE</a>
 
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.header') && !e.target.closest('.mobile-menu')) {
-    if (hamburger) hamburger.classList.remove('active');
-    if (mobileMenu) mobileMenu.classList.remove('active');
-  }
-});
-</script>
+      <a href="index.html" class="mobile-nav-link">HOME</a>
+      <a href="roms.html" class="mobile-nav-link">ROMS</a>
+      <a href="devices.html" class="mobile-nav-link">DEVICES</a>
+      <a href="downloads.html" class="mobile-nav-link">DOWNLOADS</a>
+      <a href="installation.html" class="mobile-nav-link">INSTALL GUIDE</a>
+      <a href="newswire.html" class="mobile-nav-link">NEWSWIRE</a>
+      <a href="https://t.me/ReVorkHub" target="_blank" class="mobile-nav-link mobile-nav-link-arrow">SUPPORT</a>
+    </nav>
+  </header>
 
+  <main>
+    <section class="error-canvas" aria-labelledby="error-title">
+      <div class="error-ping" aria-hidden="true"></div>
+      <div class="error-ping" aria-hidden="true"></div>
+      <div class="error-ping" aria-hidden="true"></div>
+
+      <div class="error-canvas-inner">
+        <p class="error-code" aria-hidden="true">404</p>
+        <span class="error-eyebrow">Missing Route</span>
+        <h1 class="error-title" id="error-title">This page took a wrong turn.</h1>
+        <p class="error-description">
+          The link may be outdated, the page may have moved, or the URL might have a typo.
+          Jump back to a known route and keep flashing smarter.
+        </p>
+
+        <div class="error-actions">
+          <a href="index.html" class="error-btn primary">Back To Home</a>
+          <a href="downloads.html" class="error-btn secondary">Go To Downloads</a>
+          <a href="devices.html" class="error-btn secondary">Browse Devices</a>
+        </div>
+
+        <div class="error-grid" aria-hidden="true">
+          <div class="error-grid-item">
+            <strong>Status</strong>
+            <span>404 Not Found</span>
+          </div>
+          <div class="error-grid-item">
+            <strong>Hint</strong>
+            <span>Check URL spelling</span>
+          </div>
+          <div class="error-grid-item">
+            <strong>Fallback</strong>
+            <span>Use top navigation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/boot.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
 
