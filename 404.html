@@ -13,220 +13,340 @@
 
   <style>
     :root {
-      --error-accent: #ff4d2d;
-      --error-accent-soft: rgba(255, 77, 45, 0.16);
-      --error-highlight: #00e5bf;
-      --error-panel: rgba(8, 10, 14, 0.72);
-      --error-border: rgba(255, 255, 255, 0.18);
-      --error-text-dim: rgba(255, 255, 255, 0.74);
+      --nf-bg-1: #05070b;
+      --nf-bg-2: #111625;
+      --nf-glass: rgba(9, 14, 24, 0.75);
+      --nf-border: rgba(255, 255, 255, 0.2);
+      --nf-text: #f6f9ff;
+      --nf-dim: rgba(219, 228, 245, 0.72);
+      --nf-hot: #ff6e2f;
+      --nf-neon: #2de3c1;
+      --nf-sun: #ffdc5f;
     }
 
     body.error-page {
       min-height: 100vh;
+      background:
+        radial-gradient(circle at 10% 15%, rgba(255, 110, 47, 0.24), transparent 34%),
+        radial-gradient(circle at 88% 84%, rgba(45, 227, 193, 0.22), transparent 40%),
+        linear-gradient(140deg, var(--nf-bg-1) 0%, #080b12 36%, var(--nf-bg-2) 100%);
       overflow-x: hidden;
     }
 
     .error-page main {
       min-height: 100vh;
+      padding: 126px 20px 42px;
+      position: relative;
+      isolation: isolate;
       display: grid;
       place-items: center;
-      padding: 120px 20px 40px;
-      position: relative;
-      z-index: 1;
     }
 
-    .error-canvas {
-      width: min(960px, 100%);
-      border: 1px solid var(--error-border);
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at 88% 14%, rgba(0, 229, 191, 0.15), transparent 36%),
-        radial-gradient(circle at 12% 88%, rgba(255, 77, 45, 0.22), transparent 45%),
-        linear-gradient(125deg, rgba(17, 20, 28, 0.92), var(--error-panel));
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-      animation: panel-rise 620ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    }
-
-    .error-canvas::before {
+    .error-page main::after {
       content: "";
       position: absolute;
-      inset: -20% -10%;
+      inset: 0;
+      background: radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.06), transparent 56%);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .notfound-shell {
+      width: min(1120px, 100%);
+      position: relative;
+      z-index: 1;
+      animation: panel-enter 620ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    .atmo-ring {
+      position: absolute;
+      inset: -26px;
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: linear-gradient(140deg, rgba(255, 255, 255, 0.04), transparent 35%);
+      box-shadow: 0 0 80px rgba(0, 0, 0, 0.45);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .atmo-ring::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transform: scale(1.018);
+    }
+
+    .mesh-orb {
+      position: absolute;
+      pointer-events: none;
+      border-radius: 999px;
+      filter: blur(2px);
+      opacity: 0.85;
+    }
+
+    .mesh-orb.orb-a {
+      width: clamp(160px, 25vw, 250px);
+      aspect-ratio: 1;
+      top: -58px;
+      right: -38px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 220, 95, 0.92), rgba(255, 110, 47, 0.3) 55%, transparent 73%);
+      animation: float-a 10s ease-in-out infinite;
+    }
+
+    .mesh-orb.orb-b {
+      width: clamp(180px, 24vw, 240px);
+      aspect-ratio: 1;
+      left: -50px;
+      bottom: -46px;
+      background: radial-gradient(circle at 54% 40%, rgba(45, 227, 193, 0.68), rgba(45, 227, 193, 0.08) 58%, transparent 75%);
+      animation: float-b 12s ease-in-out infinite;
+    }
+
+    .notfound-panel {
+      border: 1px solid var(--nf-border);
+      border-radius: 30px;
+      background:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 35%),
+        linear-gradient(165deg, rgba(10, 14, 22, 0.95), var(--nf-glass));
+      box-shadow: 0 34px 90px rgba(0, 0, 0, 0.58), inset 0 1px 0 rgba(255, 255, 255, 0.13);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .notfound-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
       background:
         repeating-linear-gradient(
-          -14deg,
-          rgba(255, 255, 255, 0.04) 0px,
-          rgba(255, 255, 255, 0.04) 2px,
-          transparent 2px,
-          transparent 14px
+          92deg,
+          rgba(255, 255, 255, 0.03) 0,
+          rgba(255, 255, 255, 0.03) 1px,
+          transparent 1px,
+          transparent 15px
         );
-      opacity: 0.28;
-      z-index: 0;
+      opacity: 0.32;
       pointer-events: none;
     }
 
-    .error-canvas-inner {
+    .notfound-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.08) 48%, transparent 64%);
+      transform: translateX(-120%);
+      animation: sheen 5.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .notfound-inner {
       position: relative;
       z-index: 1;
-      padding: 52px clamp(22px, 4vw, 56px);
-      text-align: center;
+      padding: 54px clamp(20px, 4vw, 56px);
+      display: grid;
+      gap: 26px;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      align-items: stretch;
+    }
+
+    .hero-stack {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--nf-dim);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .status-chip::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--nf-hot);
+      box-shadow: 0 0 14px rgba(255, 110, 47, 0.8);
     }
 
     .error-code {
       font-family: "Anton", sans-serif;
-      font-size: clamp(4.8rem, 24vw, 12rem);
-      letter-spacing: 0.04em;
-      line-height: 0.88;
-      margin: 0;
+      font-size: clamp(4.7rem, 15vw, 9rem);
+      letter-spacing: 0.02em;
+      line-height: 0.86;
+      margin: 14px 0 6px;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.16);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.02) 100%);
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.28);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.1) 92%);
       -webkit-background-clip: text;
       background-clip: text;
-      text-transform: uppercase;
-      animation: code-flicker 2.6s ease-in-out infinite;
-    }
-
-    .error-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 16px;
-      margin-bottom: 22px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: var(--error-accent-soft);
-      color: #ffd0c6;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      border: 1px solid rgba(255, 77, 45, 0.34);
+      text-shadow: 0 0 26px rgba(255, 110, 47, 0.24);
     }
 
     .error-title {
       font-family: "Haverbrooke", "Anton", sans-serif;
-      font-size: clamp(2.1rem, 5vw, 4rem);
-      letter-spacing: 0.02em;
+      font-size: clamp(2rem, 4.3vw, 3.7rem);
+      letter-spacing: 0.015em;
+      line-height: 1.04;
       margin: 0 0 12px;
+      color: var(--nf-text);
       text-wrap: balance;
     }
 
     .error-description {
-      margin: 0 auto;
-      max-width: 620px;
-      color: var(--error-text-dim);
-      font-size: clamp(1rem, 2.2vw, 1.16rem);
-      line-height: 1.72;
+      margin: 0;
+      max-width: 560px;
+      color: var(--nf-dim);
+      font-size: clamp(1rem, 1.95vw, 1.13rem);
+      line-height: 1.68;
     }
 
-    .error-actions {
-      margin-top: 34px;
+    .cta-row {
+      margin-top: 26px;
       display: flex;
-      justify-content: center;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .error-btn {
+    .cta-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 170px;
+      min-width: 156px;
       border-radius: 12px;
       padding: 12px 22px;
       text-decoration: none;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
+      letter-spacing: 0.1em;
       font-size: 0.83rem;
       border: 1px solid transparent;
-      transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease;
+      transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease;
     }
 
-    .error-btn.primary {
-      background: linear-gradient(130deg, var(--error-accent), #ff9a3b);
-      color: #151922;
-      box-shadow: 0 12px 26px rgba(255, 84, 35, 0.33);
+    .cta-btn.primary {
+      background: linear-gradient(120deg, var(--nf-hot), var(--nf-sun));
+      color: #12161e;
+      box-shadow: 0 14px 34px rgba(255, 110, 47, 0.4);
     }
 
-    .error-btn.secondary {
+    .cta-btn.secondary {
       background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.2);
-      color: #f3f4f7;
+      border-color: rgba(255, 255, 255, 0.26);
+      color: #f4f8ff;
     }
 
-    .error-btn:hover,
-    .error-btn:focus-visible {
+    .cta-btn:hover,
+    .cta-btn:focus-visible {
       transform: translateY(-2px);
     }
 
-    .error-btn.secondary:hover,
-    .error-btn.secondary:focus-visible {
-      border-color: rgba(0, 229, 191, 0.56);
-      box-shadow: 0 0 0 1px rgba(0, 229, 191, 0.24) inset;
+    .cta-btn.secondary:hover,
+    .cta-btn.secondary:focus-visible {
+      border-color: rgba(45, 227, 193, 0.72);
+      color: #d8fff7;
+      box-shadow: 0 0 0 1px rgba(45, 227, 193, 0.24) inset;
     }
 
-    .error-grid {
-      margin-top: 28px;
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .error-grid-item {
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+    .action-card {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 20px;
       background: rgba(255, 255, 255, 0.04);
-      padding: 14px 12px;
+      padding: 22px;
       display: grid;
-      gap: 3px;
+      align-content: start;
+      gap: 16px;
     }
 
-    .error-grid-item strong {
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.55);
+    .action-card h2 {
+      margin: 0;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
+      color: rgba(240, 245, 255, 0.76);
+      font-weight: 600;
     }
 
-    .error-grid-item span {
-      font-size: 0.98rem;
-      color: #ffffff;
+    .quick-map {
+      display: grid;
+      gap: 10px;
     }
 
-    .error-ping {
-      position: absolute;
-      width: 12px;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: var(--error-highlight);
-      opacity: 0;
-      filter: blur(0.5px);
-      animation: ping-up 11s linear infinite;
+    .quick-map a {
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      color: #f2f7ff;
+      text-decoration: none;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
     }
 
-    .error-ping:nth-child(1) {
-      left: 10%;
-      animation-delay: 0s;
+    .quick-map a span {
+      font-size: 0.7rem;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      min-width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.74);
     }
 
-    .error-ping:nth-child(2) {
-      left: 28%;
-      animation-delay: 3.2s;
-      width: 10px;
+    .quick-map a:hover,
+    .quick-map a:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(255, 220, 95, 0.7);
+      background: rgba(255, 255, 255, 0.075);
     }
 
-    .error-ping:nth-child(3) {
-      left: 74%;
-      animation-delay: 1.8s;
-      width: 8px;
+    .path-hint {
+      margin: 0;
+      color: rgba(215, 224, 246, 0.65);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      word-break: break-word;
     }
 
-    @media (max-width: 840px) {
-      .error-grid {
+    .path-hint strong {
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    .tiny-note {
+      margin: 0;
+      color: rgba(206, 216, 237, 0.66);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 940px) {
+      .notfound-inner {
         grid-template-columns: 1fr;
+      }
+
+      .action-card {
+        padding: 18px;
       }
     }
 
@@ -235,32 +355,25 @@
         padding-top: 104px;
       }
 
-      .error-canvas-inner {
-        padding: 38px 18px 30px;
+      .notfound-inner {
+        padding: 34px 16px 24px;
       }
 
-      .error-actions {
+      .cta-row {
         flex-direction: column;
       }
 
-      .error-btn {
+      .cta-btn {
         width: 100%;
       }
-    }
 
-    @media (prefers-reduced-motion: reduce) {
-      .error-code,
-      .error-canvas,
-      .error-ping {
-        animation: none;
-      }
-
-      .error-btn {
-        transition: none;
+      .atmo-ring {
+        inset: -12px;
+        border-radius: 24px;
       }
     }
 
-    @keyframes panel-rise {
+    @keyframes panel-enter {
       from {
         opacity: 0;
         transform: translateY(24px) scale(0.985);
@@ -272,38 +385,49 @@
       }
     }
 
-    @keyframes code-flicker {
+    @keyframes float-a {
       0%,
       100% {
-        filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
-      }
-
-      45% {
-        filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.13));
-      }
-
-      60% {
-        filter: drop-shadow(0 0 24px rgba(255, 77, 45, 0.2));
-      }
-    }
-
-    @keyframes ping-up {
-      0% {
-        transform: translateY(42px) scale(0.3);
-        opacity: 0;
-      }
-
-      12% {
-        opacity: 0.8;
+        transform: translateY(0px) translateX(0px);
       }
 
       50% {
-        opacity: 0.34;
+        transform: translateY(-14px) translateX(10px);
+      }
+    }
+
+    @keyframes float-b {
+      0%,
+      100% {
+        transform: translateY(0px) translateX(0px);
       }
 
+      50% {
+        transform: translateY(12px) translateX(-8px);
+      }
+    }
+
+    @keyframes sheen {
+      0% {
+        transform: translateX(-120%);
+      }
+
+      60%,
       100% {
-        transform: translateY(-560px) scale(1.1);
-        opacity: 0;
+        transform: translateX(120%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .notfound-shell,
+      .mesh-orb,
+      .notfound-panel::after {
+        animation: none;
+      }
+
+      .cta-btn,
+      .quick-map a {
+        transition: none;
       }
     }
   </style>
@@ -346,44 +470,49 @@
   </header>
 
   <main>
-    <section class="error-canvas" aria-labelledby="error-title">
-      <div class="error-ping" aria-hidden="true"></div>
-      <div class="error-ping" aria-hidden="true"></div>
-      <div class="error-ping" aria-hidden="true"></div>
+    <section class="notfound-shell" aria-labelledby="error-title">
+      <div class="atmo-ring" aria-hidden="true"></div>
+      <div class="mesh-orb orb-a" aria-hidden="true"></div>
+      <div class="mesh-orb orb-b" aria-hidden="true"></div>
 
-      <div class="error-canvas-inner">
-        <p class="error-code" aria-hidden="true">404</p>
-        <span class="error-eyebrow">Missing Route</span>
-        <h1 class="error-title" id="error-title">This page took a wrong turn.</h1>
-        <p class="error-description">
-          The link may be outdated, the page may have moved, or the URL might have a typo.
-          Jump back to a known route and keep flashing smarter.
-        </p>
+      <div class="notfound-panel">
+        <div class="notfound-inner">
+          <div class="hero-stack">
+            <span class="status-chip">HTTP / 404 / route not found</span>
+            <p class="error-code" aria-hidden="true">404</p>
+            <h1 class="error-title" id="error-title">This route never made it to production.</h1>
+            <p class="error-description">
+              The page might be moved, renamed, or linked from an old source.
+              Jump to a verified section and continue from there.
+            </p>
 
-        <div class="error-actions">
-          <a href="index.html" class="error-btn primary">Back To Home</a>
-          <a href="downloads.html" class="error-btn secondary">Go To Downloads</a>
-          <a href="devices.html" class="error-btn secondary">Browse Devices</a>
-        </div>
+            <div class="cta-row">
+              <a href="index.html" class="cta-btn primary">Back To Home</a>
+              <a href="downloads.html" class="cta-btn secondary">Open Downloads</a>
+              <a href="devices.html" class="cta-btn secondary">Browse Devices</a>
+            </div>
+          </div>
 
-        <div class="error-grid" aria-hidden="true">
-          <div class="error-grid-item">
-            <strong>Status</strong>
-            <span>404 Not Found</span>
+          <aside class="action-card" aria-label="Recovery actions">
+            <h2>Quick Recovery</h2>
+            <div class="quick-map">
+              <a href="roms.html"><span>01</span>Roms Library</a>
+              <a href="installation.html"><span>02</span>Install Guide</a>
+              <a href="newswire.html"><span>03</span>Newswire</a>
+              <a href="devices.html"><span>04</span>Device Catalog</a>
+            </div>
+
+            <p class="path-hint">Requested path: <strong id="requestedPath">/</strong></p>
+            <p class="tiny-note">Tip: if this came from a bookmark, refresh your saved link to avoid old routes.</p>
+          </aside>
           </div>
-          <div class="error-grid-item">
-            <strong>Hint</strong>
-            <span>Check URL spelling</span>
-          </div>
-          <div class="error-grid-item">
-            <strong>Fallback</strong>
-            <span>Use top navigation</span>
-          </div>
-        </div>
       </div>
     </section>
   </main>
 
+  <script>
+    document.getElementById('requestedPath').textContent = window.location.pathname || '/';
+  </script>
   <script src="assets/boot.js"></script>
   <script src="script.js"></script>
 </body>
