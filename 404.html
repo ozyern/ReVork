@@ -511,7 +511,25 @@
   </main>
 
   <script>
-    document.getElementById('requestedPath').textContent = window.location.pathname || '/';
+    (function handleCleanUrlFallback() {
+      const pathname = window.location.pathname || '/';
+      const hasExtension = /\/[^/]+\.[^/]+$/.test(pathname);
+
+      if (!hasExtension && pathname !== '/' && !pathname.endsWith('/')) {
+        window.location.replace(`${pathname}.html${window.location.search}${window.location.hash}`);
+        return;
+      }
+
+      if (!hasExtension && pathname.endsWith('/')) {
+        window.location.replace(`${pathname}index.html${window.location.search}${window.location.hash}`);
+        return;
+      }
+
+      const requestedPath = document.getElementById('requestedPath');
+      if (requestedPath) {
+        requestedPath.textContent = pathname;
+      }
+    })();
   </script>
   <script src="assets/boot.js"></script>
   <script src="script.js"></script>
