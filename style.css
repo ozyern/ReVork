@@ -198,10 +198,13 @@ header nav a:hover {
 
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 20px);
+  top: 100%;
+    margin-top: 20px; /* Keep visual gap but no hit gap */
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  background: rgba(20, 20, 20, 0.98);
+  background: rgba(20, 20, 20, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 16px;

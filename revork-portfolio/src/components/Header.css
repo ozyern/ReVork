@@ -1,0 +1,49 @@
+import { useState, useEffect } from 'react';
+import './Header.css';
+
+export default function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > window.innerHeight * 0.4);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className={`header-wrapper ${menuOpen ? 'open' : ''}`}>
+      <header className={isScrolled ? 'island-active' : ''}>
+        <a href="/" className="nav-logo">
+          <img src="/favicon.png" alt="ReVork Logo" />
+        </a>
+
+        {/* Dynamic Island Slot (Mobile Only) */}
+        <div className="header-island-slot">
+            <div className="island-content">
+                <span className="pulse-dot"></span>
+                <span>OOS 16 OUT NOW</span>
+            </div>
+        </div>
+
+        <ul className="nav-links">
+          <li><a href="#roms">ROMs</a></li>
+          <li><a href="#devices">Devices</a></li>
+          <li><a href="#downloads">Downloads</a></li>
+          <li><a href="#guide">Install Guide</a></li>
+        </ul>
+
+        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+
+      <div className="mobile-menu">
+        <a href="#roms" onClick={() => setMenuOpen(false)}>ROMs</a>
+        <a href="#devices" onClick={() => setMenuOpen(false)}>Devices</a>
+        <a href="#downloads" onClick={() => setMenuOpen(false)}>Downloads</a>
+        <a href="#guide" onClick={() => setMenuOpen(false)}>Install Guide</a>
+      </div>
+    </div>
+  );
+}

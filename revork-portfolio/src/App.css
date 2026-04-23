@@ -1,0 +1,44 @@
+/* Hero Styles */
+.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 140px 20px 60px; }
+.hero-badge { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); padding: 8px 24px; background: rgba(229, 57, 53, 0.1); border: 1px solid rgba(229, 57, 53, 0.3); border-radius: 50px; margin-bottom: 24px; display: inline-block; }
+.hero-title { font-family: 'Outfit', sans-serif; font-size: clamp(4rem, 12vw, 10rem); font-weight: 800; line-height: 0.9; margin-bottom: 24px; letter-spacing: -0.02em; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.hero-desc { font-size: clamp(1.1rem, 2vw, 1.25rem); color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.6; }
+.hero-actions { display: flex; gap: 16px; justify-content: center; margin-top: 40px; }
+
+.btn { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 16px 36px; border-radius: 50px; font-weight: 600; transition: 0.3s; display: inline-block; }
+.btn-primary { background: var(--text-main); color: var(--bg-main); }
+.btn-primary:hover { background: var(--accent); color: #fff; transform: translateY(-4px); box-shadow: 0 12px 24px rgba(229, 57, 53, 0.3); }
+.btn-outline { border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); }
+.btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+
+/* Status Pill (Hero) */
+.status-pill {
+  display: inline-flex; align-items: center; gap: 16px; margin-top: 48px; padding: 12px 24px 12px 12px;
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border);
+  border-radius: 50px; position: relative; overflow: hidden; box-shadow: var(--glass-shadow);
+}
+.status-icon { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 8px;}
+.status-text { text-align: left; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); line-height: 1.4;}
+.status-text strong { color: var(--text-main); font-size: 1rem; }
+
+/* Sections */
+.section-wrapper { padding: clamp(60px, 8vw, 100px) 20px; border-radius: 40px; margin: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); }
+.section-content { max-width: 1160px; margin: 0 auto; }
+.sec-label { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+.sec-title { font-family: 'Outfit', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 48px; }
+.sec-title em { font-family: 'Cormorant Garamond', serif; font-weight: 400; color: var(--text-muted); }
+
+/* Grid */
+.rom-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+.rom-card { border-radius: 24px; overflow: hidden; position: relative; background: rgba(0,0,0,0.5); transition: transform 0.4s var(--spring); border: 1px solid rgba(255,255,255,0.05); }
+.rom-card:hover { transform: translateY(-10px); }
+.rom-art { width: 100%; aspect-ratio: 4/3; background-size: cover; background-position: center; transition: 0.6s var(--spring); opacity: 0.7; }
+.rom-card:hover .rom-art { transform: scale(1.05); opacity: 1; }
+.rom-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 24px; background: linear-gradient(to top, #000, transparent); }
+.rom-info h4 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin-bottom: 4px; }
+.rom-info span { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+
+@media (max-width: 600px) {
+  .hero-actions { flex-direction: column; width: 100%; align-items: center; }
+  .btn { width: 100%; max-width: 320px; text-align: center; }
+}
