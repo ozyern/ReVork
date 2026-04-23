@@ -1,69 +1,117 @@
-# Hi there, I'm Ozyern! 👋 
+<div align="center">
+  <img src="https://ozyern.me/assets/favicon.png" width="80" alt="ReVork Logo" />
 
-Welcome to the source code for my personal website and developer portfolio, hosted on GitHub Pages: [ozyern.github.io](https://ozyern.github.io) 🚀
+  <h1>ReVork</h1>
+  <p><strong>Custom ROMs Reimagined — Enhanced OxygenOS & ColorOS for OnePlus Devices</strong></p>
 
-![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fozyern.github.io&label=ozyern.github.io&style=flat-square)
-![GitHub repo size](https://img.shields.io/github/repo-size/ozyern/ozyern.github.io?style=flat-square)
-![GitHub last commit](https://img.shields.io/github/last-commit/ozyern/ozyern.github.io?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)
+  <a href="https://ozyern.me"><img src="https://img.shields.io/website?url=https%3A%2F%2Fozyern.me&label=ozyern.me&style=flat-square" alt="Website Status"></a>
+  <img src="https://img.shields.io/github/repo-size/ozyern/ReVork?style=flat-square" alt="Repo Size">
+  <img src="https://img.shields.io/github/last-commit/ozyern/ReVork?style=flat-square" alt="Last Commit">
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
+  <a href="https://t.me/ReVorkHub"><img src="https://img.shields.io/badge/Telegram-ReVorkHub-2CA5E0?style=flat-square&logo=telegram" alt="Telegram"></a>
+</div>
 
 ---
 
-## 📖 About This Project
+## 📖 About
 
-This repository contains the source code for my personal corner of the internet. It serves as my digital resume, a showcase of my latest projects, and a place where I occasionally share my thoughts on software development and tech.
+**ReVork** is a custom ROM project by [ozyern](https://github.com/ozyern) delivering enhanced builds of **OxygenOS 16** and **ColorOS 16** for OnePlus devices. This repository houses the source code for the official ReVork website — a clean, fast reference hub for ROM downloads, device compatibility, changelogs, and installation guides.
 
-### ✨ Features
-- **Responsive Design:** 📱 Looks great on desktops, tablets, and mobile devices.
-- **Project Showcase:** 🛠️ A dedicated section highlighting my best work and open-source contributions.
-- **Dark/Light Mode:** 🌓 (Optional: Mention if you have a theme toggle!)
-- **SEO Optimized:** 🔍 Built to be easily discoverable on the web.
-- **Fast Performance:** ⚡ Lightweight and optimized for quick load times.
+> **Live site:** [ozyern.me](https://ozyern.me)
+
+---
+
+## ✨ Features
+
+- 📱 **ROM Downloads** — Ported builds of OxygenOS 16 and ColorOS 16 for supported OnePlus devices
+- 🗂️ **Device Pages** — Per-device pages with version-specific changelogs and download links
+- 📰 **Newswire** — Release news and update announcements
+- 🛠️ **Installation Guide** — Step-by-step flashing instructions
+- ⚡ **Fast & Responsive** — Lightweight HTML/CSS/JS, works great on mobile and desktop
+- 🔍 **SEO Optimized** — Structured data, sitemap, and Open Graph tags built-in
+
+---
+
+## 📦 Supported Devices & ROMs
+
+| Device | OxygenOS 16 | ColorOS 16 |
+|---|---|---|
+| OnePlus 9 Pro | ✅ | ✅ |
+| OnePlus 9 | ✅ | ✅ |
+
+> More devices may be added over time. Check [ozyern.me/devices.html](https://ozyern.me/devices.html) for the latest.
+
+---
+
+## 🗂️ Repo Structure
+
+```
+ReVork/
+├── index.html                  # Homepage (hero slider, news, support)
+├── devices.html                # Device listing
+├── roms.html                   # ROM listing
+├── downloads.html              # Downloads page
+├── installation.html           # Flashing/installation guide
+├── newswire.html               # News hub
+├── oxygen-versions.html        # OxygenOS version index
+├── coloros-versions.html       # ColorOS version index
+├── device-*.html               # Per-device per-version pages
+├── devices-*.html              # Per-version device listing pages
+├── newswire/                   # Individual news articles
+├── assets/                     # Images, icons, banners
+├── style.css                   # Global stylesheet
+├── script.js                   # Site JS (slider, nav, etc.)
+├── sitemap.xml                 # SEO sitemap
+├── robots.txt                  # Crawler rules
+└── update-*.ps1                # PowerShell scripts for page generation
+```
+
+---
+
+## 🚀 Running Locally
+
+This is a static HTML site — no build step needed.
+
+```bash
+# Clone the repo
+git clone https://github.com/ozyern/ReVork.git
+cd ReVork
+
+# Serve locally (Python)
+python -m http.server 8000
+
+# Or use VS Code Live Server extension
+```
+
+Then open [http://localhost:8000](http://localhost:8000) in your browser.
 
 ---
 
 ## 🛠️ Tech Stack
 
-*This section highlights the tools and technologies I used to build this site.*
-
-**Frontend:**
-- ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-- ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-- ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-- *(Add React, Vue, Tailwind, or Next.js if you use them!)*
-
-**Hosting & Deployment:**
-- ![GitHub Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)
-- ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+- **HTML5 / CSS3 / Vanilla JS** — No frameworks, just clean static web
+- **GitHub Pages** — Hosted via custom domain `ozyern.me`
+- **PowerShell scripts** — Automate device/version page generation
+- **JSON-LD** — Structured data for SEO
 
 ---
 
-## 🚀 Running the Project Locally
+## 💬 Support & Community
 
-Want to explore the code or use it as inspiration? Follow these steps to run the website locally on your machine.
+Join the Telegram community for support, updates, and discussions:
 
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/ozyern/ozyern.github.io.git](https://github.com/ozyern/ozyern.github.io.git)
-Navigate into the directory:
+👉 [t.me/ReVorkHub](https://t.me/ReVorkHub)
 
-Bash
-cd ozyern.github.io
-Start a local server:
-(If it's plain HTML/JS/CSS, you can use Live Server in VS Code, or a simple Python server)
+---
 
-Bash
-python -m http.server 8000
-(If you are using Jekyll, Node.js, React, etc., update this command to npm start, npm run dev, or bundle exec jekyll serve)
+## 📄 License
 
-Open in your browser:
-Navigate to http://localhost:8000 🌐
+This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
 
-🤝 Connect With Me
-I'm always open to discussing tech, collaborating on open-source projects, or just having a chat! You can find me around the web:
+The website source code is open for learning and reference. Please swap out all personal branding, ROM files, and device-specific content if you fork it.
 
-🐦 Twitter / X: @ozyern
+---
 
-
-📄 License
-This project is open-source and available under the MIT License. Feel free to fork it, learn from it, and use it to build your own awesome portfolio—but please change the personal content, images, and links to your own! 😊
+<div align="center">
+  <sub>© 2026 ReVork Project · Built by <a href="https://github.com/ozyern">ozyern</a></sub>
+</div>
