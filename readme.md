@@ -1,117 +1,338 @@
-<div align="center">
-  <img src="https://ozyern.me/assets/favicon.png" width="80" alt="ReVork Logo" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnePlus 9 Pro | ReVork Downloads</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            /* OxygenOS 16 Fluid Friction Curve */
+            --aqua-ease: cubic-bezier(0.22, 1, 0.36, 1);
+        }
 
-  <h1>ReVork</h1>
-  <p><strong>Custom ROMs Reimagined — Enhanced OxygenOS & ColorOS for OnePlus Devices</strong></p>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important;
+        }
 
-  <a href="https://ozyern.me"><img src="https://img.shields.io/website?url=https%3A%2F%2Fozyern.me&label=ozyern.me&style=flat-square" alt="Website Status"></a>
-  <img src="https://img.shields.io/github/repo-size/ozyern/ReVork?style=flat-square" alt="Repo Size">
-  <img src="https://img.shields.io/github/last-commit/ozyern/ReVork?style=flat-square" alt="Last Commit">
-  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
-  <a href="https://t.me/ReVorkHub"><img src="https://img.shields.io/badge/Telegram-ReVorkHub-2CA5E0?style=flat-square&logo=telegram" alt="Telegram"></a>
-</div>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
----
+        /* --- Premium OxygenOS Cursor --- */
+        #cursor-dot {
+            width: 5px; height: 5px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 10000;
+            will-change: transform;
+        }
 
-## 📖 About
+        #cursor-ring {
+            width: 36px; height: 36px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 9999;
+            will-change: transform;
+            transition: width 0.4s var(--aqua-ease), height 0.4s var(--aqua-ease), border-color 0.4s;
+        }
 
-**ReVork** is a custom ROM project by [ozyern](https://github.com/ozyern) delivering enhanced builds of **OxygenOS 16** and **ColorOS 16** for OnePlus devices. This repository houses the source code for the official ReVork website — a clean, fast reference hub for ROM downloads, device compatibility, changelogs, and installation guides.
+        body.hovering-link #cursor-ring {
+            width: 56px; height: 56px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(4px);
+        }
 
-> **Live site:** [ozyern.me](https://ozyern.me)
+        /* --- High-End Ambient Void --- */
+        .ambient-bg {
+            position: fixed; inset: -20%;
+            width: 140%; height: 140%;
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
+            z-index: -1; pointer-events: none;
+        }
 
----
+        /* --- OOS 16 Tab Control --- */
+        .tab-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(30px);
+            border-radius: 99px;
+            position: relative; padding: 5px;
+        }
 
-## ✨ Features
+        .tab-indicator {
+            position: absolute; top: 5px; left: 5px;
+            height: calc(100% - 10px); width: calc(50% - 5px);
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 99px;
+            transition: transform 0.6s var(--aqua-ease);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
 
-- 📱 **ROM Downloads** — Ported builds of OxygenOS 16 and ColorOS 16 for supported OnePlus devices
-- 🗂️ **Device Pages** — Per-device pages with version-specific changelogs and download links
-- 📰 **Newswire** — Release news and update announcements
-- 🛠️ **Installation Guide** — Step-by-step flashing instructions
-- ⚡ **Fast & Responsive** — Lightweight HTML/CSS/JS, works great on mobile and desktop
-- 🔍 **SEO Optimized** — Structured data, sitemap, and Open Graph tags built-in
+        .tab-btn { position: relative; z-index: 2; transition: opacity 0.3s; }
 
----
+        /* --- Aquamorphic Download Panels --- */
+        .download-row {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative; overflow: hidden;
+            transition: all 0.6s var(--aqua-ease);
+        }
 
-## 📦 Supported Devices & ROMs
+        /* The Sweeping Liquid Sheen Animation */
+        .download-row::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: skewX(-25deg);
+            transition: left 0.8s var(--aqua-ease);
+            pointer-events: none;
+            z-index: 1;
+        }
 
-| Device | OxygenOS 16 | ColorOS 16 |
-|---|---|---|
-| OnePlus 9 Pro | ✅ | ✅ |
-| OnePlus 9 | ✅ | ✅ |
+        .download-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9);
+        }
 
-> More devices may be added over time. Check [ozyern.me/devices.html](https://ozyern.me/devices.html) for the latest.
+        .download-row:hover::before { left: 200%; }
 
----
+        .download-row:active {
+            transform: scale(0.97);
+            transition: transform 0.2s ease;
+        }
 
-## 🗂️ Repo Structure
+        .dl-icon {
+            opacity: 0.2; transform: translateX(-10px); transition: all 0.5s var(--aqua-ease);
+        }
 
-```
-ReVork/
-├── index.html                  # Homepage (hero slider, news, support)
-├── devices.html                # Device listing
-├── roms.html                   # ROM listing
-├── downloads.html              # Downloads page
-├── installation.html           # Flashing/installation guide
-├── newswire.html               # News hub
-├── oxygen-versions.html        # OxygenOS version index
-├── coloros-versions.html       # ColorOS version index
-├── device-*.html               # Per-device per-version pages
-├── devices-*.html              # Per-version device listing pages
-├── newswire/                   # Individual news articles
-├── assets/                     # Images, icons, banners
-├── style.css                   # Global stylesheet
-├── script.js                   # Site JS (slider, nav, etc.)
-├── sitemap.xml                 # SEO sitemap
-├── robots.txt                  # Crawler rules
-└── update-*.ps1                # PowerShell scripts for page generation
-```
+        .download-row:hover .dl-icon {
+            opacity: 1; transform: translateX(0);
+        }
 
----
+        /* --- Layout & Views --- */
+        .os-view { display: none; opacity: 0; transform: translateY(15px); transition: all 0.6s var(--aqua-ease); }
+        .os-view.active { display: flex; opacity: 1; transform: translateY(0); }
 
-## 🚀 Running Locally
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            animation: revealAnim 1s forwards var(--aqua-ease);
+        }
 
-This is a static HTML site — no build step needed.
+        @keyframes revealAnim { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="flex flex-col items-center p-8 sm:p-12 relative">
 
-```bash
-# Clone the repo
-git clone https://github.com/ozyern/ReVork.git
-cd ReVork
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+    <div class="ambient-bg"></div>
 
-# Serve locally (Python)
-python -m http.server 8000
+    <main class="w-full max-w-4xl mt-10 mb-24 z-10">
+        
+        <nav class="mb-16 reveal w-full flex justify-between items-center" style="animation-delay: 0.1s;">
+            <a href="index.html" class="interactive-el flex items-center gap-4 text-white/40 hover:text-white transition-all">
+                <span class="text-2xl">←</span>
+                <span class="text-[11px] font-extrabold tracking-[0.4em] uppercase">Devices</span>
+            </a>
+            <div class="h-[1px] w-12 bg-white/10"></div>
+        </nav>
 
-# Or use VS Code Live Server extension
-```
+        <header class="mb-16 reveal flex flex-col items-start" style="animation-delay: 0.2s;">
+            <span class="text-[12px] font-extrabold tracking-[0.4em] text-gray-500 uppercase mb-3 block">OnePlus 9 Pro (LE2123)</span>
+            <h1 class="text-6xl sm:text-8xl font-bold tracking-tighter text-white mb-10">
+                Downloads.
+            </h1>
+            
+            <div class="tab-container flex w-full max-w-sm interactive-el">
+                <div id="tab-bg" class="tab-indicator"></div>
+                <button onclick="switchTab('oos')" id="btn-oos" class="tab-btn flex-1 py-4 text-[11px] font-extrabold tracking-[0.3em] uppercase text-white">OxygenOS</button>
+                <button onclick="switchTab('cos')" id="btn-cos" class="tab-btn flex-1 py-4 text-[11px] font-extrabold tracking-[0.3em] uppercase text-white/30">ColorOS</button>
+            </div>
+        </header>
 
-Then open [http://localhost:8000](http://localhost:8000) in your browser.
+        <div id="view-oos" class="os-view active flex-col gap-6 reveal" style="animation-delay: 0.3s;">
+            
+            <h3 class="text-[11px] font-extrabold tracking-[0.4em] text-white/20 uppercase mt-4 mb-2 pl-6">Latest Release</h3>
+            <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-LE2123_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-4 mb-2">
+                        <span class="px-3 py-1 rounded-full border border-green-500/40 text-green-400 text-[10px] font-black tracking-widest uppercase bg-green-500/5">Latest</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">OxygenOS 16.1</h2>
+                    </div>
+                    <span class="text-sm text-white/30 font-mono tracking-wider">Android 16 • 16.0.7.201 • Stable Build</span>
+                </div>
+                <div class="dl-icon text-4xl text-white">↓</div>
+            </a>
 
----
+            <h3 class="text-[11px] font-extrabold tracking-[0.4em] text-white/20 uppercase mt-10 mb-2 pl-6">Archive Builds</h3>
+            
+            <div class="flex flex-col gap-5">
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.703/ota_full-LE2123_16.0.5.703.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">OxygenOS 16.0</h2>
+                        <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 16 • 16.0.5.703 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-4xl text-white">↓</div>
+                </a>
 
-## 🛠️ Tech Stack
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.700/ota_full-LE2123_16.0.5.700.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">OxygenOS 16.0</h2>
+                        <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 16 • 16.0.5.700 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-4xl text-white">↓</div>
+                </a>
 
-- **HTML5 / CSS3 / Vanilla JS** — No frameworks, just clean static web
-- **GitHub Pages** — Hosted via custom domain `ozyern.me`
-- **PowerShell scripts** — Automate device/version page generation
-- **JSON-LD** — Structured data for SEO
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.503/ota_full-LE2123_16.0.3.503.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">OxygenOS 16.0</h2>
+                        <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 16 • 16.0.3.503 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-4xl text-white">↓</div>
+                </a>
 
----
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.501/ota_full-LE2123_16.0.3.501.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">OxygenOS 16.0</h2>
+                        <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 16 • 16.0.3.501 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-4xl text-white">↓</div>
+                </a>
 
-## 💬 Support & Community
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.500/ota_full-LE2123_16.0.3.500.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">OxygenOS 16.0</h2>
+                        <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 16 • 16.0.3.500 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-4xl text-white">↓</div>
+                </a>
 
-Join the Telegram community for support, updates, and discussions:
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.401/ota_full-LE2123_16.0.2.401.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">OxygenOS 16.0</h2>
+                        <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 16 • 16.0.2.401 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-4xl text-white">↓</div>
+                </a>
 
-👉 [t.me/ReVorkHub](https://t.me/ReVorkHub)
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.400/ota_full-LE2123_16.0.2.400.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">OxygenOS 16.0</h2>
+                        <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 16 • 16.0.2.400 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-4xl text-white">↓</div>
+                </a>
+            </div>
+            
+            <h3 class="text-[11px] font-extrabold tracking-[0.4em] text-white/20 uppercase mt-10 mb-2 pl-6">Extras</h3>
+            <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2015/15.0.0.864/ota_full-LE2123_15.0.0.864.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                <div class="flex flex-col">
+                    <h2 class="text-3xl font-bold text-white">OxygenOS 15</h2>
+                    <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 15 • 15.0.0.864 • Firmware</span>
+                </div>
+                <div class="dl-icon text-4xl text-white">↓</div>
+            </a>
+        </div>
 
----
+        <div id="view-cos" class="os-view flex-col gap-6">
+            
+            <h3 class="text-[11px] font-extrabold tracking-[0.4em] text-white/20 uppercase mt-4 mb-2 pl-6">Latest Release</h3>
+            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.7.204/ota_full-LE2123_16.0.7.204.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-4 mb-2">
+                        <span class="px-3 py-1 rounded-full border border-green-500/40 text-green-400 text-[10px] font-black tracking-widest uppercase bg-green-500/5">Latest</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">ColorOS 16.1</h2>
+                    </div>
+                    <span class="text-sm text-white/30 font-mono tracking-wider">Android 16 • 16.0.7.204 • Stable Build</span>
+                </div>
+                <div class="dl-icon text-4xl text-white">↓</div>
+            </a>
 
-## 📄 License
+            <h3 class="text-[11px] font-extrabold tracking-[0.4em] text-white/20 uppercase mt-10 mb-2 pl-6">Archive Builds</h3>
+            <div class="flex flex-col gap-5">
+                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.5.701/ota_full-LE2123_16.0.5.701.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">ColorOS 16.0</h2>
+                        <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 16 • 16.0.5.701 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-4xl text-white">↓</div>
+                </a>
+                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.3.504/ota_full-LE2123_16.0.3.504.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">ColorOS 16.0</h2>
+                        <span class="text-sm text-white/30 font-mono tracking-wider mt-1">Android 16 • 16.0.3.504 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-4xl text-white">↓</div>
+                </a>
+            </div>
+        </div>
+    </main>
 
-This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
+    <script>
+        function switchTab(os) {
+            const bg = document.getElementById('tab-bg');
+            const btnOos = document.getElementById('btn-oos');
+            const btnCos = document.getElementById('btn-cos');
+            const viewOos = document.getElementById('view-oos');
+            const viewCos = document.getElementById('view-cos');
 
-The website source code is open for learning and reference. Please swap out all personal branding, ROM files, and device-specific content if you fork it.
+            if(os === 'oos') {
+                bg.style.transform = 'translateX(0)';
+                btnOos.style.color = '#ffffff';
+                btnCos.style.color = 'rgba(255,255,255,0.3)';
+                viewCos.classList.remove('active');
+                setTimeout(() => viewOos.classList.add('active'), 100);
+            } else {
+                bg.style.transform = 'translateX(100%)';
+                btnOos.style.color = 'rgba(255,255,255,0.3)';
+                btnCos.style.color = '#ffffff';
+                viewOos.classList.remove('active');
+                setTimeout(() => viewCos.classList.add('active'), 100);
+            }
+        }
 
----
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2, ringX = mouseX, ringY = mouseY;
 
-<div align="center">
-  <sub>© 2026 ReVork Project · Built by <a href="https://github.com/ozyern">ozyern</a></sub>
-</div>
+        window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+
+        function animateCursor() {
+            ringX += (mouseX - ringX) * 0.25; ringY += (mouseY - ringY) * 0.25;
+            dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
+            const isHovering = document.body.classList.contains('hovering-link');
+            const offset = isHovering ? 28 : 18; 
+            ring.style.transform = `translate3d(${ringX - offset}px, ${ringY - offset}px, 0)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        const interactives = document.querySelectorAll('.interactive-el, a, button');
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+        });
+    </script>
+</body>
+</html>
