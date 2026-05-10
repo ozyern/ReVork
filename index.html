@@ -1,212 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <meta name="theme-color" content="#000000">
-  <meta name="description" content="ReVork">
-  <meta name="keywords" content="ReVork, OnePlus ROM, OxygenOS, ColorOS, custom ROM, ROM flashing, OnePlus devices">
-  <meta name="author" content="ReVork Project">
-  <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
-  
-  <!-- Open Graph / Social Media -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ozyern.me">
-  <meta property="og:title" content="ReVork">
-  <meta property="og:description" content="Flash enhanced OxygenOS and ColorOS ROMs with better performance and customization for your OnePlus device.">
-  <meta property="og:image" content="https://ozyern.me/assets/favicon.png">
-  
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://ozyern.me">
-  <meta property="twitter:title" content="ReVork">
-  <meta property="twitter:description" content="Flash enhanced OxygenOS and ColorOS ROMs with better performance and customization for your OnePlus device.">
-  <meta property="twitter:image" content="https://ozyern.me/assets/favicon.png">
-  
-  <title>ReVork</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReVork | Aquamorphic Core</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap');
+        
+        :root {
+            /* Authentic OxygenOS 16 Water-like Deceleration Curve */
+            --aqua-ease: cubic-bezier(0.22, 1, 0.36, 1);
+        }
 
-  <link rel="icon" href="assets/favicon.png">
-  <link href="https://db.onlinewebfonts.com/c/1a5a02144883150dce30ae0877cfb513?family=Haverbrooke" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  
-  <!-- Structured Data (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "ReVork",
-    "description": "Custom ROM for OnePlus devices with enhanced OxygenOS and ColorOS",
-    "url": "https://ozyern.me",
-    "applicationCategory": "SystemSoftware",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "image": "https://ozyern.me/assets/favicon.png"
-  }
-  </script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #030303;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Aquamorphic Precision Cursor --- */
+        #cursor-dot {
+            width: 4px;
+            height: 4px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 10000;
+            will-change: transform;
+        }
+
+        #cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform;
+            transition: width 0.4s var(--aqua-ease), 
+                        height 0.4s var(--aqua-ease), 
+                        border-color 0.4s var(--aqua-ease), 
+                        background-color 0.4s var(--aqua-ease);
+        }
+
+        body.hovering-box #cursor-ring {
+            width: 52px;
+            height: 52px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(2px);
+        }
+
+        /* --- Deep Obsidian Background --- */
+        .ambient-bg {
+            position: fixed;
+            inset: -20%;
+            width: 140%;
+            height: 140%;
+            background: 
+                radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.02) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- OOS 16 Aquamorphic Panels --- */
+        #glass-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .oos-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 2.5rem; 
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            padding: 2.5rem 3rem;
+            overflow: hidden;
+            /* Planted, frictionless transition */
+            transition: transform 0.6s var(--aqua-ease), 
+                        background 0.6s var(--aqua-ease), 
+                        border-color 0.6s var(--aqua-ease), 
+                        box-shadow 0.6s var(--aqua-ease);
+            will-change: transform;
+        }
+
+        /* Subtle Inner Sweep */
+        .oos-panel::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.8s var(--aqua-ease);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Top Specular Edge Highlight */
+        .oos-panel::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 2.5rem;
+            padding: 1px;
+            background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(255,255,255,0.01) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .oos-panel:hover {
+            transform: scale(1.01); /* Subtler, more realistic expansion */
+            background: rgba(255, 255, 255, 0.035);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Tactile OS Press Physics */
+        .oos-panel:active {
+            transform: scale(0.98);
+            transition: transform 0.2s ease-out; /* Snaps quickly on press */
+        }
+
+        .oos-panel:hover::before {
+            left: 200%;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Snappy Kinetic Arrow */
+        .arrow-icon {
+            opacity: 0;
+            transform: translateX(-24px) scale(0.9);
+            transition: all 0.5s var(--aqua-ease);
+        }
+
+        .oos-panel:hover .arrow-icon {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        /* --- Staggered UI Entrance --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            animation: revealAnim 1s forwards var(--aqua-ease);
+        }
+
+        @keyframes revealAnim {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
+<body class="flex flex-col items-center p-6 sm:p-12 relative">
 
-<body>
-    <div class="cursor-glow" id="cursorGlow"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L21 11.46L12.21 12.76L11.46 21.57L3 3Z" fill="white" stroke="white" stroke-width="0.5"/></svg></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+    <div class="ambient-bg"></div>
 
-<header>
-  <button class="mobile-menu-toggle" aria-label="Toggle Menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+    <main class="w-full max-w-4xl mt-16 mb-24 z-10">
+        
+        <header class="mb-16 reveal flex flex-col items-start" style="animation-delay: 0.1s;">
+            <div class="flex items-center gap-4 mb-5">
+                <div class="h-[2px] w-6 bg-white/40 rounded-full"></div>
+                <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-white/40">Project ReVork</span>
+            </div>
+            <h1 class="text-6xl sm:text-8xl font-semibold tracking-tighter text-white">
+                Select <span class="font-light text-white/30">Device.</span>
+            </h1>
+        </header>
 
-  <div class="logo">
-    <a href="https://ozyern.me">
-      <img src="assets/favicon.png" draggable="false" alt="ReVork Logo">
-    </a>
-  </div>
-
-  <nav>
-    <div class="nav-item dropdown-parent">
-      <a href="#" class="dropdown-trigger">ROMS <span class="dropdown-arrow">▼</span></a>
-      <div class="dropdown-menu">
-        <div class="dropdown-header">
-          <h3>Featured ROM</h3>
-          <a href="roms.html" class="view-all">View All →</a>
-        </div>
-        <div class="rom-grid">
-          <a href="oxygen-versions.html" class="rom-card">
-            <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
-            <span>OxygenOS 16</span>
-          </a>
-          <a href="coloroscn-versions.html" class="rom-card">
-              <img src="assets/cos16_cn.jpg" alt="ColorOS 16 China" draggable="false">
-              <span>ColorOS 16 China</span>
+        <div id="glass-container">
+            
+            <a href="https://sabrina.ozyern.me/lemonadep" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.2s;">
+                <div class="content-layer">
+                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Hasselblad Edition</span>
+                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
+                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 9 Pro</h2>
+                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">LE2123 / lemonadep</span>
+                    </div>
+                </div>
+                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
             </a>
-            <a href="coloros-versions.html" class="rom-card">
-            <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
-            <span>ColorOS 16</span>
-          </a>
+
+            <a href="https://sabrina.ozyern.me/9" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.3s;">
+                <div class="content-layer">
+                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Standard</span>
+                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
+                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 9</h2>
+                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">LE2113 / lemonade</span>
+                    </div>
+                </div>
+                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
+            </a>
+
+            <a href="https://sabrina.ozyern.me/9r" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.4s;">
+                <div class="content-layer">
+                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Global Variant</span>
+                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
+                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 9R</h2>
+                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">LE2101 / lemonades</span>
+                    </div>
+                </div>
+                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
+            </a>
+
+            <a href="https://sabrina.ozyern.me/8pro" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.5s;">
+                <div class="content-layer">
+                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Classic Pro</span>
+                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
+                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 8 Pro</h2>
+                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">IN2023 / instantnoodlep</span>
+                    </div>
+                </div>
+                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
+            </a>
+
+            <a href="https://sabrina.ozyern.me/8t" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.6s;">
+                <div class="content-layer">
+                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Performance</span>
+                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
+                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 8T</h2>
+                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">KB2003 / kebab</span>
+                    </div>
+                </div>
+                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
+            </a>
+
         </div>
-      </div>
-    </div>
-    <div class="mobile-nav-featured">
-      <div class="mobile-nav-featured-header">
-        <span>FEATURED ROMS</span>
-        <a href="roms.html" class="mobile-nav-view-all">View All →</a>
-      </div>
-      <div class="mobile-nav-roms">
-        <a href="oxygen-versions.html" class="mobile-nav-rom-card">
-          <img src="assets/oos16_icon.png" alt="OxygenOS 16" draggable="false">
-        </a>
-        <a href="coloroscn-versions.html" class="mobile-nav-rom-card">
-            <img src="assets/cos16_cn.jpg" alt="ColorOS 16 China" draggable="false">
-          </a>
-          <a href="coloros-versions.html" class="mobile-nav-rom-card">
-          <img src="assets/cos16_icon.jpg" alt="ColorOS 16" draggable="false">
-        </a>
-      </div>
-    </div>
-    <a href="devices.html" class="desktop-nav-link">DEVICES</a>
-    <a href="downloads.html" class="desktop-nav-link">DOWNLOADS</a>
-    <a href="installation.html" class="desktop-nav-link">INSTALL GUIDE</a>
-    <a href="newswire.html" class="desktop-nav-link">NEWSWIRE</a>
+    </main>
 
-    <a href="devices.html" class="mobile-nav-link">DEVICES</a>
-    <a href="downloads.html" class="mobile-nav-link">DOWNLOADS</a>
-    <a href="installation.html" class="mobile-nav-link">INSTALL GUIDE</a>
-    <a href="newswire.html" class="mobile-nav-link">NEWSWIRE</a>
-    <a href="https://t.me/ReVorkHub" target="_blank" class="mobile-nav-link mobile-nav-link-arrow">SUPPORT</a>
-  </nav>
-</header>
-
-<!-- HERO SLIDER -->
-<section class="hero">
-  <div class="slide active" data-desktop="assets/oos16_home.png" data-mobile="assets/oos16_home.png"></div>
-  <div class="slide" data-desktop="assets/cos16_home.png" data-mobile="assets/cos16_home.png"></div>
-  <!-- You can add more <div class="slide"> here later -->
-
-  <!-- Hero Content -->
-  <div class="hero-content">
-    <h1 class="hero-title">ReVork</h1>
-    <p class="hero-subtitle">Custom ROMs Reimagined</p>
-    <div class="hero-ctas">
-      <a href="#" class="cta-primary">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-        Download ROMs
-      </a>
-      <a href="installation.html" class="cta-secondary">Installation Guide</a>
-    </div>
-  </div>
-
-  <div class="rs-controls">
-    <button class="rs-pause-play" aria-label="Pause or Play Slider">
-      <span class="icon">||</span>
-    </button>
-
-    <div class="rs-indicators">
-      <!-- Dots generated by JavaScript -->
-    </div>
-  </div>
-</section>
-
-<!-- NEWS SECTION -->
-<section class="news">
-  <div class="news-container">
-    <h2>RECENT STORIES</h2>
-    <div class="news-grid">
-      <a href="newswire/oxygenos-16-0-5-700.html" class="story-card">
-        <div class="story-image" style="background-image: url('assets/16.0.5.700.jpg');"></div>
-        <div class="story-overlay">
-          <p>OxygenOS 16.0.5.700 Released – Latest Updates Available...</p>
+    <footer class="w-full max-w-4xl flex justify-between items-center text-[11px] text-white/30 font-bold tracking-[0.3em] reveal uppercase pt-8 border-t border-white/5 z-10" style="animation-delay: 0.7s;">
+        <span>© 2026 ReVork</span>
+        <div class="flex gap-8">
+            <a href="https://github.com/ozyern/ReVork" class="hover-target hover:text-white transition-colors duration-300">GitHub</a>
+            <a href="#" class="hover-target hover:text-white transition-colors duration-300">Telegram</a>
         </div>
-      </a>
+    </footer>
 
-      <a href="newswire/coloros-16-0-5-701.html" class="story-card">
-        <div class="story-image" style="background-image: url('assets/16.0.5.701.jpg');"></div>
-        <div class="story-overlay">
-          <p>ColorOS 16.0.5.701 Release – Enhanced Performance and Features...</p>
-        </div>
-      </a>
+    <script>
+        // --- Aquamorphic Cursor Engine ---
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let ringX = mouseX;
+        let ringY = mouseY;
 
-      <a href="newswire/oxygenos-16-0-3-503.html" class="story-card">
-        <div class="story-image" style="background-image: url('assets/16.0.3.503.png');"></div>
-        <div class="story-overlay">
-          <p>OxygenOS 16.0.3.503 Released For OnePlus 9...</p>
-        </div>
-      </a>
-    </div>
-    <div class="news-footer">
-      <a href="newswire.html" class="learn-more">LEARN MORE →</a>
-    </div>
-  </div>
-</section>
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
 
-<section class="support">
-  <a href="https://t.me/ReVorkHub" target="_blank" class="support-image-desktop">
-    <img src="assets/revork.png" draggable="false" alt="Support ReVork">
-  </a>
-  <a href="https://t.me/ReVorkHub" target="_blank" class="support-image-mobile">
-    <img src="assets/revork_phone.png" draggable="false" alt="Support ReVork">
-  </a>
-</section>
+        function animateCursor() {
+            // Smooth, spring-like tracking
+            ringX += (mouseX - ringX) * 0.22;
+            ringY += (mouseY - ringY) * 0.22;
 
-<footer class="rog-footer">
-  <div class="footer-divider">
-    <img src="assets/divider.png" draggable="false" alt="">
-  </div>
+            dot.style.transform = `translate3d(${mouseX - 2}px, ${mouseY - 2}px, 0)`;
+            
+            const isHovering = document.body.classList.contains('hovering-box');
+            // Offset logic (32px width = 16 offset, 52px width = 26 offset)
+            const offset = isHovering ? 26 : 16; 
+            
+            ring.style.transform = `translate3d(${ringX - offset}px, ${ringY - offset}px, 0)`;
 
-  <div class="footer-bottom">
-    <div class="region">
-      <img src="assets/globalenglish.png" draggable="false" alt="Region selector" style="user-select: none; -webkit-user-select: none;">
-    </div>
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
 
-    <div class="copyright">
-      © 2026 ReVork Project. All rights reserved.
-    </div>
-  </div>
-</footer>
-
-<script src="script.js"></script>
+        // --- Hover Triggers ---
+        const interactiveElements = document.querySelectorAll('.oos-panel, .hover-target');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering-box'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-box'));
+        });
+    </script>
 </body>
 </html>
