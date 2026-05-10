@@ -1,5 +1,4 @@
-<div align="center">
-  <img src="https://ozyern.me/assets/favicon.png" width="80" alt="ReVork Logo" />
+<div align="center"
 
   <h1>ReVork</h1>
   <p><strong>Custom ROMs Reimagined — Enhanced OxygenOS & ColorOS for OnePlus Devices</strong></p>
