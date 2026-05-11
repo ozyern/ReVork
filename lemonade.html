@@ -14,7 +14,11 @@
             --liquid-glow: rgba(255, 255, 255, 0.05);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -30,29 +34,43 @@
         /* DESKTOP CURSOR & HOVER PHYSICS            */
         /* ========================================= */
         @media (hover: hover) and (pointer: fine) {
-            * { cursor: none !important; }
+            * {
+                cursor: none !important;
+            }
             
             #cursor-dot {
-                width: 5px; height: 5px;
+                width: 5px;
+                height: 5px;
                 background-color: #ffffff;
                 border-radius: 50%;
-                position: fixed; top: 0; left: 0;
-                pointer-events: none; z-index: 10000;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 10000;
                 will-change: transform;
             }
 
             #cursor-ring {
-                width: 36px; height: 36px;
+                width: 36px;
+                height: 36px;
                 border: 1.5px solid rgba(255, 255, 255, 0.2);
                 border-radius: 50%;
-                position: fixed; top: 0; left: 0;
-                pointer-events: none; z-index: 9999;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9999;
                 will-change: transform;
-                transition: width 0.4s var(--aqua-ease), height 0.4s var(--aqua-ease), border-color 0.4s;
+                transition: 
+                    width 0.4s var(--aqua-ease), 
+                    height 0.4s var(--aqua-ease), 
+                    border-color 0.4s var(--aqua-ease);
             }
 
             body.hovering-link #cursor-ring {
-                width: 56px; height: 56px;
+                width: 56px;
+                height: 56px;
                 background-color: rgba(255, 255, 255, 0.08);
                 border-color: rgba(255, 255, 255, 0.5);
                 backdrop-filter: blur(6px);
@@ -65,28 +83,49 @@
                 box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.95);
             }
 
-            .download-row:hover::before { left: 200%; }
-            .download-row:hover .dl-icon { opacity: 1; transform: translateX(0); color: #ffffff;}
+            .download-row:hover::before {
+                left: 200%;
+            }
+
+            .download-row:hover .dl-icon {
+                opacity: 1;
+                transform: translateX(0);
+                color: #ffffff;
+            }
         }
 
         /* ========================================= */
         /* MOBILE OPTIMIZATIONS                      */
         /* ========================================= */
         @media (hover: none), (pointer: coarse) {
-            #cursor-dot, #cursor-ring { display: none !important; }
+            #cursor-dot, 
+            #cursor-ring {
+                display: none !important;
+            }
         }
 
         /* ========================================= */
         /* AMBIENT BACKGROUND                        */
         /* ========================================= */
         .ambient-bg {
-            position: fixed; inset: -20%; width: 140%; height: 140%;
+            position: fixed;
+            inset: -20%;
+            width: 140%;
+            height: 140%;
             background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
-            z-index: -1; pointer-events: none;
+            z-index: -1;
+            pointer-events: none;
             animation: slowDrift 20s ease-in-out infinite alternate;
         }
 
-        @keyframes slowDrift { from { transform: translateY(0); } to { transform: translateY(2%); } }
+        @keyframes slowDrift {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(2%);
+            }
+        }
 
         /* ========================================= */
         /* TAB ENGINE                                */
@@ -95,12 +134,17 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(30px);
-            border-radius: 99px; position: relative; padding: 6px;
+            border-radius: 99px;
+            position: relative;
+            padding: 6px;
         }
 
         .tab-indicator {
-            position: absolute; top: 6px; left: 6px;
-            height: calc(100% - 12px); width: calc(50% - 6px);
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            height: calc(100% - 12px);
+            width: calc(50% - 6px);
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 99px;
@@ -108,33 +152,55 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
-        .tab-btn { position: relative; z-index: 2; transition: opacity 0.3s; }
+        .tab-btn {
+            position: relative;
+            z-index: 2;
+            transition: opacity 0.3s;
+        }
 
         /* ========================================= */
         /* SUPERCHARGED DOWNLOAD PANELS              */
         /* ========================================= */
         .download-row {
             background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(45px); -webkit-backdrop-filter: blur(45px);
+            backdrop-filter: blur(45px);
+            -webkit-backdrop-filter: blur(45px);
             border-radius: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.04);
-            position: relative; overflow: hidden; display: block;
-            transition: all 0.7s var(--aqua-ease); will-change: transform, background;
+            position: relative;
+            overflow: hidden;
+            display: block;
+            transition: all 0.7s var(--aqua-ease);
+            will-change: transform, background;
         }
 
         /* Liquid Sheen */
         .download-row::before {
-            content: ""; position: absolute; top: 0; left: -150%; width: 80%; height: 100%;
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 80%;
+            height: 100%;
             background: linear-gradient(90deg, transparent, var(--liquid-glow), transparent);
-            transform: skewX(-30deg); transition: left 0.9s var(--aqua-ease); pointer-events: none; z-index: 1;
+            transform: skewX(-30deg);
+            transition: left 0.9s var(--aqua-ease);
+            pointer-events: none;
+            z-index: 1;
         }
 
         /* Specular Edge Mask */
         .download-row::after {
-            content: ""; position: absolute; inset: 0; border-radius: 2rem; padding: 1px;
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            padding: 1px;
             background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(255,255,255,0.01) 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
 
         /* Tactile Mobile Press */
@@ -144,16 +210,42 @@
             transition: transform 0.15s ease-out, background 0.15s ease-out;
         }
 
-        .dl-icon { opacity: 0.2; transform: translateX(-15px); transition: all 0.5s var(--aqua-ease); }
-        .content-layer { position: relative; z-index: 2; }
+        .dl-icon {
+            opacity: 0.2;
+            transform: translateX(-15px);
+            transition: all 0.5s var(--aqua-ease);
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 2;
+        }
 
         /* ========================================= */
         /* VIEW MANAGEMENT & ANIMATIONS              */
         /* ========================================= */
-        .os-view { display: none; opacity: 0; transform: translateY(20px); transition: all 0.7s var(--aqua-ease); }
-        .os-view.active { display: flex; opacity: 1; transform: translateY(0); }
-        .reveal { opacity: 0; transform: translateY(40px); animation: revealAnim 1.2s forwards var(--aqua-ease); }
-        @keyframes revealAnim { to { opacity: 1; transform: translateY(0); } }
+        .os-view {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s var(--aqua-ease);
+        }
+        .os-view.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: revealAnim 1.2s forwards var(--aqua-ease);
+        }
+        @keyframes revealAnim {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* ========================================= */
         /* REFINED ACCORDION EXPAND WIDGET           */
@@ -286,6 +378,20 @@
                 <span id="oos-btn-text" class="text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase text-white/60 transition-colors">Show 2 More Builds</span>
                 <span id="oos-btn-icon" class="text-white/60 transition-transform duration-500">↓</span>
             </button>
+            
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">Extras</h3>
+            <div class="flex flex-col gap-4 sm:gap-6">
+                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2113_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                    <div class="content-layer flex flex-col">
+                        <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/30 text-amber-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10">Beta</span>
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">Realme UI 7.0</h2>
+                        </div>
+                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.5.704 • Beta Build</span>
+                    </div>
+                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
+                </a>
+            </div>
         </div>
 
         <div id="view-cos" class="os-view flex-col gap-6 sm:gap-8">
@@ -373,10 +479,14 @@
             const ring = document.getElementById('cursor-ring');
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2, ringX = mouseX, ringY = mouseY;
 
-            window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+            window.addEventListener('mousemove', (e) => { 
+                mouseX = e.clientX; 
+                mouseY = e.clientY; 
+            });
 
             function animateCursor() {
-                ringX += (mouseX - ringX) * 0.25; ringY += (mouseY - ringY) * 0.25;
+                ringX += (mouseX - ringX) * 0.25; 
+                ringY += (mouseY - ringY) * 0.25;
                 dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
                 const isHovering = document.body.classList.contains('hovering-link');
                 const offset = isHovering ? 30 : 19; 

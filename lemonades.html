@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnePlus 9 Pro | ReVork Downloads</title>
+    <title>OnePlus 9R | ReVork Downloads</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -246,39 +246,6 @@
                 transform: translateY(0);
             }
         }
-
-        /* ========================================= */
-        /* REFINED ACCORDION EXPAND WIDGET           */
-        /* ========================================= */
-        .expandable-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.8s var(--aqua-ease);
-        }
-        .expandable-wrapper.open {
-            grid-template-rows: 1fr;
-        }
-        .expandable-content {
-            overflow: hidden;
-        }
-        .expandable-inner {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.6s ease, transform 0.8s var(--aqua-ease);
-        }
-        .expandable-wrapper.open .expandable-inner {
-            opacity: 1;
-            transform: translateY(0);
-            padding-top: 1.5rem;
-        }
-        
-        @media (max-width: 640px) {
-            .expandable-inner { gap: 1rem; }
-            .expandable-wrapper.open .expandable-inner { padding-top: 1rem; }
-        }
     </style>
 </head>
 <body class="flex flex-col items-center p-6 sm:p-14 relative">
@@ -298,7 +265,7 @@
         </nav>
 
         <header class="mb-16 sm:mb-20 reveal flex flex-col items-start" style="animation-delay: 0.2s;">
-            <span class="text-[11px] sm:text-[13px] font-extrabold tracking-[0.4em] text-gray-500 uppercase mb-3 block">OnePlus 9 Pro (LE2123)</span>
+            <span class="text-[11px] sm:text-[13px] font-extrabold tracking-[0.4em] text-gray-500 uppercase mb-3 block">OnePlus 9R (LE2101)</span>
             <h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold tracking-tighter text-white mb-10 sm:mb-12">
                 Downloads.
             </h1>
@@ -313,7 +280,7 @@
         <div id="view-oos" class="os-view active flex-col gap-6 sm:gap-8 reveal" style="animation-delay: 0.3s;">
             
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
-            <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-LE2123_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+            <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-LE2101_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/30 text-green-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/5">Latest</span>
@@ -324,104 +291,12 @@
                 <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
             </a>
 
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">OxygenOS 16 Builds</h3>
-            
-            <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.703/ota_full-LE2123_16.0.5.703.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                    <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.703 • Stable</span>
-                    </div>
-                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                </a>
-
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.700/ota_full-LE2123_16.0.5.700.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                    <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.700 • Stable</span>
-                    </div>
-                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                </a>
-
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.503/ota_full-LE2123_16.0.3.503.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                    <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.503 • Stable</span>
-                    </div>
-                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                </a>
-            </div>
-
-            <div id="oos-more-wrapper" class="expandable-wrapper">
-                <div class="expandable-content">
-                    <div class="expandable-inner">
-                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.501/ota_full-LE2123_16.0.3.501.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                            <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.501 • Stable</span>
-                            </div>
-                            <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                        </a>
-
-                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.500/ota_full-LE2123_16.0.3.500.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                            <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.500 • Stable</span>
-                            </div>
-                            <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                        </a>
-
-                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.401/ota_full-LE2123_16.0.2.401.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                            <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.401 • Stable</span>
-                            </div>
-                            <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                        </a>
-
-                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.400/ota_full-LE2123_16.0.2.400.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                            <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.400 • Stable</span>
-                            </div>
-                            <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="toggleMore('oos')" class="interactive-el w-full py-5 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all flex justify-center items-center gap-3">
-                <span id="oos-btn-text" class="text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase text-white/60 transition-colors">Show 4 More Builds</span>
-                <span id="oos-btn-icon" class="text-white/60 transition-transform duration-500">↓</span>
-            </button>
-            
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">Extras</h3>
-            <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                    <div class="content-layer flex flex-col">
-                        <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/30 text-amber-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10">Beta</span>
-                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">Realme UI 7.0</h2>
-                        </div>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.5.704 • Beta Build</span>
-                    </div>
-                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                </a>
-
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2015/15.0.0.864/ota_full-LE2123_15.0.0.864.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                    <div class="content-layer flex flex-col">
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 15</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 15 • 15.0.0.864 • Firmware</span>
-                    </div>
-                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                </a>
-            </div>
         </div>
 
         <div id="view-cos" class="os-view flex-col gap-6 sm:gap-8">
             
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
-            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.7.204/ota_full-LE2123_16.0.7.204.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.7.204/ota_full-LE2101_16.0.7.204.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/30 text-green-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/5">Latest</span>
@@ -432,23 +307,6 @@
                 <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
             </a>
 
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">ColorOS 16 Builds</h3>
-            <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.5.701/ota_full-LE2123_16.0.5.701.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                    <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">ColorOS 16.0</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.701 • Stable</span>
-                    </div>
-                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                </a>
-                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.3.504/ota_full-LE2123_16.0.3.504.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                    <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">ColorOS 16.0</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.504 • Stable</span>
-                    </div>
-                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                </a>
-            </div>
         </div>
     </main>
 
@@ -473,25 +331,6 @@
                 btnCos.style.color = '#ffffff';
                 viewOos.classList.remove('active');
                 setTimeout(() => viewCos.classList.add('active'), 100);
-            }
-        }
-
-        // --- CSS Grid Expand Toggler ---
-        function toggleMore(os) {
-            const moreWrapper = document.getElementById(`${os}-more-wrapper`);
-            const btnText = document.getElementById(`${os}-btn-text`);
-            const btnIcon = document.getElementById(`${os}-btn-icon`);
-
-            if(moreWrapper.classList.contains('open')) {
-                moreWrapper.classList.remove('open');
-                btnText.innerText = "Show 4 More Builds";
-                btnText.style.color = "rgba(255, 255, 255, 0.6)";
-                btnIcon.style.transform = "rotate(0deg)";
-            } else {
-                moreWrapper.classList.add('open');
-                btnText.innerText = "Show Fewer Builds";
-                btnText.style.color = "#ffffff";
-                btnIcon.style.transform = "rotate(180deg)";
             }
         }
 
