@@ -3,123 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReVork | Aquamorphic Core</title>
+    <title>ReVork | Select Device</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
         :root {
             /* Authentic OxygenOS 16 Water-like Deceleration Curve */
             --aqua-ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --liquid-glow: rgba(255, 255, 255, 0.05);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none !important;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #030303;
+            background-color: #000000;
             color: #ffffff;
             overflow-x: hidden;
             min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Aquamorphic Precision Cursor --- */
-        #cursor-dot {
-            width: 4px;
-            height: 4px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            position: fixed;
-            top: 0; left: 0;
-            pointer-events: none;
-            z-index: 10000;
-            will-change: transform;
+        /* ========================================= */
+        /* DESKTOP CURSOR & HOVER PHYSICS            */
+        /* ========================================= */
+        @media (hover: hover) and (pointer: fine) {
+            * {
+                cursor: none !important;
+            }
+            
+            #cursor-dot {
+                width: 5px;
+                height: 5px;
+                background-color: #ffffff;
+                border-radius: 50%;
+                position: fixed;
+                top: 0; 
+                left: 0;
+                pointer-events: none;
+                z-index: 10000;
+                will-change: transform;
+            }
+
+            #cursor-ring {
+                width: 36px;
+                height: 36px;
+                border: 1.5px solid rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                position: fixed;
+                top: 0; 
+                left: 0;
+                pointer-events: none;
+                z-index: 9999;
+                will-change: transform;
+                transition: width 0.4s var(--aqua-ease), 
+                            height 0.4s var(--aqua-ease), 
+                            border-color 0.4s var(--aqua-ease);
+            }
+
+            body.hovering-link #cursor-ring {
+                width: 60px;
+                height: 60px;
+                background-color: rgba(255, 255, 255, 0.08);
+                border-color: rgba(255, 255, 255, 0.5);
+                backdrop-filter: blur(6px);
+            }
+
+            .oos-panel:hover {
+                background: rgba(255, 255, 255, 0.05);
+                border-color: rgba(255, 255, 255, 0.15);
+                transform: scale(1.02) translateY(-4px);
+                box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.95);
+            }
+
+            .oos-panel:hover::before {
+                left: 200%;
+            }
+
+            .oos-panel:hover .arrow-icon {
+                opacity: 1;
+                transform: translateX(0);
+                color: #ffffff;
+            }
         }
 
-        #cursor-ring {
-            width: 32px;
-            height: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            position: fixed;
-            top: 0; left: 0;
-            pointer-events: none;
-            z-index: 9999;
-            will-change: transform;
-            transition: width 0.4s var(--aqua-ease), 
-                        height 0.4s var(--aqua-ease), 
-                        border-color 0.4s var(--aqua-ease), 
-                        background-color 0.4s var(--aqua-ease);
+        /* ========================================= */
+        /* MOBILE OPTIMIZATIONS                      */
+        /* ========================================= */
+        @media (hover: none), (pointer: coarse) {
+            #cursor-dot, 
+            #cursor-ring {
+                display: none !important;
+            }
         }
 
-        body.hovering-box #cursor-ring {
-            width: 52px;
-            height: 52px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(2px);
-        }
-
-        /* --- Deep Obsidian Background --- */
+        /* ========================================= */
+        /* AMBIENT BACKGROUND                        */
+        /* ========================================= */
         .ambient-bg {
             position: fixed;
             inset: -20%;
             width: 140%;
             height: 140%;
-            background: 
-                radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.02) 0%, transparent 60%);
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
             z-index: -1;
             pointer-events: none;
+            animation: slowDrift 20s ease-in-out infinite alternate;
         }
 
-        /* --- OOS 16 Aquamorphic Panels --- */
+        @keyframes slowDrift {
+            from { transform: translateY(0); }
+            to { transform: translateY(2%); }
+        }
+
+        /* ========================================= */
+        /* OXYGENOS 16 SQUIRCLE PANELS               */
+        /* ========================================= */
         #glass-container {
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 1.5rem;
         }
 
         .oos-panel {
             background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border-radius: 2.5rem; 
+            backdrop-filter: blur(45px);
+            -webkit-backdrop-filter: blur(45px);
+            border-radius: 2.2rem; 
             border: 1px solid rgba(255, 255, 255, 0.04);
             position: relative;
-            padding: 2.5rem 3rem;
             overflow: hidden;
-            /* Planted, frictionless transition */
-            transition: transform 0.6s var(--aqua-ease), 
-                        background 0.6s var(--aqua-ease), 
-                        border-color 0.6s var(--aqua-ease), 
-                        box-shadow 0.6s var(--aqua-ease);
-            will-change: transform;
+            transition: all 0.7s var(--aqua-ease);
+            will-change: transform, background;
         }
 
-        /* Subtle Inner Sweep */
+        /* 1. Liquid Sheen Hover Effect */
         .oos-panel::before {
             content: "";
             position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-            transform: skewX(-20deg);
-            transition: left 0.8s var(--aqua-ease);
+            top: 0;
+            left: -150%;
+            width: 80%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--liquid-glow), transparent);
+            transform: skewX(-30deg);
+            transition: left 0.9s var(--aqua-ease);
             pointer-events: none;
             z-index: 1;
         }
 
-        /* Top Specular Edge Highlight */
+        /* 2. Specular Edge Highlight Mask */
         .oos-panel::after {
             content: "";
             position: absolute;
             inset: 0;
-            border-radius: 2.5rem;
+            border-radius: 2.2rem;
             padding: 1px;
             background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(255,255,255,0.01) 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -128,21 +172,11 @@
             pointer-events: none;
         }
 
-        .oos-panel:hover {
-            transform: scale(1.01); /* Subtler, more realistic expansion */
-            background: rgba(255, 255, 255, 0.035);
-            border-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.9);
-        }
-
-        /* Tactile OS Press Physics */
+        /* Tactile Mobile Press Physics */
         .oos-panel:active {
-            transform: scale(0.98);
-            transition: transform 0.2s ease-out; /* Snaps quickly on press */
-        }
-
-        .oos-panel:hover::before {
-            left: 200%;
+            transform: scale(0.96) !important;
+            background: rgba(255, 255, 255, 0.06);
+            transition: transform 0.15s ease-out, background 0.15s ease-out;
         }
 
         .content-layer {
@@ -150,155 +184,159 @@
             z-index: 2;
         }
 
-        /* Snappy Kinetic Arrow */
         .arrow-icon {
-            opacity: 0;
-            transform: translateX(-24px) scale(0.9);
+            opacity: 0.2;
+            transform: translateX(-15px);
             transition: all 0.5s var(--aqua-ease);
         }
 
-        .oos-panel:hover .arrow-icon {
-            opacity: 1;
-            transform: translateX(0) scale(1);
-        }
-
-        /* --- Staggered UI Entrance --- */
+        /* ========================================= */
+        /* STAGGERED ENTRANCE ANIMATIONS             */
+        /* ========================================= */
         .reveal {
             opacity: 0;
-            transform: translateY(24px);
-            animation: revealAnim 1s forwards var(--aqua-ease);
+            transform: translateY(40px);
+            animation: revealAnim 1.2s forwards var(--aqua-ease);
         }
 
         @keyframes revealAnim {
-            to { opacity: 1; transform: translateY(0); }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
-<body class="flex flex-col items-center p-6 sm:p-12 relative">
+<body class="flex flex-col items-center p-6 sm:p-14 relative">
 
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
+    
     <div class="ambient-bg"></div>
 
-    <main class="w-full max-w-4xl mt-16 mb-24 z-10">
+    <main class="w-full max-w-4xl mt-12 mb-32 z-10">
         
-        <header class="mb-16 reveal flex flex-col items-start" style="animation-delay: 0.1s;">
+        <header class="mb-20 reveal flex flex-col items-start" style="animation-delay: 0.1s;">
             <div class="flex items-center gap-4 mb-5">
                 <div class="h-[2px] w-6 bg-white/40 rounded-full"></div>
-                <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-white/40">Project ReVork</span>
+                <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white/40">Project ReVork</span>
             </div>
-            <h1 class="text-6xl sm:text-8xl font-semibold tracking-tighter text-white">
-                Select <span class="font-light text-white/30">Device.</span>
+            <h1 class="text-6xl sm:text-8xl lg:text-9xl font-bold tracking-tighter text-white">
+                Select <span class="font-light text-white/30">Hardware.</span>
             </h1>
         </header>
 
         <div id="glass-container">
             
-            <a href="lemonadep.html" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.2s;">
+            <a href="lemonadep.html" class="oos-panel flex justify-between items-center reveal group p-8 sm:p-12" style="animation-delay: 0.2s;">
                 <div class="content-layer">
-                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Hasselblad Edition</span>
+                    <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Hasselblad Edition</span>
                     <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
-                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 9 Pro</h2>
-                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">LE2123 / lemonadep</span>
+                        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white transition-colors duration-300">OnePlus 9 Pro</h2>
+                        <span class="text-xs sm:text-sm text-white/30 font-mono tracking-widest hidden sm:inline-block">LE2123 / lemonadep</span>
                     </div>
                 </div>
-                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
+                <div class="content-layer text-4xl sm:text-5xl font-light text-white arrow-icon">→</div>
             </a>
 
-            <a href="https://sabrina.ozyern.me/9" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.3s;">
+            <a href="#" class="oos-panel flex justify-between items-center reveal group p-8 sm:p-12" style="animation-delay: 0.3s;">
                 <div class="content-layer">
-                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Standard</span>
+                    <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Standard</span>
                     <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
-                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 9</h2>
-                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">LE2113 / lemonade</span>
+                        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white transition-colors duration-300">OnePlus 9</h2>
+                        <span class="text-xs sm:text-sm text-white/30 font-mono tracking-widest hidden sm:inline-block">LE2113 / lemonade</span>
                     </div>
                 </div>
-                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
+                <div class="content-layer text-4xl sm:text-5xl font-light text-white arrow-icon">→</div>
             </a>
 
-            <a href="https://sabrina.ozyern.me/9r" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.4s;">
+            <a href="#" class="oos-panel flex justify-between items-center reveal group p-8 sm:p-12" style="animation-delay: 0.4s;">
                 <div class="content-layer">
-                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Global Variant</span>
+                    <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Global Variant</span>
                     <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
-                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 9R</h2>
-                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">LE2101 / lemonades</span>
+                        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white transition-colors duration-300">OnePlus 9R</h2>
+                        <span class="text-xs sm:text-sm text-white/30 font-mono tracking-widest hidden sm:inline-block">LE2101 / lemonades</span>
                     </div>
                 </div>
-                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
+                <div class="content-layer text-4xl sm:text-5xl font-light text-white arrow-icon">→</div>
             </a>
 
-            <a href="https://sabrina.ozyern.me/8pro" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.5s;">
+            <a href="#" class="oos-panel flex justify-between items-center reveal group p-8 sm:p-12" style="animation-delay: 0.5s;">
                 <div class="content-layer">
-                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Classic Pro</span>
+                    <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Classic Pro</span>
                     <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
-                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 8 Pro</h2>
-                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">IN2023 / instantnoodlep</span>
+                        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white transition-colors duration-300">OnePlus 8 Pro</h2>
+                        <span class="text-xs sm:text-sm text-white/30 font-mono tracking-widest hidden sm:inline-block">IN2023 / instantnoodlep</span>
                     </div>
                 </div>
-                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
+                <div class="content-layer text-4xl sm:text-5xl font-light text-white arrow-icon">→</div>
             </a>
 
-            <a href="https://sabrina.ozyern.me/8t" class="oos-panel flex justify-between items-center reveal group" style="animation-delay: 0.6s;">
+            <a href="#" class="oos-panel flex justify-between items-center reveal group p-8 sm:p-12" style="animation-delay: 0.6s;">
                 <div class="content-layer">
-                    <span class="text-[11px] font-extrabold tracking-[0.3em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Performance</span>
+                    <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] text-gray-400 uppercase mb-3 block drop-shadow-sm">Performance</span>
                     <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6">
-                        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors duration-300">OnePlus 8T</h2>
-                        <span class="text-xs text-white/30 font-mono tracking-widest hidden sm:inline-block">KB2003 / kebab</span>
+                        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white transition-colors duration-300">OnePlus 8T</h2>
+                        <span class="text-xs sm:text-sm text-white/30 font-mono tracking-widest hidden sm:inline-block">KB2003 / kebab</span>
                     </div>
                 </div>
-                <div class="content-layer text-4xl font-light text-white arrow-icon">→</div>
+                <div class="content-layer text-4xl sm:text-5xl font-light text-white arrow-icon">→</div>
             </a>
 
         </div>
     </main>
 
-    <footer class="w-full max-w-4xl flex justify-between items-center text-[11px] text-white/30 font-bold tracking-[0.3em] reveal uppercase pt-8 border-t border-white/5 z-10" style="animation-delay: 0.7s;">
+    <footer class="w-full max-w-4xl flex justify-between items-center text-[10px] sm:text-[12px] text-white/30 font-extrabold tracking-[0.4em] reveal uppercase pt-8 border-t border-white/5 z-10" style="animation-delay: 0.7s;">
         <span>© 2026 ReVork</span>
-        <div class="flex gap-8">
-            <a href="https://github.com/ozyern/ReVork" class="hover-target hover:text-white transition-colors duration-300">GitHub</a>
-            <a href="#" class="hover-target hover:text-white transition-colors duration-300">Telegram</a>
+        <div class="flex gap-6 sm:gap-10">
+            <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener noreferrer" class="interactive-el hover:text-white transition-colors duration-300">GitHub</a>
+            <a href="#" class="interactive-el hover:text-white transition-colors duration-300">Telegram</a>
         </div>
     </footer>
 
     <script>
-        // --- Aquamorphic Cursor Engine ---
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
+        // Check if device supports touch
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
         
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let ringX = mouseX;
-        let ringY = mouseY;
-
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateCursor() {
-            // Smooth, spring-like tracking
-            ringX += (mouseX - ringX) * 0.22;
-            ringY += (mouseY - ringY) * 0.22;
-
-            dot.style.transform = `translate3d(${mouseX - 2}px, ${mouseY - 2}px, 0)`;
+        // Only run custom cursor logic on Desktop/Mouse devices
+        if (!isTouchDevice) {
+            const dot = document.getElementById('cursor-dot');
+            const ring = document.getElementById('cursor-ring');
             
-            const isHovering = document.body.classList.contains('hovering-box');
-            // Offset logic (32px width = 16 offset, 52px width = 26 offset)
-            const offset = isHovering ? 26 : 16; 
-            
-            ring.style.transform = `translate3d(${ringX - offset}px, ${ringY - offset}px, 0)`;
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let ringX = mouseX;
+            let ringY = mouseY;
 
-            requestAnimationFrame(animateCursor);
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                // Spring-like smooth tracking
+                ringX += (mouseX - ringX) * 0.25;
+                ringY += (mouseY - ringY) * 0.25;
+
+                dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
+                
+                const isHovering = document.body.classList.contains('hovering-link');
+                const offset = isHovering ? 30 : 18; 
+                
+                ring.style.transform = `translate3d(${ringX - offset}px, ${ringY - offset}px, 0)`;
+                
+                requestAnimationFrame(animateCursor);
+            }
+            
+            animateCursor();
+
+            // Hover state triggers
+            const interactives = document.querySelectorAll('.oos-panel, .interactive-el');
+            interactives.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+            });
         }
-        animateCursor();
-
-        // --- Hover Triggers ---
-        const interactiveElements = document.querySelectorAll('.oos-panel, .hover-target');
-        
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hovering-box'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-box'));
-        });
     </script>
 </body>
 </html>
