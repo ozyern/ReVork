@@ -144,7 +144,7 @@
             top: 6px;
             left: 6px;
             height: calc(100% - 12px);
-            width: calc(50% - 6px);
+            width: calc(33.333% - 4px);
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 99px;
@@ -290,7 +290,7 @@
     <main class="w-full max-w-4xl mt-8 sm:mt-12 mb-32 z-10">
         
         <nav class="mb-14 sm:mb-20 reveal w-full flex justify-between items-center" style="animation-delay: 0.1s;">
-            <a href="index.html" class="interactive-el flex items-center gap-3 sm:gap-4 text-white/30 hover:text-white transition-all duration-500">
+            <a href="index" class="interactive-el flex items-center gap-3 sm:gap-4 text-white/30 hover:text-white transition-all duration-500">
                 <span class="text-2xl sm:text-3xl">←</span>
                 <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] uppercase">Devices</span>
             </a>
@@ -307,6 +307,7 @@
                 <div id="tab-bg" class="tab-indicator"></div>
                 <button onclick="switchTab('oos')" id="btn-oos" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white">OxygenOS</button>
                 <button onclick="switchTab('cos')" id="btn-cos" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white/20">ColorOS</button>
+                <button onclick="switchTab('ext')" id="btn-ext" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white/20">Extras</button>
             </div>
         </header>
 
@@ -395,19 +396,8 @@
                 <span id="oos-btn-icon" class="text-white/60 transition-transform duration-500">↓</span>
             </button>
             
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">Extras</h3>
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">OxygenOS 15 Builds</h3>
             <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
-                    <div class="content-layer flex flex-col">
-                        <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/30 text-amber-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10">Beta</span>
-                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">Realme UI 7.0</h2>
-                        </div>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.5.704 • Beta Build</span>
-                    </div>
-                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
-                </a>
-
                 <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2015/15.0.0.864/ota_full-LE2123_15.0.0.864.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
                     <div class="content-layer flex flex-col">
                         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 15</h2>
@@ -450,6 +440,22 @@
                 </a>
             </div>
         </div>
+
+        <div id="view-ext" class="os-view flex-col gap-6 sm:gap-8">
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-4 mb-1 pl-6 sm:pl-8">Extras</h3>
+            <div class="flex flex-col gap-4 sm:gap-6">
+                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                    <div class="content-layer flex flex-col">
+                        <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/30 text-amber-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10">Beta</span>
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">Realme UI 7.0</h2>
+                        </div>
+                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.5.704 • Beta Build</span>
+                    </div>
+                    <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
+                </a>
+            </div>
+        </div>
     </main>
 
     <script>
@@ -458,21 +464,35 @@
             const bg = document.getElementById('tab-bg');
             const btnOos = document.getElementById('btn-oos');
             const btnCos = document.getElementById('btn-cos');
+            const btnExt = document.getElementById('btn-ext');
             const viewOos = document.getElementById('view-oos');
             const viewCos = document.getElementById('view-cos');
+            const viewExt = document.getElementById('view-ext');
 
             if(os === 'oos') {
                 bg.style.transform = 'translateX(0)';
                 btnOos.style.color = '#ffffff';
                 btnCos.style.color = 'rgba(255,255,255,0.2)';
+                btnExt.style.color = 'rgba(255,255,255,0.2)';
                 viewCos.classList.remove('active');
+                if (viewExt) viewExt.classList.remove('active');
                 setTimeout(() => viewOos.classList.add('active'), 100);
-            } else {
+            } else if(os === 'cos') {
                 bg.style.transform = 'translateX(100%)';
                 btnOos.style.color = 'rgba(255,255,255,0.2)';
                 btnCos.style.color = '#ffffff';
+                btnExt.style.color = 'rgba(255,255,255,0.2)';
                 viewOos.classList.remove('active');
+                if (viewExt) viewExt.classList.remove('active');
                 setTimeout(() => viewCos.classList.add('active'), 100);
+            } else if(os === 'ext') {
+                bg.style.transform = 'translateX(200%)';
+                btnOos.style.color = 'rgba(255,255,255,0.2)';
+                btnCos.style.color = 'rgba(255,255,255,0.2)';
+                btnExt.style.color = '#ffffff';
+                viewOos.classList.remove('active');
+                viewCos.classList.remove('active');
+                setTimeout(() => { if (viewExt) viewExt.classList.add('active'); }, 100);
             }
         }
 
