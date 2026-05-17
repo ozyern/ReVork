@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>OnePlus 8 Pro | ReVork Downloads</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+		:root {
+			--aqua-ease: cubic-bezier(0.22, 1, 0.36, 1);
+			--liquid-glow: rgba(255, 255, 255, 0.05);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Plus Jakarta Sans', sans-serif;
+			background-color: #000000;
+			color: #ffffff;
+			overflow-x: hidden;
+			min-height: 100vh;
+			-webkit-tap-highlight-color: transparent;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		@media (hover: hover) and (pointer: fine) {
+			* {
+				cursor: none !important;
+			}
+
+			#cursor-dot {
+				width: 5px;
+				height: 5px;
+				background-color: #ffffff;
+				border-radius: 50%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				pointer-events: none;
+				z-index: 10000;
+				will-change: transform;
+			}
+
+			#cursor-ring {
+				width: 36px;
+				height: 36px;
+				border: 1.5px solid rgba(255, 255, 255, 0.2);
+				border-radius: 50%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				pointer-events: none;
+				z-index: 9999;
+				will-change: transform;
+				transition:
+					width 0.4s var(--aqua-ease),
+					height 0.4s var(--aqua-ease),
+					border-color 0.4s var(--aqua-ease);
+			}
+
+			body.hovering-link #cursor-ring {
+				width: 56px;
+				height: 56px;
+				background-color: rgba(255, 255, 255, 0.08);
+				border-color: rgba(255, 255, 255, 0.5);
+				backdrop-filter: blur(6px);
+			}
+
+			.download-row:hover {
+				background: rgba(255, 255, 255, 0.05);
+				border-color: rgba(255, 255, 255, 0.15);
+				transform: scale(1.02) translateY(-4px);
+				box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.95);
+			}
+
+			.download-row:hover::before {
+				left: 200%;
+			}
+
+			.download-row:hover .dl-icon {
+				opacity: 1;
+				transform: translateX(0);
+				color: #ffffff;
+			}
+		}
+
+		@media (hover: none), (pointer: coarse) {
+			#cursor-dot,
+			#cursor-ring {
+				display: none !important;
+			}
+		}
+
+		.ambient-bg {
+			position: fixed;
+			inset: -20%;
+			width: 140%;
+			height: 140%;
+			background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
+			z-index: -1;
+			pointer-events: none;
+			animation: slowDrift 20s ease-in-out infinite alternate;
+		}
+
+		@keyframes slowDrift {
+			from {
+				transform: translateY(0);
+			}
+			to {
+				transform: translateY(2%);
+			}
+		}
+
+		.download-row {
+			background: rgba(255, 255, 255, 0.02);
+			backdrop-filter: blur(45px);
+			-webkit-backdrop-filter: blur(45px);
+			border-radius: 2rem;
+			border: 1px solid rgba(255, 255, 255, 0.04);
+			position: relative;
+			overflow: hidden;
+			display: block;
+			transition: all 0.7s var(--aqua-ease);
+			will-change: transform, background;
+		}
+
+		.download-row::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: -150%;
+			width: 80%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, var(--liquid-glow), transparent);
+			transform: skewX(-30deg);
+			transition: left 0.9s var(--aqua-ease);
+			pointer-events: none;
+			z-index: 1;
+		}
+
+		.download-row::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			border-radius: 2rem;
+			padding: 1px;
+			background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(255,255,255,0.01) 100%);
+			-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+			mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+			-webkit-mask-composite: xor;
+			mask-composite: exclude;
+			pointer-events: none;
+		}
+
+		.download-row:active {
+			transform: scale(0.96) !important;
+			background: rgba(255, 255, 255, 0.06);
+			transition: transform 0.15s ease-out, background 0.15s ease-out;
+		}
+
+		.dl-icon {
+			opacity: 0.2;
+			transform: translateX(-15px);
+			transition: all 0.5s var(--aqua-ease);
+		}
+
+		.content-layer {
+			position: relative;
+			z-index: 2;
+		}
+
+		.reveal {
+			opacity: 0;
+			transform: translateY(40px);
+			animation: revealAnim 1.2s forwards var(--aqua-ease);
+		}
+
+		@keyframes revealAnim {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+	</style>
+</head>
+<body class="flex flex-col items-center p-6 sm:p-14 relative">
+
+	<div id="cursor-dot"></div>
+	<div id="cursor-ring"></div>
+	<div class="ambient-bg"></div>
+
+	<main class="w-full max-w-4xl mt-12 mb-32 z-10">
+
+		<nav class="mb-14 sm:mb-20 reveal w-full flex justify-between items-center" style="animation-delay: 0.1s;">
+			<a href="index" class="interactive-el flex items-center gap-3 sm:gap-4 text-white/30 hover:text-white transition-all duration-500">
+				<span class="text-2xl sm:text-3xl">←</span>
+				<span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] uppercase">Devices</span>
+			</a>
+			<div class="h-[1px] w-12 sm:w-16 bg-white/10"></div>
+		</nav>
+
+		<header class="mb-16 sm:mb-20 reveal flex flex-col items-start" style="animation-delay: 0.2s;">
+			<span class="text-[11px] sm:text-[13px] font-extrabold tracking-[0.4em] text-gray-500 uppercase mb-3 block">OnePlus 8 Pro (IN2023)</span>
+			<h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold tracking-tighter text-white mb-10 sm:mb-12">
+				Downloads.
+			</h1>
+		</header>
+
+		<section class="reveal flex flex-col gap-6 sm:gap-8" style="animation-delay: 0.3s;">
+			<h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
+
+			<a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-IN2023_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+				<div class="content-layer flex flex-col">
+					<div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+						<span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/30 text-green-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/5">Latest</span>
+						<h2 class="text-3xl sm:text-5xl font-extrabold text-white">OxygenOS 16.1</h2>
+					</div>
+					<span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.7.201 • Stable Build</span>
+				</div>
+				<div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
+			</a>
+
+			<h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">OxygenOS 16 Builds</h3>
+
+			<div class="flex flex-col gap-4 sm:gap-6">
+				<a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.703/ota_full-IN2023_16.0.5.703.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+					<div class="content-layer flex flex-col">
+						<h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
+						<span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.703 • Stable</span>
+					</div>
+					<div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
+				</a>
+
+				<a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.700/ota_full-IN2023_16.0.5.700.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+					<div class="content-layer flex flex-col">
+						<h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
+						<span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.700 • Stable</span>
+					</div>
+					<div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
+				</a>
+			</div>
+		</section>
+	</main>
+
+	<script>
+		const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+		if (!isTouchDevice) {
+			const dot = document.getElementById('cursor-dot');
+			const ring = document.getElementById('cursor-ring');
+			let mouseX = 0;
+			let mouseY = 0;
+			let ringX = 0;
+			let ringY = 0;
+
+			document.addEventListener('mousemove', (event) => {
+				mouseX = event.clientX;
+				mouseY = event.clientY;
+				dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+			});
+
+			const animateRing = () => {
+				ringX += (mouseX - ringX) * 0.12;
+				ringY += (mouseY - ringY) * 0.12;
+				ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+				requestAnimationFrame(animateRing);
+			};
+
+			animateRing();
+
+			const hoverTargets = document.querySelectorAll('a, button, .interactive-el');
+			hoverTargets.forEach((element) => {
+				element.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
+				element.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+			});
+		}
+	</script>
+</body>
+</html>
