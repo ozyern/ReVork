@@ -187,6 +187,49 @@
 				transform: translateY(0);
 			}
 		}
+
+		/* ========================================= */
+		/* TAB ENGINE                                */
+		/* ========================================= */
+		.tab-container {
+			background: rgba(255, 255, 255, 0.03);
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			backdrop-filter: blur(30px);
+			border-radius: 99px;
+			position: relative;
+			padding: 6px;
+		}
+
+		.tab-indicator {
+			position: absolute;
+			top: 6px;
+			left: 6px;
+			height: calc(100% - 12px);
+			width: calc(50% - 6px);
+			background: rgba(255, 255, 255, 0.12);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 99px;
+			transition: transform 0.6s var(--aqua-ease);
+			box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+		}
+
+		.tab-btn {
+			position: relative;
+			z-index: 2;
+			transition: opacity 0.3s;
+		}
+		
+		.os-view {
+			display: none;
+			opacity: 0;
+			transform: translateY(20px);
+			transition: all 0.7s var(--aqua-ease);
+		}
+		.os-view.active {
+			display: flex;
+			opacity: 1;
+			transform: translateY(0);
+		}
 	</style>
 </head>
 <body class="flex flex-col items-center p-6 sm:p-14 relative">
@@ -210,9 +253,15 @@
 			<h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold tracking-tighter text-white mb-10 sm:mb-12">
 				Downloads.
 			</h1>
+			
+			<div class="tab-container flex w-full max-w-md interactive-el">
+				<div id="tab-bg" class="tab-indicator"></div>
+				<button onclick="switchTab('oos')" id="btn-oos" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white">OxygenOS</button>
+				<button onclick="switchTab('cos')" id="btn-cos" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white/20">ColorOS</button>
+			</div>
 		</header>
 
-		<section class="reveal flex flex-col gap-6 sm:gap-8" style="animation-delay: 0.3s;">
+		<div id="view-oos" class="os-view active flex-col gap-6 sm:gap-8 reveal" style="animation-delay: 0.3s;">
 			<h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
 
 			<a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-IN2023_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
@@ -245,34 +294,80 @@
 					<div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
 				</a>
 			</div>
-		</section>
+		</div>
+
+		<div id="view-cos" class="os-view flex-col gap-6 sm:gap-8">
+			<h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
+			<a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.7.204_v2/ota_full-IN2023_16.0.7.204.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+				<div class="content-layer flex flex-col">
+					<div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+						<span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/30 text-green-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/5">Latest</span>
+						<h2 class="text-3xl sm:text-5xl font-extrabold text-white">ColorOS 16.1</h2>
+					</div>
+					<span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.7.204_v2 • Stable Build</span>
+				</div>
+				<div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
+			</a>
+
+			<a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.7.206/ota_full-IN2023_16.0.7.206.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+				<div class="content-layer flex flex-col">
+					<div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+						<em class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/30 text-blue-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/5">China</em>
+						<h2 class="text-3xl sm:text-5xl font-extrabold text-white">ColorOS 16.1</h2>
+					</div>
+					<span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.7.206 • Stable Build</span>
+				</div>
+				<div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
+			</a>
+		</div>
 	</main>
 
 	<script>
+		// --- View Toggler ---
+		function switchTab(os) {
+			const bg = document.getElementById('tab-bg');
+			const btnOos = document.getElementById('btn-oos');
+			const btnCos = document.getElementById('btn-cos');
+			const viewOos = document.getElementById('view-oos');
+			const viewCos = document.getElementById('view-cos');
+
+			if(os === 'oos') {
+				bg.style.transform = 'translateX(0)';
+				btnOos.style.color = '#ffffff';
+				btnCos.style.color = 'rgba(255,255,255,0.2)';
+				viewCos.classList.remove('active');
+				setTimeout(() => viewOos.classList.add('active'), 100);
+			} else {
+				bg.style.transform = 'translateX(100%)';
+				btnOos.style.color = 'rgba(255,255,255,0.2)';
+				btnCos.style.color = '#ffffff';
+				viewOos.classList.remove('active');
+				setTimeout(() => viewCos.classList.add('active'), 100);
+			}
+		}
+
 		const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
 		if (!isTouchDevice) {
 			const dot = document.getElementById('cursor-dot');
 			const ring = document.getElementById('cursor-ring');
-			let mouseX = 0;
-			let mouseY = 0;
-			let ringX = 0;
-			let ringY = 0;
+			let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2, ringX = mouseX, ringY = mouseY;
 
-			document.addEventListener('mousemove', (event) => {
-				mouseX = event.clientX;
-				mouseY = event.clientY;
-				dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+			window.addEventListener('mousemove', (e) => { 
+				mouseX = e.clientX; 
+				mouseY = e.clientY; 
 			});
 
-			const animateRing = () => {
-				ringX += (mouseX - ringX) * 0.12;
-				ringY += (mouseY - ringY) * 0.12;
-				ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-				requestAnimationFrame(animateRing);
-			};
-
-			animateRing();
+			function animateCursor() {
+				ringX += (mouseX - ringX) * 0.25; 
+				ringY += (mouseY - ringY) * 0.25;
+				dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
+				const isHovering = document.body.classList.contains('hovering-link');
+				const offset = isHovering ? 28 : 18; // 56px and 36px ring diameter respectively
+				ring.style.transform = `translate3d(${ringX - offset}px, ${ringY - offset}px, 0)`;
+				requestAnimationFrame(animateCursor);
+			}
+			animateCursor();
 
 			const hoverTargets = document.querySelectorAll('a, button, .interactive-el');
 			hoverTargets.forEach((element) => {
