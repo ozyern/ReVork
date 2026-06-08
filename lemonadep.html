@@ -328,6 +328,7 @@
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">OxygenOS 16 Builds</h3>
             
             <div class="flex flex-col gap-4 sm:gap-6">
+                <!-- Visible builds -->
                 <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.703/ota_full-LE2123_16.0.5.703.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
@@ -335,6 +336,28 @@
                     </div>
                     <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                 </a>
+
+                <!-- Show More Button -->
+                <button onclick="toggleMore('oos')" class="w-full py-6 text-center text-white/60 hover:text-white transition-colors flex items-center justify-center gap-3 text-sm font-medium">
+                    <span id="oos-btn-text">Show 4 More Builds</span>
+                    <span id="oos-btn-icon" class="text-xl transition-transform">↓</span>
+                </button>
+
+                <div id="oos-more-wrapper" class="expandable-wrapper">
+                    <div class="expandable-content">
+                        <div class="expandable-inner flex flex-col gap-4 sm:gap-6">
+                            <!-- Older OxygenOS builds here -->
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center opacity-75">
+                                <div class="content-layer flex flex-col">
+                                    <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
+                                    <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • Older build • Stable</span>
+                                </div>
+                                <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
+                            </a>
+                            <!-- Add more older builds as needed -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
