@@ -4,409 +4,426 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OnePlus 9 Pro | ReVork Downloads</title>
+    
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <meta name="theme-color" content="#000000">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
         :root {
-            /* OxygenOS 16 Fluid Friction Curves */
-            --aqua-ease: cubic-bezier(0.22, 1, 0.36, 1);
-            --spring-ease: cubic-bezier(0.25, 1.2, 0.5, 1);
+            /* Apple UI Physics Curves */
+            --apple-ease: cubic-bezier(0.32, 0.72, 0, 1); 
+            --apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.15); 
+            --apple-slow: cubic-bezier(0.16, 1, 0.3, 1);
             --liquid-glow: rgba(255, 255, 255, 0.05);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* STRIP ALL NATIVE CURSORS GLOBALLY */
+        *, *::before, *::after, *:hover, *:active, *:focus { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            cursor: none !important; 
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
         }
+
+        ::selection { background: rgba(255, 255, 255, 0.2); color: #ffffff; }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #000000;
-            color: #ffffff;
-            overflow-x: hidden;
-            min-height: 100vh;
-            -webkit-tap-highlight-color: transparent;
+            background-color: #000000; color: #ffffff;
+            overflow-x: hidden; min-height: 100vh;
             -webkit-font-smoothing: antialiased;
-            /* perspective REMOVED from body to fix position: fixed for cursors */
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
+        /* Stealth Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; cursor: none; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
         /* ========================================= */
-        /* DESKTOP CURSOR & HOVER PHYSICS            */
+        /* CLASSIC DOT & RING CURSOR + SPOTLIGHT     */
         /* ========================================= */
+        #spotlight { display: none; }
+
         @media (hover: hover) and (pointer: fine) {
-            * {
-                cursor: none !important;
+            #cursor-dot {
+                width: 5px; height: 5px; background-color: #ffffff; border-radius: 50%;
+                position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
+                will-change: transform; transition: opacity 0.2s var(--apple-ease);
             }
             
-            #cursor-dot {
-                width: 5px;
-                height: 5px;
-                background-color: #ffffff;
-                border-radius: 50%;
-                position: fixed;
-                top: 0;
-                left: 0;
-                pointer-events: none;
-                z-index: 10000;
-                will-change: transform;
-            }
-
             #cursor-ring {
-                width: 36px;
-                height: 36px;
-                border: 1.5px solid rgba(255, 255, 255, 0.2);
-                border-radius: 50%;
-                position: fixed;
-                top: 0;
-                left: 0;
-                pointer-events: none;
-                z-index: 9999;
-                will-change: transform;
-                transition: 
-                    width 0.5s var(--spring-ease), 
-                    height 0.5s var(--spring-ease), 
-                    border-color 0.4s var(--aqua-ease);
+                width: 36px; height: 36px; border: 1.5px solid rgba(255, 255, 255, 0.25); border-radius: 50%;
+                position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+                will-change: transform, width, height, border-color, background-color, box-shadow;
+                transition: width 0.3s var(--apple-ease), height 0.3s var(--apple-ease), border-color 0.3s var(--apple-ease), background-color 0.3s var(--apple-ease), box-shadow 0.3s var(--apple-ease);
+            }
+            
+            #spotlight {
+                display: block; position: fixed; top: 0; left: 0;
+                width: 800px; height: 800px; border-radius: 50%; pointer-events: none; z-index: 0;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, rgba(150, 200, 255, 0.005) 40%, transparent 60%);
+                will-change: transform; transition: background 0.5s var(--apple-ease);
             }
 
+            /* Generic Hover State */
             body.hovering-link #cursor-ring {
-                width: 56px;
-                height: 56px;
-                background-color: rgba(255, 255, 255, 0.08);
-                border-color: rgba(255, 255, 255, 0.5);
-                backdrop-filter: blur(6px);
+                width: 56px; height: 56px; background-color: rgba(255, 255, 255, 0.08);
+                border-color: rgba(255, 255, 255, 0.6); backdrop-filter: blur(4px);
+            }
+            body.hovering-link #cursor-dot { opacity: 0; }
+            body.hovering-link #spotlight {
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.035) 0%, rgba(150, 200, 255, 0.01) 30%, transparent 50%);
             }
 
-            .download-row:hover {
-                background: rgba(255, 255, 255, 0.05);
-                border-color: rgba(255, 255, 255, 0.15);
-                transform: scale(1.02) translateY(-4px);
-                box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.95);
+            /* TVOS Card Hover State (Soft Lens Flare) */
+            body.hovering-card #cursor-ring {
+                width: 110px; height: 110px; background-color: transparent;
+                border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+                backdrop-filter: none;
             }
+            body.hovering-card #cursor-dot { opacity: 0; }
+        }
+        @media (hover: none), (pointer: coarse) { #cursor-dot, #cursor-ring { display: none !important; } }
 
-            .download-row:hover::before {
-                left: 200%;
-            }
-
-            .download-row:hover .dl-icon {
-                opacity: 1;
-                transform: translateX(0);
-                color: #ffffff;
-            }
+        /* ========================================= */
+        /* GPU-ACCELERATED VOLUMETRIC AURORA         */
+        /* ========================================= */
+        .aurora-container {
+            position: fixed; inset: -20%; width: 140%; height: 140%;
+            z-index: -1; pointer-events: none; overflow: hidden;
+            will-change: transform;
         }
 
-        /* ========================================= */
-        /* MOBILE OPTIMIZATIONS                      */
-        /* ========================================= */
-        @media (hover: none), (pointer: coarse) {
-            #cursor-dot, 
-            #cursor-ring {
-                display: none !important;
-            }
+        .aurora-blob-1, .aurora-blob-2 {
+            position: absolute; border-radius: 50%;
+            will-change: transform;
         }
 
-        /* ========================================= */
-        /* AMBIENT BACKGROUND                        */
-        /* ========================================= */
-        .ambient-bg {
-            position: fixed;
-            inset: -20%;
-            width: 140%;
-            height: 140%;
-            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
-            z-index: -1;
-            pointer-events: none;
-            animation: slowDrift 20s ease-in-out infinite alternate;
+        .aurora-blob-1 {
+            width: 70vw; height: 70vw; top: -10%; left: 0%;
+            background: radial-gradient(closest-side, rgba(14, 165, 233, 0.08) 0%, transparent 100%);
+            animation: floatAurora1 25s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
         }
 
-        @keyframes slowDrift {
-            from {
-                transform: translateY(0);
-            }
-            to {
-                transform: translateY(2%);
-            }
+        .aurora-blob-2 {
+            width: 80vw; height: 80vw; bottom: -10%; right: -10%;
+            background: radial-gradient(closest-side, rgba(16, 185, 129, 0.06) 0%, transparent 100%);
+            animation: floatAurora2 30s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate-reverse;
         }
 
+        @keyframes floatAurora1 { 0% { transform: translate3d(0, 0, 0) scale(1); } 100% { transform: translate3d(10%, 15%, 0) scale(1.1); } }
+        @keyframes floatAurora2 { 0% { transform: translate3d(0, 0, 0) scale(1); } 100% { transform: translate3d(-15%, -10%, 0) scale(1.05); } }
+
         /* ========================================= */
-        /* TAB ENGINE                                */
+        /* TVOS 3D HARDWARE CARDS                    */
         /* ========================================= */
-        .tab-container {
-            background: rgba(255, 255, 255, 0.03);
+        .tvos-card {
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(45px) saturate(200%);
+            -webkit-backdrop-filter: blur(45px) saturate(200%);
+            border-radius: 2.2rem;
             border: 1px solid rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(30px);
-            border-radius: 99px;
-            position: relative;
-            padding: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2); 
+            position: relative; overflow: visible; display: block;
+            transform-style: preserve-3d; will-change: transform;
+            transition: transform 0.6s var(--apple-ease), border-color 0.4s var(--apple-ease);
         }
 
-        .tab-indicator {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            height: calc(100% - 12px);
-            width: calc(33.333% - 4px);
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 99px;
-            transition: transform 0.7s var(--spring-ease);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        .tvos-card.is-tracking {
+            transition: transform 0.1s linear, border-color 0.2s linear;
+            border-color: rgba(255, 255, 255, 0.3); z-index: 20;
         }
 
-        .tab-btn {
-            position: relative;
-            z-index: 2;
-            transition: opacity 0.3s;
+        /* 120fps Baked Shadow */
+        .tvos-card .shadow-layer {
+            position: absolute; inset: 0; border-radius: 2.2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.03);
+            opacity: 0; pointer-events: none; z-index: -1;
+            transition: opacity 0.4s var(--apple-ease), transform 0.1s linear;
+            will-change: opacity, transform;
+        }
+        .tvos-card.is-tracking .shadow-layer { opacity: 1; }
+
+        /* Static Optical Grain */
+        .film-grain {
+            position: absolute; inset: 0; border-radius: 2.2rem; overflow: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04; pointer-events: none; z-index: 1;
+            mask-image: radial-gradient(white, black); -webkit-mask-image: -webkit-radial-gradient(white, black);
         }
 
-        /* ========================================= */
-        /* SUPERCHARGED DOWNLOAD PANELS              */
-        /* ========================================= */
-        .download-row {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(45px);
-            -webkit-backdrop-filter: blur(45px);
-            border-radius: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            position: relative;
-            overflow: hidden;
-            display: block;
-            transition: all 0.7s var(--aqua-ease);
-            will-change: transform, background;
+        /* Iridescent Glare */
+        .dynamic-glare {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 2.2rem;
+            background: radial-gradient(circle at var(--mouseX, 50%) var(--mouseY, 50%), rgba(255,255,255,0.15) 0%, rgba(150, 200, 255, 0.05) 20%, rgba(255, 150, 200, 0.02) 40%, transparent 60%);
+            opacity: 0; transition: opacity 0.4s var(--apple-ease); pointer-events: none; z-index: 2;
         }
-
-        /* Liquid Sheen */
-        .download-row::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 80%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--liquid-glow), transparent);
-            transform: skewX(-30deg);
-            transition: left 0.9s var(--aqua-ease);
-            pointer-events: none;
-            z-index: 1;
-        }
+        .tvos-card.is-tracking .dynamic-glare { opacity: 1; transition: none; }
 
         /* Specular Edge Mask */
-        .download-row::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 2rem;
-            padding: 1px;
-            background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(255,255,255,0.01) 100%);
+        .tvos-card::after {
+            content: ""; position: absolute; inset: 0; border-radius: 2.2rem; padding: 1px;
+            background: linear-gradient(160deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(255,255,255,0.01) 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: 4;
         }
 
-        /* Tactile Mobile Press */
-        .download-row:active {
-            transform: scale(0.96) !important;
-            background: rgba(255, 255, 255, 0.06);
-            transition: transform 0.15s ease-out, background 0.15s ease-out;
+        /* Content 3D Lift */
+        .content-layer { 
+            position: relative; z-index: 5; transform: translateZ(1px); 
+            transition: transform 0.4s var(--apple-ease); pointer-events: none;
         }
+        .tvos-card.is-tracking .content-layer { transform: translateZ(25px); }
 
         .dl-icon {
-            opacity: 0.2;
-            transform: translateX(-15px);
-            transition: all 0.5s var(--aqua-ease);
+            opacity: 0.2; transform: translateX(-15px) translateZ(1px); transition: all 0.4s var(--apple-spring);
         }
+        .tvos-card.is-tracking .dl-icon { opacity: 1; transform: translateX(0) translateY(4px) translateZ(35px); color: #ffffff; }
 
-        .content-layer {
-            position: relative;
-            z-index: 2;
-        }
+        .tvos-card:active { transform: scale3d(0.97, 0.97, 0.97) !important; transition: transform 0.1s var(--apple-spring); }
 
         /* ========================================= */
-        /* VIEW MANAGEMENT & ANIMATIONS              */
+        /* HERO PULSES (For Latest Builds)           */
         /* ========================================= */
-        .os-view {
-            display: none;
+        @keyframes pulseGlow { 0% { opacity: 0.2; transform: scale(0.95); } 100% { opacity: 0.8; transform: scale(1.05); } }
+        .hero-glow-green, .hero-glow-blue {
+            position: absolute; width: 160%; height: 160%; top: -30%; left: -30%;
+            z-index: 0; pointer-events: none; animation: pulseGlow 4s ease-in-out infinite alternate;
         }
+        .hero-glow-green { background: radial-gradient(circle closest-side, rgba(74, 222, 128, 0.08) 0%, transparent 100%); }
+        .hero-glow-blue { background: radial-gradient(circle closest-side, rgba(96, 165, 250, 0.08) 0%, transparent 100%); }
+
+        /* ========================================= */
+        /* ANIMATED GRADIENT TEXT                    */
+        /* ========================================= */
+        .animate-gradient-text { 
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.4) 50%, #ffffff 100%);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: textShine 6s linear infinite; 
+        }
+        @keyframes textShine { 0% { background-position: 0% center; } 100% { background-position: -200% center; } }
+
+        /* ========================================= */
+        /* iOS SEGMENTED CONTROL / TABS              */
+        /* ========================================= */
+        .tab-container {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px); border-radius: 99px; position: relative; padding: 6px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+            /* Magnetic properties */
+            transition: transform 0.4s var(--apple-ease), box-shadow 0.4s var(--apple-ease);
+            will-change: transform; transform-style: preserve-3d;
+        }
+        .tab-container.is-magnetized {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 2px 10px rgba(0,0,0,0.5);
+            transition: none; /* JS tracking handles it */
+        }
+        .tab-indicator {
+            position: absolute; top: 6px; left: 6px; height: calc(100% - 12px); width: calc(33.333% - 4px);
+            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 99px; transition: transform 0.5s var(--apple-spring);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+            will-change: transform;
+        }
+        .tab-btn { position: relative; z-index: 2; transition: color 0.4s var(--apple-ease), transform 0.2s var(--apple-spring); }
+        .tab-btn:hover { transform: scale(1.05); color: #ffffff !important; }
+
+        /* ========================================= */
+        /* IPADOS MAGNETIC 'SHOW MORE' BUTTON        */
+        /* ========================================= */
+        .magnetic-btn {
+            position: relative; overflow: visible; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08); border-radius: 99px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3); transform-style: preserve-3d;
+            transition: transform 0.4s var(--apple-ease), background 0.4s var(--apple-ease), border-color 0.4s var(--apple-ease);
+            will-change: transform;
+        }
+        .magnetic-btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.7s var(--apple-ease); z-index: 1; border-radius: 99px;
+        }
+        .magnetic-btn.is-magnetized {
+            border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); transition: none;
+        }
+        .magnetic-btn:hover::before { left: 200%; }
+        .magnetic-btn:active { transform: scale(0.96) !important; transition: transform 0.1s var(--apple-spring); }
+        .magnetic-btn .content-wrap { position: relative; z-index: 2; pointer-events: none; transform: translateZ(10px); }
         
-        /* Perspective is now baked directly into the transform to avoid breaking fixed elements */
-        @keyframes viewEnter {
-            0% { 
-                opacity: 0; 
-                transform: perspective(1200px) translateY(30px) scale(0.96) rotateX(-8deg); 
-                filter: blur(12px); 
-            }
-            100% { 
-                opacity: 1; 
-                transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); 
-                filter: blur(0); 
-            }
-        }
+        .btn-premium-icon { transition: transform 0.5s var(--apple-spring); }
+        .expandable-wrapper.open ~ .magnetic-btn .btn-premium-icon { transform: rotate(180deg); }
 
-        .os-view.active {
-            display: flex;
-            animation: viewEnter 0.9s var(--spring-ease) forwards;
-            transform-origin: top center;
+        /* ========================================= */
+        /* FLUID VIEW MANAGEMENT (CROSSFADE)         */
+        /* ========================================= */
+        .os-view { display: none; }
+        @keyframes viewEnter {
+            0% { opacity: 0; transform: perspective(1200px) translateY(20px) scale(0.98); filter: blur(8px); }
+            100% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
         }
+        @keyframes viewExit {
+            0% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
+            100% { opacity: 0; transform: perspective(1200px) translateY(-15px) scale(0.98); filter: blur(8px); }
+        }
+        .os-view.active { display: flex; animation: viewEnter 0.5s var(--apple-ease) forwards; transform-origin: center top; }
+        .os-view.exiting { display: flex; animation: viewExit 0.3s var(--apple-ease) forwards; transform-origin: center top; pointer-events: none; }
 
         .reveal {
-            opacity: 0;
-            transform: perspective(1200px) translateY(40px) scale(0.94) rotateX(-10deg);
-            filter: blur(12px);
-            animation: revealAnim 1.2s forwards var(--spring-ease);
-            transform-origin: top center;
+            opacity: 0; transform: perspective(1200px) translateY(30px) scale(0.96) rotateX(-5deg); filter: blur(12px);
+            animation: revealAnim 1s forwards var(--apple-spring); animation-delay: var(--delay, 0s); transform-origin: top center;
         }
-        
-        @keyframes revealAnim {
-            to {
-                opacity: 1;
-                transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg);
-                filter: blur(0);
-            }
-        }
+        @keyframes revealAnim { to { opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0); } }
 
         /* ========================================= */
-        /* REFINED ACCORDION EXPAND WIDGET           */
+        /* STAGGERED ACCORDION WIDGET                */
         /* ========================================= */
-        .expandable-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.85s var(--aqua-ease);
+        .expandable-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.7s var(--apple-spring); }
+        .expandable-wrapper.open { grid-template-rows: 1fr; }
+        .expandable-content { overflow: hidden; }
+        .expandable-inner { display: flex; flex-direction: column; gap: 1.5rem; padding: 0; transition: padding 0.7s var(--apple-spring); }
+        .expandable-wrapper.open .expandable-inner { padding-top: 1.5rem; padding-bottom: 0.5rem; }
+
+        .expandable-inner .tvos-card {
+            opacity: 0; transform: perspective(1200px) translateY(-30px) scale(0.96) rotateX(-8deg); filter: blur(10px);
+            transition: opacity 0.5s ease, transform 0.7s var(--apple-spring), filter 0.5s ease; transform-origin: top center;
         }
-        .expandable-wrapper.open {
-            grid-template-rows: 1fr;
+        .expandable-wrapper.open .expandable-inner .tvos-card {
+            opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0);
         }
-        .expandable-content {
-            overflow: hidden;
-        }
-        .expandable-inner {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            opacity: 0;
-            filter: blur(10px);
-            transform: perspective(1200px) translateY(-20px) scale(0.97) rotateX(-5deg);
-            transition: opacity 0.6s ease, transform 0.85s var(--spring-ease), filter 0.6s ease;
-            transform-origin: top center;
-        }
-        .expandable-wrapper.open .expandable-inner {
-            opacity: 1;
-            filter: blur(0);
-            transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg);
-            padding-top: 1.5rem;
-            padding-bottom: 0.5rem;
-        }
+
+        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(1) { transition-delay: 0.04s; }
+        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(2) { transition-delay: 0.08s; }
+        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(3) { transition-delay: 0.12s; }
+        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(4) { transition-delay: 0.16s; }
         
-        @media (max-width: 640px) {
-            .expandable-inner { gap: 1rem; }
-            .expandable-wrapper.open .expandable-inner { padding-top: 1rem; }
-        }
+        @media (max-width: 640px) { .expandable-inner { gap: 1rem; } .expandable-wrapper.open .expandable-inner { padding-top: 1rem; } }
     </style>
 </head>
 <body class="flex flex-col items-center p-6 sm:p-14 relative">
 
+    <div id="spotlight"></div>
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
-    <div class="ambient-bg"></div>
+    
+    <div class="aurora-container">
+        <div class="aurora-blob-1"></div>
+        <div class="aurora-blob-2"></div>
+    </div>
 
     <main class="w-full max-w-4xl mt-8 sm:mt-12 mb-32 z-10">
         
-        <nav class="mb-14 sm:mb-20 reveal w-full flex justify-between items-center" style="animation-delay: 0.1s;">
-            <a href="index" class="interactive-el flex items-center gap-3 sm:gap-4 text-white/30 hover:text-white transition-all duration-500">
-                <span class="text-2xl sm:text-3xl">←</span>
-                <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] uppercase">Devices</span>
+        <nav class="mb-14 sm:mb-20 reveal w-full flex justify-between items-center" style="--delay: 0.0s;">
+            <a href="index" class="magnetic-btn flex items-center gap-3 sm:gap-4 text-white/40 hover:text-white transition-all duration-500 py-2 px-5 -ml-5 rounded-full border-transparent bg-transparent shadow-none hover:border-white/10 hover:bg-white/5">
+                <span class="text-2xl sm:text-3xl content-wrap">←</span>
+                <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] uppercase content-wrap">Devices</span>
             </a>
             <div class="h-[1px] w-12 sm:w-16 bg-white/10"></div>
         </nav>
 
-        <header class="mb-16 sm:mb-20 reveal flex flex-col items-start" style="animation-delay: 0.2s;">
-            <span class="text-[11px] sm:text-[13px] font-extrabold tracking-[0.4em] text-gray-500 uppercase mb-3 block">OnePlus 9 Pro (LE2123)</span>
-            <h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold tracking-tighter text-white mb-10 sm:mb-12">
+        <header class="mb-16 sm:mb-20 reveal flex flex-col items-start" style="--delay: 0.05s;">
+            <span class="text-[11px] sm:text-[13px] font-extrabold tracking-[0.5em] text-transparent bg-clip-text bg-gradient-to-r from-gray-300 to-gray-600 uppercase mb-4 block">OnePlus 9 Pro (LE2123)</span>
+            
+            <h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold tracking-tighter mb-10 sm:mb-12 animate-gradient-text">
                 Downloads.
             </h1>
             
-            <div class="tab-container flex w-full max-w-md interactive-el">
+            <div class="tab-container flex w-full max-w-md magnetic-pull">
                 <div id="tab-bg" class="tab-indicator"></div>
                 <button onclick="switchTab('oos')" id="btn-oos" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white">OxygenOS</button>
-                <button onclick="switchTab('cos')" id="btn-cos" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white/20">ColorOS</button>
-                <button onclick="switchTab('ext')" id="btn-ext" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white/20">Extras</button>
+                <button onclick="switchTab('cos')" id="btn-cos" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white/40">ColorOS</button>
+                <button onclick="switchTab('ext')" id="btn-ext" class="tab-btn flex-1 py-4 sm:py-5 text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase text-white/40">Extras</button>
             </div>
         </header>
 
-        <div id="view-oos" class="os-view active flex-col gap-6 sm:gap-8 reveal" style="animation-delay: 0.3s;">
+        <div id="view-oos" class="os-view active flex-col gap-6 sm:gap-8 reveal" style="--delay: 0.1s;">
             
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
-            <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-LE2123_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center reveal" style="animation-delay: 0.35s;">
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/30 uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
+            <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-LE2123_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal" style="--delay: 0.15s;">
+                <div class="shadow-layer"></div>
+                <div class="hero-glow-green"></div>
+                <div class="film-grain"></div><div class="dynamic-glare"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                        <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/30 text-green-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/5">Latest</span>
-                        <h2 class="text-3xl sm:text-5xl font-extrabold text-white">OxygenOS 16.1</h2>
+                        <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/40 text-green-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/10 shadow-[0_0_15px_rgba(74,222,128,0.2)]">Latest</span>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.1</h2>
                     </div>
-                    <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.7.201 • Stable Build</span>
+                    <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest">Android 16 • 16.0.7.201 • Stable</span>
                 </div>
                 <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
             </a>
 
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8 reveal" style="animation-delay: 0.4s;">OxygenOS 16 Builds</h3>
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/30 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8 reveal" style="--delay: 0.2s;">OxygenOS 16 Builds</h3>
             
             <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.703/ota_full-LE2123_16.0.5.703.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center reveal" style="animation-delay: 0.45s;">
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.703/ota_full-LE2123_16.0.5.703.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal" style="--delay: 0.25s;">
+                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.703 • Stable</span>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
+                        <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.703 • Stable</span>
                     </div>
                     <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                 </a>
 
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.700/ota_full-LE2123_16.0.5.700.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center reveal" style="animation-delay: 0.5s;">
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.700/ota_full-LE2123_16.0.5.700.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal" style="--delay: 0.3s;">
+                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.700 • Stable</span>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
+                        <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.700 • Stable</span>
                     </div>
                     <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                 </a>
 
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.503/ota_full-LE2123_16.0.3.503.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center reveal" style="animation-delay: 0.55s;">
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.503/ota_full-LE2123_16.0.3.503.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal" style="--delay: 0.35s;">
+                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.503 • Stable</span>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
+                        <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.503 • Stable</span>
                     </div>
                     <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                 </a>
             </div>
 
-            <div id="oos-more-wrapper" class="expandable-wrapper reveal" style="animation-delay: 0.6s;">
+            <div id="oos-more-wrapper" class="expandable-wrapper reveal" style="--delay: 0.4s;">
                 <div class="expandable-content">
                     <div class="expandable-inner">
-                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.501/ota_full-LE2123_16.0.3.501.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.501/ota_full-LE2123_16.0.3.501.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                             <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.501 • Stable</span>
+                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
+                                <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.501 • Stable</span>
                             </div>
                             <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                         </a>
 
-                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.500/ota_full-LE2123_16.0.3.500.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.500/ota_full-LE2123_16.0.3.500.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                             <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.500 • Stable</span>
+                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
+                                <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.500 • Stable</span>
                             </div>
                             <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                         </a>
 
-                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.401/ota_full-LE2123_16.0.2.401.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.401/ota_full-LE2123_16.0.2.401.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                             <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.401 • Stable</span>
+                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
+                                <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.401 • Stable</span>
                             </div>
                             <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                         </a>
 
-                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.400/ota_full-LE2123_16.0.2.400.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                        <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.400/ota_full-LE2123_16.0.2.400.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                             <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.400 • Stable</span>
+                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
+                                <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.400 • Stable</span>
                             </div>
                             <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                         </a>
@@ -414,19 +431,22 @@
                 </div>
             </div>
 
-            <button onclick="toggleMore('oos')" class="interactive-el mt-2 w-full py-5 rounded-full bg-gradient-to-b from-white/10 to-transparent border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-white/30 hover:shadow-[0_8px_30px_rgba(255,255,255,0.06)] transition-all duration-500 flex justify-center items-center gap-4 group reveal" style="animation-delay: 0.65s;">
-                <span id="oos-btn-text" class="text-[10px] sm:text-[11px] font-extrabold tracking-[0.3em] uppercase text-white/70 group-hover:text-white transition-colors">Show More Builds</span>
-                <div class="w-7 h-7 rounded-full bg-white/10 border border-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-500">
-                    <span id="oos-btn-icon" class="text-white/70 group-hover:text-white transition-transform duration-700 text-[10px]">↓</span>
+            <button onclick="toggleMore('oos')" class="magnetic-btn mt-2 w-full py-5 flex justify-center items-center gap-4 group reveal" style="--delay: 0.45s;">
+                <div class="content-wrap flex items-center gap-4">
+                    <span id="oos-btn-text" class="text-[10px] sm:text-[11px] font-extrabold tracking-[0.3em] uppercase text-white/70 group-hover:text-white transition-colors">Show 4 More Builds</span>
+                    <div class="w-7 h-7 rounded-full bg-white/10 border border-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-500 shadow-inner">
+                        <span id="oos-btn-icon" class="btn-premium-icon text-white/70 group-hover:text-white text-[10px]">↓</span>
+                    </div>
                 </div>
             </button>
             
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8 reveal" style="animation-delay: 0.7s;">OxygenOS 15 Builds</h3>
-            <div class="flex flex-col gap-4 sm:gap-6 reveal" style="animation-delay: 0.75s;">
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2015/15.0.0.864/ota_full-LE2123_15.0.0.864.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/30 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8 reveal" style="--delay: 0.5s;">OxygenOS 15 Builds</h3>
+            <div class="flex flex-col gap-4 sm:gap-6 reveal" style="--delay: 0.55s;">
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2015/15.0.0.864/ota_full-LE2123_15.0.0.864.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">OxygenOS 15</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 15 • 15.0.0.864 • Firmware</span>
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 15</h2>
+                        <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 15 • 15.0.0.864 • Firmware</span>
                     </div>
                     <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                 </a>
@@ -435,53 +455,60 @@
 
         <div id="view-cos" class="os-view flex-col gap-6 sm:gap-8">
             
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/30 uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
             
-            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.8.304/ota_full-LE2123_16.0.8.304.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.8.304/ota_full-LE2123_16.0.8.304.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                <div class="shadow-layer"></div>
+                <div class="hero-glow-blue"></div>
+                <div class="film-grain"></div><div class="dynamic-glare"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                        <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/30 text-blue-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/10">Global</span>
-                        <h2 class="text-3xl sm:text-5xl font-extrabold text-white">ColorOS 16.1</h2>
+                        <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/40 text-blue-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/10 shadow-[0_0_15px_rgba(96,165,250,0.2)]">Global</span>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.1</h2>
                     </div>
-                    <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.8.304 • Stable Build</span>
+                    <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest">Android 16 • 16.0.8.304 • Stable</span>
                 </div>
                 <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
             </a>
 
-            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.8.300/ota_full-LE2123_16.0.8.300.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.8.300/ota_full-LE2123_16.0.8.300.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                        <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-500/30 text-gray-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-white/5">China</span>
-                        <h2 class="text-3xl sm:text-5xl font-extrabold text-white">ColorOS 16.1</h2>
+                        <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-500/40 text-gray-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-white/5">China</span>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.1</h2>
                     </div>
-                    <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.8.300 • Stable Build</span>
+                    <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest">Android 16 • 16.0.8.300 • Stable</span>
                 </div>
                 <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
             </a>
 
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">ColorOS 16 Builds</h3>
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/30 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8">ColorOS 16 Builds</h3>
             
             <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.7.204_v2/ota_full-LE2123_16.0.7.204.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.7.204_v2/ota_full-LE2123_16.0.7.204.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">ColorOS 16.1</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.204_v2 • Stable</span>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.1</h2>
+                        <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.204_v2 • Stable</span>
                     </div>
                     <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                 </a>
 
-                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.7.206/ota_full-LE2123_16.0.7.206.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.7.206/ota_full-LE2123_16.0.7.206.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">ColorOS 16.1</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.206 • Stable</span>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.1</h2>
+                        <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.206 • Stable</span>
                     </div>
                     <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                 </a>
                 
-                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.5.701/ota_full-LE2123_16.0.5.701.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.5.701/ota_full-LE2123_16.0.5.701.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">ColorOS 16.0</h2>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.701 • Stable</span>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.0</h2>
+                        <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.701 • Stable</span>
                     </div>
                     <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                 </a>
@@ -490,10 +517,11 @@
             <div id="cos-more-wrapper" class="expandable-wrapper">
                 <div class="expandable-content">
                     <div class="expandable-inner">
-                        <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.3.504/ota_full-LE2123_16.0.3.504.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                        <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.3.504/ota_full-LE2123_16.0.3.504.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                             <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white">ColorOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.504 • Stable</span>
+                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.0</h2>
+                                <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.504 • Stable</span>
                             </div>
                             <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                         </a>
@@ -501,24 +529,27 @@
                 </div>
             </div>
 
-            <button onclick="toggleMore('cos')" class="interactive-el mt-2 w-full py-5 rounded-full bg-gradient-to-b from-white/10 to-transparent border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-white/30 hover:shadow-[0_8px_30px_rgba(255,255,255,0.06)] transition-all duration-500 flex justify-center items-center gap-4 group">
-                <span id="cos-btn-text" class="text-[10px] sm:text-[11px] font-extrabold tracking-[0.3em] uppercase text-white/70 group-hover:text-white transition-colors">Show More Builds</span>
-                <div class="w-7 h-7 rounded-full bg-white/10 border border-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-500">
-                    <span id="cos-btn-icon" class="text-white/70 group-hover:text-white transition-transform duration-700 text-[10px]">↓</span>
+            <button onclick="toggleMore('cos')" class="magnetic-btn mt-2 w-full py-5 flex justify-center items-center gap-4 group">
+                <div class="content-wrap flex items-center gap-4">
+                    <span id="cos-btn-text" class="text-[10px] sm:text-[11px] font-extrabold tracking-[0.3em] uppercase text-white/70 group-hover:text-white transition-colors">Show More Builds</span>
+                    <div class="w-7 h-7 rounded-full bg-white/10 border border-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-500 shadow-inner">
+                        <span id="cos-btn-icon" class="btn-premium-icon text-white/70 group-hover:text-white text-[10px]">↓</span>
+                    </div>
                 </div>
             </button>
         </div>
 
         <div id="view-ext" class="os-view flex-col gap-6 sm:gap-8">
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/20 uppercase mt-4 mb-1 pl-6 sm:pl-8">Extras</h3>
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/30 uppercase mt-4 mb-1 pl-6 sm:pl-8">Extras</h3>
             <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="download-row interactive-el group p-8 sm:p-10 flex justify-between items-center">
+                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
+                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
                     <div class="content-layer flex flex-col">
                         <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/30 text-amber-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10">Beta</span>
-                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">Realme UI 7.0</h2>
+                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 shadow-[0_0_15px_rgba(251,191,36,0.2)]">Beta</span>
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">Realme UI 7.0</h2>
                         </div>
-                        <span class="text-xs sm:text-base text-white/30 font-mono tracking-widest">Android 16 • 16.0.5.704 • Beta Build</span>
+                        <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest">Android 16 • 16.0.5.704 • Beta</span>
                     </div>
                     <div class="content-layer dl-icon text-3xl sm:text-5xl text-white">↓</div>
                 </a>
@@ -527,89 +558,213 @@
     </main>
 
     <script>
-        // --- View Toggler ---
+        // --- iOS Segmented Control Tab Engine ---
         function switchTab(os) {
             const bg = document.getElementById('tab-bg');
             const btnOos = document.getElementById('btn-oos');
             const btnCos = document.getElementById('btn-cos');
             const btnExt = document.getElementById('btn-ext');
+            
             const viewOos = document.getElementById('view-oos');
             const viewCos = document.getElementById('view-cos');
             const viewExt = document.getElementById('view-ext');
+            
+            const allViews = [viewOos, viewCos, viewExt];
+            let activeView = null;
+            let targetView = null;
 
             if(os === 'oos') {
                 bg.style.transform = 'translateX(0)';
                 btnOos.style.color = '#ffffff';
-                btnCos.style.color = 'rgba(255,255,255,0.2)';
-                btnExt.style.color = 'rgba(255,255,255,0.2)';
-                viewCos.classList.remove('active');
-                if (viewExt) viewExt.classList.remove('active');
-                setTimeout(() => viewOos.classList.add('active'), 50);
-                
+                btnCos.style.color = 'rgba(255,255,255,0.4)';
+                btnExt.style.color = 'rgba(255,255,255,0.4)';
+                targetView = viewOos;
             } else if(os === 'cos') {
                 bg.style.transform = 'translateX(100%)';
-                btnOos.style.color = 'rgba(255,255,255,0.2)';
+                btnOos.style.color = 'rgba(255,255,255,0.4)';
                 btnCos.style.color = '#ffffff';
-                btnExt.style.color = 'rgba(255,255,255,0.2)';
-                viewOos.classList.remove('active');
-                if (viewExt) viewExt.classList.remove('active');
-                setTimeout(() => viewCos.classList.add('active'), 50);
-                
+                btnExt.style.color = 'rgba(255,255,255,0.4)';
+                targetView = viewCos;
             } else if(os === 'ext') {
                 bg.style.transform = 'translateX(200%)';
-                btnOos.style.color = 'rgba(255,255,255,0.2)';
-                btnCos.style.color = 'rgba(255,255,255,0.2)';
+                btnOos.style.color = 'rgba(255,255,255,0.4)';
+                btnCos.style.color = 'rgba(255,255,255,0.4)';
                 btnExt.style.color = '#ffffff';
-                viewOos.classList.remove('active');
-                viewCos.classList.remove('active');
-                setTimeout(() => { if (viewExt) viewExt.classList.add('active'); }, 50);
+                targetView = viewExt;
+            }
+
+            allViews.forEach(v => { if(v && v.classList.contains('active')) activeView = v; });
+            if(activeView === targetView) return;
+
+            if(activeView) {
+                activeView.classList.remove('active');
+                activeView.classList.add('exiting');
+                setTimeout(() => {
+                    activeView.classList.remove('exiting');
+                    if(targetView) targetView.classList.add('active');
+                }, 250); 
+            } else {
+                if(targetView) targetView.classList.add('active');
             }
         }
 
-        // --- CSS Grid Expand Toggler ---
+        // --- Accordion Logic ---
         function toggleMore(os) {
             const moreWrapper = document.getElementById(`${os}-more-wrapper`);
             const btnText = document.getElementById(`${os}-btn-text`);
-            const btnIcon = document.getElementById(`${os}-btn-icon`);
+            const isOOS = moreWrapper.id.includes('oos');
 
             if(moreWrapper.classList.contains('open')) {
                 moreWrapper.classList.remove('open');
-                btnText.innerText = "Show More Builds";
-                btnIcon.style.transform = "rotate(0deg)";
+                btnText.innerText = isOOS ? "Show 4 More Builds" : "Show More Builds";
             } else {
                 moreWrapper.classList.add('open');
                 btnText.innerText = "Show Fewer Builds";
-                btnIcon.style.transform = "rotate(180deg)";
             }
         }
 
-        // --- Device-Aware Cursor & Hover ---
+        // --- Hardware Accelerated Zero-Latency Engine ---
         const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
         
         if (!isTouchDevice) {
             const dot = document.getElementById('cursor-dot');
             const ring = document.getElementById('cursor-ring');
-            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2, ringX = mouseX, ringY = mouseY;
+            const spotlight = document.getElementById('spotlight');
+            
+            const cards = Array.from(document.querySelectorAll('.tvos-card'));
+            const magneticElements = Array.from(document.querySelectorAll('.magnetic-btn'));
+            const magneticPulls = Array.from(document.querySelectorAll('.magnetic-pull'));
 
+            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+            let cursorX = mouseX, cursorY = mouseY;
+            
+            // Setup Physics Objects
+            cards.forEach(card => card.phys = { currRotX: 0, currRotY: 0, tarRotX: 0, tarRotY: 0, isHovered: false });
+            magneticElements.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
+            magneticPulls.forEach(pull => pull.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
+
+            // INSTANT ZERO-LATENCY CURSOR DOT (Bypasses physics loop)
             window.addEventListener('mousemove', (e) => { 
                 mouseX = e.clientX; 
                 mouseY = e.clientY; 
-            });
-
-            function animateCursor() {
-                ringX += (mouseX - ringX) * 0.25; 
-                ringY += (mouseY - ringY) * 0.25;
                 dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
-                const isHovering = document.body.classList.contains('hovering-link');
-                const offset = isHovering ? 30 : 19; 
-                ring.style.transform = `translate3d(${ringX - offset}px, ${ringY - offset}px, 0)`;
-                requestAnimationFrame(animateCursor);
-            }
-            animateCursor();
+            }, { passive: true });
 
-            document.querySelectorAll('.interactive-el').forEach(el => {
+            // LERP ENGINE FOR HEAVY 3D PHYSICS & RING
+            function physicsTick() {
+                // Ambient Ring & Spotlight Lerp
+                cursorX += (mouseX - cursorX) * 0.25; 
+                cursorY += (mouseY - cursorY) * 0.25;
+                
+                const isHoveringCard = document.body.classList.contains('hovering-card');
+                const isHoveringLink = document.body.classList.contains('hovering-link');
+                const offset = isHoveringCard ? 55 : (isHoveringLink ? 25 : 19);
+                
+                ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
+                spotlight.style.transform = `translate3d(${cursorX - 400}px, ${cursorY - 400}px, 0)`;
+
+                // tvOS Card Parallax Lerp
+                cards.forEach(card => {
+                    if (card.phys.isHovered) {
+                        card.phys.currRotX += (card.phys.tarRotX - card.phys.currRotX) * 0.15;
+                        card.phys.currRotY += (card.phys.tarRotY - card.phys.currRotY) * 0.15;
+                        
+                        card.style.transform = `perspective(1000px) rotateX(${card.phys.currRotX}deg) rotateY(${card.phys.currRotY}deg) scale3d(1.02, 1.02, 1.02)`;
+                        
+                        const shadowLayer = card.querySelector('.shadow-layer');
+                        if (shadowLayer) {
+                            const shadowX = card.phys.currRotY * -5;
+                            const shadowY = card.phys.currRotX * 5;
+                            shadowLayer.style.transform = `translate3d(${shadowX}px, ${shadowY}px, -20px)`;
+                        }
+                    }
+                });
+
+                // Magnetic Button Lerp
+                magneticElements.forEach(btn => {
+                    if (btn.phys.isHovered) {
+                        btn.phys.currX += (btn.phys.tarX - btn.phys.currX) * 0.25;
+                        btn.phys.currY += (btn.phys.tarY - btn.phys.currY) * 0.25;
+                        btn.style.transform = `translate3d(${btn.phys.currX}px, ${btn.phys.currY}px, 0) scale(1.02)`;
+                    }
+                });
+
+                // Tab Container Magnetic Pull Lerp
+                magneticPulls.forEach(pull => {
+                    pull.phys.currX += (pull.phys.tarX - pull.phys.currX) * 0.15;
+                    pull.phys.currY += (pull.phys.tarY - pull.phys.currY) * 0.15;
+                    pull.style.transform = `translate3d(${pull.phys.currX}px, ${pull.phys.currY}px, 0)`;
+                });
+
+                requestAnimationFrame(physicsTick);
+            }
+            physicsTick(); 
+
+            // --- Event Bindings ---
+
+            // Cursor Hover States
+            document.querySelectorAll('.interactive-el, .magnetic-btn, .magnetic-pull').forEach(el => {
                 el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
                 el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+            });
+
+            // Card 3D Tracking
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => { 
+                    card.phys.isHovered = true; 
+                    card.classList.add('is-tracking'); 
+                    document.body.classList.add('hovering-card');
+                });
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                    const centerX = rect.width / 2, centerY = rect.height / 2;
+                    
+                    card.phys.tarRotX = ((y - centerY) / centerY) * -5; 
+                    card.phys.tarRotY = ((x - centerX) / centerX) * 5;
+
+                    card.style.setProperty('--mouseX', `${(x / rect.width) * 100}%`);
+                    card.style.setProperty('--mouseY', `${(y / rect.height) * 100}%`);
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.phys.isHovered = false; 
+                    card.classList.remove('is-tracking');
+                    document.body.classList.remove('hovering-card');
+                    card.style.transform = ''; 
+                    const shadowLayer = card.querySelector('.shadow-layer');
+                    if (shadowLayer) shadowLayer.style.transform = '';
+                });
+            });
+
+            // Magnetic Button Tracking
+            magneticElements.forEach(btn => {
+                btn.addEventListener('mouseenter', () => { btn.phys.isHovered = true; btn.classList.add('is-magnetized'); });
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2, centerY = rect.top + rect.height / 2;
+                    btn.phys.tarX = (e.clientX - centerX) * 0.15;
+                    btn.phys.tarY = (e.clientY - centerY) * 0.3;
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.phys.isHovered = false; btn.classList.remove('is-magnetized');
+                    btn.style.transform = ''; 
+                });
+            });
+
+            // Tab Container Magnetic Pull Tracking
+            magneticPulls.forEach(pull => {
+                pull.addEventListener('mouseenter', () => pull.phys.isHovered = true);
+                pull.addEventListener('mousemove', (e) => {
+                    const rect = pull.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2, centerY = rect.top + rect.height / 2;
+                    // Gentle shift for the whole container
+                    pull.phys.tarX = (e.clientX - centerX) * 0.05;
+                    pull.phys.tarY = (e.clientY - centerY) * 0.1;
+                });
+                pull.addEventListener('mouseleave', () => {
+                    pull.phys.isHovered = false;
+                    pull.phys.tarX = 0; pull.phys.tarY = 0;
+                });
             });
         }
     </script>
