@@ -20,105 +20,194 @@
             --liquid-glow: rgba(255, 255, 255, 0.05);
         }
 
-        /* STRIP ALL NATIVE CURSORS GLOBALLY */
-        *, *::before, *::after, *:hover, *:active, *:focus { 
-            margin: 0; padding: 0; box-sizing: border-box; 
-            cursor: none !important; 
-            outline: none !important;
-            -webkit-tap-highlight-color: transparent;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        ::selection { background: rgba(255, 255, 255, 0.2); color: #ffffff; }
+        *:focus {
+            outline: none !important;
+        }
+
+        ::selection {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #000000; color: #ffffff;
-            overflow-x: hidden; min-height: 100vh;
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
+            cursor: none; /* Hides default cursor */
         }
 
-        /* Stealth Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; cursor: none; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+        /* ========================================= */
+        /* CUSTOM STEALTH SCROLLBAR                  */
+        /* ========================================= */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+            cursor: none;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
 
         /* ========================================= */
         /* CLASSIC DOT & RING CURSOR + SPOTLIGHT     */
         /* ========================================= */
-        #spotlight { display: none; }
+        #spotlight {
+            display: none;
+        }
 
         @media (hover: hover) and (pointer: fine) {
+            * {
+                cursor: none !important;
+            }
+            
             #cursor-dot {
-                width: 5px; height: 5px; background-color: #ffffff; border-radius: 50%;
-                position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
-                will-change: transform; transition: opacity 0.2s var(--apple-ease);
+                width: 5px;
+                height: 5px;
+                background-color: #ffffff;
+                border-radius: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 10000;
+                will-change: transform;
+                transition: opacity 0.2s var(--apple-ease);
             }
             
             #cursor-ring {
-                width: 36px; height: 36px; border: 1.5px solid rgba(255, 255, 255, 0.25); border-radius: 50%;
-                position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+                width: 36px;
+                height: 36px;
+                border: 1.5px solid rgba(255, 255, 255, 0.25);
+                border-radius: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9999;
                 will-change: transform, width, height, border-color, background-color, box-shadow;
-                transition: width 0.3s var(--apple-ease), height 0.3s var(--apple-ease), border-color 0.3s var(--apple-ease), background-color 0.3s var(--apple-ease), box-shadow 0.3s var(--apple-ease);
+                transition: width 0.3s var(--apple-ease), 
+                            height 0.3s var(--apple-ease), 
+                            border-color 0.3s var(--apple-ease), 
+                            background-color 0.3s var(--apple-ease), 
+                            box-shadow 0.3s var(--apple-ease),
+                            border-radius 0.3s var(--apple-ease);
             }
             
             #spotlight {
-                display: block; position: fixed; top: 0; left: 0;
-                width: 800px; height: 800px; border-radius: 50%; pointer-events: none; z-index: 0;
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 800px;
+                height: 800px;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
                 background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, rgba(150, 200, 255, 0.005) 40%, transparent 60%);
-                will-change: transform; transition: background 0.5s var(--apple-ease);
+                will-change: transform;
+                transition: background 0.5s var(--apple-ease);
             }
 
-            /* Generic Hover State */
+            /* Generic Button/Link Hover State */
             body.hovering-link #cursor-ring {
-                width: 56px; height: 56px; background-color: rgba(255, 255, 255, 0.08);
-                border-color: rgba(255, 255, 255, 0.6); backdrop-filter: blur(4px);
+                width: 56px;
+                height: 56px;
+                background-color: rgba(255, 255, 255, 0.08);
+                border-color: rgba(255, 255, 255, 0.6);
+                backdrop-filter: blur(4px);
             }
-            body.hovering-link #cursor-dot { opacity: 0; }
+            body.hovering-link #cursor-dot {
+                opacity: 0;
+            }
             body.hovering-link #spotlight {
                 background: radial-gradient(circle, rgba(255, 255, 255, 0.035) 0%, rgba(150, 200, 255, 0.01) 30%, transparent 50%);
             }
 
             /* TVOS Card Hover State (Soft Lens Flare) */
             body.hovering-card #cursor-ring {
-                width: 110px; height: 110px; background-color: transparent;
-                border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+                width: 110px;
+                height: 110px;
+                background-color: transparent;
+                border-color: rgba(255, 255, 255, 0.15);
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
                 backdrop-filter: none;
             }
-            body.hovering-card #cursor-dot { opacity: 0; }
+            body.hovering-card #cursor-dot {
+                opacity: 0;
+            }
         }
-        @media (hover: none), (pointer: coarse) { #cursor-dot, #cursor-ring { display: none !important; } }
+
+        @media (hover: none), (pointer: coarse) {
+            #cursor-dot, 
+            #cursor-ring {
+                display: none !important;
+            }
+        }
 
         /* ========================================= */
         /* GPU-ACCELERATED VOLUMETRIC AURORA         */
         /* ========================================= */
         .aurora-container {
-            position: fixed; inset: -20%; width: 140%; height: 140%;
-            z-index: -1; pointer-events: none; overflow: hidden;
+            position: fixed;
+            inset: -20%;
+            width: 140%;
+            height: 140%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
             will-change: transform;
         }
 
         .aurora-blob-1, .aurora-blob-2 {
-            position: absolute; border-radius: 50%;
+            position: absolute;
+            border-radius: 50%;
             will-change: transform;
         }
 
         .aurora-blob-1 {
-            width: 70vw; height: 70vw; top: -10%; left: 0%;
+            width: 70vw;
+            height: 70vw;
+            top: -10%;
+            left: 0%;
             background: radial-gradient(closest-side, rgba(14, 165, 233, 0.08) 0%, transparent 100%);
             animation: floatAurora1 25s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
         }
 
         .aurora-blob-2 {
-            width: 80vw; height: 80vw; bottom: -10%; right: -10%;
+            width: 80vw;
+            height: 80vw;
+            bottom: -10%;
+            right: -10%;
             background: radial-gradient(closest-side, rgba(16, 185, 129, 0.06) 0%, transparent 100%);
             animation: floatAurora2 30s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate-reverse;
         }
 
-        @keyframes floatAurora1 { 0% { transform: translate3d(0, 0, 0) scale(1); } 100% { transform: translate3d(10%, 15%, 0) scale(1.1); } }
-        @keyframes floatAurora2 { 0% { transform: translate3d(0, 0, 0) scale(1); } 100% { transform: translate3d(-15%, -10%, 0) scale(1.05); } }
+        @keyframes floatAurora1 {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(10%, 15%, 0) scale(1.1); }
+        }
+        @keyframes floatAurora2 {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(-15%, -10%, 0) scale(1.05); }
+        }
 
         /* ========================================= */
         /* TVOS 3D HARDWARE CARDS                    */
@@ -129,140 +218,262 @@
             -webkit-backdrop-filter: blur(45px) saturate(200%);
             border-radius: 2.2rem;
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-top: 1px solid rgba(255, 255, 255, 0.2); 
-            position: relative; overflow: visible; display: block;
-            transform-style: preserve-3d; will-change: transform;
-            transition: transform 0.6s var(--apple-ease), border-color 0.4s var(--apple-ease);
+            border-top: 1px solid rgba(255, 255, 255, 0.15); 
+            position: relative;
+            overflow: hidden; /* Ensure sheen stays inside */
+            display: block;
+            transform-style: preserve-3d;
+            will-change: transform, box-shadow;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.6s var(--apple-ease), border-color 0.4s var(--apple-ease), box-shadow 0.6s var(--apple-ease);
         }
 
+        /* Active Hover Physics */
         .tvos-card.is-tracking {
             transition: transform 0.1s linear, border-color 0.2s linear;
-            border-color: rgba(255, 255, 255, 0.3); z-index: 20;
+            border-color: rgba(255, 255, 255, 0.3);
+            z-index: 20;
         }
 
         /* 120fps Baked Shadow */
         .tvos-card .shadow-layer {
-            position: absolute; inset: 0; border-radius: 2.2rem;
+            position: absolute;
+            inset: 0;
+            border-radius: 2.2rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.03);
-            opacity: 0; pointer-events: none; z-index: -1;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
             transition: opacity 0.4s var(--apple-ease), transform 0.1s linear;
             will-change: opacity, transform;
         }
-        .tvos-card.is-tracking .shadow-layer { opacity: 1; }
+        .tvos-card.is-tracking .shadow-layer {
+            opacity: 1;
+        }
 
-        /* Static Optical Grain */
+        /* Cinematic Film Grain */
+        @keyframes filmGrain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 1%); }
+            30% { transform: translate(-2%, -2%); }
+            40% { transform: translate(2%, 2%); }
+            50% { transform: translate(-1%, 1%); }
+            60% { transform: translate(1%, -1%); }
+            70% { transform: translate(2%, -2%); }
+            80% { transform: translate(-2%, 2%); }
+            90% { transform: translate(1%, 1%); }
+        }
         .film-grain {
-            position: absolute; inset: 0; border-radius: 2.2rem; overflow: hidden;
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.04; pointer-events: none; z-index: 1;
-            mask-image: radial-gradient(white, black); -webkit-mask-image: -webkit-radial-gradient(white, black);
+            opacity: 0.035;
+            pointer-events: none;
+            z-index: 1;
+            animation: filmGrain 6s steps(10) infinite;
+            will-change: transform;
         }
 
-        /* Iridescent Glare */
+        /* Iridescent Apple Intelligence Glare */
         .dynamic-glare {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 2.2rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 2.2rem;
             background: radial-gradient(circle at var(--mouseX, 50%) var(--mouseY, 50%), rgba(255,255,255,0.15) 0%, rgba(150, 200, 255, 0.05) 20%, rgba(255, 150, 200, 0.02) 40%, transparent 60%);
-            opacity: 0; transition: opacity 0.4s var(--apple-ease); pointer-events: none; z-index: 2;
+            opacity: 0;
+            transition: opacity 0.4s var(--apple-ease);
+            pointer-events: none;
+            z-index: 2;
         }
-        .tvos-card.is-tracking .dynamic-glare { opacity: 1; transition: none; }
+        .tvos-card.is-tracking .dynamic-glare {
+            opacity: 1;
+            transition: none;
+        }
+
+        /* Liquid Sheen - Restored! */
+        .sheen {
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 80%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--liquid-glow), transparent);
+            transform: skewX(-30deg);
+            transition: left 0.8s var(--apple-ease);
+            pointer-events: none;
+            z-index: 3;
+        }
+        .tvos-card:hover .sheen,
+        .magnetic-btn:hover .sheen {
+            left: 200%;
+        }
 
         /* Specular Edge Mask */
         .tvos-card::after {
-            content: ""; position: absolute; inset: 0; border-radius: 2.2rem; padding: 1px;
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 2.2rem;
+            padding: 1px;
             background: linear-gradient(160deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(255,255,255,0.01) 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: 4;
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 4;
         }
 
-        /* Content 3D Lift */
+        /* 3D PARALLAX CONTENT LAYER */
         .content-layer { 
-            position: relative; z-index: 5; transform: translateZ(1px); 
-            transition: transform 0.4s var(--apple-ease); pointer-events: none;
+            position: relative;
+            z-index: 5;
+            transform: translateZ(1px); 
+            transition: transform 0.4s var(--apple-ease);
+            transform-style: preserve-3d;
         }
-        .tvos-card.is-tracking .content-layer { transform: translateZ(25px); }
+        .tvos-card.is-tracking .content-layer {
+            transform: translateZ(25px); /* Pulls text closer to user in 3D space */
+        }
 
         .dl-icon {
-            opacity: 0.2; transform: translateX(-15px) translateZ(1px); transition: all 0.4s var(--apple-spring);
+            opacity: 0.2;
+            transform: translateX(-15px) translateZ(10px);
+            transition: all 0.5s var(--apple-spring);
         }
-        .tvos-card.is-tracking .dl-icon { opacity: 1; transform: translateX(0) translateY(4px) translateZ(35px); color: #ffffff; }
+        .tvos-card.is-tracking .dl-icon {
+            opacity: 1;
+            transform: translateX(0) translateY(4px) translateZ(40px);
+            color: #ffffff;
+        }
 
-        .tvos-card:active { transform: scale3d(0.97, 0.97, 0.97) !important; transition: transform 0.1s var(--apple-spring); }
+        .tvos-card:active {
+            transform: scale3d(0.96, 0.96, 0.96) !important;
+            transition: transform 0.15s var(--apple-spring);
+        }
 
         /* ========================================= */
         /* HERO PULSES (For Latest Builds)           */
         /* ========================================= */
-        @keyframes pulseGlow { 0% { opacity: 0.2; transform: scale(0.95); } 100% { opacity: 0.8; transform: scale(1.05); } }
-        .hero-glow-green, .hero-glow-blue {
-            position: absolute; width: 160%; height: 160%; top: -30%; left: -30%;
-            z-index: 0; pointer-events: none; animation: pulseGlow 4s ease-in-out infinite alternate;
+        @keyframes pulseGlow {
+            0% { opacity: 0.3; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
         }
-        .hero-glow-green { background: radial-gradient(circle closest-side, rgba(74, 222, 128, 0.08) 0%, transparent 100%); }
-        .hero-glow-blue { background: radial-gradient(circle closest-side, rgba(96, 165, 250, 0.08) 0%, transparent 100%); }
+        .hero-glow-green, .hero-glow-blue {
+            position: absolute;
+            width: 160%;
+            height: 160%;
+            top: -30%;
+            left: -30%;
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseGlow 4s ease-in-out infinite alternate;
+        }
+        .hero-glow-green {
+            background: radial-gradient(circle at center, rgba(74, 222, 128, 0.08) 0%, transparent 50%);
+        }
+        .hero-glow-blue {
+            background: radial-gradient(circle at center, rgba(96, 165, 250, 0.08) 0%, transparent 50%);
+        }
 
         /* ========================================= */
         /* ANIMATED GRADIENT TEXT                    */
         /* ========================================= */
-        .animate-gradient-text { 
-            background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.4) 50%, #ffffff 100%);
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: textShine 6s linear infinite; 
+        .animate-gradient-text {
+            background-size: 200% auto;
+            animation: textShine 6s linear infinite;
         }
-        @keyframes textShine { 0% { background-position: 0% center; } 100% { background-position: -200% center; } }
+        @keyframes textShine {
+            0% { background-position: 0% center; }
+            100% { background-position: -200% center; }
+        }
 
         /* ========================================= */
-        /* iOS SEGMENTED CONTROL / TABS              */
+        /* iOS SEGMENTED CONTROL / MACOS TABS        */
         /* ========================================= */
         .tab-container {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(40px); border-radius: 99px; position: relative; padding: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px);
+            border-radius: 99px;
+            position: relative;
+            padding: 6px;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
-            /* Magnetic properties */
-            transition: transform 0.4s var(--apple-ease), box-shadow 0.4s var(--apple-ease);
-            will-change: transform; transform-style: preserve-3d;
-        }
-        .tab-container.is-magnetized {
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 2px 10px rgba(0,0,0,0.5);
-            transition: none; /* JS tracking handles it */
+            transition: transform 0.4s var(--apple-ease);
+            will-change: transform;
         }
         .tab-indicator {
-            position: absolute; top: 6px; left: 6px; height: calc(100% - 12px); width: calc(33.333% - 4px);
-            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 99px; transition: transform 0.5s var(--apple-spring);
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            height: calc(100% - 12px);
+            width: calc(33.333% - 4px);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 99px;
+            transition: transform 0.5s var(--apple-spring);
             box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);
             will-change: transform;
         }
-        .tab-btn { position: relative; z-index: 2; transition: color 0.4s var(--apple-ease), transform 0.2s var(--apple-spring); }
-        .tab-btn:hover { transform: scale(1.05); color: #ffffff !important; }
+        .tab-btn { 
+            position: relative;
+            z-index: 2;
+            transition: color 0.4s var(--apple-ease), transform 0.2s var(--apple-spring); 
+        }
+        /* macOS Dock Hover effect on tabs */
+        .tab-btn:hover {
+            transform: scale(1.05);
+            color: #ffffff !important;
+        }
 
         /* ========================================= */
-        /* IPADOS MAGNETIC 'SHOW MORE' BUTTON        */
+        /* IPADOS MAGNETIC BUTTONS                   */
         /* ========================================= */
         .magnetic-btn {
-            position: relative; overflow: visible; background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08); border-radius: 99px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3); transform-style: preserve-3d;
-            transition: transform 0.4s var(--apple-ease), background 0.4s var(--apple-ease), border-color 0.4s var(--apple-ease);
+            position: relative;
+            overflow: hidden; /* Ensures sheen stays inside */
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 99px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+            transition: transform 0.4s var(--apple-ease), background 0.4s var(--apple-ease), border-color 0.4s var(--apple-ease), box-shadow 0.4s var(--apple-ease);
             will-change: transform;
         }
-        .magnetic-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.7s var(--apple-ease); z-index: 1; border-radius: 99px;
-        }
         .magnetic-btn.is-magnetized {
-            border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); transition: none;
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.05);
+            transition: border-color 0.2s linear, background 0.2s linear, box-shadow 0.2s linear; 
         }
-        .magnetic-btn:hover::before { left: 200%; }
-        .magnetic-btn:active { transform: scale(0.96) !important; transition: transform 0.1s var(--apple-spring); }
-        .magnetic-btn .content-wrap { position: relative; z-index: 2; pointer-events: none; transform: translateZ(10px); }
-        
-        .btn-premium-icon { transition: transform 0.5s var(--apple-spring); }
-        .expandable-wrapper.open ~ .magnetic-btn .btn-premium-icon { transform: rotate(180deg); }
+        .magnetic-btn:active {
+            transform: scale(0.95) !important;
+            transition: transform 0.15s var(--apple-spring);
+        }
+        .magnetic-btn .content-wrap {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
+            transform: translateZ(10px);
+        }
+        .btn-premium-icon {
+            transition: transform 0.6s var(--apple-spring);
+        }
+        .expandable-wrapper.open ~ .magnetic-btn .btn-premium-icon {
+            transform: rotate(180deg);
+        }
 
         /* ========================================= */
         /* FLUID VIEW MANAGEMENT (CROSSFADE)         */
         /* ========================================= */
         .os-view { display: none; }
+        
         @keyframes viewEnter {
             0% { opacity: 0; transform: perspective(1200px) translateY(20px) scale(0.98); filter: blur(8px); }
             100% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
@@ -271,38 +482,80 @@
             0% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
             100% { opacity: 0; transform: perspective(1200px) translateY(-15px) scale(0.98); filter: blur(8px); }
         }
-        .os-view.active { display: flex; animation: viewEnter 0.5s var(--apple-ease) forwards; transform-origin: center top; }
-        .os-view.exiting { display: flex; animation: viewExit 0.3s var(--apple-ease) forwards; transform-origin: center top; pointer-events: none; }
+        
+        .os-view.active {
+            display: flex;
+            animation: viewEnter 0.5s var(--apple-ease) forwards;
+            transform-origin: center top;
+        }
+        .os-view.exiting {
+            display: flex;
+            animation: viewExit 0.3s var(--apple-ease) forwards;
+            transform-origin: center top;
+            pointer-events: none;
+        }
 
         .reveal {
-            opacity: 0; transform: perspective(1200px) translateY(30px) scale(0.96) rotateX(-5deg); filter: blur(12px);
-            animation: revealAnim 1s forwards var(--apple-spring); animation-delay: var(--delay, 0s); transform-origin: top center;
+            opacity: 0;
+            transform: perspective(1200px) translateY(30px) scale(0.96) rotateX(-5deg);
+            filter: blur(12px);
+            animation: revealAnim 1s forwards var(--apple-spring);
+            animation-delay: var(--delay, 0s);
+            transform-origin: top center;
         }
-        @keyframes revealAnim { to { opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0); } }
+        @keyframes revealAnim {
+            to { opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0); }
+        }
 
         /* ========================================= */
         /* STAGGERED ACCORDION WIDGET                */
         /* ========================================= */
-        .expandable-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.7s var(--apple-spring); }
-        .expandable-wrapper.open { grid-template-rows: 1fr; }
-        .expandable-content { overflow: hidden; }
-        .expandable-inner { display: flex; flex-direction: column; gap: 1.5rem; padding: 0; transition: padding 0.7s var(--apple-spring); }
-        .expandable-wrapper.open .expandable-inner { padding-top: 1.5rem; padding-bottom: 0.5rem; }
+        .expandable-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.7s var(--apple-spring);
+        }
+        .expandable-wrapper.open {
+            grid-template-rows: 1fr;
+        }
+        .expandable-content {
+            overflow: hidden;
+        }
+        .expandable-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 0;
+            transition: padding 0.7s var(--apple-spring);
+        }
+        .expandable-wrapper.open .expandable-inner {
+            padding-top: 1.5rem;
+            padding-bottom: 0.5rem;
+        }
 
         .expandable-inner .tvos-card {
-            opacity: 0; transform: perspective(1200px) translateY(-30px) scale(0.96) rotateX(-8deg); filter: blur(10px);
-            transition: opacity 0.5s ease, transform 0.7s var(--apple-spring), filter 0.5s ease; transform-origin: top center;
+            opacity: 0;
+            transform: perspective(1200px) translateY(-30px) scale(0.96) rotateX(-8deg);
+            filter: blur(10px);
+            transition: opacity 0.5s ease, transform 0.7s var(--apple-spring), filter 0.5s ease;
+            transform-origin: top center;
         }
         .expandable-wrapper.open .expandable-inner .tvos-card {
-            opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0);
+            opacity: 1;
+            transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg);
+            filter: blur(0);
         }
 
+        /* Full Deck Shuffle Cascade */
         .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(1) { transition-delay: 0.04s; }
         .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(2) { transition-delay: 0.08s; }
         .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(3) { transition-delay: 0.12s; }
         .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(4) { transition-delay: 0.16s; }
         
-        @media (max-width: 640px) { .expandable-inner { gap: 1rem; } .expandable-wrapper.open .expandable-inner { padding-top: 1rem; } }
+        @media (max-width: 640px) {
+            .expandable-inner { gap: 1rem; }
+            .expandable-wrapper.open .expandable-inner { padding-top: 1rem; }
+        }
     </style>
 </head>
 <body class="flex flex-col items-center p-6 sm:p-14 relative">
@@ -315,12 +568,14 @@
         <div class="aurora-blob-1"></div>
         <div class="aurora-blob-2"></div>
     </div>
+    <div class="ambient-bg"></div>
 
     <main class="w-full max-w-4xl mt-8 sm:mt-12 mb-32 z-10">
         
         <nav class="mb-14 sm:mb-20 reveal w-full flex justify-between items-center" style="--delay: 0.0s;">
-            <a href="index" class="magnetic-btn flex items-center gap-3 sm:gap-4 text-white/40 hover:text-white transition-all duration-500 py-2 px-5 -ml-5 rounded-full border-transparent bg-transparent shadow-none hover:border-white/10 hover:bg-white/5">
-                <span class="text-2xl sm:text-3xl content-wrap">←</span>
+            <a href="index" class="magnetic-btn flex items-center gap-3 sm:gap-4 text-white/50 hover:text-white transition-all duration-500 py-3 px-6 -ml-6 rounded-full group">
+                <div class="sheen"></div>
+                <span class="text-2xl sm:text-3xl content-wrap transition-transform group-hover:-translate-x-1">←</span>
                 <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] uppercase content-wrap">Devices</span>
             </a>
             <div class="h-[1px] w-12 sm:w-16 bg-white/10"></div>
@@ -329,7 +584,7 @@
         <header class="mb-16 sm:mb-20 reveal flex flex-col items-start" style="--delay: 0.05s;">
             <span class="text-[11px] sm:text-[13px] font-extrabold tracking-[0.5em] text-transparent bg-clip-text bg-gradient-to-r from-gray-300 to-gray-600 uppercase mb-4 block">OnePlus 9 Pro (LE2123)</span>
             
-            <h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold tracking-tighter mb-10 sm:mb-12 animate-gradient-text">
+            <h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold tracking-tighter mb-10 sm:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-white via-white/50 to-white animate-gradient-text">
                 Downloads.
             </h1>
             
@@ -347,7 +602,9 @@
             <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-LE2123_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal" style="--delay: 0.15s;">
                 <div class="shadow-layer"></div>
                 <div class="hero-glow-green"></div>
-                <div class="film-grain"></div><div class="dynamic-glare"></div>
+                <div class="film-grain"></div>
+                <div class="dynamic-glare"></div>
+                <div class="sheen"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/40 text-green-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/10 shadow-[0_0_15px_rgba(74,222,128,0.2)]">Latest</span>
@@ -362,7 +619,10 @@
             
             <div class="flex flex-col gap-4 sm:gap-6">
                 <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.703/ota_full-LE2123_16.0.5.703.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal" style="--delay: 0.25s;">
-                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                    <div class="shadow-layer"></div>
+                    <div class="film-grain"></div>
+                    <div class="dynamic-glare"></div>
+                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.703 • Stable</span>
@@ -371,7 +631,10 @@
                 </a>
 
                 <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.700/ota_full-LE2123_16.0.5.700.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal" style="--delay: 0.3s;">
-                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                    <div class="shadow-layer"></div>
+                    <div class="film-grain"></div>
+                    <div class="dynamic-glare"></div>
+                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.700 • Stable</span>
@@ -380,7 +643,10 @@
                 </a>
 
                 <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.503/ota_full-LE2123_16.0.3.503.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal" style="--delay: 0.35s;">
-                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                    <div class="shadow-layer"></div>
+                    <div class="film-grain"></div>
+                    <div class="dynamic-glare"></div>
+                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.503 • Stable</span>
@@ -393,7 +659,10 @@
                 <div class="expandable-content">
                     <div class="expandable-inner">
                         <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.501/ota_full-LE2123_16.0.3.501.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                            <div class="shadow-layer"></div>
+                            <div class="film-grain"></div>
+                            <div class="dynamic-glare"></div>
+                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.501 • Stable</span>
@@ -402,7 +671,10 @@
                         </a>
 
                         <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.500/ota_full-LE2123_16.0.3.500.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                            <div class="shadow-layer"></div>
+                            <div class="film-grain"></div>
+                            <div class="dynamic-glare"></div>
+                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.500 • Stable</span>
@@ -411,7 +683,10 @@
                         </a>
 
                         <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.401/ota_full-LE2123_16.0.2.401.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                            <div class="shadow-layer"></div>
+                            <div class="film-grain"></div>
+                            <div class="dynamic-glare"></div>
+                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.401 • Stable</span>
@@ -420,7 +695,10 @@
                         </a>
 
                         <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.2.400/ota_full-LE2123_16.0.2.400.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                            <div class="shadow-layer"></div>
+                            <div class="film-grain"></div>
+                            <div class="dynamic-glare"></div>
+                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.400 • Stable</span>
@@ -432,6 +710,7 @@
             </div>
 
             <button onclick="toggleMore('oos')" class="magnetic-btn mt-2 w-full py-5 flex justify-center items-center gap-4 group reveal" style="--delay: 0.45s;">
+                <div class="sheen"></div>
                 <div class="content-wrap flex items-center gap-4">
                     <span id="oos-btn-text" class="text-[10px] sm:text-[11px] font-extrabold tracking-[0.3em] uppercase text-white/70 group-hover:text-white transition-colors">Show 4 More Builds</span>
                     <div class="w-7 h-7 rounded-full bg-white/10 border border-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-500 shadow-inner">
@@ -443,7 +722,10 @@
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/30 uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8 reveal" style="--delay: 0.5s;">OxygenOS 15 Builds</h3>
             <div class="flex flex-col gap-4 sm:gap-6 reveal" style="--delay: 0.55s;">
                 <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2015/15.0.0.864/ota_full-LE2123_15.0.0.864.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                    <div class="shadow-layer"></div>
+                    <div class="film-grain"></div>
+                    <div class="dynamic-glare"></div>
+                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 15</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 15 • 15.0.0.864 • Firmware</span>
@@ -460,7 +742,9 @@
             <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.8.304/ota_full-LE2123_16.0.8.304.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
                 <div class="shadow-layer"></div>
                 <div class="hero-glow-blue"></div>
-                <div class="film-grain"></div><div class="dynamic-glare"></div>
+                <div class="film-grain"></div>
+                <div class="dynamic-glare"></div>
+                <div class="sheen"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/40 text-blue-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/10 shadow-[0_0_15px_rgba(96,165,250,0.2)]">Global</span>
@@ -472,7 +756,10 @@
             </a>
 
             <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.8.300/ota_full-LE2123_16.0.8.300.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                <div class="shadow-layer"></div>
+                <div class="film-grain"></div>
+                <div class="dynamic-glare"></div>
+                <div class="sheen"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-500/40 text-gray-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-white/5">China</span>
@@ -487,7 +774,10 @@
             
             <div class="flex flex-col gap-4 sm:gap-6">
                 <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.7.204_v2/ota_full-LE2123_16.0.7.204.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                    <div class="shadow-layer"></div>
+                    <div class="film-grain"></div>
+                    <div class="dynamic-glare"></div>
+                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.1</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.204_v2 • Stable</span>
@@ -496,7 +786,10 @@
                 </a>
 
                 <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.7.206/ota_full-LE2123_16.0.7.206.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                    <div class="shadow-layer"></div>
+                    <div class="film-grain"></div>
+                    <div class="dynamic-glare"></div>
+                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.1</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.206 • Stable</span>
@@ -505,7 +798,10 @@
                 </a>
                 
                 <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.5.701/ota_full-LE2123_16.0.5.701.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                    <div class="shadow-layer"></div>
+                    <div class="film-grain"></div>
+                    <div class="dynamic-glare"></div>
+                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.0</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.701 • Stable</span>
@@ -518,7 +814,10 @@
                 <div class="expandable-content">
                     <div class="expandable-inner">
                         <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.3.504/ota_full-LE2123_16.0.3.504.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                            <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                            <div class="shadow-layer"></div>
+                            <div class="film-grain"></div>
+                            <div class="dynamic-glare"></div>
+                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.504 • Stable</span>
@@ -530,6 +829,7 @@
             </div>
 
             <button onclick="toggleMore('cos')" class="magnetic-btn mt-2 w-full py-5 flex justify-center items-center gap-4 group">
+                <div class="sheen"></div>
                 <div class="content-wrap flex items-center gap-4">
                     <span id="cos-btn-text" class="text-[10px] sm:text-[11px] font-extrabold tracking-[0.3em] uppercase text-white/70 group-hover:text-white transition-colors">Show More Builds</span>
                     <div class="w-7 h-7 rounded-full bg-white/10 border border-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-500 shadow-inner">
@@ -543,7 +843,10 @@
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-white/30 uppercase mt-4 mb-1 pl-6 sm:pl-8">Extras</h3>
             <div class="flex flex-col gap-4 sm:gap-6">
                 <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center">
-                    <div class="shadow-layer"></div><div class="film-grain"></div><div class="dynamic-glare"></div>
+                    <div class="shadow-layer"></div>
+                    <div class="film-grain"></div>
+                    <div class="dynamic-glare"></div>
+                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                             <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 shadow-[0_0_15px_rgba(251,191,36,0.2)]">Beta</span>
@@ -643,14 +946,14 @@
             magneticElements.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
             magneticPulls.forEach(pull => pull.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
 
-            // INSTANT ZERO-LATENCY CURSOR DOT (Bypasses physics loop)
+            // 1. INSTANT ZERO-LATENCY CURSOR DOT (Bypasses physics loop)
             window.addEventListener('mousemove', (e) => { 
                 mouseX = e.clientX; 
                 mouseY = e.clientY; 
-                dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
+                if (dot) dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
             }, { passive: true });
 
-            // LERP ENGINE FOR HEAVY 3D PHYSICS & RING
+            // 2. LERP ENGINE FOR HEAVY 3D PHYSICS & RING
             function physicsTick() {
                 // Ambient Ring & Spotlight Lerp
                 cursorX += (mouseX - cursorX) * 0.25; 
@@ -658,10 +961,10 @@
                 
                 const isHoveringCard = document.body.classList.contains('hovering-card');
                 const isHoveringLink = document.body.classList.contains('hovering-link');
-                const offset = isHoveringCard ? 55 : (isHoveringLink ? 25 : 19);
+                const offset = isHoveringCard ? 55 : (isHoveringLink ? 28 : 19);
                 
-                ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
-                spotlight.style.transform = `translate3d(${cursorX - 400}px, ${cursorY - 400}px, 0)`;
+                if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
+                if (spotlight) spotlight.style.transform = `translate3d(${cursorX - 400}px, ${cursorY - 400}px, 0)`;
 
                 // tvOS Card Parallax Lerp
                 cards.forEach(card => {
@@ -671,6 +974,7 @@
                         
                         card.style.transform = `perspective(1000px) rotateX(${card.phys.currRotX}deg) rotateY(${card.phys.currRotY}deg) scale3d(1.02, 1.02, 1.02)`;
                         
+                        // Opposite shadow cast
                         const shadowLayer = card.querySelector('.shadow-layer');
                         if (shadowLayer) {
                             const shadowX = card.phys.currRotY * -5;
@@ -691,9 +995,11 @@
 
                 // Tab Container Magnetic Pull Lerp
                 magneticPulls.forEach(pull => {
-                    pull.phys.currX += (pull.phys.tarX - pull.phys.currX) * 0.15;
-                    pull.phys.currY += (pull.phys.tarY - pull.phys.currY) * 0.15;
-                    pull.style.transform = `translate3d(${pull.phys.currX}px, ${pull.phys.currY}px, 0)`;
+                    if (pull.phys.isHovered) {
+                        pull.phys.currX += (pull.phys.tarX - pull.phys.currX) * 0.15;
+                        pull.phys.currY += (pull.phys.tarY - pull.phys.currY) * 0.15;
+                        pull.style.transform = `translate3d(${pull.phys.currX}px, ${pull.phys.currY}px, 0)`;
+                    }
                 });
 
                 requestAnimationFrame(physicsTick);
@@ -720,9 +1026,11 @@
                     const x = e.clientX - rect.left, y = e.clientY - rect.top;
                     const centerX = rect.width / 2, centerY = rect.height / 2;
                     
+                    // Rotation Targets
                     card.phys.tarRotX = ((y - centerY) / centerY) * -5; 
                     card.phys.tarRotY = ((x - centerX) / centerX) * 5;
 
+                    // Update Dynamic Glare Center
                     card.style.setProperty('--mouseX', `${(x / rect.width) * 100}%`);
                     card.style.setProperty('--mouseY', `${(y / rect.height) * 100}%`);
                 });
@@ -730,13 +1038,14 @@
                     card.phys.isHovered = false; 
                     card.classList.remove('is-tracking');
                     document.body.classList.remove('hovering-card');
+                    
                     card.style.transform = ''; 
                     const shadowLayer = card.querySelector('.shadow-layer');
                     if (shadowLayer) shadowLayer.style.transform = '';
                 });
             });
 
-            // Magnetic Button Tracking
+            // Magnetic Physics Tracking
             magneticElements.forEach(btn => {
                 btn.addEventListener('mouseenter', () => { btn.phys.isHovered = true; btn.classList.add('is-magnetized'); });
                 btn.addEventListener('mousemove', (e) => {
@@ -757,13 +1066,13 @@
                 pull.addEventListener('mousemove', (e) => {
                     const rect = pull.getBoundingClientRect();
                     const centerX = rect.left + rect.width / 2, centerY = rect.top + rect.height / 2;
-                    // Gentle shift for the whole container
                     pull.phys.tarX = (e.clientX - centerX) * 0.05;
                     pull.phys.tarY = (e.clientY - centerY) * 0.1;
                 });
                 pull.addEventListener('mouseleave', () => {
                     pull.phys.isHovered = false;
                     pull.phys.tarX = 0; pull.phys.tarY = 0;
+                    pull.style.transform = '';
                 });
             });
         }

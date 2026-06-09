@@ -17,16 +17,11 @@
             --apple-ease: cubic-bezier(0.32, 0.72, 0, 1); 
             --apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.15); 
             --apple-slow: cubic-bezier(0.16, 1, 0.3, 1);
-            --liquid-glow: rgba(255, 255, 255, 0.05);
         }
 
-        /* STRIP ALL NATIVE CURSORS GLOBALLY */
-        *, *::before, *::after, *:hover, *:active, *:focus { 
-            margin: 0; padding: 0; box-sizing: border-box; 
-            cursor: none !important; 
-            outline: none !important;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        *:focus { outline: none !important; }
 
         ::selection { background: rgba(255, 255, 255, 0.2); color: #ffffff; }
 
@@ -34,9 +29,11 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #000000; color: #ffffff;
             overflow-x: hidden; min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
+            cursor: none; /* Hide native cursor for iPadOS immersion */
         }
 
         /* Stealth Scrollbar */
@@ -46,17 +43,21 @@
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 
         /* ========================================= */
-        /* CLASSIC DOT & RING CURSOR + SPOTLIGHT     */
+        /* ZERO-LATENCY CURSOR & AMBIENT SPOTLIGHT   */
         /* ========================================= */
         #spotlight { display: none; }
 
         @media (hover: hover) and (pointer: fine) {
+            * { cursor: none !important; }
+            
+            /* Dot is now instantly updated for 0ms latency */
             #cursor-dot {
                 width: 5px; height: 5px; background-color: #ffffff; border-radius: 50%;
                 position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
                 will-change: transform; transition: opacity 0.2s var(--apple-ease);
             }
             
+            /* Ring is physics-based */
             #cursor-ring {
                 width: 36px; height: 36px; border: 1.5px solid rgba(255, 255, 255, 0.25); border-radius: 50%;
                 position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
@@ -71,9 +72,9 @@
                 will-change: transform; transition: background 0.5s var(--apple-ease);
             }
 
-            /* Generic Hover State */
+            /* iPadOS style snap hover */
             body.hovering-link #cursor-ring {
-                width: 56px; height: 56px; background-color: rgba(255, 255, 255, 0.08);
+                width: 50px; height: 50px; background-color: rgba(255, 255, 255, 0.08);
                 border-color: rgba(255, 255, 255, 0.6); backdrop-filter: blur(4px);
             }
             body.hovering-link #cursor-dot { opacity: 0; }
@@ -93,6 +94,7 @@
 
         /* ========================================= */
         /* GPU-ACCELERATED VOLUMETRIC AURORA         */
+        /* (Removed filter: blur for 120fps locked)  */
         /* ========================================= */
         .aurora-container {
             position: fixed; inset: -20%; width: 140%; height: 140%;
@@ -107,6 +109,7 @@
 
         .aurora-blob-1 {
             width: 70vw; height: 70vw; top: -10%; left: 0%;
+            /* Pure gradient fading acts as a hardware-native blur */
             background: radial-gradient(closest-side, rgba(14, 165, 233, 0.08) 0%, transparent 100%);
             animation: floatAurora1 25s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
         }
@@ -117,40 +120,50 @@
             animation: floatAurora2 30s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate-reverse;
         }
 
-        @keyframes floatAurora1 { 0% { transform: translate3d(0, 0, 0) scale(1); } 100% { transform: translate3d(10%, 15%, 0) scale(1.1); } }
-        @keyframes floatAurora2 { 0% { transform: translate3d(0, 0, 0) scale(1); } 100% { transform: translate3d(-15%, -10%, 0) scale(1.05); } }
+        @keyframes floatAurora1 {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(10%, 15%, 0) scale(1.1); }
+        }
+        @keyframes floatAurora2 {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(-15%, -10%, 0) scale(1.05); }
+        }
 
         /* ========================================= */
-        /* TVOS 3D HARDWARE CARDS                    */
+        /* TVOS 3D HARDWARE CARDS (COMPOSITOR ONLY)  */
         /* ========================================= */
         .tvos-card {
             background: rgba(255, 255, 255, 0.015);
-            backdrop-filter: blur(45px) saturate(200%);
-            -webkit-backdrop-filter: blur(45px) saturate(200%);
+            backdrop-filter: blur(45px) saturate(180%);
+            -webkit-backdrop-filter: blur(45px) saturate(180%);
             border-radius: 2.2rem;
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-top: 1px solid rgba(255, 255, 255, 0.2); 
+            border-top: 1px solid rgba(255, 255, 255, 0.15); 
             position: relative; overflow: visible; display: block;
-            transform-style: preserve-3d; will-change: transform;
+            transform-style: preserve-3d;
+            will-change: transform;
+            /* Removed box-shadow transition here to prevent repaints */
             transition: transform 0.6s var(--apple-ease), border-color 0.4s var(--apple-ease);
         }
 
         .tvos-card.is-tracking {
             transition: transform 0.1s linear, border-color 0.2s linear;
-            border-color: rgba(255, 255, 255, 0.3); z-index: 20;
+            border-color: rgba(255, 255, 255, 0.25);
+            z-index: 10;
         }
 
-        /* 120fps Baked Shadow */
+        /* 120fps Shadow Layer */
         .tvos-card .shadow-layer {
             position: absolute; inset: 0; border-radius: 2.2rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.03);
             opacity: 0; pointer-events: none; z-index: -1;
+            /* Only animating opacity and transform is incredibly cheap for the GPU */
             transition: opacity 0.4s var(--apple-ease), transform 0.1s linear;
             will-change: opacity, transform;
         }
         .tvos-card.is-tracking .shadow-layer { opacity: 1; }
 
-        /* Static Optical Grain */
+        /* Static Optical Grain (Saves immense CPU) */
         .film-grain {
             position: absolute; inset: 0; border-radius: 2.2rem; overflow: hidden;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
@@ -158,10 +171,10 @@
             mask-image: radial-gradient(white, black); -webkit-mask-image: -webkit-radial-gradient(white, black);
         }
 
-        /* Iridescent Glare */
+        /* Dynamic Glare */
         .dynamic-glare {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 2.2rem;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.15) 0%, rgba(150, 200, 255, 0.05) 20%, rgba(255, 150, 200, 0.02) 40%, transparent 60%);
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.1) 0%, transparent 60%);
             opacity: 0; transition: opacity 0.4s var(--apple-ease); pointer-events: none; z-index: 2;
         }
         .tvos-card.is-tracking .dynamic-glare { opacity: 1; transition: none; }
@@ -182,11 +195,14 @@
         .tvos-card.is-tracking .content-layer { transform: translateZ(25px); }
 
         .dl-icon {
-            opacity: 0.2; transform: translateX(-15px) translateZ(1px); transition: all 0.4s var(--apple-spring);
+            opacity: 0.2; transform: translateX(-15px) translateZ(10px);
+            transition: all 0.5s var(--apple-spring);
         }
-        .tvos-card.is-tracking .dl-icon { opacity: 1; transform: translateX(0) translateY(4px) translateZ(35px); color: #ffffff; }
+        .tvos-card.is-tracking .dl-icon {
+            opacity: 1; transform: translateX(0) translateY(4px) translateZ(35px); color: #ffffff;
+        }
 
-        .tvos-card:active { transform: scale3d(0.97, 0.97, 0.97) !important; transition: transform 0.1s var(--apple-spring); }
+        .tvos-card:active { transform: scale3d(0.96, 0.96, 0.96) !important; transition: transform 0.15s var(--apple-spring); }
 
         /* ========================================= */
         /* HERO PULSES (For Latest Builds)           */
@@ -216,86 +232,88 @@
             background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(40px); border-radius: 99px; position: relative; padding: 6px;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
-            transition: transform 0.4s var(--apple-ease), box-shadow 0.4s var(--apple-ease);
+            transition: transform 0.4s var(--apple-ease);
             will-change: transform; transform-style: preserve-3d;
         }
         .tab-indicator {
-            position: absolute; top: 6px; left: 6px; height: calc(100% - 12px); width: calc(50% - 6px); /* Adjusted for 2 tabs */
+            position: absolute; top: 6px; left: 6px; height: calc(100% - 12px); width: calc(50% - 6px); /* 2 TABS */
             background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 99px; transition: transform 0.5s var(--apple-spring);
             box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);
             will-change: transform;
         }
-        .tab-btn { position: relative; z-index: 2; transition: color 0.4s var(--apple-ease), transform 0.2s var(--apple-spring); }
+        .tab-btn { position: relative; z-index: 2; transition: color 0.4s var(--apple-ease), transform 0.2s var(--apple-spring); cursor: none; }
         .tab-btn:hover { transform: scale(1.05); color: #ffffff !important; }
 
         /* ========================================= */
-        /* IPADOS MAGNETIC 'SHOW MORE' BUTTON        */
+        /* IPADOS MAGNETIC BUTTONS (Pure Spatial)    */
+        /* No side-to-side sweeping sheen            */
         /* ========================================= */
         .magnetic-btn {
             position: relative; overflow: visible; background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08); border-radius: 99px;
+            border: 1px solid rgba(255,255,255,0.08); border-radius: 99px; cursor: none;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3); transform-style: preserve-3d;
-            transition: transform 0.4s var(--apple-ease), background 0.4s var(--apple-ease), border-color 0.4s var(--apple-ease);
+            transition: transform 0.4s var(--apple-ease), background 0.4s var(--apple-ease), border-color 0.4s var(--apple-ease), box-shadow 0.4s var(--apple-ease);
             will-change: transform;
         }
-        .magnetic-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.7s var(--apple-ease); z-index: 1; border-radius: 99px;
-        }
         .magnetic-btn.is-magnetized {
-            border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); transition: none;
+            border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.05);
+            transition: border-color 0.2s linear, background 0.2s linear, box-shadow 0.2s linear; 
         }
-        .magnetic-btn:hover::before { left: 200%; }
         .magnetic-btn:active { transform: scale(0.95) !important; transition: transform 0.15s var(--apple-spring); }
         .magnetic-btn .content-wrap { position: relative; z-index: 2; pointer-events: none; transform: translateZ(10px); }
         
-        .btn-premium-icon { transition: transform 0.5s var(--apple-spring); }
+        .btn-premium-icon { transition: transform 0.6s var(--apple-spring); }
         .expandable-wrapper.open ~ .magnetic-btn .btn-premium-icon { transform: rotate(180deg); }
+
+        /* Generic Magnetic Element (For back button) */
+        .magnetic-el {
+            display: inline-flex; position: relative; transition: transform 0.4s var(--apple-ease); will-change: transform;
+        }
 
         /* ========================================= */
         /* FLUID VIEW MANAGEMENT (CROSSFADE)         */
         /* ========================================= */
         .os-view { display: none; }
         @keyframes viewEnter {
-            0% { opacity: 0; transform: translateY(15px) scale(0.98); filter: blur(8px); }
-            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+            0% { opacity: 0; transform: perspective(1200px) translateY(20px) scale(0.98); filter: blur(8px); }
+            100% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
         }
         @keyframes viewExit {
-            0% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-            100% { opacity: 0; transform: translateY(-10px) scale(0.98); filter: blur(8px); }
+            0% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
+            100% { opacity: 0; transform: perspective(1200px) translateY(-15px) scale(0.98); filter: blur(8px); }
         }
         .os-view.active { display: flex; animation: viewEnter 0.5s var(--apple-ease) forwards; transform-origin: center top; }
         .os-view.exiting { display: flex; animation: viewExit 0.3s var(--apple-ease) forwards; transform-origin: center top; pointer-events: none; }
 
         .reveal {
-            opacity: 0; transform: translateY(20px); filter: blur(10px);
-            animation: revealAnim 0.8s forwards var(--apple-ease); animation-delay: var(--delay, 0s); will-change: transform, opacity;
+            opacity: 0; transform: perspective(1200px) translateY(30px) scale(0.96) rotateX(-5deg); filter: blur(12px);
+            animation: revealAnim 1s forwards var(--apple-spring); animation-delay: var(--delay, 0s); transform-origin: top center;
         }
-        @keyframes revealAnim { to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+        @keyframes revealAnim { to { opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0); } }
 
         /* ========================================= */
         /* STAGGERED ACCORDION WIDGET                */
         /* ========================================= */
-        .expandable-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s var(--apple-spring); }
+        .expandable-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.7s var(--apple-spring); }
         .expandable-wrapper.open { grid-template-rows: 1fr; }
         .expandable-content { overflow: hidden; }
-        .expandable-inner { display: flex; flex-direction: column; gap: 1.5rem; padding: 0; transition: padding 0.6s var(--apple-spring); }
+        .expandable-inner { display: flex; flex-direction: column; gap: 1.5rem; padding: 0; transition: padding 0.7s var(--apple-spring); }
         .expandable-wrapper.open .expandable-inner { padding-top: 1.5rem; padding-bottom: 0.5rem; }
 
         .expandable-inner .tvos-card {
-            opacity: 0; transform: translateY(-20px) scale(0.98); filter: blur(5px);
-            transition: opacity 0.4s var(--apple-ease), transform 0.6s var(--apple-spring), filter 0.4s var(--apple-ease);
+            opacity: 0; transform: perspective(1200px) translateY(-30px) scale(0.96) rotateX(-8deg); filter: blur(10px);
+            transition: opacity 0.5s ease, transform 0.7s var(--apple-spring), filter 0.5s ease; transform-origin: top center;
         }
         .expandable-wrapper.open .expandable-inner .tvos-card {
-            opacity: 1; transform: translateY(0) scale(1); filter: blur(0);
+            opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0);
         }
 
-        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(1) { transition-delay: 0.05s; }
-        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(2) { transition-delay: 0.10s; }
-        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(3) { transition-delay: 0.15s; }
-        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(4) { transition-delay: 0.20s; }
+        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(1) { transition-delay: 0.04s; }
+        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(2) { transition-delay: 0.08s; }
+        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(3) { transition-delay: 0.12s; }
+        .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(4) { transition-delay: 0.16s; }
         
         @media (max-width: 640px) { .expandable-inner { gap: 1rem; } .expandable-wrapper.open .expandable-inner { padding-top: 1rem; } }
     </style>
@@ -310,11 +328,12 @@
         <div class="aurora-blob-1"></div>
         <div class="aurora-blob-2"></div>
     </div>
+    <div class="ambient-bg"></div>
 
     <main class="w-full max-w-4xl mt-8 sm:mt-12 mb-32 z-10">
         
         <nav class="mb-14 sm:mb-20 reveal w-full flex justify-between items-center" style="--delay: 0.0s;">
-            <a href="index" class="magnetic-btn flex items-center gap-3 sm:gap-4 text-white/40 hover:text-white transition-all duration-500 py-2 px-5 -ml-5 rounded-full border-transparent bg-transparent shadow-none hover:border-white/10 hover:bg-white/5">
+            <a href="index" class="magnetic-el flex items-center gap-3 sm:gap-4 text-white/40 hover:text-white transition-all duration-500 py-2 px-5 -ml-5 rounded-full border-transparent bg-transparent shadow-none hover:border-white/10 hover:bg-white/5">
                 <span class="text-2xl sm:text-3xl content-wrap">←</span>
                 <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] uppercase content-wrap">Devices</span>
             </a>
@@ -324,7 +343,7 @@
         <header class="mb-16 sm:mb-20 reveal flex flex-col items-start" style="--delay: 0.05s;">
             <span class="text-[11px] sm:text-[13px] font-extrabold tracking-[0.5em] text-transparent bg-clip-text bg-gradient-to-r from-gray-300 to-gray-600 uppercase mb-4 block">OnePlus 9 (LE2113)</span>
             
-            <h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold tracking-tighter mb-10 sm:mb-12 animate-gradient-text">
+            <h1 class="text-5xl sm:text-7xl lg:text-9xl font-bold tracking-tighter mb-10 sm:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-white via-white/50 to-white animate-gradient-text">
                 Downloads.
             </h1>
             
@@ -341,7 +360,8 @@
             <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-LE2113_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal" style="--delay: 0.15s;">
                 <div class="shadow-layer"></div>
                 <div class="hero-glow-green"></div>
-                <div class="film-grain"></div><div class="dynamic-glare"></div>
+                <div class="film-grain"></div>
+                <div class="dynamic-glare"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/40 text-green-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/10 shadow-[0_0_15px_rgba(74,222,128,0.2)]">Latest</span>
@@ -592,7 +612,7 @@
             const spotlight = document.getElementById('spotlight');
             
             const cards = Array.from(document.querySelectorAll('.tvos-card'));
-            const magneticElements = Array.from(document.querySelectorAll('.magnetic-btn'));
+            const magneticElements = Array.from(document.querySelectorAll('.magnetic-btn, .magnetic-el'));
             const magneticPulls = Array.from(document.querySelectorAll('.magnetic-pull'));
 
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
@@ -649,9 +669,11 @@
 
                 // Magnetic Container
                 magneticPulls.forEach(pull => {
-                    pull.phys.currX += (pull.phys.tarX - pull.phys.currX) * 0.15;
-                    pull.phys.currY += (pull.phys.tarY - pull.phys.currY) * 0.15;
-                    pull.style.transform = `translate3d(${pull.phys.currX}px, ${pull.phys.currY}px, 0)`;
+                    if (pull.phys.isHovered) {
+                        pull.phys.currX += (pull.phys.tarX - pull.phys.currX) * 0.15;
+                        pull.phys.currY += (pull.phys.tarY - pull.phys.currY) * 0.15;
+                        pull.style.transform = `translate3d(${pull.phys.currX}px, ${pull.phys.currY}px, 0)`;
+                    }
                 });
 
                 requestAnimationFrame(physicsTick);
@@ -660,7 +682,7 @@
 
             // --- Event Bindings ---
 
-            document.querySelectorAll('.interactive-el, .magnetic-btn, .magnetic-pull').forEach(el => {
+            document.querySelectorAll('.interactive-el, .magnetic-btn, .magnetic-el, .magnetic-pull').forEach(el => {
                 el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
                 el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
             });
@@ -679,8 +701,8 @@
                     card.phys.tarRotX = ((y - centerY) / centerY) * -5; 
                     card.phys.tarRotY = ((x - centerX) / centerX) * 5;
 
-                    card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
-                    card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+                    card.style.setProperty('--mouseX', `${(x / rect.width) * 100}%`);
+                    card.style.setProperty('--mouseY', `${(y / rect.height) * 100}%`);
                 });
                 card.addEventListener('mouseleave', () => {
                     card.phys.isHovered = false; 
@@ -717,6 +739,7 @@
                 pull.addEventListener('mouseleave', () => {
                     pull.phys.isHovered = false;
                     pull.phys.tarX = 0; pull.phys.tarY = 0;
+                    pull.style.transform = '';
                 });
             });
         }
