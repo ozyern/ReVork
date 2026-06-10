@@ -17,17 +17,15 @@
             --apple-ease: cubic-bezier(0.32, 0.72, 0, 1); 
             --apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.15); 
             --apple-slow: cubic-bezier(0.16, 1, 0.3, 1);
-            --liquid-glow: rgba(255, 255, 255, 0.05);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        *:focus {
+            cursor: none !important; 
             outline: none !important;
+            -webkit-tap-highlight-color: transparent;
         }
 
         ::selection {
@@ -41,11 +39,9 @@
             color: #ffffff;
             overflow-x: hidden;
             min-height: 100vh;
-            -webkit-tap-highlight-color: transparent;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
-            cursor: none; /* Hides default cursor */
         }
 
         /* ========================================= */
@@ -54,14 +50,17 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
+        
         ::-webkit-scrollbar-track {
             background: transparent;
             cursor: none;
         }
+        
         ::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.15);
             border-radius: 10px;
         }
+        
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.25);
         }
@@ -74,10 +73,6 @@
         }
 
         @media (hover: hover) and (pointer: fine) {
-            * {
-                cursor: none !important;
-            }
-            
             #cursor-dot {
                 width: 5px;
                 height: 5px;
@@ -126,7 +121,7 @@
                 transition: background 0.5s var(--apple-ease);
             }
 
-            /* Generic Button/Link Hover State */
+            /* Generic Hover State */
             body.hovering-link #cursor-ring {
                 width: 56px;
                 height: 56px;
@@ -134,9 +129,11 @@
                 border-color: rgba(255, 255, 255, 0.6);
                 backdrop-filter: blur(4px);
             }
+            
             body.hovering-link #cursor-dot {
                 opacity: 0;
             }
+            
             body.hovering-link #spotlight {
                 background: radial-gradient(circle, rgba(255, 255, 255, 0.035) 0%, rgba(150, 200, 255, 0.01) 30%, transparent 50%);
             }
@@ -150,6 +147,7 @@
                 box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
                 backdrop-filter: none;
             }
+            
             body.hovering-card #cursor-dot {
                 opacity: 0;
             }
@@ -176,7 +174,8 @@
             will-change: transform;
         }
 
-        .aurora-blob-1, .aurora-blob-2 {
+        .aurora-blob-1, 
+        .aurora-blob-2 {
             position: absolute;
             border-radius: 50%;
             will-change: transform;
@@ -204,9 +203,84 @@
             0% { transform: translate3d(0, 0, 0) scale(1); }
             100% { transform: translate3d(10%, 15%, 0) scale(1.1); }
         }
+        
         @keyframes floatAurora2 {
             0% { transform: translate3d(0, 0, 0) scale(1); }
             100% { transform: translate3d(-15%, -10%, 0) scale(1.05); }
+        }
+
+        /* ========================================= */
+        /* PURE APPLE BUTTONS (No Liquid Sweeps)     */
+        /* ========================================= */
+
+        /* 1. Invisible Platter (Back Button) */
+        .magnetic-clear {
+            position: relative;
+            display: inline-flex;
+            cursor: none;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .nav-platter {
+            position: absolute;
+            inset: 0;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0);
+            transition: all 0.4s var(--apple-ease);
+            z-index: 0;
+            border: 1px solid transparent;
+        }
+        .magnetic-clear:hover .nav-platter,
+        .magnetic-clear.is-magnetized .nav-platter {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+        .magnetic-clear:active {
+            transform: scale(0.96) !important;
+            transition: transform 0.15s var(--apple-spring);
+        }
+
+        /* 2. Solid Frosted (Show More Button) */
+        .magnetic-solid {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 99px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: background 0.4s var(--apple-ease), 
+                        border-color 0.4s var(--apple-ease), 
+                        box-shadow 0.4s var(--apple-ease);
+            cursor: none;
+        }
+        .magnetic-solid:hover, 
+        .magnetic-solid.is-magnetized {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(30px) saturate(150%);
+            -webkit-backdrop-filter: blur(30px) saturate(150%);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15);
+        }
+        .magnetic-solid:active {
+            transform: scale(0.96) !important;
+            transition: transform 0.15s var(--apple-spring);
+        }
+
+        .btn-content-wrap {
+            position: relative; 
+            z-index: 2; 
+            pointer-events: none; 
+            transform: translateZ(5px);
+        }
+        .btn-premium-icon {
+            transition: transform 0.6s var(--apple-spring);
+        }
+        .expandable-wrapper.open ~ .magnetic-solid .btn-premium-icon {
+            transform: rotate(180deg);
         }
 
         /* ========================================= */
@@ -218,9 +292,9 @@
             -webkit-backdrop-filter: blur(45px) saturate(200%);
             border-radius: 2.2rem;
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-top: 1px solid rgba(255, 255, 255, 0.15); 
+            border-top: 1px solid rgba(255, 255, 255, 0.2); 
             position: relative;
-            overflow: hidden; /* Ensure sheen stays inside */
+            overflow: hidden;
             display: block;
             transform-style: preserve-3d;
             will-change: transform, box-shadow;
@@ -228,7 +302,6 @@
             transition: transform 0.6s var(--apple-ease), border-color 0.4s var(--apple-ease), box-shadow 0.6s var(--apple-ease);
         }
 
-        /* Active Hover Physics */
         .tvos-card.is-tracking {
             transition: transform 0.1s linear, border-color 0.2s linear;
             border-color: rgba(255, 255, 255, 0.3);
@@ -247,35 +320,23 @@
             transition: opacity 0.4s var(--apple-ease), transform 0.1s linear;
             will-change: opacity, transform;
         }
+        
         .tvos-card.is-tracking .shadow-layer {
             opacity: 1;
         }
 
-        /* Cinematic Film Grain */
-        @keyframes filmGrain {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-1%, -1%); }
-            20% { transform: translate(1%, 1%); }
-            30% { transform: translate(-2%, -2%); }
-            40% { transform: translate(2%, 2%); }
-            50% { transform: translate(-1%, 1%); }
-            60% { transform: translate(1%, -1%); }
-            70% { transform: translate(2%, -2%); }
-            80% { transform: translate(-2%, 2%); }
-            90% { transform: translate(1%, 1%); }
-        }
+        /* Static Optical Grain */
         .film-grain {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            inset: 0;
+            border-radius: 2.2rem;
+            overflow: hidden;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             opacity: 0.035;
             pointer-events: none;
             z-index: 1;
-            animation: filmGrain 6s steps(10) infinite;
-            will-change: transform;
+            mask-image: radial-gradient(white, black);
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
         }
 
         /* Iridescent Apple Intelligence Glare */
@@ -292,27 +353,10 @@
             pointer-events: none;
             z-index: 2;
         }
+        
         .tvos-card.is-tracking .dynamic-glare {
             opacity: 1;
             transition: none;
-        }
-
-        /* Liquid Sheen - Restored! */
-        .sheen {
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 80%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--liquid-glow), transparent);
-            transform: skewX(-30deg);
-            transition: left 0.8s var(--apple-ease);
-            pointer-events: none;
-            z-index: 3;
-        }
-        .tvos-card:hover .sheen,
-        .magnetic-btn:hover .sheen {
-            left: 200%;
         }
 
         /* Specular Edge Mask */
@@ -336,10 +380,11 @@
             z-index: 5;
             transform: translateZ(1px); 
             transition: transform 0.4s var(--apple-ease);
-            transform-style: preserve-3d;
+            pointer-events: none;
         }
+        
         .tvos-card.is-tracking .content-layer {
-            transform: translateZ(25px); /* Pulls text closer to user in 3D space */
+            transform: translateZ(25px);
         }
 
         .dl-icon {
@@ -347,6 +392,7 @@
             transform: translateX(-15px) translateZ(10px);
             transition: all 0.5s var(--apple-spring);
         }
+        
         .tvos-card.is-tracking .dl-icon {
             opacity: 1;
             transform: translateX(0) translateY(4px) translateZ(40px);
@@ -362,10 +408,12 @@
         /* HERO PULSES (For Latest Builds)           */
         /* ========================================= */
         @keyframes pulseGlow {
-            0% { opacity: 0.3; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1.05); }
+            0% { opacity: 0.2; transform: scale(0.95); }
+            100% { opacity: 0.8; transform: scale(1.05); }
         }
-        .hero-glow-green, .hero-glow-blue {
+        
+        .hero-glow-green, 
+        .hero-glow-blue {
             position: absolute;
             width: 160%;
             height: 160%;
@@ -375,27 +423,33 @@
             pointer-events: none;
             animation: pulseGlow 4s ease-in-out infinite alternate;
         }
+        
         .hero-glow-green {
-            background: radial-gradient(circle at center, rgba(74, 222, 128, 0.08) 0%, transparent 50%);
+            background: radial-gradient(circle closest-side, rgba(74, 222, 128, 0.08) 0%, transparent 100%);
         }
+        
         .hero-glow-blue {
-            background: radial-gradient(circle at center, rgba(96, 165, 250, 0.08) 0%, transparent 50%);
+            background: radial-gradient(circle closest-side, rgba(96, 165, 250, 0.08) 0%, transparent 100%);
         }
 
         /* ========================================= */
         /* ANIMATED GRADIENT TEXT                    */
         /* ========================================= */
-        .animate-gradient-text {
-            background-size: 200% auto;
-            animation: textShine 6s linear infinite;
+        .animate-gradient-text { 
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.4) 50%, #ffffff 100%);
+            background-size: 200% auto; 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 6s linear infinite; 
         }
+        
         @keyframes textShine {
             0% { background-position: 0% center; }
             100% { background-position: -200% center; }
         }
 
         /* ========================================= */
-        /* iOS SEGMENTED CONTROL / MACOS TABS        */
+        /* iOS SEGMENTED CONTROL / TABS              */
         /* ========================================= */
         .tab-container {
             background: rgba(255, 255, 255, 0.03);
@@ -408,6 +462,7 @@
             transition: transform 0.4s var(--apple-ease);
             will-change: transform;
         }
+        
         .tab-indicator {
             position: absolute;
             top: 6px;
@@ -421,63 +476,30 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);
             will-change: transform;
         }
+        
         .tab-btn { 
             position: relative;
             z-index: 2;
             transition: color 0.4s var(--apple-ease), transform 0.2s var(--apple-spring); 
         }
-        /* macOS Dock Hover effect on tabs */
+        
         .tab-btn:hover {
             transform: scale(1.05);
             color: #ffffff !important;
         }
 
         /* ========================================= */
-        /* IPADOS MAGNETIC BUTTONS                   */
-        /* ========================================= */
-        .magnetic-btn {
-            position: relative;
-            overflow: hidden; /* Ensures sheen stays inside */
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 99px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            transform-style: preserve-3d;
-            transition: transform 0.4s var(--apple-ease), background 0.4s var(--apple-ease), border-color 0.4s var(--apple-ease), box-shadow 0.4s var(--apple-ease);
-            will-change: transform;
-        }
-        .magnetic-btn.is-magnetized {
-            border-color: rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.08);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.05);
-            transition: border-color 0.2s linear, background 0.2s linear, box-shadow 0.2s linear; 
-        }
-        .magnetic-btn:active {
-            transform: scale(0.95) !important;
-            transition: transform 0.15s var(--apple-spring);
-        }
-        .magnetic-btn .content-wrap {
-            position: relative;
-            z-index: 2;
-            pointer-events: none;
-            transform: translateZ(10px);
-        }
-        .btn-premium-icon {
-            transition: transform 0.6s var(--apple-spring);
-        }
-        .expandable-wrapper.open ~ .magnetic-btn .btn-premium-icon {
-            transform: rotate(180deg);
-        }
-
-        /* ========================================= */
         /* FLUID VIEW MANAGEMENT (CROSSFADE)         */
         /* ========================================= */
-        .os-view { display: none; }
+        .os-view {
+            display: none;
+        }
         
         @keyframes viewEnter {
             0% { opacity: 0; transform: perspective(1200px) translateY(20px) scale(0.98); filter: blur(8px); }
             100% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
         }
+        
         @keyframes viewExit {
             0% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
             100% { opacity: 0; transform: perspective(1200px) translateY(-15px) scale(0.98); filter: blur(8px); }
@@ -488,6 +510,7 @@
             animation: viewEnter 0.5s var(--apple-ease) forwards;
             transform-origin: center top;
         }
+        
         .os-view.exiting {
             display: flex;
             animation: viewExit 0.3s var(--apple-ease) forwards;
@@ -503,6 +526,7 @@
             animation-delay: var(--delay, 0s);
             transform-origin: top center;
         }
+        
         @keyframes revealAnim {
             to { opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0); }
         }
@@ -515,12 +539,15 @@
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.7s var(--apple-spring);
         }
+        
         .expandable-wrapper.open {
             grid-template-rows: 1fr;
         }
+        
         .expandable-content {
             overflow: hidden;
         }
+        
         .expandable-inner {
             display: flex;
             flex-direction: column;
@@ -528,6 +555,7 @@
             padding: 0;
             transition: padding 0.7s var(--apple-spring);
         }
+        
         .expandable-wrapper.open .expandable-inner {
             padding-top: 1.5rem;
             padding-bottom: 0.5rem;
@@ -540,6 +568,7 @@
             transition: opacity 0.5s ease, transform 0.7s var(--apple-spring), filter 0.5s ease;
             transform-origin: top center;
         }
+        
         .expandable-wrapper.open .expandable-inner .tvos-card {
             opacity: 1;
             transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg);
@@ -568,15 +597,14 @@
         <div class="aurora-blob-1"></div>
         <div class="aurora-blob-2"></div>
     </div>
-    <div class="ambient-bg"></div>
-
+    
     <main class="w-full max-w-4xl mt-8 sm:mt-12 mb-32 z-10">
         
         <nav class="mb-14 sm:mb-20 reveal w-full flex justify-between items-center" style="--delay: 0.0s;">
-            <a href="index" class="magnetic-btn flex items-center gap-3 sm:gap-4 text-white/50 hover:text-white transition-all duration-500 py-3 px-6 -ml-6 rounded-full group">
-                <div class="sheen"></div>
-                <span class="text-2xl sm:text-3xl content-wrap transition-transform group-hover:-translate-x-1">←</span>
-                <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] uppercase content-wrap">Devices</span>
+            <a href="index" class="magnetic-clear flex items-center gap-3 sm:gap-4 text-white/50 hover:text-white transition-colors duration-400 py-3 px-6 -ml-6 rounded-full group">
+                <div class="nav-platter"></div>
+                <span class="text-2xl sm:text-3xl relative z-10 transition-transform duration-400 group-hover:-translate-x-1">←</span>
+                <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] uppercase relative z-10">Devices</span>
             </a>
             <div class="h-[1px] w-12 sm:w-16 bg-white/10"></div>
         </nav>
@@ -604,7 +632,6 @@
                 <div class="hero-glow-green"></div>
                 <div class="film-grain"></div>
                 <div class="dynamic-glare"></div>
-                <div class="sheen"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/40 text-green-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/10 shadow-[0_0_15px_rgba(74,222,128,0.2)]">Latest</span>
@@ -622,7 +649,6 @@
                     <div class="shadow-layer"></div>
                     <div class="film-grain"></div>
                     <div class="dynamic-glare"></div>
-                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.703 • Stable</span>
@@ -634,7 +660,6 @@
                     <div class="shadow-layer"></div>
                     <div class="film-grain"></div>
                     <div class="dynamic-glare"></div>
-                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.700 • Stable</span>
@@ -646,7 +671,6 @@
                     <div class="shadow-layer"></div>
                     <div class="film-grain"></div>
                     <div class="dynamic-glare"></div>
-                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.503 • Stable</span>
@@ -662,7 +686,6 @@
                             <div class="shadow-layer"></div>
                             <div class="film-grain"></div>
                             <div class="dynamic-glare"></div>
-                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.501 • Stable</span>
@@ -674,7 +697,6 @@
                             <div class="shadow-layer"></div>
                             <div class="film-grain"></div>
                             <div class="dynamic-glare"></div>
-                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.500 • Stable</span>
@@ -686,7 +708,6 @@
                             <div class="shadow-layer"></div>
                             <div class="film-grain"></div>
                             <div class="dynamic-glare"></div>
-                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.401 • Stable</span>
@@ -698,7 +719,6 @@
                             <div class="shadow-layer"></div>
                             <div class="film-grain"></div>
                             <div class="dynamic-glare"></div>
-                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.2.400 • Stable</span>
@@ -709,9 +729,8 @@
                 </div>
             </div>
 
-            <button onclick="toggleMore('oos')" class="magnetic-btn mt-2 w-full py-5 flex justify-center items-center gap-4 group reveal" style="--delay: 0.45s;">
-                <div class="sheen"></div>
-                <div class="content-wrap flex items-center gap-4">
+            <button onclick="toggleMore('oos')" class="magnetic-solid mt-2 w-full py-5 flex justify-center items-center gap-4 group reveal" style="--delay: 0.45s;">
+                <div class="btn-content-wrap flex items-center gap-4">
                     <span id="oos-btn-text" class="text-[10px] sm:text-[11px] font-extrabold tracking-[0.3em] uppercase text-white/70 group-hover:text-white transition-colors">Show 4 More Builds</span>
                     <div class="w-7 h-7 rounded-full bg-white/10 border border-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-500 shadow-inner">
                         <span id="oos-btn-icon" class="btn-premium-icon text-white/70 group-hover:text-white text-[10px]">↓</span>
@@ -725,7 +744,6 @@
                     <div class="shadow-layer"></div>
                     <div class="film-grain"></div>
                     <div class="dynamic-glare"></div>
-                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">OxygenOS 15</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 15 • 15.0.0.864 • Firmware</span>
@@ -744,7 +762,6 @@
                 <div class="hero-glow-blue"></div>
                 <div class="film-grain"></div>
                 <div class="dynamic-glare"></div>
-                <div class="sheen"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/40 text-blue-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/10 shadow-[0_0_15px_rgba(96,165,250,0.2)]">Global</span>
@@ -759,7 +776,6 @@
                 <div class="shadow-layer"></div>
                 <div class="film-grain"></div>
                 <div class="dynamic-glare"></div>
-                <div class="sheen"></div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-500/40 text-gray-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-white/5">China</span>
@@ -777,7 +793,6 @@
                     <div class="shadow-layer"></div>
                     <div class="film-grain"></div>
                     <div class="dynamic-glare"></div>
-                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.1</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.204_v2 • Stable</span>
@@ -789,7 +804,6 @@
                     <div class="shadow-layer"></div>
                     <div class="film-grain"></div>
                     <div class="dynamic-glare"></div>
-                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.1</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.206 • Stable</span>
@@ -801,7 +815,6 @@
                     <div class="shadow-layer"></div>
                     <div class="film-grain"></div>
                     <div class="dynamic-glare"></div>
-                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.0</h2>
                         <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.701 • Stable</span>
@@ -817,7 +830,6 @@
                             <div class="shadow-layer"></div>
                             <div class="film-grain"></div>
                             <div class="dynamic-glare"></div>
-                            <div class="sheen"></div>
                             <div class="content-layer flex flex-col">
                                 <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">ColorOS 16.0</h2>
                                 <span class="text-xs sm:text-base text-white/40 font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.504 • Stable</span>
@@ -828,9 +840,8 @@
                 </div>
             </div>
 
-            <button onclick="toggleMore('cos')" class="magnetic-btn mt-2 w-full py-5 flex justify-center items-center gap-4 group">
-                <div class="sheen"></div>
-                <div class="content-wrap flex items-center gap-4">
+            <button onclick="toggleMore('cos')" class="magnetic-solid mt-2 w-full py-5 flex justify-center items-center gap-4 group">
+                <div class="btn-content-wrap flex items-center gap-4">
                     <span id="cos-btn-text" class="text-[10px] sm:text-[11px] font-extrabold tracking-[0.3em] uppercase text-white/70 group-hover:text-white transition-colors">Show More Builds</span>
                     <div class="w-7 h-7 rounded-full bg-white/10 border border-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-500 shadow-inner">
                         <span id="cos-btn-icon" class="btn-premium-icon text-white/70 group-hover:text-white text-[10px]">↓</span>
@@ -846,7 +857,6 @@
                     <div class="shadow-layer"></div>
                     <div class="film-grain"></div>
                     <div class="dynamic-glare"></div>
-                    <div class="sheen"></div>
                     <div class="content-layer flex flex-col">
                         <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                             <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-400 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 shadow-[0_0_15px_rgba(251,191,36,0.2)]">Beta</span>
@@ -935,7 +945,7 @@
             const spotlight = document.getElementById('spotlight');
             
             const cards = Array.from(document.querySelectorAll('.tvos-card'));
-            const magneticElements = Array.from(document.querySelectorAll('.magnetic-btn'));
+            const magneticElements = Array.from(document.querySelectorAll('.magnetic-solid, .magnetic-clear'));
             const magneticPulls = Array.from(document.querySelectorAll('.magnetic-pull'));
 
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
@@ -946,14 +956,13 @@
             magneticElements.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
             magneticPulls.forEach(pull => pull.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
 
-            // 1. INSTANT ZERO-LATENCY CURSOR DOT (Bypasses physics loop)
+            // INSTANT ZERO-LATENCY CURSOR DOT 
             window.addEventListener('mousemove', (e) => { 
                 mouseX = e.clientX; 
                 mouseY = e.clientY; 
                 if (dot) dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
             }, { passive: true });
 
-            // 2. LERP ENGINE FOR HEAVY 3D PHYSICS & RING
             function physicsTick() {
                 // Ambient Ring & Spotlight Lerp
                 cursorX += (mouseX - cursorX) * 0.25; 
@@ -984,16 +993,16 @@
                     }
                 });
 
-                // Magnetic Button Lerp
+                // Magnetic Button Lerp (No scaling here, just pure translation)
                 magneticElements.forEach(btn => {
                     if (btn.phys.isHovered) {
                         btn.phys.currX += (btn.phys.tarX - btn.phys.currX) * 0.25;
                         btn.phys.currY += (btn.phys.tarY - btn.phys.currY) * 0.25;
-                        btn.style.transform = `translate3d(${btn.phys.currX}px, ${btn.phys.currY}px, 0) scale(1.02)`;
+                        btn.style.transform = `translate3d(${btn.phys.currX}px, ${btn.phys.currY}px, 0)`;
                     }
                 });
 
-                // Tab Container Magnetic Pull Lerp
+                // Magnetic Container Pull Lerp
                 magneticPulls.forEach(pull => {
                     if (pull.phys.isHovered) {
                         pull.phys.currX += (pull.phys.tarX - pull.phys.currX) * 0.15;
@@ -1009,7 +1018,7 @@
             // --- Event Bindings ---
 
             // Cursor Hover States
-            document.querySelectorAll('.interactive-el, .magnetic-btn, .magnetic-pull').forEach(el => {
+            document.querySelectorAll('.magnetic-solid, .magnetic-clear, .tab-btn').forEach(el => {
                 el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
                 el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
             });
@@ -1021,19 +1030,20 @@
                     card.classList.add('is-tracking'); 
                     document.body.classList.add('hovering-card');
                 });
+                
                 card.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left, y = e.clientY - rect.top;
                     const centerX = rect.width / 2, centerY = rect.height / 2;
                     
-                    // Rotation Targets
-                    card.phys.tarRotX = ((y - centerY) / centerY) * -5; 
-                    card.phys.tarRotY = ((x - centerX) / centerX) * 5;
+                    // Microscopic tilt intensity
+                    card.phys.tarRotX = ((y - centerY) / centerY) * -1.5; 
+                    card.phys.tarRotY = ((x - centerX) / centerX) * 1.5;
 
-                    // Update Dynamic Glare Center
                     card.style.setProperty('--mouseX', `${(x / rect.width) * 100}%`);
                     card.style.setProperty('--mouseY', `${(y / rect.height) * 100}%`);
                 });
+                
                 card.addEventListener('mouseleave', () => {
                     card.phys.isHovered = false; 
                     card.classList.remove('is-tracking');
@@ -1047,15 +1057,21 @@
 
             // Magnetic Physics Tracking
             magneticElements.forEach(btn => {
-                btn.addEventListener('mouseenter', () => { btn.phys.isHovered = true; btn.classList.add('is-magnetized'); });
+                btn.addEventListener('mouseenter', () => { 
+                    btn.phys.isHovered = true; 
+                    btn.classList.add('is-magnetized'); 
+                });
+                
                 btn.addEventListener('mousemove', (e) => {
                     const rect = btn.getBoundingClientRect();
                     const centerX = rect.left + rect.width / 2, centerY = rect.top + rect.height / 2;
                     btn.phys.tarX = (e.clientX - centerX) * 0.15;
                     btn.phys.tarY = (e.clientY - centerY) * 0.3;
                 });
+                
                 btn.addEventListener('mouseleave', () => {
-                    btn.phys.isHovered = false; btn.classList.remove('is-magnetized');
+                    btn.phys.isHovered = false; 
+                    btn.classList.remove('is-magnetized');
                     btn.style.transform = ''; 
                 });
             });
