@@ -15,7 +15,6 @@
         :root {
             /* Ultra-Premium Apple Spring & Ease Curves */
             --apple-ease: cubic-bezier(0.25, 1, 0.5, 1); 
-            /* Added a tiny bit of elegant bounce for the snap-back */
             --apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1); 
             --apple-heavy: cubic-bezier(0.2, 0.8, 0.2, 1);
 
@@ -112,6 +111,39 @@
             scroll-behavior: smooth;
             transition: background-color 0.8s var(--apple-ease), color 0.8s var(--apple-ease);
         }
+
+        /* ========================================= */
+        /* TOP NAV: DOWNLOADS BUTTON                 */
+        /* ========================================= */
+        .nav-downloads-container {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 100;
+            padding: 0.5rem;
+        }
+        @media (min-width: 640px) {
+            .nav-downloads-container { top: 2rem; left: 2rem; padding: 1rem; }
+        }
+
+        .btn-liquid {
+            display: flex; align-items: center; gap: 0.6rem; 
+            padding: 0.75rem 1.25rem; border-radius: 999px;
+            color: var(--text-main); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
+            text-decoration: none; will-change: transform;
+            
+            background: var(--glass-bg-base);
+            backdrop-filter: blur(30px) saturate(200%); -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid var(--glass-border-base);
+            box-shadow: var(--glass-shadow-inset), 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s var(--apple-bounce), background 0.8s var(--apple-ease), border-color 0.8s var(--apple-ease), color 0.8s var(--apple-ease);
+        }
+        .btn-liquid:hover { 
+            border-color: var(--glass-border-hover-top);
+            box-shadow: var(--glass-shadow-inset), 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .btn-liquid svg { width: 1.15rem; height: 1.15rem; transition: transform 0.4s var(--apple-bounce); }
+        .nav-downloads-container:hover .btn-liquid svg { transform: translateY(2px); }
 
         /* ========================================= */
         /* SKEUOMORPHIC 3D GLASS TOGGLE              */
@@ -524,6 +556,15 @@
         <div class="aurora-blob-2"></div>
     </div>
 
+    <div class="nav-downloads-container reveal" style="--delay: 0.1s;">
+        <a href="downloads.html" class="btn-liquid interactive-el" id="nav-downloads">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Downloads
+        </a>
+    </div>
+
     <div class="theme-toggle-container reveal" style="--delay: 0.1s;">
         <div class="theme-toggle interactive-el" id="themeSwitcher">
             <div class="toggle-thumb"></div>
@@ -692,6 +733,16 @@
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
             let cursorX = mouseX, cursorY = mouseY;
             
+            // For custom downloads container logic
+            let dlBtnCurrX = 0, dlBtnCurrY = 0, dlBtnTarX = 0, dlBtnTarY = 0;
+            const navDownloadsWrap = document.querySelector('.nav-downloads-container');
+            const navDownloadsBtn = document.getElementById('nav-downloads');
+            if(navDownloadsWrap) {
+                navDownloadsWrap.isHovered = false;
+                navDownloadsWrap.addEventListener('mouseenter', () => navDownloadsWrap.isHovered = true);
+                navDownloadsWrap.addEventListener('mouseleave', () => navDownloadsWrap.isHovered = false);
+            }
+
             cards.forEach(card => card.phys = { currRotX: 0, currRotY: 0, tarRotX: 0, tarRotY: 0, isHovered: false });
             magneticElements.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
 
@@ -699,6 +750,18 @@
                 mouseX = e.clientX; 
                 mouseY = e.clientY; 
                 if (dot) dot.style.transform = `translate3d(${mouseX - 3}px, ${mouseY - 3}px, 0)`;
+
+                // Downloads Button Tracking
+                if(navDownloadsWrap && navDownloadsWrap.isHovered) {
+                    const rect = navDownloadsWrap.getBoundingClientRect();
+                    const cX = rect.left + rect.width / 2;
+                    const cY = rect.top + rect.height / 2;
+                    dlBtnTarX = (mouseX - cX) * 0.3;
+                    dlBtnTarY = (mouseY - cY) * 0.3;
+                } else {
+                    dlBtnTarX = 0;
+                    dlBtnTarY = 0;
+                }
             }, { passive: true });
 
             function physicsTick() {
@@ -711,6 +774,11 @@
                 
                 if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
                 if (spotlight) spotlight.style.transform = `translate3d(${cursorX - 500}px, ${cursorY - 500}px, 0)`;
+
+                // Downloads Nav Physics Tick
+                dlBtnCurrX += (dlBtnTarX - dlBtnCurrX) * 0.2;
+                dlBtnCurrY += (dlBtnTarY - dlBtnCurrY) * 0.2;
+                if(navDownloadsBtn) navDownloadsBtn.style.transform = `translate3d(${dlBtnCurrX}px, ${dlBtnCurrY}px, 0)`;
 
                 cards.forEach(card => {
                     if (card.phys.isHovered) {
