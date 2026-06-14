@@ -14,7 +14,7 @@
 
 ## 📖 About
 
-**ReVork** is an elite custom ROM project by [ozyern](https://github.com/ozyern), delivering flawlessly ported builds of **OxygenOS 16** and **ColorOS 16** for OnePlus flagship devices. 
+**ReVork** is an elite custom ROM project by [Aditya Jha](https://github.com/ozyern), delivering flawlessly ported builds of **OxygenOS 16** and **ColorOS 16** for OnePlus flagship devices. 
 
 This repository houses the source code for the official ReVork website. Recently rebuilt from the ground up, the site features a striking **"Obsidian" dark aesthetic**, **Aquamorphic 3.0 fluid physics**, and **Specular Glassmorphism** to provide a premium, flagship-level download experience that rivals native operating systems.
 
