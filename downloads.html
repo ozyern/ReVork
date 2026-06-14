@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ReVork | Download Terminal</title>
     
     <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -21,6 +21,7 @@
             --bg-color: #020203;
             --text-main: #ffffff;
             --text-muted: #86868b;
+            --text-sub: rgba(255, 255, 255, 0.7);
             
             /* Premium Vision Glass */
             --glass-bg: rgba(18, 18, 22, 0.65);
@@ -28,6 +29,9 @@
             --glass-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
             --glass-shadow: 0 40px 80px -20px rgba(0, 0, 0, 1), 0 20px 40px -20px rgba(0,0,0,0.8);
             
+            --glass-bg-base: linear-gradient(150deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.005) 100%);
+            --glass-border-base: rgba(255, 255, 255, 0.06);
+
             --title-gradient: linear-gradient(110deg, #86868b 0%, #ffffff 30%, #86868b 50%, #ffffff 70%, #86868b 100%);
             
             --cursor-dot: #ffffff;
@@ -38,10 +42,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; outline: none !important; -webkit-tap-highlight-color: transparent; }
         ::selection { background: rgba(59, 130, 246, 0.5); color: #fff; }
 
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-color); color: var(--text-main);
-            overflow-x: hidden; min-height: 100vh;
+            min-height: 100vh;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
             perspective: 1200px;
         }
@@ -50,9 +59,12 @@
         ::-webkit-scrollbar-track { background: transparent; cursor: none; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
-        /* MESH & AURORA BACKGROUND */
+        /* MESH & AURORA BACKGROUND (Contained to prevent horizontal scrolling) */
+        .ambient-bg-wrapper {
+            position: fixed; inset: 0; overflow: hidden; z-index: -2; pointer-events: none;
+        }
         .ambient-bg {
-            position: fixed; inset: -50%; width: 200%; height: 200%; z-index: -2; pointer-events: none;
+            position: absolute; inset: -50%; width: 200%; height: 200%;
             background: 
                 radial-gradient(circle at 40% 30%, rgba(20, 60, 120, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 60% 70%, rgba(10, 80, 60, 0.1) 0%, transparent 40%);
@@ -72,7 +84,9 @@
         @media (hover: none), (pointer: coarse) { #cursor-dot, #cursor-ring { display: none !important; } }
 
         /* LIQUID GLASS BACK BUTTON (iOS Style) */
-        .magnetic-wrap { position: absolute; top: 2rem; left: 2rem; z-index: 100; display: inline-block; padding: 1rem; }
+        .magnetic-wrap { position: absolute; top: 1rem; left: 1rem; z-index: 100; display: inline-block; padding: 0.5rem; }
+        @media (min-width: 640px) { .magnetic-wrap { top: 2rem; left: 2rem; padding: 1rem; } }
+        
         .btn-liquid {
             display: flex; align-items: center; gap: 0.6rem; 
             padding: 0.75rem 1.25rem 0.75rem 1rem; border-radius: 999px;
@@ -182,6 +196,21 @@
         .btn-rst:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); transform: translateY(-1px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .btn-rst:active { transform: scale(0.95); }
 
+        /* INVISIBLE PLATTER BUTTONS (Footer Sync) */
+        .magnetic-clear {
+            position: relative; display: inline-flex; cursor: none; transform-style: preserve-3d; will-change: transform;
+            color: var(--text-sub); transition: color 0.8s var(--apple-ease);
+        }
+        .nav-platter {
+            position: absolute; inset: 0; border-radius: 99px; background: rgba(255, 255, 255, 0); transition: all 0.5s var(--apple-ease); z-index: 0; border: 1px solid transparent;
+        }
+        .magnetic-clear:hover .nav-platter, .magnetic-clear.is-magnetized .nav-platter {
+            background: var(--glass-bg-base); backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border-color: var(--glass-border-base); box-shadow: 0 10px 30px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        }
+        .magnetic-clear:hover { color: var(--text-main); }
+        .magnetic-clear:active { transform: scale(0.96) !important; transition: transform 0.15s var(--apple-spring); }
+
         /* APP LAUNCH ANIMATION */
         .app-launch { opacity: 0; transform: scale(0.9) translateY(40px) rotateX(-5deg); filter: blur(20px); animation: appLaunchAnim 1.2s forwards var(--apple-bounce); animation-delay: 0.1s; }
         @keyframes appLaunchAnim { to { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); filter: blur(0); } }
@@ -193,9 +222,12 @@
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="flex flex-col items-center p-6 sm:p-14 relative justify-center min-h-screen">
+<body class="flex flex-col items-center px-4 sm:px-14 relative justify-between min-h-screen max-w-full">
 
-    <div class="ambient-bg"></div>
+    <div class="ambient-bg-wrapper">
+        <div class="ambient-bg"></div>
+    </div>
+    
     <div id="spotlight"></div>
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
@@ -207,101 +239,110 @@
         </a>
     </div>
 
-    <div class="terminal-container flex flex-col items-center app-launch">
-        
-        <header class="mb-10 flex flex-col items-center text-center w-full">
-            <div class="flex items-center gap-4 mb-3">
-                <div class="h-[1px] w-8 bg-gray-600 rounded-full opacity-50"></div>
-                <span class="text-[10px] font-extrabold tracking-[0.4em] uppercase text-gray-400">Terminal Shell</span>
-                <div class="h-[1px] w-8 bg-gray-600 rounded-full opacity-50"></div>
-            </div>
-            <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tighter drop-shadow-2xl">
-                Resolve <span class="animate-gradient-text">Packages.</span>
-            </h1>
-        </header>
-
-        <div class="terminal-window w-full" id="cmd-center">
+    <main class="flex-1 w-full max-w-full flex flex-col items-center justify-center mt-24 sm:mt-0">
+        <div class="terminal-container flex flex-col items-center app-launch mx-auto">
             
-            <div class="terminal-header relative">
-                <div class="mac-dots">
-                    <div class="mac-dot dot-red"></div>
-                    <div class="mac-dot dot-yel"></div>
-                    <div class="mac-dot dot-grn"></div>
+            <header class="mb-8 flex flex-col items-center text-center w-full">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="h-[1px] w-8 bg-gray-600 rounded-full opacity-50"></div>
+                    <span class="text-[10px] font-extrabold tracking-[0.4em] uppercase text-gray-400">Terminal Shell</span>
+                    <div class="h-[1px] w-8 bg-gray-600 rounded-full opacity-50"></div>
                 </div>
-                <div class="terminal-title flex items-center gap-2">
-                    <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-                    revork — -zsh — 80x24
-                </div>
-            </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tighter drop-shadow-2xl">
+                    Resolve <span class="animate-gradient-text">Packages.</span>
+                </h1>
+            </header>
 
-            <div class="p-6 sm:p-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
+            <div class="terminal-window w-full" id="cmd-center">
+                
+                <div class="terminal-header relative">
+                    <div class="mac-dots">
+                        <div class="mac-dot dot-red"></div>
+                        <div class="mac-dot dot-yel"></div>
+                        <div class="mac-dot dot-grn"></div>
+                    </div>
+                    <div class="terminal-title flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+                        revork — -zsh — 80x24
+                    </div>
+                </div>
+
+                <div class="p-5 sm:p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-2">
+                        
+                        <div class="custom-dd-wrapper" id="dd-device" style="z-index: 30;">
+                            <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Target Hardware</label>
+                            <button class="custom-dd-btn interactive-el" aria-expanded="false">
+                                <span class="dd-text truncate">Select Device...</span>
+                                <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="custom-dd-menu">
+                                <div class="custom-dd-item interactive-el" data-val="op9pro">OnePlus 9 Pro</div>
+                                <div class="custom-dd-item interactive-el" data-val="op9">OnePlus 9</div>
+                                <div class="custom-dd-item interactive-el" data-val="op8pro">OnePlus 8 Pro</div>
+                                <div class="custom-dd-item interactive-el" data-val="op8t">OnePlus 8T</div>
+                            </div>
+                        </div>
+
+                        <div class="custom-dd-wrapper" id="dd-component" style="z-index: 20;">
+                            <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Component</label>
+                            <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
+                                <span class="dd-text text-gray-500 truncate">Awaiting Hardware...</span>
+                                <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="custom-dd-menu">
+                                <div class="custom-dd-item interactive-el" data-val="super_empty">super_empty.img</div>
+                                <div class="custom-dd-item interactive-el" data-val="recovery">Recovery Image</div>
+                            </div>
+                        </div>
+
+                        <div class="custom-dd-wrapper" id="dd-variant" style="z-index: 10;">
+                            <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Variant</label>
+                            <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
+                                <span class="dd-text text-gray-500 truncate">Locked</span>
+                                <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="custom-dd-menu">
+                                <div class="custom-dd-item interactive-el" data-val="orangefox">OrangeFox Project</div>
+                                <div class="custom-dd-item interactive-el" data-val="twrp">TWRP Official</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="cli-footer flex flex-col sm:flex-row items-center justify-between gap-5">
                     
-                    <div class="custom-dd-wrapper" id="dd-device" style="z-index: 30;">
-                        <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Target Hardware</label>
-                        <button class="custom-dd-btn interactive-el" aria-expanded="false">
-                            <span class="dd-text">Select Device...</span>
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="custom-dd-menu">
-                            <div class="custom-dd-item interactive-el" data-val="op9pro">OnePlus 9 Pro</div>
-                            <div class="custom-dd-item interactive-el" data-val="op9">OnePlus 9</div>
-                            <div class="custom-dd-item interactive-el" data-val="op8pro">OnePlus 8 Pro</div>
-                            <div class="custom-dd-item interactive-el" data-val="op8t">OnePlus 8T</div>
-                        </div>
+                    <div class="text-[12.5px] sm:text-[13.5px] w-full sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap min-w-0 flex items-center">
+                        <span class="text-[#27c93f] font-bold flex-shrink-0">admin@revork</span><span class="text-white flex-shrink-0">:</span><span class="text-[#3b82f6] font-bold flex-shrink-0">~/bin</span><span class="text-white font-bold mr-2 flex-shrink-0">$</span>
+                        <span id="cli-output" class="text-gray-300 font-medium truncate">awaiting --hardware</span><span class="animate-pulse text-white font-bold flex-shrink-0">_</span>
                     </div>
-
-                    <div class="custom-dd-wrapper" id="dd-component" style="z-index: 20;">
-                        <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Component</label>
-                        <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
-                            <span class="dd-text text-gray-500">Awaiting Hardware...</span>
-                            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                    
+                    <div class="flex gap-3 w-full sm:w-auto flex-shrink-0">
+                        <button id="btn-reset" class="btn-rst flex-1 sm:flex-none text-[11px] sm:text-xs tracking-widest px-5 py-3 interactive-el uppercase">
+                            Clear
                         </button>
-                        <div class="custom-dd-menu">
-                            <div class="custom-dd-item interactive-el" data-val="super_empty">super_empty.img</div>
-                            <div class="custom-dd-item interactive-el" data-val="recovery">Recovery Image</div>
-                        </div>
-                    </div>
-
-                    <div class="custom-dd-wrapper" id="dd-variant" style="z-index: 10;">
-                        <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Variant</label>
-                        <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
-                            <span class="dd-text text-gray-500">Locked</span>
-                            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                        <button id="btn-resolve" class="btn-exec flex-1 sm:flex-none text-[11px] sm:text-xs tracking-widest px-8 py-3 interactive-el uppercase">
+                            Execute
                         </button>
-                        <div class="custom-dd-menu">
-                            <div class="custom-dd-item interactive-el" data-val="orangefox">OrangeFox Project</div>
-                            <div class="custom-dd-item interactive-el" data-val="twrp">TWRP Official</div>
-                        </div>
                     </div>
-
                 </div>
+
             </div>
-
-            <div class="cli-footer flex flex-col sm:flex-row items-center justify-between gap-6">
-                
-                <div class="text-[13.5px] w-full sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap">
-                    <span class="text-[#27c93f] font-bold">admin@revork</span><span class="text-white">:</span><span class="text-[#3b82f6] font-bold">~/bin</span><span class="text-white font-bold">$</span>
-                    <span id="cli-output" class="text-gray-300 ml-2 font-medium">awaiting --hardware</span><span class="animate-pulse text-white ml-[1px] font-bold">_</span>
-                </div>
-                
-                <div class="flex gap-3 w-full sm:w-auto">
-                    <button id="btn-reset" class="btn-rst flex-1 sm:flex-none text-xs tracking-widest px-6 py-3 interactive-el uppercase">
-                        Clear
-                    </button>
-                    <button id="btn-resolve" class="btn-exec flex-1 sm:flex-none text-xs tracking-widest px-8 py-3 interactive-el uppercase">
-                        Execute
-                    </button>
-                </div>
-            </div>
-
         </div>
-    </div>
+    </main>
 
-    <footer class="absolute bottom-6 w-full max-w-4xl flex justify-between items-center px-6 text-[10px] font-extrabold tracking-[0.3em] uppercase text-gray-600 fade-in-up z-10" style="animation-delay: 0.6s;">
-        <span>© 2026 ReVork</span>
-        <div class="flex gap-6">
-            <a href="https://github.com/ozyern/ReVork" class="hover:text-gray-300 transition-colors interactive-el">GitHub</a>
+    <footer class="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center text-[10px] sm:text-[12px] text-gray-400 font-extrabold tracking-[0.4em] uppercase pt-8 pb-10 mt-12 border-t border-gray-500/20 z-10 gap-6 sm:gap-0 fade-in-up" style="animation-delay: 0.6s;">
+        <span class="text-sub">© 2026 ReVork</span>
+        <div class="flex gap-4 sm:gap-6">
+            <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
+                <div class="nav-platter"></div>
+                <span class="relative z-10 transition-colors duration-300 group-hover:text-white">GitHub</span>
+            </a>
+            <a href="https://t.me/ReVorkHub" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
+                <div class="nav-platter"></div>
+                <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Telegram</span>
+            </a>
         </div>
     </footer>
 
@@ -314,9 +355,14 @@
             const ring = document.getElementById('cursor-ring');
             const spotlight = document.getElementById('spotlight');
             const cmdCenter = document.getElementById('cmd-center');
+            
             const backWrap = document.querySelector('.magnetic-wrap');
             const backBtn = document.getElementById('back-button');
+            const footerBtns = Array.from(document.querySelectorAll('.magnetic-clear'));
             
+            // Initialize physical states for footer buttons
+            footerBtns.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
+
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
             let cursorX = mouseX, cursorY = mouseY;
             let cmdHover = false;
@@ -342,7 +388,7 @@
                     rotXTar = 0; rotYTar = 0;
                 }
 
-                // Magnetic Button Target
+                // Magnetic Home Button Target
                 if(backHover) {
                     const rect = backWrap.getBoundingClientRect();
                     const cX = rect.left + rect.width / 2, cY = rect.top + rect.height / 2;
@@ -350,6 +396,17 @@
                 } else {
                     btnTarX = 0; btnTarY = 0;
                 }
+
+                // Magnetic Footer Platter Buttons Target
+                footerBtns.forEach(btn => {
+                    if(btn.phys.isHovered) {
+                        const rect = btn.getBoundingClientRect();
+                        const cX = rect.left + rect.width / 2;
+                        const cY = rect.top + rect.height / 2;
+                        btn.phys.tarX = (mouseX - cX) * 0.15;
+                        btn.phys.tarY = (mouseY - cY) * 0.3;
+                    }
+                });
             }, { passive: true });
 
             document.addEventListener('mouseenter', () => { if(spotlight) spotlight.style.opacity = '1'; });
@@ -361,6 +418,19 @@
             backWrap.addEventListener('mouseenter', () => backHover = true);
             backWrap.addEventListener('mouseleave', () => backHover = false);
 
+            // Handle hover states for synced footer buttons
+            footerBtns.forEach(btn => {
+                btn.addEventListener('mouseenter', () => { 
+                    btn.phys.isHovered = true; 
+                    btn.classList.add('is-magnetized'); 
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.phys.isHovered = false; 
+                    btn.classList.remove('is-magnetized');
+                    btn.style.transform = ''; 
+                });
+            });
+
             function physicsTick() {
                 cursorX += (mouseX - cursorX) * 0.15; cursorY += (mouseY - cursorY) * 0.15;
                 const offset = document.body.classList.contains('hovering-link') ? 24 : 18;
@@ -371,9 +441,18 @@
                 rotYCurr += (rotYTar - rotYCurr) * 0.1;
                 if(cmdCenter) cmdCenter.style.transform = `rotateX(${rotXCurr}deg) rotateY(${rotYCurr}deg)`;
                 
-                // Magnetic Button Easing
+                // Magnetic Home Button Easing
                 btnCurrX += (btnTarX - btnCurrX) * 0.2; btnCurrY += (btnTarY - btnCurrY) * 0.2;
                 if(backBtn) backBtn.style.transform = `translate3d(${btnCurrX}px, ${btnCurrY}px, 0)`;
+
+                // Magnetic Footer Buttons Easing
+                footerBtns.forEach(btn => {
+                    if (btn.phys.isHovered) {
+                        btn.phys.currX += (btn.phys.tarX - btn.phys.currX) * 0.2;
+                        btn.phys.currY += (btn.phys.tarY - btn.phys.currY) * 0.2;
+                        btn.style.transform = `translate3d(${btn.phys.currX}px, ${btn.phys.currY}px, 0)`;
+                    }
+                });
 
                 requestAnimationFrame(physicsTick);
             }
@@ -391,7 +470,7 @@
 
         function typeCommand(cmdText, colorClass = 'text-gray-300') {
             clearTimeout(typeTimeout);
-            cliOutput.className = `ml-2 font-medium ${colorClass}`;
+            cliOutput.className = `font-medium truncate ${colorClass}`;
             cliOutput.innerText = '';
             
             let i = 0;
@@ -498,10 +577,22 @@
         });
 
         const fileDatabase = {
-            'op9pro': { 'super_empty': { default: 'https://revork.net/dl/op9pro_super_empty.img' }, 'recovery': { 'orangefox': 'https://revork.net/dl/op9pro_ofox.zip', 'twrp': 'https://revork.net/dl/op9pro_twrp.img' }},
-            'op9': { 'super_empty': { default: 'https://revork.net/dl/op9_super_empty.img' }, 'recovery': { 'orangefox': 'https://revork.net/dl/op9_ofox.zip', 'twrp': 'https://revork.net/dl/op9_twrp.img' }},
-            'op8pro': { 'super_empty': { default: 'https://revork.net/dl/op8pro_super_empty.img' }, 'recovery': { 'orangefox': 'https://revork.net/dl/op8series_ofox.zip', 'twrp': 'https://revork.net/dl/op8pro_twrp.img' }},
-            'op8t': { 'super_empty': { default: 'https://revork.net/dl/op8t_super_empty.img' }, 'recovery': { 'orangefox': 'https://revork.net/dl/op8series_ofox.zip', 'twrp': 'https://revork.net/dl/op8t_twrp.img' }}
+            'op9pro': { 
+                'super_empty': { default: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_9p.img' }, 
+                'recovery': { 'orangefox': 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9series.img', 'twrp': 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_9series.img' }
+            },
+            'op9': { 
+                'super_empty': { default: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_9.img' }, 
+                'recovery': { 'orangefox': 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9series.img', 'twrp': 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_9series.img' }
+            },
+            'op8pro': { 
+                'super_empty': { default: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_8p.img' }, 
+                'recovery': { 'orangefox': 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_8series.img', 'twrp': 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_8p.img' }
+            },
+            'op8t': { 
+                'super_empty': { default: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_8t.img' }, 
+                'recovery': { 'orangefox': 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_8series.img', 'twrp': 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_8t.img' }
+            }
         };
 
         document.getElementById('btn-resolve').addEventListener('click', () => {
@@ -514,7 +605,7 @@
                 typeCommand(`wget -qO- fetching_payload...`, "text-[#ffbd2e]");
                 setTimeout(() => {
                     typeCommand(`200 OK: Payload found. Redirecting.`, "text-[#27c93f]");
-                    setTimeout(() => alert(`Redirecting to:\n${url}`), 300);
+                    setTimeout(() => window.location.href = url, 300); // Redirects user cleanly now instead of popping up an alert
                 }, 500);
             } else {
                 typeCommand("Error 404: Payload not found in remote repository.", "text-[#ff5f56]");
