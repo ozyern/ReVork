@@ -1,1 +1,525 @@
-admin@revork:~/bin$ awaiting --hardware_
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReVork | Download Terminal</title>
+    
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <meta name="theme-color" content="#000000">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
+        
+        :root {
+            /* Authentic iOS / visionOS Spring Physics */
+            --apple-ease: cubic-bezier(0.25, 1, 0.5, 1); 
+            --apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.2); 
+            --apple-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            --bg-color: #020203;
+            --text-main: #ffffff;
+            --text-muted: #86868b;
+            
+            /* Premium Vision Glass */
+            --glass-bg: rgba(18, 18, 22, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            --glass-shadow: 0 40px 80px -20px rgba(0, 0, 0, 1), 0 20px 40px -20px rgba(0,0,0,0.8);
+            
+            --title-gradient: linear-gradient(110deg, #86868b 0%, #ffffff 30%, #86868b 50%, #ffffff 70%, #86868b 100%);
+            
+            --cursor-dot: #ffffff;
+            --cursor-ring: rgba(255, 255, 255, 0.3);
+            --spotlight: radial-gradient(circle 600px at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.08), transparent 40%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; outline: none !important; -webkit-tap-highlight-color: transparent; }
+        ::selection { background: rgba(59, 130, 246, 0.5); color: #fff; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color); color: var(--text-main);
+            overflow-x: hidden; min-height: 100vh;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            perspective: 1200px;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; cursor: none; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+        /* MESH & AURORA BACKGROUND */
+        .ambient-bg {
+            position: fixed; inset: -50%; width: 200%; height: 200%; z-index: -2; pointer-events: none;
+            background: 
+                radial-gradient(circle at 40% 30%, rgba(20, 60, 120, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 60% 70%, rgba(10, 80, 60, 0.1) 0%, transparent 40%);
+            filter: blur(60px); animation: ambientFloat 25s ease-in-out infinite alternate;
+        }
+        @keyframes ambientFloat { 0% { transform: rotate(0deg) scale(1); } 100% { transform: rotate(5deg) scale(1.05) translate(-1%, -1%); } }
+
+        /* ZERO-LATENCY CURSOR */
+        #spotlight { display: none; }
+        @media (hover: hover) and (pointer: fine) {
+            #cursor-dot { width: 5px; height: 5px; background-color: var(--cursor-dot); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000; transition: opacity 0.2s; box-shadow: 0 0 10px rgba(255,255,255,0.8); }
+            #cursor-ring { width: 36px; height: 36px; border: 1px solid var(--cursor-ring); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: width 0.3s var(--apple-bounce), height 0.3s var(--apple-bounce), border-color 0.3s; }
+            #spotlight { display: block; position: fixed; inset: 0; pointer-events: none; z-index: -1; background: var(--spotlight); opacity: 0; transition: opacity 0.8s var(--apple-ease); }
+            body.hovering-link #cursor-ring { width: 48px; height: 48px; background-color: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.6); backdrop-filter: blur(3px); }
+            body.hovering-link #cursor-dot { opacity: 0; }
+        }
+        @media (hover: none), (pointer: coarse) { #cursor-dot, #cursor-ring { display: none !important; } }
+
+        /* LIQUID GLASS BACK BUTTON (iOS Style) */
+        .magnetic-wrap { position: absolute; top: 2rem; left: 2rem; z-index: 100; display: inline-block; padding: 1rem; }
+        .btn-liquid {
+            display: flex; align-items: center; gap: 0.6rem; 
+            padding: 0.75rem 1.25rem 0.75rem 1rem; border-radius: 999px;
+            color: var(--text-main); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
+            text-decoration: none; will-change: transform;
+            /* Liquid Glass Physics */
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px) saturate(200%); -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.2);
+            transition: all 0.4s var(--apple-bounce);
+        }
+        .btn-liquid:hover { 
+            background: rgba(255, 255, 255, 0.08); border-color: rgba(255,255,255,0.25);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.3);
+        }
+        .btn-liquid svg { width: 1.25rem; height: 1.25rem; transition: transform 0.4s var(--apple-bounce); }
+        .magnetic-wrap:hover .btn-liquid svg { transform: translateX(-4px); }
+
+        /* MACOS / VISIONOS TERMINAL WINDOW */
+        .terminal-container { width: 100%; max-width: 900px; z-index: 10; perspective: 1500px; }
+        .terminal-window {
+            position: relative; background: var(--glass-bg);
+            backdrop-filter: blur(60px) saturate(200%); -webkit-backdrop-filter: blur(60px) saturate(200%);
+            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.25);
+            box-shadow: var(--glass-shadow), var(--glass-highlight); 
+            border-radius: 24px;
+            transform-style: preserve-3d; will-change: transform;
+            transition: transform 0.1s linear, box-shadow 0.5s var(--apple-ease);
+        }
+        .terminal-window::before {
+            content: ""; position: absolute; inset: 0; border-radius: 24px; z-index: -1; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+        .terminal-window.is-tracking { box-shadow: 0 60px 120px -20px rgba(0, 0, 0, 1), inset 0 1px 2px rgba(255, 255, 255, 0.4); }
+
+        /* TITLE BAR */
+        .terminal-header {
+            display: flex; align-items: center; padding: 1.1rem 1.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02);
+            border-radius: 24px 24px 0 0; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .mac-dots { display: flex; gap: 8px; }
+        .mac-dot { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 1px 1px rgba(255,255,255,0.5), inset 0 -1px 1px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.4); }
+        .dot-red { background-color: #ff5f56; } .dot-yel { background-color: #ffbd2e; } .dot-grn { background-color: #27c93f; }
+        .terminal-title { position: absolute; left: 50%; transform: translateX(-50%); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; color: var(--text-muted); }
+
+        /* IOS / VISIONOS INSET DROPDOWNS */
+        .custom-dd-wrapper { position: relative; width: 100%; z-index: 10; }
+        .custom-dd-btn {
+            width: 100%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.05);
+            padding: 1.1rem 1.25rem; border-radius: 16px; color: var(--text-main); font-weight: 600; font-size: 0.9rem;
+            transition: all 0.4s var(--apple-bounce);
+        }
+        .custom-dd-btn:hover:not(.disabled) { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.25); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 2px 10px rgba(0,0,0,0.2); }
+        .custom-dd-btn.disabled { opacity: 0.4; pointer-events: none; background: rgba(0,0,0,0.15); box-shadow: none; }
+        .custom-dd-btn[aria-expanded="true"] { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1); box-shadow: 0 0 25px rgba(255,255,255,0.08); }
+        .custom-dd-btn svg { transition: transform 0.5s var(--apple-bounce); }
+        .custom-dd-btn[aria-expanded="true"] svg { transform: rotate(180deg); color: #fff; }
+        
+        .custom-dd-menu {
+            position: absolute; top: calc(100% + 10px); left: 0; width: 100%; z-index: 100;
+            background: rgba(20, 20, 24, 0.85); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 0.5rem;
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transform-origin: top center; transform: translateY(-10px) scale(0.95);
+            transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.5s var(--apple-bounce);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9), inset 0 1px 1px rgba(255,255,255,0.2);
+        }
+        .custom-dd-menu.show { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); }
+        
+        .custom-dd-item { padding: 0.85rem 1rem; border-radius: 10px; cursor: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; transition: all 0.3s var(--apple-bounce); }
+        .custom-dd-item:hover { background: rgba(255,255,255,0.12); color: #ffffff; transform: translateX(4px); }
+
+        /* TERMINAL CLI FOOTER */
+        .cli-footer {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0,0,0,0.45); border-top: 1px solid rgba(255,255,255,0.08);
+            border-radius: 0 0 24px 24px; padding: 1.25rem 1.5rem;
+            box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.6);
+        }
+
+        /* IOS / VISION BUTTONS (Pill Shaped) */
+        .btn-exec {
+            background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 100%); color: #000;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; border-radius: 999px;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.15), inset 0 1px 1px #fff;
+            transition: all 0.5s var(--apple-bounce); position: relative; overflow: hidden;
+        }
+        .btn-exec::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
+            transform: rotate(45deg) translateY(-100%); transition: transform 0.5s ease;
+        }
+        .btn-exec:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 25px rgba(255,255,255,0.3), inset 0 1px 1px #fff; }
+        .btn-exec:hover::after { transform: rotate(45deg) translateY(100%); }
+        .btn-exec:active { transform: scale(0.95); }
+
+        .btn-rst {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; border-radius: 999px;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            transition: all 0.4s var(--apple-bounce);
+        }
+        .btn-rst:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); transform: translateY(-1px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .btn-rst:active { transform: scale(0.95); }
+
+        /* APP LAUNCH ANIMATION */
+        .app-launch { opacity: 0; transform: scale(0.9) translateY(40px) rotateX(-5deg); filter: blur(20px); animation: appLaunchAnim 1.2s forwards var(--apple-bounce); animation-delay: 0.1s; }
+        @keyframes appLaunchAnim { to { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); filter: blur(0); } }
+
+        .animate-gradient-text { background: var(--title-gradient); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textShine 6s linear infinite; }
+        @keyframes textShine { 0% { background-position: 0% center; } 100% { background-position: -200% center; } }
+        
+        .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 1s forwards var(--apple-spring); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="flex flex-col items-center p-6 sm:p-14 relative justify-center min-h-screen">
+
+    <div class="ambient-bg"></div>
+    <div id="spotlight"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <div class="magnetic-wrap fade-in-up" style="animation-delay: 0.4s;">
+        <a href="index.html" class="btn-liquid interactive-el" id="back-button">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Home
+        </a>
+    </div>
+
+    <div class="terminal-container flex flex-col items-center app-launch">
+        
+        <header class="mb-10 flex flex-col items-center text-center w-full">
+            <div class="flex items-center gap-4 mb-3">
+                <div class="h-[1px] w-8 bg-gray-600 rounded-full opacity-50"></div>
+                <span class="text-[10px] font-extrabold tracking-[0.4em] uppercase text-gray-400">Terminal Shell</span>
+                <div class="h-[1px] w-8 bg-gray-600 rounded-full opacity-50"></div>
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tighter drop-shadow-2xl">
+                Resolve <span class="animate-gradient-text">Packages.</span>
+            </h1>
+        </header>
+
+        <div class="terminal-window w-full" id="cmd-center">
+            
+            <div class="terminal-header relative">
+                <div class="mac-dots">
+                    <div class="mac-dot dot-red"></div>
+                    <div class="mac-dot dot-yel"></div>
+                    <div class="mac-dot dot-grn"></div>
+                </div>
+                <div class="terminal-title flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+                    revork — -zsh — 80x24
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
+                    
+                    <div class="custom-dd-wrapper" id="dd-device" style="z-index: 30;">
+                        <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Target Hardware</label>
+                        <button class="custom-dd-btn interactive-el" aria-expanded="false">
+                            <span class="dd-text">Select Device...</span>
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="custom-dd-menu">
+                            <div class="custom-dd-item interactive-el" data-val="op9pro">OnePlus 9 Pro</div>
+                            <div class="custom-dd-item interactive-el" data-val="op9">OnePlus 9</div>
+                            <div class="custom-dd-item interactive-el" data-val="op8pro">OnePlus 8 Pro</div>
+                            <div class="custom-dd-item interactive-el" data-val="op8t">OnePlus 8T</div>
+                        </div>
+                    </div>
+
+                    <div class="custom-dd-wrapper" id="dd-component" style="z-index: 20;">
+                        <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Component</label>
+                        <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
+                            <span class="dd-text text-gray-500">Awaiting Hardware...</span>
+                            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="custom-dd-menu">
+                            <div class="custom-dd-item interactive-el" data-val="super_empty">super_empty.img</div>
+                            <div class="custom-dd-item interactive-el" data-val="recovery">Recovery Image</div>
+                        </div>
+                    </div>
+
+                    <div class="custom-dd-wrapper" id="dd-variant" style="z-index: 10;">
+                        <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Variant</label>
+                        <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
+                            <span class="dd-text text-gray-500">Locked</span>
+                            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="custom-dd-menu">
+                            <div class="custom-dd-item interactive-el" data-val="orangefox">OrangeFox Project</div>
+                            <div class="custom-dd-item interactive-el" data-val="twrp">TWRP Official</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cli-footer flex flex-col sm:flex-row items-center justify-between gap-6">
+                
+                <div class="text-[13.5px] w-full sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap">
+                    <span class="text-[#27c93f] font-bold">admin@revork</span><span class="text-white">:</span><span class="text-[#3b82f6] font-bold">~/bin</span><span class="text-white font-bold">$</span>
+                    <span id="cli-output" class="text-gray-300 ml-2 font-medium">awaiting --hardware</span><span class="animate-pulse text-white ml-[1px] font-bold">_</span>
+                </div>
+                
+                <div class="flex gap-3 w-full sm:w-auto">
+                    <button id="btn-reset" class="btn-rst flex-1 sm:flex-none text-xs tracking-widest px-6 py-3 interactive-el uppercase">
+                        Clear
+                    </button>
+                    <button id="btn-resolve" class="btn-exec flex-1 sm:flex-none text-xs tracking-widest px-8 py-3 interactive-el uppercase">
+                        Execute
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="absolute bottom-6 w-full max-w-4xl flex justify-between items-center px-6 text-[10px] font-extrabold tracking-[0.3em] uppercase text-gray-600 fade-in-up z-10" style="animation-delay: 0.6s;">
+        <span>© 2026 ReVork</span>
+        <div class="flex gap-6">
+            <a href="https://github.com/ozyern/ReVork" class="hover:text-gray-300 transition-colors interactive-el">GitHub</a>
+        </div>
+    </footer>
+
+    <script>
+        // --- High Performance Cursor & Physics Engine ---
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        
+        if (!isTouchDevice) {
+            const dot = document.getElementById('cursor-dot');
+            const ring = document.getElementById('cursor-ring');
+            const spotlight = document.getElementById('spotlight');
+            const cmdCenter = document.getElementById('cmd-center');
+            const backWrap = document.querySelector('.magnetic-wrap');
+            const backBtn = document.getElementById('back-button');
+            
+            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+            let cursorX = mouseX, cursorY = mouseY;
+            let cmdHover = false;
+            let backHover = false;
+            
+            let btnCurrX = 0, btnCurrY = 0, btnTarX = 0, btnTarY = 0;
+            let rotXCurr = 0, rotYCurr = 0, rotXTar = 0, rotYTar = 0;
+
+            window.addEventListener('mousemove', (e) => { 
+                mouseX = e.clientX; mouseY = e.clientY; 
+                if (dot) dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
+                if (spotlight) spotlight.style.setProperty('--mouse-x', `${mouseX}px`);
+                if (spotlight) spotlight.style.setProperty('--mouse-y', `${mouseY}px`);
+                
+                // Extremely subtle 3D Tilt for Terminal (max 2 degrees)
+                if(cmdHover) {
+                    const rect = cmdCenter.getBoundingClientRect();
+                    const x = mouseX - rect.left, y = mouseY - rect.top;
+                    const cX = rect.width / 2, cY = rect.height / 2;
+                    rotXTar = ((y - cY) / cY) * -2; 
+                    rotYTar = ((x - cX) / cX) * 2;
+                } else {
+                    rotXTar = 0; rotYTar = 0;
+                }
+
+                // Magnetic Button Target
+                if(backHover) {
+                    const rect = backWrap.getBoundingClientRect();
+                    const cX = rect.left + rect.width / 2, cY = rect.top + rect.height / 2;
+                    btnTarX = (mouseX - cX) * 0.4; btnTarY = (mouseY - cY) * 0.4;
+                } else {
+                    btnTarX = 0; btnTarY = 0;
+                }
+            }, { passive: true });
+
+            document.addEventListener('mouseenter', () => { if(spotlight) spotlight.style.opacity = '1'; });
+            document.addEventListener('mouseleave', () => { if(spotlight) spotlight.style.opacity = '0'; });
+
+            cmdCenter.addEventListener('mouseenter', () => { cmdHover = true; cmdCenter.classList.add('is-tracking'); });
+            cmdCenter.addEventListener('mouseleave', () => { cmdHover = false; cmdCenter.classList.remove('is-tracking'); });
+
+            backWrap.addEventListener('mouseenter', () => backHover = true);
+            backWrap.addEventListener('mouseleave', () => backHover = false);
+
+            function physicsTick() {
+                cursorX += (mouseX - cursorX) * 0.15; cursorY += (mouseY - cursorY) * 0.15;
+                const offset = document.body.classList.contains('hovering-link') ? 24 : 18;
+                if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
+                
+                // 3D Glass Smooth Easing
+                rotXCurr += (rotXTar - rotXCurr) * 0.1;
+                rotYCurr += (rotYTar - rotYCurr) * 0.1;
+                if(cmdCenter) cmdCenter.style.transform = `rotateX(${rotXCurr}deg) rotateY(${rotYCurr}deg)`;
+                
+                // Magnetic Button Easing
+                btnCurrX += (btnTarX - btnCurrX) * 0.2; btnCurrY += (btnTarY - btnCurrY) * 0.2;
+                if(backBtn) backBtn.style.transform = `translate3d(${btnCurrX}px, ${btnCurrY}px, 0)`;
+
+                requestAnimationFrame(physicsTick);
+            }
+            physicsTick(); 
+
+            document.querySelectorAll('.interactive-el').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+            });
+        }
+
+        // --- Terminal CLI Typing Engine ---
+        const cliOutput = document.getElementById('cli-output');
+        let typeTimeout;
+
+        function typeCommand(cmdText, colorClass = 'text-gray-300') {
+            clearTimeout(typeTimeout);
+            cliOutput.className = `ml-2 font-medium ${colorClass}`;
+            cliOutput.innerText = '';
+            
+            let i = 0;
+            function typeChar() {
+                if (i < cmdText.length) {
+                    cliOutput.innerText += cmdText.charAt(i);
+                    i++;
+                    typeTimeout = setTimeout(typeChar, 10); // Hyper-fast typing
+                }
+            }
+            typeChar();
+        }
+
+        // --- Logic & Dropdown Engine ---
+        let state = { device: null, component: null, variant: null };
+
+        // Dropdown Interactions
+        document.querySelectorAll('.custom-dd-wrapper').forEach(wrapper => {
+            const btn = wrapper.querySelector('.custom-dd-btn');
+            const menu = wrapper.querySelector('.custom-dd-menu');
+            const text = wrapper.querySelector('.dd-text');
+            const type = wrapper.id.replace('dd-', '');
+
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (btn.classList.contains('disabled')) return;
+                
+                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+                
+                document.querySelectorAll('.custom-dd-btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
+                document.querySelectorAll('.custom-dd-menu').forEach(m => m.classList.remove('show'));
+                
+                if (!isExpanded) {
+                    btn.setAttribute('aria-expanded', 'true');
+                    menu.classList.add('show');
+                }
+            });
+
+            menu.querySelectorAll('.custom-dd-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const val = item.getAttribute('data-val');
+                    const label = item.textContent;
+                    
+                    text.textContent = label;
+                    text.classList.remove('text-gray-500'); text.style.color = 'white';
+                    state[type] = val;
+                    
+                    btn.setAttribute('aria-expanded', 'false');
+                    menu.classList.remove('show');
+
+                    handleLogicUpdate(type);
+                });
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.custom-dd-btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
+            document.querySelectorAll('.custom-dd-menu').forEach(m => m.classList.remove('show'));
+        });
+
+        const btnComp = document.querySelector('#dd-component .custom-dd-btn');
+        const textComp = document.querySelector('#dd-component .dd-text');
+        const btnVar = document.querySelector('#dd-variant .custom-dd-btn');
+        const textVar = document.querySelector('#dd-variant .dd-text');
+
+        function handleLogicUpdate(triggeredBy) {
+            if (triggeredBy === 'device') {
+                btnComp.classList.remove('disabled'); textComp.textContent = "Select Format..."; textComp.style.color = "var(--text-muted)";
+                state.component = null;
+                btnVar.classList.add('disabled'); textVar.textContent = "Locked"; textVar.style.color = "var(--text-muted)";
+                state.variant = null;
+                typeCommand(`export TARGET="${state.device}"; awaiting --format`);
+            }
+            
+            if (triggeredBy === 'component') {
+                if (state.component === 'recovery') {
+                    btnVar.classList.remove('disabled'); textVar.textContent = "Select Variant..."; textVar.style.color = "var(--text-muted)";
+                    state.variant = null;
+                    typeCommand(`export COMPONENT="recovery"; awaiting --variant`);
+                } else if (state.component === 'super_empty') {
+                    btnVar.classList.add('disabled'); textVar.textContent = "Standard Output"; textVar.style.color = "white";
+                    state.variant = 'default';
+                    typeCommand(`./resolve_link.sh --ready`, "text-[#27c93f]");
+                }
+            }
+
+            if (triggeredBy === 'variant') {
+                typeCommand(`./resolve_link.sh --ready`, "text-[#27c93f]");
+            }
+        }
+
+        // Actions
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            state = { device: null, component: null, variant: null };
+            
+            const textDev = document.querySelector('#dd-device .dd-text');
+            textDev.textContent = "Select Device..."; textDev.style.color = "var(--text-main)";
+            
+            btnComp.classList.add('disabled'); textComp.textContent = "Awaiting Hardware..."; textComp.style.color = "var(--text-muted)";
+            btnVar.classList.add('disabled'); textVar.textContent = "Locked"; textVar.style.color = "var(--text-muted)";
+            
+            typeCommand("clear && reset_env; awaiting --hardware");
+        });
+
+        const fileDatabase = {
+            'op9pro': { 'super_empty': { default: 'https://revork.net/dl/op9pro_super_empty.img' }, 'recovery': { 'orangefox': 'https://revork.net/dl/op9pro_ofox.zip', 'twrp': 'https://revork.net/dl/op9pro_twrp.img' }},
+            'op9': { 'super_empty': { default: 'https://revork.net/dl/op9_super_empty.img' }, 'recovery': { 'orangefox': 'https://revork.net/dl/op9_ofox.zip', 'twrp': 'https://revork.net/dl/op9_twrp.img' }},
+            'op8pro': { 'super_empty': { default: 'https://revork.net/dl/op8pro_super_empty.img' }, 'recovery': { 'orangefox': 'https://revork.net/dl/op8series_ofox.zip', 'twrp': 'https://revork.net/dl/op8pro_twrp.img' }},
+            'op8t': { 'super_empty': { default: 'https://revork.net/dl/op8t_super_empty.img' }, 'recovery': { 'orangefox': 'https://revork.net/dl/op8series_ofox.zip', 'twrp': 'https://revork.net/dl/op8t_twrp.img' }}
+        };
+
+        document.getElementById('btn-resolve').addEventListener('click', () => {
+            if (!state.device) return typeCommand("Error: Missing --hardware parameter", "text-[#ff5f56]");
+            if (!state.component) return typeCommand("Error: Missing --format parameter", "text-[#ff5f56]");
+            if (state.component === 'recovery' && !state.variant) return typeCommand("Error: Missing --variant parameter", "text-[#ff5f56]");
+
+            const url = fileDatabase[state.device]?.[state.component]?.[state.variant];
+            if (url) {
+                typeCommand(`wget -qO- fetching_payload...`, "text-[#ffbd2e]");
+                setTimeout(() => {
+                    typeCommand(`200 OK: Payload found. Redirecting.`, "text-[#27c93f]");
+                    setTimeout(() => alert(`Redirecting to:\n${url}`), 300);
+                }, 500);
+            } else {
+                typeCommand("Error 404: Payload not found in remote repository.", "text-[#ff5f56]");
+            }
+        });
+    </script>
+</body>
+</html>
