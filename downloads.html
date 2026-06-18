@@ -6,7 +6,7 @@
     <title>ReVork | Download Terminal</title>
     
     <link rel="icon" type="image/png" href="assets/favicon.png">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#03050a">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -18,38 +18,34 @@
             --apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.2); 
             --apple-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-            --bg-color: #020203;
+            /* RESTORED DEEP BLUE-BLACK ABYSS */
+            --bg-color: #03050a;
             --text-main: #ffffff;
             --text-muted: #86868b;
-            --text-sub: rgba(255, 255, 255, 0.7);
+            --text-sub: rgba(255, 255, 255, 0.5);
             
-            /* Premium Vision Glass */
-            --glass-bg: rgba(18, 18, 22, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.15);
+            /* RESTORED HEAVY LIQUID GLASS */
+            --glass-bg: linear-gradient(135deg, rgba(25, 30, 40, 0.45) 0%, rgba(10, 12, 16, 0.75) 100%);
+            --glass-border: rgba(255, 255, 255, 0.12);
             --glass-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            --glass-shadow: 0 40px 80px -20px rgba(0, 0, 0, 1), 0 20px 40px -20px rgba(0,0,0,0.8);
+            --glass-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8), 0 30px 60px -30px rgba(0,0,0,0.6);
             
-            --glass-bg-base: linear-gradient(150deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.005) 100%);
-            --glass-border-base: rgba(255, 255, 255, 0.06);
-
             --title-gradient: linear-gradient(110deg, #86868b 0%, #ffffff 30%, #86868b 50%, #ffffff 70%, #86868b 100%);
             
+            /* PREMIUM WHITE CURSOR */
             --cursor-dot: #ffffff;
-            --cursor-ring: rgba(255, 255, 255, 0.3);
-            --spotlight: radial-gradient(circle 600px at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.08), transparent 40%);
+            --cursor-ring: rgba(255, 255, 255, 0.35);
+            --spotlight: radial-gradient(circle 800px at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; outline: none !important; -webkit-tap-highlight-color: transparent; }
-        ::selection { background: rgba(59, 130, 246, 0.5); color: #fff; }
+        ::selection { background: rgba(59, 130, 246, 0.3); color: #fff; }
 
-        html, body {
-            max-width: 100vw;
-            overflow-x: hidden;
-        }
+        html, body { max-width: 100vw; overflow-x: hidden; background-color: var(--bg-color); }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color); color: var(--text-main);
+            color: var(--text-main);
             min-height: 100vh;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
             perspective: 1200px;
@@ -59,31 +55,50 @@
         ::-webkit-scrollbar-track { background: transparent; cursor: none; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
-        /* MESH & AURORA BACKGROUND (Contained to prevent horizontal scrolling) */
+        /* DEEP BLUE-BLACK BACKGROUND */
         .ambient-bg-wrapper {
             position: fixed; inset: 0; overflow: hidden; z-index: -2; pointer-events: none;
+            background-color: var(--bg-color);
         }
+        
+        .cyber-grid {
+            position: absolute; inset: -50%; width: 200%; height: 200%;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(800px) rotateX(65deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 25s linear infinite;
+            mask-image: radial-gradient(circle at center, black 5%, transparent 65%);
+            -webkit-mask-image: radial-gradient(circle at center, black 5%, transparent 65%);
+        }
+        @keyframes gridMove { 0% { transform: perspective(800px) rotateX(65deg) translateY(0) translateZ(-200px); } 100% { transform: perspective(800px) rotateX(65deg) translateY(60px) translateZ(-200px); } }
+
         .ambient-bg {
             position: absolute; inset: -50%; width: 200%; height: 200%;
             background: 
-                radial-gradient(circle at 40% 30%, rgba(20, 60, 120, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 60% 70%, rgba(10, 80, 60, 0.1) 0%, transparent 40%);
-            filter: blur(60px); animation: ambientFloat 25s ease-in-out infinite alternate;
+                radial-gradient(circle at 30% 40%, rgba(20, 50, 100, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 70% 60%, rgba(10, 30, 70, 0.2) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 55%);
+            filter: blur(70px); animation: ambientPulse 18s ease-in-out infinite alternate;
         }
-        @keyframes ambientFloat { 0% { transform: rotate(0deg) scale(1); } 100% { transform: rotate(5deg) scale(1.05) translate(-1%, -1%); } }
+        @keyframes ambientPulse { 
+            0% { transform: scale(1) translate(0, 0); opacity: 0.7; } 
+            100% { transform: scale(1.05) translate(-2%, 2%); opacity: 1; } 
+        }
 
         /* ZERO-LATENCY CURSOR */
         #spotlight { display: none; }
         @media (hover: hover) and (pointer: fine) {
-            #cursor-dot { width: 5px; height: 5px; background-color: var(--cursor-dot); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000; transition: opacity 0.2s; box-shadow: 0 0 10px rgba(255,255,255,0.8); }
+            #cursor-dot { width: 5px; height: 5px; background-color: var(--cursor-dot); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000; transition: opacity 0.2s; box-shadow: 0 0 12px rgba(255,255,255,0.9); }
             #cursor-ring { width: 36px; height: 36px; border: 1px solid var(--cursor-ring); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: width 0.3s var(--apple-bounce), height 0.3s var(--apple-bounce), border-color 0.3s; }
             #spotlight { display: block; position: fixed; inset: 0; pointer-events: none; z-index: -1; background: var(--spotlight); opacity: 0; transition: opacity 0.8s var(--apple-ease); }
-            body.hovering-link #cursor-ring { width: 48px; height: 48px; background-color: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.6); backdrop-filter: blur(3px); }
+            body.hovering-link #cursor-ring { width: 48px; height: 48px; background-color: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.9); backdrop-filter: blur(4px); box-shadow: 0 0 25px rgba(255,255,255,0.2); }
             body.hovering-link #cursor-dot { opacity: 0; }
         }
         @media (hover: none), (pointer: coarse) { #cursor-dot, #cursor-ring { display: none !important; } }
 
-        /* LIQUID GLASS BACK BUTTON (iOS Style) */
+        /* DEEP LIQUID GLASS BACK BUTTON */
         .magnetic-wrap { position: absolute; top: 1rem; left: 1rem; z-index: 100; display: inline-block; padding: 0.5rem; }
         @media (min-width: 640px) { .magnetic-wrap { top: 2rem; left: 2rem; padding: 1rem; } }
         
@@ -92,139 +107,224 @@
             padding: 0.75rem 1.25rem 0.75rem 1rem; border-radius: 999px;
             color: var(--text-main); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
             text-decoration: none; will-change: transform;
-            /* Liquid Glass Physics */
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(30px) saturate(200%); -webkit-backdrop-filter: blur(30px) saturate(200%);
+            background: rgba(20, 30, 45, 0.4);
+            backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15);
             transition: all 0.4s var(--apple-bounce);
         }
         .btn-liquid:hover { 
-            background: rgba(255, 255, 255, 0.08); border-color: rgba(255,255,255,0.25);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.3);
+            background: rgba(40, 50, 70, 0.6); border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.3);
+            color: #fff;
         }
         .btn-liquid svg { width: 1.25rem; height: 1.25rem; transition: transform 0.4s var(--apple-bounce); }
         .magnetic-wrap:hover .btn-liquid svg { transform: translateX(-4px); }
 
-        /* MACOS / VISIONOS TERMINAL WINDOW */
-        .terminal-container { width: 100%; max-width: 900px; z-index: 10; perspective: 1500px; }
+        /* TERMINAL WINDOW - RESTORED LIQUID GLASS & ANIMATIONS */
+        .terminal-container { width: 100%; max-width: 920px; z-index: 10; perspective: 1500px; }
+        
+        /* Floating Animation for the entire wrapper */
+        .terminal-glow-wrapper { 
+            position: relative; width: 100%; border-radius: 24px; 
+            animation: terminalFloat 6s ease-in-out infinite alternate;
+            transition: box-shadow 0.8s ease; 
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.7); 
+        }
+        @keyframes terminalFloat {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-8px); }
+        }
+        .terminal-glow-wrapper.is-ready { box-shadow: 0 0 100px rgba(255, 255, 255, 0.12) !important; }
+
         .terminal-window {
             position: relative; background: var(--glass-bg);
-            backdrop-filter: blur(60px) saturate(200%); -webkit-backdrop-filter: blur(60px) saturate(200%);
-            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.25);
+            backdrop-filter: blur(50px) saturate(200%); -webkit-backdrop-filter: blur(50px) saturate(200%);
+            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.35);
             box-shadow: var(--glass-shadow), var(--glass-highlight); 
             border-radius: 24px;
             transform-style: preserve-3d; will-change: transform;
-            transition: transform 0.1s linear, box-shadow 0.5s var(--apple-ease);
+            transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s var(--apple-ease);
         }
+
+        /* Edge Reflection */
         .terminal-window::before {
-            content: ""; position: absolute; inset: 0; border-radius: 24px; z-index: -1; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.0) 70%, rgba(59,130,246,0.2) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: 50;
         }
-        .terminal-window.is-tracking { box-shadow: 0 60px 120px -20px rgba(0, 0, 0, 1), inset 0 1px 2px rgba(255, 255, 255, 0.4); }
+
+        /* Subtle Dark CRT Overlay */
+        .crt-overlay {
+            position: absolute; inset: 0; border-radius: 24px; z-index: 40; pointer-events: none; overflow: hidden;
+        }
+        .crt-overlay::before {
+            content: ""; position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        .terminal-window.is-tracking { box-shadow: 0 70px 140px -20px rgba(0, 0, 0, 1), inset 0 1px 2px rgba(255, 255, 255, 0.5); }
 
         /* TITLE BAR */
         .terminal-header {
-            display: flex; align-items: center; padding: 1.1rem 1.25rem;
-            border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02);
-            border-radius: 24px 24px 0 0; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+            display: flex; align-items: center; padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.25);
+            border-radius: 24px 24px 0 0; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); position: relative; z-index: 45;
         }
-        .mac-dots { display: flex; gap: 8px; }
-        .mac-dot { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 1px 1px rgba(255,255,255,0.5), inset 0 -1px 1px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.4); }
-        .dot-red { background-color: #ff5f56; } .dot-yel { background-color: #ffbd2e; } .dot-grn { background-color: #27c93f; }
-        .terminal-title { position: absolute; left: 50%; transform: translateX(-50%); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; color: var(--text-muted); }
+        .mac-dots { display: flex; gap: 9px; }
+        .mac-dot { 
+            width: 13px; height: 13px; border-radius: 50%; opacity: 0;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.6), inset 0 -1px 1px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.8);
+            transition: transform 0.3s var(--apple-bounce); position: relative;
+            animation: popIn 0.5s forwards var(--apple-bounce);
+        }
+        .mac-dot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; opacity: 0; transition: opacity 0.3s; box-shadow: 0 0 10px currentColor; }
+        .mac-dot:hover { transform: scale(1.15); }
+        .mac-dot:hover::after { opacity: 0.8; }
+        
+        .dot-red { background-color: #ff5f56; color: #ff5f56; animation-delay: 0.4s; } 
+        .dot-yel { background-color: #ffbd2e; color: #ffbd2e; animation-delay: 0.5s; } 
+        .dot-grn { background-color: #27c93f; color: #27c93f; animation-delay: 0.6s; }
+        @keyframes popIn { to { opacity: 1; transform: scale(1); } from { opacity: 0; transform: scale(0.5); } }
+        
+        .terminal-title { position: absolute; left: 50%; transform: translateX(-50%); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; color: var(--text-muted); }
 
-        /* IOS / VISIONOS INSET DROPDOWNS */
-        .custom-dd-wrapper { position: relative; width: 100%; z-index: 10; }
+        /* DROPDOWNS - SPACIOUS & PREMIUM */
+        .dropdown-container { position: relative; z-index: 100; padding: 1.5rem; }
+        @media (min-width: 640px) { .dropdown-container { padding: 2rem 2.5rem; } } 
+        .footer-container { position: relative; z-index: 10; }
+
+        .custom-dd-wrapper { position: relative; width: 100%; transition: z-index 0s; }
+        .custom-dd-wrapper.is-active { z-index: 999 !important; }
+
         .custom-dd-btn {
             width: 100%; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.05);
-            padding: 1.1rem 1.25rem; border-radius: 16px; color: var(--text-main); font-weight: 600; font-size: 0.9rem;
+            background: rgba(10, 15, 25, 0.4); border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.05);
+            padding: 1.1rem 1.25rem; border-radius: 14px; color: var(--text-main); font-weight: 600; font-size: 0.85rem;
             transition: all 0.4s var(--apple-bounce);
         }
-        .custom-dd-btn:hover:not(.disabled) { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.25); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 2px 10px rgba(0,0,0,0.2); }
-        .custom-dd-btn.disabled { opacity: 0.4; pointer-events: none; background: rgba(0,0,0,0.15); box-shadow: none; }
-        .custom-dd-btn[aria-expanded="true"] { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1); box-shadow: 0 0 25px rgba(255,255,255,0.08); }
+        @media (min-width: 640px) { .custom-dd-btn { padding: 1.25rem 1.5rem; font-size: 0.95rem; border-radius: 16px; } }
+
+        .custom-dd-btn:hover:not(.disabled) { background: rgba(30, 40, 60, 0.5); border-color: rgba(255, 255, 255, 0.35); box-shadow: inset 0 2px 5px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.4); transform: translateY(-2px); }
+        .custom-dd-btn.disabled { opacity: 0.4; pointer-events: none; background: rgba(0,0,0,0.3); box-shadow: none; }
+        .custom-dd-btn[aria-expanded="true"] { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.15); box-shadow: 0 0 25px rgba(255,255,255,0.15); transform: translateY(0); }
         .custom-dd-btn svg { transition: transform 0.5s var(--apple-bounce); }
         .custom-dd-btn[aria-expanded="true"] svg { transform: rotate(180deg); color: #fff; }
         
         .custom-dd-menu {
-            position: absolute; top: calc(100% + 10px); left: 0; width: 100%; z-index: 100;
-            background: rgba(20, 20, 24, 0.85); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 0.5rem;
+            position: absolute; top: calc(100% + 10px); left: 0; width: 100%; z-index: 1000;
+            background: #090b10; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 0.5rem;
             opacity: 0; visibility: hidden; pointer-events: none;
-            transform-origin: top center; transform: translateY(-10px) scale(0.95);
-            transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.5s var(--apple-bounce);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.9), inset 0 1px 1px rgba(255,255,255,0.2);
+            transform-origin: top center; transform: translateY(-15px) scale(0.95);
+            transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.5s var(--apple-bounce);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.05) inset, 0 50px 100px -10px rgba(0,0,0,1);
         }
         .custom-dd-menu.show { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); }
         
-        .custom-dd-item { padding: 0.85rem 1rem; border-radius: 10px; cursor: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; transition: all 0.3s var(--apple-bounce); }
-        .custom-dd-item:hover { background: rgba(255,255,255,0.12); color: #ffffff; transform: translateX(4px); }
+        .custom-dd-item { 
+            padding: 0.85rem 1rem; border-radius: 10px; cursor: none; color: var(--text-muted); 
+            font-size: 0.85rem; font-weight: 600; transition: all 0.3s var(--apple-bounce); 
+            opacity: 0; transform: translateX(-10px); 
+        }
+        @media (min-width: 640px) { .custom-dd-item { font-size: 0.9rem; padding: 1rem 1.25rem; } }
+        
+        .custom-dd-menu.show .custom-dd-item { opacity: 1; transform: translateX(0); }
+        .custom-dd-menu.show .custom-dd-item:nth-child(1) { transition-delay: 0.05s; }
+        .custom-dd-menu.show .custom-dd-item:nth-child(2) { transition-delay: 0.1s; }
+        .custom-dd-menu.show .custom-dd-item:nth-child(3) { transition-delay: 0.15s; }
+        .custom-dd-menu.show .custom-dd-item:nth-child(4) { transition-delay: 0.2s; }
+        
+        .custom-dd-item:hover { background: rgba(255,255,255,0.12); color: #ffffff; transform: translateX(8px) !important; transition-delay: 0s !important; box-shadow: -4px 0 15px -5px rgba(255,255,255,0.2); }
 
         /* TERMINAL CLI FOOTER */
         .cli-footer {
             font-family: 'JetBrains Mono', monospace;
-            background: rgba(0,0,0,0.45); border-top: 1px solid rgba(255,255,255,0.08);
-            border-radius: 0 0 24px 24px; padding: 1.25rem 1.5rem;
-            box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.6);
+            background: rgba(5, 5, 8, 0.7); border-top: 1px solid rgba(255,255,255,0.12);
+            border-radius: 0 0 24px 24px; padding: 1.5rem;
+            box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.9);
         }
+        @media (min-width: 640px) { .cli-footer { padding: 1.5rem 2.5rem; } }
 
-        /* IOS / VISION BUTTONS (Pill Shaped) */
+        /* Crisp Terminal Output Colors */
+        .term-glow-green { color: #34d399; text-shadow: 0 0 8px rgba(52,211,153,0.4); }
+        .term-glow-blue { color: #60a5fa; text-shadow: 0 0 8px rgba(96,165,250,0.4); }
+        .term-glow-white { color: #ffffff; text-shadow: 0 0 5px rgba(255,255,255,0.4); }
+        .term-glow-red { color: #f87171; text-shadow: 0 0 8px rgba(248,113,113,0.4); }
+        .term-glow-yellow { color: #fbbf24; text-shadow: 0 0 8px rgba(251,191,36,0.4); }
+        
+        .block-cursor { display: inline-block; width: 8px; height: 16px; background-color: #fff; vertical-align: middle; margin-left: 4px; box-shadow: 0 0 6px #fff; }
+
+        /* RESTORED PREMIUM WHITE/SILVER EXECUTE BUTTON */
         .btn-exec {
-            background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 100%); color: #000;
+            background: linear-gradient(135deg, #ffffff 0%, #e4e4e7 50%, #d4d4d8 100%); background-size: 200% 200%; color: #000;
             font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; border-radius: 999px;
             box-shadow: 0 4px 15px rgba(255,255,255,0.15), inset 0 1px 1px #fff;
-            transition: all 0.5s var(--apple-bounce); position: relative; overflow: hidden;
+            transition: all 0.5s var(--apple-bounce), box-shadow 0.6s ease; position: relative; overflow: hidden;
+            border: none;
         }
+        
+        /* Elegant White Liquid Pulse */
+        .btn-exec.is-ready {
+            animation: readyPulsePremium 2s infinite alternate, gradientShift 4s ease infinite;
+        }
+        @keyframes readyPulsePremium {
+            0% { box-shadow: 0 4px 15px rgba(255,255,255,0.15), 0 0 0px rgba(255, 255, 255, 0), inset 0 1px 1px #fff; }
+            100% { box-shadow: 0 4px 15px rgba(255,255,255,0.25), 0 0 35px rgba(255, 255, 255, 0.6), inset 0 1px 1px #fff; }
+        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
         .btn-exec::after {
             content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
-            transform: rotate(45deg) translateY(-100%); transition: transform 0.5s ease;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.9), transparent);
+            transform: rotate(45deg) translateY(-100%); transition: transform 0.6s var(--apple-bounce);
         }
-        .btn-exec:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 25px rgba(255,255,255,0.3), inset 0 1px 1px #fff; }
+        .btn-exec:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 15px 30px rgba(255,255,255,0.35), 0 0 25px rgba(255,255,255,0.5), inset 0 1px 1px #fff !important; animation: gradientShift 4s ease infinite; color: #000; }
         .btn-exec:hover::after { transform: rotate(45deg) translateY(100%); }
-        .btn-exec:active { transform: scale(0.95); }
+        .btn-exec:active { transform: scale(0.95); box-shadow: 0 5px 15px rgba(255,255,255,0.3) !important; }
 
+        /* Secondary Clear Button */
         .btn-rst {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main);
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: var(--text-muted);
             font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; border-radius: 999px;
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             transition: all 0.4s var(--apple-bounce);
         }
-        .btn-rst:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); transform: translateY(-1px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .btn-rst:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); color: #fff; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15); }
         .btn-rst:active { transform: scale(0.95); }
 
-        /* INVISIBLE PLATTER BUTTONS (Footer Sync) */
-        .magnetic-clear {
-            position: relative; display: inline-flex; cursor: none; transform-style: preserve-3d; will-change: transform;
-            color: var(--text-sub); transition: color 0.8s var(--apple-ease);
-        }
-        .nav-platter {
-            position: absolute; inset: 0; border-radius: 99px; background: rgba(255, 255, 255, 0); transition: all 0.5s var(--apple-ease); z-index: 0; border: 1px solid transparent;
-        }
-        .magnetic-clear:hover .nav-platter, .magnetic-clear.is-magnetized .nav-platter {
-            background: var(--glass-bg-base); backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
-            border-color: var(--glass-border-base); box-shadow: 0 10px 30px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-        }
-        .magnetic-clear:hover { color: var(--text-main); }
-        .magnetic-clear:active { transform: scale(0.96) !important; transition: transform 0.15s var(--apple-spring); }
+        /* INVISIBLE PLATTER BUTTONS */
+        .magnetic-clear { position: relative; display: inline-flex; cursor: none; transform-style: preserve-3d; will-change: transform; color: var(--text-sub); transition: color 0.5s ease; }
+        .nav-platter { position: absolute; inset: 0; border-radius: 99px; background: rgba(255, 255, 255, 0); transition: all 0.5s var(--apple-bounce); z-index: 0; border: 1px solid transparent; }
+        .magnetic-clear:hover .nav-platter, .magnetic-clear.is-magnetized .nav-platter { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.25); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+        .magnetic-clear:hover { color: #fff; }
+        .magnetic-clear:active { transform: scale(0.95) !important; transition: transform 0.15s var(--apple-spring); }
 
-        /* APP LAUNCH ANIMATION */
-        .app-launch { opacity: 0; transform: scale(0.9) translateY(40px) rotateX(-5deg); filter: blur(20px); animation: appLaunchAnim 1.2s forwards var(--apple-bounce); animation-delay: 0.1s; }
-        @keyframes appLaunchAnim { to { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); filter: blur(0); } }
+        /* SMOOTH LIQUID BOOT ANIMATION */
+        .app-launch { opacity: 0; transform: scale(0.9) translateY(50px) rotateX(-12deg); filter: blur(25px); animation: liquidBoot 1.8s var(--apple-spring) forwards; animation-delay: 0.1s; }
+        @keyframes liquidBoot { to { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); filter: blur(0); } }
 
         .animate-gradient-text { background: var(--title-gradient); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textShine 6s linear infinite; }
         @keyframes textShine { 0% { background-position: 0% center; } 100% { background-position: -200% center; } }
         
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 1s forwards var(--apple-spring); }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* Stagger Classes */
+        .stagger-item { opacity: 0; transform: translateY(20px) scale(0.96); animation: cascadeIn 1s forwards var(--apple-spring); }
+        @keyframes cascadeIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+        .stagger-1 { animation-delay: 0.5s; }
+        .stagger-2 { animation-delay: 0.65s; }
+        .stagger-3 { animation-delay: 0.8s; }
+        .stagger-4 { animation-delay: 0.95s; }
     </style>
 </head>
 <body class="flex flex-col items-center px-4 sm:px-14 relative justify-between min-h-screen max-w-full">
 
     <div class="ambient-bg-wrapper">
+        <div class="cyber-grid"></div>
         <div class="ambient-bg"></div>
     </div>
     
@@ -242,106 +342,111 @@
     <main class="flex-1 w-full max-w-full flex flex-col items-center justify-center mt-24 sm:mt-0">
         <div class="terminal-container flex flex-col items-center app-launch mx-auto">
             
-            <header class="mb-8 flex flex-col items-center text-center w-full">
-                <div class="flex items-center gap-4 mb-3">
-                    <div class="h-[1px] w-8 bg-gray-600 rounded-full opacity-50"></div>
-                    <span class="text-[10px] font-extrabold tracking-[0.4em] uppercase text-gray-400">Terminal Shell</span>
-                    <div class="h-[1px] w-8 bg-gray-600 rounded-full opacity-50"></div>
+            <header class="mb-6 sm:mb-10 flex flex-col items-center text-center w-full">
+                <div class="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+                    <div class="h-[1px] w-6 sm:w-8 bg-gray-600 rounded-full opacity-50"></div>
+                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase text-gray-400 term-glow-white" style="animation: pulse 4s infinite alternate;">Terminal Shell</span>
+                    <div class="h-[1px] w-6 sm:w-8 bg-gray-600 rounded-full opacity-50"></div>
                 </div>
-                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tighter drop-shadow-2xl">
+                <h1 class="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tighter drop-shadow-2xl relative">
                     Resolve <span class="animate-gradient-text">Packages.</span>
                 </h1>
             </header>
 
-            <div class="terminal-window w-full" id="cmd-center">
-                
-                <div class="terminal-header relative">
-                    <div class="mac-dots">
-                        <div class="mac-dot dot-red"></div>
-                        <div class="mac-dot dot-yel"></div>
-                        <div class="mac-dot dot-grn"></div>
-                    </div>
-                    <div class="terminal-title flex items-center gap-2">
-                        <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-                        revork — -zsh — 80x24
-                    </div>
-                </div>
-
-                <div class="p-5 sm:p-8">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-2">
-                        
-                        <div class="custom-dd-wrapper" id="dd-device" style="z-index: 30;">
-                            <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Target Hardware</label>
-                            <button class="custom-dd-btn interactive-el" aria-expanded="false">
-                                <span class="dd-text truncate">Select Device...</span>
-                                <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="custom-dd-menu">
-                                <div class="custom-dd-item interactive-el" data-val="op9pro">OnePlus 9 Pro</div>
-                                <div class="custom-dd-item interactive-el" data-val="op9">OnePlus 9</div>
-                                <div class="custom-dd-item interactive-el" data-val="op8pro">OnePlus 8 Pro</div>
-                                <div class="custom-dd-item interactive-el" data-val="op8t">OnePlus 8T</div>
-                            </div>
-                        </div>
-
-                        <div class="custom-dd-wrapper" id="dd-component" style="z-index: 20;">
-                            <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Component</label>
-                            <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
-                                <span class="dd-text text-gray-500 truncate">Awaiting Hardware...</span>
-                                <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="custom-dd-menu">
-                                <div class="custom-dd-item interactive-el" data-val="super_empty">super_empty.img</div>
-                                <div class="custom-dd-item interactive-el" data-val="recovery">Recovery Image</div>
-                            </div>
-                        </div>
-
-                        <div class="custom-dd-wrapper" id="dd-variant" style="z-index: 10;">
-                            <label class="block text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Variant</label>
-                            <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
-                                <span class="dd-text text-gray-500 truncate">Locked</span>
-                                <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="custom-dd-menu">
-                                <div class="custom-dd-item interactive-el" data-val="orangefox">OrangeFox Project</div>
-                                <div class="custom-dd-item interactive-el" data-val="twrp">TWRP Official</div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="cli-footer flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div class="terminal-glow-wrapper" id="glow-wrapper">
+                <div class="terminal-window w-full" id="cmd-center">
+                    <div class="crt-overlay"></div>
                     
-                    <div class="text-[12.5px] sm:text-[13.5px] w-full sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap min-w-0 flex items-center">
-                        <span class="text-[#27c93f] font-bold flex-shrink-0">admin@revork</span><span class="text-white flex-shrink-0">:</span><span class="text-[#3b82f6] font-bold flex-shrink-0">~/bin</span><span class="text-white font-bold mr-2 flex-shrink-0">$</span>
-                        <span id="cli-output" class="text-gray-300 font-medium truncate">awaiting --hardware</span><span class="animate-pulse text-white font-bold flex-shrink-0">_</span>
+                    <div class="terminal-header relative">
+                        <div class="mac-dots">
+                            <div class="mac-dot dot-red"></div>
+                            <div class="mac-dot dot-yel"></div>
+                            <div class="mac-dot dot-grn"></div>
+                        </div>
+                        <div class="terminal-title flex items-center gap-2">
+                            <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+                            revork — -zsh — 80x24
+                        </div>
                     </div>
-                    
-                    <div class="flex gap-3 w-full sm:w-auto flex-shrink-0">
-                        <button id="btn-reset" class="btn-rst flex-1 sm:flex-none text-[11px] sm:text-xs tracking-widest px-5 py-3 interactive-el uppercase">
-                            Clear
-                        </button>
-                        <button id="btn-resolve" class="btn-exec flex-1 sm:flex-none text-[11px] sm:text-xs tracking-widest px-8 py-3 interactive-el uppercase">
-                            Execute
-                        </button>
-                    </div>
-                </div>
 
+                    <div class="dropdown-container">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-1 relative">
+                            
+                            <div class="custom-dd-wrapper stagger-item stagger-1" id="dd-device" style="z-index: 30;">
+                                <label class="block text-[9px] sm:text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Target Hardware</label>
+                                <button class="custom-dd-btn interactive-el" aria-expanded="false">
+                                    <span class="dd-text truncate">Select Device...</span>
+                                    <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div class="custom-dd-menu">
+                                    <div class="custom-dd-item interactive-el" data-val="op9pro">OnePlus 9 Pro</div>
+                                    <div class="custom-dd-item interactive-el" data-val="op9">OnePlus 9</div>
+                                    <div class="custom-dd-item interactive-el" data-val="op8pro">OnePlus 8 Pro</div>
+                                    <div class="custom-dd-item interactive-el" data-val="op8t">OnePlus 8T</div>
+                                </div>
+                            </div>
+
+                            <div class="custom-dd-wrapper stagger-item stagger-2" id="dd-component" style="z-index: 20;">
+                                <label class="block text-[9px] sm:text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Component</label>
+                                <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
+                                    <span class="dd-text text-gray-500 truncate">Awaiting Hardware...</span>
+                                    <svg class="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div class="custom-dd-menu">
+                                    <div class="custom-dd-item interactive-el" data-val="super_empty">super_empty.img</div>
+                                    <div class="custom-dd-item interactive-el" data-val="recovery">Recovery Image</div>
+                                </div>
+                            </div>
+
+                            <div class="custom-dd-wrapper stagger-item stagger-3" id="dd-variant" style="z-index: 10;">
+                                <label class="block text-[9px] sm:text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Variant</label>
+                                <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
+                                    <span class="dd-text text-gray-500 truncate">Locked</span>
+                                    <svg class="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div class="custom-dd-menu">
+                                    <div class="custom-dd-item interactive-el" data-val="orangefox">OrangeFox Project</div>
+                                    <div class="custom-dd-item interactive-el" data-val="twrp">TWRP Official</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="footer-container">
+                        <div class="cli-footer stagger-item stagger-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6">
+                            
+                            <div class="text-[12.5px] sm:text-[14px] w-full sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap min-w-0 flex items-center">
+                                <span class="font-bold flex-shrink-0 term-glow-green">admin@revork</span><span class="text-white flex-shrink-0">:</span><span class="font-bold flex-shrink-0 term-glow-blue">~/bin</span><span class="term-glow-white font-bold mr-1 sm:mr-2 flex-shrink-0">$</span>
+                                <span id="cli-output" class="text-gray-400 font-medium truncate ml-1"></span><span class="animate-pulse block-cursor flex-shrink-0" style="animation-duration: 0.9s;"></span>
+                            </div>
+                            
+                            <div class="flex gap-3 w-full sm:w-auto flex-shrink-0 mt-2 sm:mt-0">
+                                <button id="btn-reset" class="btn-rst flex-1 sm:flex-none text-[11px] sm:text-xs tracking-widest px-5 sm:px-6 py-3 sm:py-3.5 interactive-el uppercase">
+                                    Clear
+                                </button>
+                                <button id="btn-resolve" class="btn-exec flex-[2] sm:flex-none text-[11px] sm:text-xs tracking-widest px-8 sm:px-10 py-3 sm:py-3.5 interactive-el uppercase">
+                                    Execute
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </main>
 
-    <footer class="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center text-[10px] sm:text-[12px] text-gray-400 font-extrabold tracking-[0.4em] uppercase pt-8 pb-10 mt-12 border-t border-gray-500/20 z-10 gap-6 sm:gap-0 fade-in-up" style="animation-delay: 0.6s;">
+    <footer class="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center text-[10px] sm:text-[12px] text-gray-500 font-extrabold tracking-[0.4em] uppercase pt-6 sm:pt-8 pb-8 sm:pb-10 mt-10 sm:mt-16 border-t border-gray-700/40 z-10 gap-5 sm:gap-0 fade-in-up" style="animation-delay: 1.2s;">
         <span class="text-sub">© 2026 ReVork</span>
         <div class="flex gap-4 sm:gap-6">
-            <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
+            <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-5 sm:px-6 rounded-full group interactive-el">
                 <div class="nav-platter"></div>
-                <span class="relative z-10 transition-colors duration-300 group-hover:text-white">GitHub</span>
+                <span class="relative z-10 transition-colors duration-300">GitHub</span>
             </a>
-            <a href="https://t.me/ReVorkHub" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
+            <a href="https://t.me/ReVorkHub" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-5 sm:px-6 rounded-full group interactive-el">
                 <div class="nav-platter"></div>
-                <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Telegram</span>
+                <span class="relative z-10 transition-colors duration-300">Telegram</span>
             </a>
         </div>
     </footer>
@@ -360,7 +465,6 @@
             const backBtn = document.getElementById('back-button');
             const footerBtns = Array.from(document.querySelectorAll('.magnetic-clear'));
             
-            // Initialize physical states for footer buttons
             footerBtns.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
 
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
@@ -377,7 +481,6 @@
                 if (spotlight) spotlight.style.setProperty('--mouse-x', `${mouseX}px`);
                 if (spotlight) spotlight.style.setProperty('--mouse-y', `${mouseY}px`);
                 
-                // Extremely subtle 3D Tilt for Terminal (max 2 degrees)
                 if(cmdHover) {
                     const rect = cmdCenter.getBoundingClientRect();
                     const x = mouseX - rect.left, y = mouseY - rect.top;
@@ -388,7 +491,6 @@
                     rotXTar = 0; rotYTar = 0;
                 }
 
-                // Magnetic Home Button Target
                 if(backHover) {
                     const rect = backWrap.getBoundingClientRect();
                     const cX = rect.left + rect.width / 2, cY = rect.top + rect.height / 2;
@@ -397,7 +499,6 @@
                     btnTarX = 0; btnTarY = 0;
                 }
 
-                // Magnetic Footer Platter Buttons Target
                 footerBtns.forEach(btn => {
                     if(btn.phys.isHovered) {
                         const rect = btn.getBoundingClientRect();
@@ -418,7 +519,6 @@
             backWrap.addEventListener('mouseenter', () => backHover = true);
             backWrap.addEventListener('mouseleave', () => backHover = false);
 
-            // Handle hover states for synced footer buttons
             footerBtns.forEach(btn => {
                 btn.addEventListener('mouseenter', () => { 
                     btn.phys.isHovered = true; 
@@ -436,16 +536,13 @@
                 const offset = document.body.classList.contains('hovering-link') ? 24 : 18;
                 if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
                 
-                // 3D Glass Smooth Easing
                 rotXCurr += (rotXTar - rotXCurr) * 0.1;
                 rotYCurr += (rotYTar - rotYCurr) * 0.1;
                 if(cmdCenter) cmdCenter.style.transform = `rotateX(${rotXCurr}deg) rotateY(${rotYCurr}deg)`;
                 
-                // Magnetic Home Button Easing
                 btnCurrX += (btnTarX - btnCurrX) * 0.2; btnCurrY += (btnTarY - btnCurrY) * 0.2;
                 if(backBtn) backBtn.style.transform = `translate3d(${btnCurrX}px, ${btnCurrY}px, 0)`;
 
-                // Magnetic Footer Buttons Easing
                 footerBtns.forEach(btn => {
                     if (btn.phys.isHovered) {
                         btn.phys.currX += (btn.phys.tarX - btn.phys.currX) * 0.2;
@@ -468,9 +565,9 @@
         const cliOutput = document.getElementById('cli-output');
         let typeTimeout;
 
-        function typeCommand(cmdText, colorClass = 'text-gray-300') {
+        function typeCommand(cmdText, colorClass = 'text-gray-400') {
             clearTimeout(typeTimeout);
-            cliOutput.className = `font-medium truncate ${colorClass}`;
+            cliOutput.className = `font-medium truncate ml-1 ${colorClass}`;
             cliOutput.innerText = '';
             
             let i = 0;
@@ -478,17 +575,42 @@
                 if (i < cmdText.length) {
                     cliOutput.innerText += cmdText.charAt(i);
                     i++;
-                    typeTimeout = setTimeout(typeChar, 10); // Hyper-fast typing
+                    typeTimeout = setTimeout(typeChar, 15);
                 }
             }
             typeChar();
         }
 
+        // Boot Sequence
+        setTimeout(() => {
+            typeCommand("init revork_shell... done. awaiting --hardware");
+        }, 1200);
+
         // --- Logic & Dropdown Engine ---
         let state = { device: null, component: null, variant: null };
+        const ddWrappers = document.querySelectorAll('.custom-dd-wrapper');
+        const btnExec = document.getElementById('btn-resolve');
+        const glowWrapper = document.getElementById('glow-wrapper');
 
-        // Dropdown Interactions
-        document.querySelectorAll('.custom-dd-wrapper').forEach(wrapper => {
+        function checkReadyState() {
+            if (state.device && state.component) {
+                if (state.component === 'super_empty' || (state.component === 'recovery' && state.variant)) {
+                    btnExec.classList.add('is-ready');
+                    glowWrapper.classList.add('is-ready');
+                    return;
+                }
+            }
+            btnExec.classList.remove('is-ready');
+            glowWrapper.classList.remove('is-ready');
+        }
+
+        function closeAllDropdowns() {
+            document.querySelectorAll('.custom-dd-btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
+            document.querySelectorAll('.custom-dd-menu').forEach(m => m.classList.remove('show'));
+            ddWrappers.forEach(w => w.classList.remove('is-active'));
+        }
+
+        ddWrappers.forEach((wrapper) => {
             const btn = wrapper.querySelector('.custom-dd-btn');
             const menu = wrapper.querySelector('.custom-dd-menu');
             const text = wrapper.querySelector('.dd-text');
@@ -499,11 +621,10 @@
                 if (btn.classList.contains('disabled')) return;
                 
                 const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-                
-                document.querySelectorAll('.custom-dd-btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
-                document.querySelectorAll('.custom-dd-menu').forEach(m => m.classList.remove('show'));
+                closeAllDropdowns();
                 
                 if (!isExpanded) {
+                    wrapper.classList.add('is-active'); 
                     btn.setAttribute('aria-expanded', 'true');
                     menu.classList.add('show');
                 }
@@ -516,21 +637,16 @@
                     const label = item.textContent;
                     
                     text.textContent = label;
-                    text.classList.remove('text-gray-500'); text.style.color = 'white';
+                    text.classList.remove('text-gray-500', 'text-gray-600'); text.style.color = '#fff';
                     state[type] = val;
                     
-                    btn.setAttribute('aria-expanded', 'false');
-                    menu.classList.remove('show');
-
+                    closeAllDropdowns();
                     handleLogicUpdate(type);
                 });
             });
         });
 
-        document.addEventListener('click', () => {
-            document.querySelectorAll('.custom-dd-btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
-            document.querySelectorAll('.custom-dd-menu').forEach(m => m.classList.remove('show'));
-        });
+        document.addEventListener('click', closeAllDropdowns);
 
         const btnComp = document.querySelector('#dd-component .custom-dd-btn');
         const textComp = document.querySelector('#dd-component .dd-text');
@@ -554,16 +670,16 @@
                 } else if (state.component === 'super_empty') {
                     btnVar.classList.add('disabled'); textVar.textContent = "Standard Output"; textVar.style.color = "white";
                     state.variant = 'default';
-                    typeCommand(`./resolve_link.sh --ready`, "text-[#27c93f]");
+                    typeCommand(`./resolve_link.sh --ready`, "term-glow-green");
                 }
             }
 
             if (triggeredBy === 'variant') {
-                typeCommand(`./resolve_link.sh --ready`, "text-[#27c93f]");
+                typeCommand(`./resolve_link.sh --ready`, "term-glow-green");
             }
+            checkReadyState();
         }
 
-        // Actions
         document.getElementById('btn-reset').addEventListener('click', () => {
             state = { device: null, component: null, variant: null };
             
@@ -574,8 +690,10 @@
             btnVar.classList.add('disabled'); textVar.textContent = "Locked"; textVar.style.color = "var(--text-muted)";
             
             typeCommand("clear && reset_env; awaiting --hardware");
+            checkReadyState();
         });
 
+        // STRICTLY OG 8/9 SERIES
         const fileDatabase = {
             'op9pro': { 
                 'super_empty': { default: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_9p.img' }, 
@@ -595,20 +713,23 @@
             }
         };
 
-        document.getElementById('btn-resolve').addEventListener('click', () => {
-            if (!state.device) return typeCommand("Error: Missing --hardware parameter", "text-[#ff5f56]");
-            if (!state.component) return typeCommand("Error: Missing --format parameter", "text-[#ff5f56]");
-            if (state.component === 'recovery' && !state.variant) return typeCommand("Error: Missing --variant parameter", "text-[#ff5f56]");
+        btnExec.addEventListener('click', () => {
+            if (!state.device) return typeCommand("Error: Missing --hardware parameter", "term-glow-red");
+            if (!state.component) return typeCommand("Error: Missing --format parameter", "term-glow-red");
+            if (state.component === 'recovery' && !state.variant) return typeCommand("Error: Missing --variant parameter", "term-glow-red");
 
             const url = fileDatabase[state.device]?.[state.component]?.[state.variant];
             if (url) {
-                typeCommand(`wget -qO- fetching_payload...`, "text-[#ffbd2e]");
+                btnExec.classList.remove('is-ready');
+                glowWrapper.classList.remove('is-ready');
+                typeCommand(`wget -qO- fetching_payload...`, "term-glow-yellow");
+                
                 setTimeout(() => {
-                    typeCommand(`200 OK: Payload found. Redirecting.`, "text-[#27c93f]");
-                    setTimeout(() => window.location.href = url, 300); // Redirects user cleanly now instead of popping up an alert
-                }, 500);
+                    typeCommand(`200 OK: Payload found. Redirecting.`, "term-glow-green");
+                    setTimeout(() => window.location.href = url, 400); 
+                }, 600);
             } else {
-                typeCommand("Error 404: Payload not found in remote repository.", "text-[#ff5f56]");
+                typeCommand("Error 404: Payload not found in remote repository.", "term-glow-red");
             }
         });
     </script>
