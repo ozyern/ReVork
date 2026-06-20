@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://ozyern.me/assets/favicon.png" width="80" alt="ReVork Logo" />
+  <img src="https://ozyern.me/assets/favicon.png" width="100" alt="ReVork Logo" />
 
   <h1>ReVork</h1>
   <p><strong>Custom ROMs Reimagined — The Ultimate Hub for Enhanced OxygenOS & ColorOS</strong></p>
