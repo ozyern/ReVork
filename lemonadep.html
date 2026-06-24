@@ -284,16 +284,32 @@
             opacity: 1;
         }
 
+        /* Enhanced Premium Blur on Non-Tracked Cards - WITH !IMPORTANT FIX */
         body.hovering-card .tvos-card:not(.is-tracking) {
-            opacity: 0.5;
-            filter: blur(2px);
-            transform: scale3d(0.98, 0.98, 0.98);
+            opacity: 0.25 !important;
+            filter: blur(6px) saturate(70%) !important;
+            transform: scale3d(0.96, 0.96, 0.96) !important;
+        }
+
+        /* Premium Depth dimming for surrounding page elements - WITH !IMPORTANT FIX */
+        body.hovering-card header,
+        body.hovering-card nav,
+        body.hovering-card h3,
+        body.hovering-card .magnetic-solid,
+        body.hovering-card .theme-toggle-container {
+            opacity: 0.2 !important;
+            filter: blur(4px) !important;
+            transform: scale(0.99) !important;
+        }
+
+        header, nav, h3, .magnetic-solid, .theme-toggle-container {
+            transition: opacity 0.6s var(--apple-ease), filter 0.6s var(--apple-ease), transform 0.6s var(--apple-ease);
         }
 
         .tvos-card.is-tracking {
             z-index: 20;
-            opacity: 1;
-            filter: blur(0);
+            opacity: 1 !important;
+            filter: blur(0) !important;
         }
 
         /* Gentle push-in on click, preserving the 3D angles */
@@ -522,22 +538,25 @@
         .os-view { display: none; }
         
         @keyframes viewEnter {
-            0% { opacity: 0; transform: perspective(1200px) translateY(20px) scale(0.98); filter: blur(8px); }
-            100% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
+            0% { opacity: 0; translate: 0 20px; scale: 0.98; filter: blur(8px); }
+            100% { opacity: 1; translate: 0 0; scale: 1; filter: blur(0); }
         }
         @keyframes viewExit {
-            0% { opacity: 1; transform: perspective(1200px) translateY(0) scale(1); filter: blur(0); }
-            100% { opacity: 0; transform: perspective(1200px) translateY(-15px) scale(0.98); filter: blur(8px); }
+            0% { opacity: 1; translate: 0 0; scale: 1; filter: blur(0); }
+            100% { opacity: 0; translate: 0 -15px; scale: 0.98; filter: blur(8px); }
         }
         
         .os-view.active { display: flex; animation: viewEnter 0.5s var(--apple-ease) forwards; transform-origin: center top; }
         .os-view.exiting { display: flex; animation: viewExit 0.3s var(--apple-ease) forwards; transform-origin: center top; pointer-events: none; }
 
+        /* UPGRADED REVEAL ANIMATION (Independent Properties) */
         .reveal {
-            opacity: 0; transform: perspective(1200px) translateY(30px) scale(0.96) rotateX(-5deg); filter: blur(12px);
+            opacity: 0; translate: 0 30px; scale: 0.96; rotate: x -5deg; filter: blur(12px);
             animation: revealAnim 1s forwards var(--apple-spring); animation-delay: var(--delay, 0s); transform-origin: top center;
         }
-        @keyframes revealAnim { to { opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0); } }
+        @keyframes revealAnim { 
+            to { opacity: 1; translate: 0 0; scale: 1; rotate: x 0deg; filter: blur(0); } 
+        }
 
         /* ========================================= */
         /* STAGGERED ACCORDION WIDGET                */
@@ -550,12 +569,13 @@
         .expandable-inner { display: flex; flex-direction: column; gap: 1.5rem; padding: 0; transition: padding 0.7s var(--apple-spring); }
         .expandable-wrapper.open .expandable-inner { padding-top: 1.5rem; padding-bottom: 0.5rem; }
 
+        /* UPGRADED ACCORDION ANIMATION (Independent Properties) */
         .expandable-inner .tvos-card {
-            opacity: 0; transform: perspective(1200px) translateY(-30px) scale(0.96) rotateX(-8deg); filter: blur(10px);
-            transition: opacity 0.5s ease, transform 0.7s var(--apple-spring), filter 0.5s ease; transform-origin: top center;
+            opacity: 0; translate: 0 -30px; scale: 0.96; rotate: x -8deg; filter: blur(10px);
+            transition: opacity 0.5s ease, translate 0.7s var(--apple-spring), scale 0.7s var(--apple-spring), rotate 0.7s var(--apple-spring), filter 0.5s ease; transform-origin: top center;
         }
         .expandable-wrapper.open .expandable-inner .tvos-card {
-            opacity: 1; transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg); filter: blur(0);
+            opacity: 1; translate: 0 0; scale: 1; rotate: x 0deg; filter: blur(0);
         }
 
         .expandable-wrapper.open .expandable-inner .tvos-card:nth-child(1) { transition-delay: 0.04s; }
@@ -871,6 +891,22 @@
         <div id="view-ext" class="os-view flex-col gap-6 sm:gap-8">
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-sub uppercase mt-4 mb-1 pl-6 sm:pl-8">Extras</h3>
             <div class="flex flex-col gap-4 sm:gap-6">
+                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.7.205/ota_full-LE2123_16.0.7.205.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
+                    <div class="shadow-layer"></div>
+                    <div class="glass-pane">
+                        <div class="dynamic-glare"></div>
+                        <div class="film-grain"></div>
+                    </div>
+                    <div class="content-layer flex flex-col">
+                        <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 shadow-[0_0_15px_rgba(251,191,36,0.2)]">Beta</span>
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">Realme UI 7.1</h2>
+                        </div>
+                        <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.7.205 • Beta</span>
+                    </div>
+                    <div class="dl-icon text-3xl sm:text-5xl">↓</div>
+                </a>
+
                 <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                     <div class="shadow-layer"></div>
                     <div class="glass-pane">
