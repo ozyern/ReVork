@@ -537,6 +537,7 @@
         /* ========================================= */
         .os-view { display: none; }
         
+        /* UPGRADED ANIMATIONS (Independent Properties) */
         @keyframes viewEnter {
             0% { opacity: 0; translate: 0 20px; scale: 0.98; filter: blur(8px); }
             100% { opacity: 1; translate: 0 0; scale: 1; filter: blur(0); }
@@ -549,7 +550,6 @@
         .os-view.active { display: flex; animation: viewEnter 0.5s var(--apple-ease) forwards; transform-origin: center top; }
         .os-view.exiting { display: flex; animation: viewExit 0.3s var(--apple-ease) forwards; transform-origin: center top; pointer-events: none; }
 
-        /* UPGRADED REVEAL ANIMATION (Independent Properties) */
         .reveal {
             opacity: 0; translate: 0 30px; scale: 0.96; rotate: x -5deg; filter: blur(12px);
             animation: revealAnim 1s forwards var(--apple-spring); animation-delay: var(--delay, 0s); transform-origin: top center;
@@ -635,7 +635,8 @@
         <div id="view-oos" class="os-view active flex-col gap-6 sm:gap-8 reveal" style="--delay: 0.1s;">
             
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-sub uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
-            <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-LE2123_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal interactive-el" style="--delay: 0.15s;">
+            
+            <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.8.300/ota_full-LE2123_16.0.8.300.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal interactive-el" style="--delay: 0.15s;">
                 <div class="shadow-layer"></div>
                 <div class="glass-pane">
                     <div class="hero-glow-green"></div>
@@ -647,7 +648,7 @@
                         <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/40 text-green-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/10 shadow-[0_0_15px_rgba(74,222,128,0.2)]">Latest</span>
                         <h2 class="text-3xl sm:text-5xl font-extrabold text-title tracking-tight">OxygenOS 16.1</h2>
                     </div>
-                    <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.7.201 • Stable</span>
+                    <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.8.300 • Stable</span>
                 </div>
                 <div class="dl-icon text-3xl sm:text-5xl">↓</div>
             </a>
@@ -655,7 +656,20 @@
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-sub uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8 reveal" style="--delay: 0.2s;">OxygenOS 16 Builds</h3>
             
             <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.703/ota_full-LE2123_16.0.5.703.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal interactive-el" style="--delay: 0.25s;">
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.7.201/ota_full-LE2123_16.0.7.201.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal interactive-el" style="--delay: 0.25s;">
+                    <div class="shadow-layer"></div>
+                    <div class="glass-pane">
+                        <div class="dynamic-glare"></div>
+                        <div class="film-grain"></div>
+                    </div>
+                    <div class="content-layer flex flex-col">
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">OxygenOS 16.1</h2>
+                        <span class="text-xs sm:text-base text-sub font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.201 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-3xl sm:text-5xl">↓</div>
+                </a>
+
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.703/ota_full-LE2123_16.0.5.703.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal interactive-el" style="--delay: 0.3s;">
                     <div class="shadow-layer"></div>
                     <div class="glass-pane">
                         <div class="dynamic-glare"></div>
@@ -668,7 +682,7 @@
                     <div class="dl-icon text-3xl sm:text-5xl">↓</div>
                 </a>
 
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.700/ota_full-LE2123_16.0.5.700.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal interactive-el" style="--delay: 0.3s;">
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.5.700/ota_full-LE2123_16.0.5.700.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal interactive-el" style="--delay: 0.35s;">
                     <div class="shadow-layer"></div>
                     <div class="glass-pane">
                         <div class="dynamic-glare"></div>
@@ -681,7 +695,7 @@
                     <div class="dl-icon text-3xl sm:text-5xl">↓</div>
                 </a>
 
-                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.503/ota_full-LE2123_16.0.3.503.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal interactive-el" style="--delay: 0.35s;">
+                <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.503/ota_full-LE2123_16.0.3.503.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center reveal interactive-el" style="--delay: 0.4s;">
                     <div class="shadow-layer"></div>
                     <div class="glass-pane">
                         <div class="dynamic-glare"></div>
@@ -695,7 +709,7 @@
                 </a>
             </div>
 
-            <div id="oos-more-wrapper" class="expandable-wrapper reveal" style="--delay: 0.4s;">
+            <div id="oos-more-wrapper" class="expandable-wrapper reveal" style="--delay: 0.45s;">
                 <div class="expandable-content">
                     <div class="expandable-inner">
                         <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2016/16.0.3.501/ota_full-LE2123_16.0.3.501.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
@@ -753,7 +767,7 @@
                 </div>
             </div>
 
-            <button onclick="toggleMore('oos')" class="magnetic-solid mt-2 group interactive-el reveal" style="--delay: 0.45s;">
+            <button onclick="toggleMore('oos')" class="magnetic-solid mt-2 group interactive-el reveal" style="--delay: 0.5s;">
                 <div class="btn-content-wrap flex items-center gap-4">
                     <span id="oos-btn-text" class="text-[10px] sm:text-[11px] font-extrabold tracking-[0.3em] uppercase text-sub group-hover:text-main transition-colors">Show 4 More Builds</span>
                     <div class="w-7 h-7 rounded-full bg-gray-500/10 border border-gray-500/20 group-hover:bg-gray-500/30 flex items-center justify-center transition-all duration-500 shadow-inner">
@@ -762,8 +776,8 @@
                 </div>
             </button>
             
-            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-sub uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8 reveal" style="--delay: 0.5s;">OxygenOS 15 Builds</h3>
-            <div class="flex flex-col gap-4 sm:gap-6 reveal" style="--delay: 0.55s;">
+            <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-sub uppercase mt-8 sm:mt-12 mb-1 pl-6 sm:pl-8 reveal" style="--delay: 0.55s;">OxygenOS 15 Builds</h3>
+            <div class="flex flex-col gap-4 sm:gap-6 reveal" style="--delay: 0.6s;">
                 <a href="https://sourceforge.net/projects/reimagine/files/OxygenOS%2015/15.0.0.864/ota_full-LE2123_15.0.0.864.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                     <div class="shadow-layer"></div>
                     <div class="glass-pane">
@@ -826,7 +840,10 @@
                         <div class="film-grain"></div>
                     </div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.1</h2>
+                        <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/40 text-blue-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/10 shadow-[0_0_15px_rgba(96,165,250,0.2)]">Global</span>
+                            <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.1</h2>
+                        </div>
                         <span class="text-xs sm:text-base text-sub font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.204_v2 • Stable</span>
                     </div>
                     <div class="dl-icon text-3xl sm:text-5xl">↓</div>
@@ -839,7 +856,10 @@
                         <div class="film-grain"></div>
                     </div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.1</h2>
+                        <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-500/40 text-sub text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-gray-500/10">China</span>
+                            <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.1</h2>
+                        </div>
                         <span class="text-xs sm:text-base text-sub font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.206 • Stable</span>
                     </div>
                     <div class="dl-icon text-3xl sm:text-5xl">↓</div>
@@ -852,7 +872,10 @@
                         <div class="film-grain"></div>
                     </div>
                     <div class="content-layer flex flex-col">
-                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.0</h2>
+                        <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/40 text-blue-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/10 shadow-[0_0_15px_rgba(96,165,250,0.2)]">Global</span>
+                            <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.0</h2>
+                        </div>
                         <span class="text-xs sm:text-base text-sub font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.5.701 • Stable</span>
                     </div>
                     <div class="dl-icon text-3xl sm:text-5xl">↓</div>
@@ -869,8 +892,11 @@
                                 <div class="film-grain"></div>
                             </div>
                             <div class="content-layer flex flex-col">
-                                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.0</h2>
-                                <span class="text-xs sm:text-base text-sub font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.3.504 • Stable</span>
+                                <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+                                    <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/40 text-blue-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/10 shadow-[0_0_15px_rgba(96,165,250,0.2)]">Global</span>
+                                    <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.0</h2>
+                                </div>
+                                <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.3.504 • Stable</span>
                             </div>
                             <div class="dl-icon text-3xl sm:text-5xl">↓</div>
                         </a>
@@ -891,7 +917,7 @@
         <div id="view-ext" class="os-view flex-col gap-6 sm:gap-8">
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-sub uppercase mt-4 mb-1 pl-6 sm:pl-8">Extras</h3>
             <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/realmeUI%207/16.0.7.205/ota_full-LE2123_16.0.7.205.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
+                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.7.205/ota_full-LE2123_16.0.7.205.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                     <div class="shadow-layer"></div>
                     <div class="glass-pane">
                         <div class="dynamic-glare"></div>
@@ -902,12 +928,12 @@
                             <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 shadow-[0_0_15px_rgba(251,191,36,0.2)]">Beta</span>
                             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">Realme UI 7.1</h2>
                         </div>
-                        <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.7.205 • Beta</span>
+                        <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.7.205 • Global</span>
                     </div>
                     <div class="dl-icon text-3xl sm:text-5xl">↓</div>
                 </a>
 
-                <a href="https://sourceforge.net/projects/reimagine/files/realmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
+                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                     <div class="shadow-layer"></div>
                     <div class="glass-pane">
                         <div class="dynamic-glare"></div>
@@ -916,9 +942,9 @@
                     <div class="content-layer flex flex-col">
                         <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
                             <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 shadow-[0_0_15px_rgba(251,191,36,0.2)]">Beta</span>
-                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">realmeUI 7.0</h2>
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">Realme UI 7.0</h2>
                         </div>
-                        <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.5.704 • Beta</span>
+                        <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.5.704 • Global</span>
                     </div>
                     <div class="dl-icon text-3xl sm:text-5xl">↓</div>
                 </a>
