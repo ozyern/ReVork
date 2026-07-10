@@ -33,11 +33,11 @@
             
             /* Enhanced Titanium Shimmer */
             --title-gradient: linear-gradient(110deg, #9ca3af 0%, #ffffff 20%, #e5e7eb 40%, #ffffff 60%, #9ca3af 100%);
-            --aurora-1: rgba(14, 165, 233, 0.07);
-            --aurora-2: rgba(16, 185, 129, 0.05);
-            --aurora-3: rgba(139, 92, 246, 0.06);
+            --aurora-1: rgba(14, 165, 233, 0.09);
+            --aurora-2: rgba(16, 185, 129, 0.07);
+            --aurora-3: rgba(139, 92, 246, 0.08);
             
-            /* Glass Refraction & Light Physics (Dark Mode) */
+            /* Glass Refraction & Light Physics */
             --edge-glare: rgba(255, 255, 255, 0.7);
             --surface-glare-1: rgba(255, 255, 255, 0.15);
             --surface-glare-2: rgba(150, 200, 255, 0.04);
@@ -66,10 +66,9 @@
             
             --title-gradient: linear-gradient(110deg, #1d1d1f 0%, #a1a1a6 30%, #1d1d1f 50%, #a1a1a6 70%, #1d1d1f 100%);
             --aurora-1: rgba(14, 165, 233, 0.15);
-            --aurora-2: rgba(16, 185, 129, 0.1);
-            --aurora-3: rgba(139, 92, 246, 0.1);
+            --aurora-2: rgba(16, 185, 129, 0.12);
+            --aurora-3: rgba(139, 92, 246, 0.15);
             
-            /* Glass Refraction & Light Physics (Light Mode) */
             --edge-glare: rgba(255, 255, 255, 1);
             --surface-glare-1: rgba(255, 255, 255, 0.5);
             --surface-glare-2: rgba(255, 255, 255, 0.15);
@@ -122,13 +121,11 @@
         .theme-toggle {
             --toggle-width: 64px;
             --toggle-height: 36px;
-            
             position: relative;
             display: block;
             width: var(--toggle-width);
             height: var(--toggle-height);
             border-radius: 99px;
-            
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -163,18 +160,6 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 -1px 2px rgba(0,0,0,0.05);
         }
 
-        .toggle-thumb::after {
-            content: '';
-            position: absolute;
-            top: 8%;
-            left: 15%;
-            width: 70%;
-            height: 40%;
-            border-radius: 50%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 100%);
-            filter: blur(0.5px);
-        }
-
         /* ========================================= */
         /* CUSTOM STEALTH SCROLLBAR                  */
         /* ========================================= */
@@ -184,7 +169,7 @@
         ::-webkit-scrollbar-thumb:hover { background: var(--cursor-ring-hover); }
 
         /* ========================================= */
-        /* ZERO-LATENCY DOT & RING CURSOR            */
+        /* FLAWLESS ZERO-LATENCY CURSOR ENGINE       */
         /* ========================================= */
         #spotlight { display: none; }
 
@@ -193,35 +178,40 @@
                 width: 6px; height: 6px; 
                 background-color: var(--cursor-dot); 
                 border-radius: 50%;
-                position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
-                will-change: transform, scale; 
-                transition: opacity 0.2s var(--apple-ease), background-color 0.8s var(--apple-ease), scale 0.15s ease-out;
-            }
-            body:active #cursor-dot {
-                scale: 0.4 !important;
+                /* CSS Native Centering */
+                position: fixed; top: -3px; left: -3px; 
+                pointer-events: none; z-index: 10000;
+                will-change: transform; 
+                transition: opacity 0.2s var(--apple-ease), background-color 0.8s var(--apple-ease);
             }
             #cursor-ring {
                 width: 36px; height: 36px; 
                 border: 1px solid var(--cursor-ring); 
                 border-radius: 50%;
-                position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
-                will-change: transform, width, height, border-color, background-color, box-shadow;
+                /* CSS Native Centering */
+                position: fixed; top: -18px; left: -18px; 
+                pointer-events: none; z-index: 9999;
+                will-change: transform, width, height, top, left, border-color, background-color, box-shadow;
                 transition: 
                     width 0.3s var(--apple-spring), 
                     height 0.3s var(--apple-spring), 
+                    top 0.3s var(--apple-spring), 
+                    left 0.3s var(--apple-spring), 
                     border-color 0.3s var(--apple-ease), 
                     background-color 0.3s var(--apple-ease), 
                     box-shadow 0.3s var(--apple-ease);
             }
             #spotlight {
-                display: block; position: fixed; top: 0; left: 0;
+                display: block; position: fixed; top: -500px; left: -500px;
                 width: 1000px; height: 1000px; border-radius: 50%; pointer-events: none; z-index: 0;
                 background: var(--spotlight-bg);
                 will-change: transform; transition: background 0.8s var(--apple-ease);
             }
 
+            /* Hover State Width/Heights */
             body.hovering-link #cursor-ring {
                 width: 50px; height: 50px; 
+                top: -25px; left: -25px;
                 background-color: var(--cursor-ring-hover);
                 border-color: var(--cursor-ring-border-hover); 
                 backdrop-filter: blur(4px);
@@ -229,7 +219,9 @@
             body.hovering-link #cursor-dot { opacity: 0; }
             
             body.hovering-card #cursor-ring {
-                width: 150px; height: 150px; background-color: transparent;
+                width: 150px; height: 150px; 
+                top: -75px; left: -75px;
+                background-color: transparent;
                 border-color: var(--cursor-ring); box-shadow: 0 0 50px var(--cursor-ring-hover);
                 backdrop-filter: none;
             }
@@ -340,9 +332,7 @@
             background: var(--glass-bg-base);
             backdrop-filter: blur(45px) saturate(200%); 
             -webkit-backdrop-filter: blur(45px) saturate(200%);
-            
             box-shadow: var(--glass-shadow-inset), var(--glass-shadow-drop);
-            
             overflow: hidden; 
             border: 1px solid var(--glass-border-base);
             transition: border-color 0.6s var(--apple-ease), box-shadow 0.6s var(--apple-ease), background 0.8s var(--apple-ease);
@@ -359,7 +349,7 @@
         .glass-shine {
             position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-            transform: skewX(-20deg);
+            transform: skewX(-30deg) scaleY(1.5);
             z-index: 10;
             pointer-events: none;
             transition: left 0s;
@@ -390,7 +380,7 @@
         }
         .tvos-card.is-tracking .shadow-layer { 
             opacity: 1; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 255, 255, 0.03);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 255, 255, 0.05);
         }
 
         /* 4. Static Optical Grain */
@@ -444,8 +434,17 @@
         .text-sub { color: var(--text-muted); transition: color 0.8s var(--apple-ease); }
 
         /* ========================================= */
-        /* PULSING BADGES & GLOWS                    */
+        /* PULSING & FLOATING BADGES                 */
         /* ========================================= */
+        .floating-badge {
+            display: inline-block;
+            animation: floatBadge 3s infinite ease-in-out;
+        }
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
         @keyframes pulseGlow {
             0% { opacity: 0.2; transform: scale(0.95); }
             100% { opacity: 0.8; transform: scale(1.05); }
@@ -494,9 +493,13 @@
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent;
             animation: textShine 6s linear infinite; 
-            transition: background 0.8s var(--apple-ease);
+            transition: transform 0.6s var(--apple-spring), text-shadow 0.6s var(--apple-ease), background 0.8s var(--apple-ease);
+            display: inline-block;
         }
-        
+        .animate-gradient-text:hover {
+            transform: scale(1.02) rotate(-1deg);
+            text-shadow: 0 10px 30px rgba(255,255,255,0.15);
+        }
         @keyframes textShine {
             0% { background-position: 0% center; }
             100% { background-position: -200% center; }
@@ -692,7 +695,7 @@
                 </div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                        <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/40 text-green-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/10 badge-pulse-green">Latest</span>
+                        <span class="floating-badge px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-green-500/40 text-green-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-green-500/10 badge-pulse-green">Latest</span>
                         <h2 class="text-3xl sm:text-5xl font-extrabold text-title tracking-tight">OxygenOS 16.1</h2>
                     </div>
                     <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.8.300 • Stable</span>
@@ -853,7 +856,7 @@
             
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-sub uppercase mt-4 mb-1 pl-6 sm:pl-8">Latest Release</h3>
             
-            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.9.400/ota_full-LE2123_16.0.9.400.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
+            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.8.306/ota_full-LE2123_16.0.8.306.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                 <div class="shadow-layer"></div>
                 <div class="glass-pane">
                     <div class="hero-glow-blue"></div>
@@ -863,15 +866,15 @@
                 </div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                        <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-500/40 text-sub text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-gray-500/10 badge-pulse-gray">China</span>
+                        <span class="floating-badge px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/40 text-blue-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/10 badge-pulse-blue">Global</span>
                         <h2 class="text-3xl sm:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.1</h2>
                     </div>
-                    <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.9.400 • Stable</span>
+                    <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.8.306 • Stable</span>
                 </div>
                 <div class="dl-icon text-3xl sm:text-5xl">↓</div>
             </a>
 
-            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.8.306/ota_full-LE2123_16.0.8.306.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
+            <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.9.400/ota_full-LE2123_16.0.9.400.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                 <div class="shadow-layer"></div>
                 <div class="glass-pane">
                     <div class="dynamic-glare"></div>
@@ -880,10 +883,10 @@
                 </div>
                 <div class="content-layer flex flex-col">
                     <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                        <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/40 text-blue-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-blue-500/10 badge-pulse-blue">Global</span>
+                        <span class="floating-badge px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-500/40 text-sub text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-gray-500/10 badge-pulse-gray">China</span>
                         <h2 class="text-3xl sm:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.1</h2>
                     </div>
-                    <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.8.306 • Stable</span>
+                    <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.9.400 • Stable</span>
                 </div>
                 <div class="dl-icon text-3xl sm:text-5xl">↓</div>
             </a>
@@ -958,6 +961,23 @@
                     </div>
                     <div class="dl-icon text-3xl sm:text-5xl">↓</div>
                 </a>
+
+                <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.7.206/ota_full-LE2123_16.0.7.206.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
+                    <div class="shadow-layer"></div>
+                    <div class="glass-pane">
+                        <div class="dynamic-glare"></div>
+                        <div class="glass-shine"></div>
+                        <div class="film-grain"></div>
+                    </div>
+                    <div class="content-layer flex flex-col">
+                        <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
+                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-500/40 text-sub text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-gray-500/10">China</span>
+                            <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.1</h2>
+                        </div>
+                        <span class="text-xs sm:text-base text-sub font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.206 • Stable</span>
+                    </div>
+                    <div class="dl-icon text-3xl sm:text-5xl">↓</div>
+                </a>
                 
                 <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.5.701/ota_full-LE2123_16.0.5.701.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                     <div class="shadow-layer"></div>
@@ -980,23 +1000,6 @@
             <div id="cos-more-wrapper" class="expandable-wrapper">
                 <div class="expandable-content">
                     <div class="expandable-inner">
-                        <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20China/16.0.7.206/ota_full-LE2123_16.0.7.206.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
-                            <div class="shadow-layer"></div>
-                            <div class="glass-pane">
-                                <div class="dynamic-glare"></div>
-                                <div class="glass-shine"></div>
-                                <div class="film-grain"></div>
-                            </div>
-                            <div class="content-layer flex flex-col">
-                                <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                                    <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-500/40 text-sub text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-gray-500/10">China</span>
-                                    <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">ColorOS 16.1</h2>
-                                </div>
-                                <span class="text-xs sm:text-base text-sub font-mono tracking-widest mt-1 sm:mt-2">Android 16 • 16.0.7.206 • Stable</span>
-                            </div>
-                            <div class="dl-icon text-3xl sm:text-5xl">↓</div>
-                        </a>
-
                         <a href="https://sourceforge.net/projects/reimagine/files/ColorOS%2016%20Global/16.0.3.504/ota_full-LE2123_16.0.3.504.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                             <div class="shadow-layer"></div>
                             <div class="glass-pane">
@@ -1030,7 +1033,7 @@
         <div id="view-ext" class="os-view flex-col gap-6 sm:gap-8">
             <h3 class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.5em] text-sub uppercase mt-4 mb-1 pl-6 sm:pl-8">Extras</h3>
             <div class="flex flex-col gap-4 sm:gap-6">
-                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.7.205/ota_full-LE2123_16.0.7.205.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
+                <a href="https://sourceforge.net/projects/reimagine/files/realmeUI%207/16.0.7.205/ota_full-LE2123_16.0.7.205.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                     <div class="shadow-layer"></div>
                     <div class="glass-pane">
                         <div class="dynamic-glare"></div>
@@ -1039,7 +1042,7 @@
                     </div>
                     <div class="content-layer flex flex-col">
                         <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 badge-pulse-gray">Global</span>
+                            <span class="floating-badge px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 badge-pulse-gray">Global</span>
                             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">Realme UI 7.1</h2>
                         </div>
                         <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.7.205 • Beta</span>
@@ -1047,7 +1050,7 @@
                     <div class="dl-icon text-3xl sm:text-5xl">↓</div>
                 </a>
 
-                <a href="https://sourceforge.net/projects/reimagine/files/RealmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
+                <a href="https://sourceforge.net/projects/reimagine/files/realmeUI%207/16.0.5.704/ota_full-LE2123_16.0.5.704.zip/download" target="_blank" rel="noopener noreferrer" class="tvos-card p-8 sm:p-10 flex justify-between items-center interactive-el">
                     <div class="shadow-layer"></div>
                     <div class="glass-pane">
                         <div class="dynamic-glare"></div>
@@ -1056,7 +1059,7 @@
                     </div>
                     <div class="content-layer flex flex-col">
                         <div class="flex items-center gap-4 sm:gap-5 mb-2 sm:mb-3">
-                            <span class="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 badge-pulse-gray">Global</span>
+                            <span class="floating-badge px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-500/40 text-amber-500 text-[9px] sm:text-[11px] font-black tracking-[0.2em] uppercase bg-amber-500/10 badge-pulse-gray">Global</span>
                             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-title tracking-tight">Realme UI 7.0</h2>
                         </div>
                         <span class="text-xs sm:text-base text-sub font-mono tracking-widest">Android 16 • 16.0.5.704 • Beta</span>
@@ -1098,7 +1101,7 @@
             });
         }
 
-        // --- iOS Segmented Control Tab Engine ---
+        // --- iOS Segmented Control Tab Engine (3 Tabs for 9) ---
         function switchTab(os) {
             const bg = document.getElementById('tab-bg');
             const btnOos = document.getElementById('btn-oos');
@@ -1173,7 +1176,7 @@
             
             const cards = Array.from(document.querySelectorAll('.tvos-card'));
             const magneticElements = Array.from(document.querySelectorAll('.magnetic-solid, .magnetic-clear'));
-            const magneticPulls = Array.from(document.querySelectorAll('.magnetic-pull'));
+            const magneticPulls = Array.from(document.querySelectorAll('.tab-container'));
 
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
             let cursorX = mouseX, cursorY = mouseY;
@@ -1196,7 +1199,7 @@
             function physicsTick() {
                 // Fix for Cursor dot glitch: Calculate scale manually in JS so it doesnt fight CSS transforms
                 currentDotScale += (dotScaleTarget - currentDotScale) * 0.3;
-                if (dot) dot.style.transform = `translate3d(${mouseX - 3}px, ${mouseY - 3}px, 0) scale(${currentDotScale})`;
+                if (dot) dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) scale(${currentDotScale})`;
 
                 // Ambient Ring & Spotlight Lerp (Tighter tracking)
                 cursorX += (mouseX - cursorX) * 0.25; 
@@ -1204,10 +1207,10 @@
                 
                 const isHoveringCard = document.body.classList.contains('hovering-card');
                 const isHoveringLink = document.body.classList.contains('hovering-link');
-                const offset = isHoveringCard ? 75 : (isHoveringLink ? 25 : 18);
                 
-                if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
-                if (spotlight) spotlight.style.transform = `translate3d(${cursorX - 500}px, ${cursorY - 500}px, 0)`;
+                
+                if (ring) ring.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+                if (spotlight) spotlight.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
 
                 // tvOS Card Parallax Lerp
                 cards.forEach(card => {
