@@ -38,9 +38,9 @@ This repository houses the source code for the official ReVork website. Recently
 |---|---|:---:|:---:|
 | **OnePlus 9 Pro** | `lemonadep / LE2123` | ✅ | ✅ |
 | **OnePlus 9** | `lemonade / LE2113` | ✅ | ✅ |
-| **OnePlus 9R** | `lemonades / LE2101` | ⏳ *✅* | ⏳ *✅* |
-| **OnePlus 8 Pro** | `instantnoodlep / IN2023` | ⏳ *✅* | ⏳ *✅* |
-| **OnePlus 8T** | `kebab / KB2003` | ⏳ *✅* | ⏳ *✅* |
+| **OnePlus 9R** | `lemonades / LE2101` | ✅ | ✅ |
+| **OnePlus 8 Pro** | `instantnoodlep / IN2023` |  ✅ | ✅ |
+| **OnePlus 8T** | `kebab / KB2003` | ✅ | ✅ |
 
 > Check [ozyern.me](https://ozyern.me) for the latest supported hardware and builds.
 
