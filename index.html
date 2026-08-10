@@ -1,423 +1,774 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLJ7DVSZW7"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-WLJ7DVSZW7');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-WLJ7DVSZW7');
     </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReVork | Select Device</title>
-    
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <meta name="theme-color" content="#000000">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
-        
-        :root {
-            /* Ultra-Premium Apple Spring & Ease Curves */
-            --apple-ease: cubic-bezier(0.25, 1, 0.5, 1); 
-            --apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.15); /* Slightly punchier bounce */
-            --apple-heavy: cubic-bezier(0.2, 0.8, 0.2, 1);
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@600&display=swap');
 
-            /* DARK MODE VARIABLES */
+        :root {
+            --ease-base: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.15);
+
             --bg-color: #000000;
             --text-main: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.4);
             --text-sub: rgba(255, 255, 255, 0.7);
-            
-            --glass-bg-base: linear-gradient(150deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.005) 100%);
-            --glass-border-base: rgba(255, 255, 255, 0.06);
-            --glass-border-hover-top: rgba(255, 255, 255, 0.4);
-            --glass-border-hover-left: rgba(255, 255, 255, 0.25);
-            --glass-shadow-inset: inset 0 1px 1px rgba(255, 255, 255, 0.15), inset 0 -1px 1px rgba(0, 0, 0, 0.6);
-            --glass-shadow-drop: 0 20px 40px -5px rgba(0, 0, 0, 0.8);
-            
-            --title-gradient: linear-gradient(110deg, #86868b 0%, #ffffff 30%, #86868b 50%, #ffffff 70%, #86868b 100%);
+
+            --glass-bg: linear-gradient(150deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.005) 100%);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-hover-top: rgba(255, 255, 255, 0.4);
+            --glass-hover-left: rgba(255, 255, 255, 0.25);
+
+            --grad-text: linear-gradient(110deg, #86868b 0%, #ffffff 30%, #86868b 50%, #ffffff 70%, #86868b 100%);
             --aurora-1: rgba(14, 165, 233, 0.07);
             --aurora-2: rgba(16, 185, 129, 0.05);
-            --aurora-3: rgba(139, 92, 246, 0.06); /* New 3rd Aurora */
-            
-            --sheen-1: rgba(255, 255, 255, 0.15);
-            --sheen-2: rgba(255, 255, 255, 0.3);
-            --sheen-blend: overlay;
-            --edge-glare: rgba(255, 255, 255, 0.7);
-            --surface-glare-1: rgba(255, 255, 255, 0.12);
-            --surface-glare-2: rgba(150, 200, 255, 0.04);
-            --glare-blend: screen;
-            --halo-color: rgba(255, 255, 255, 0.08);
-            
+            --aurora-3: rgba(139, 92, 246, 0.06);
+
             --cursor-dot: #ffffff;
             --cursor-ring: rgba(255, 255, 255, 0.2);
-            --cursor-ring-hover: rgba(255, 255, 255, 0.08);
-            --cursor-ring-border-hover: rgba(255, 255, 255, 0.4);
-            --spotlight-bg: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(150, 200, 255, 0.005) 30%, transparent 60%);
+            --cursor-hover: rgba(255, 255, 255, 0.08);
+            --cursor-border: rgba(255, 255, 255, 0.4);
+            --spotlight: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(150, 200, 255, 0.005) 30%, transparent 60%);
+            --pulse-color: rgba(59, 130, 246, 0.15);
         }
 
         [data-theme="light"] {
-            /* LIGHT MODE VARIABLES */
             --bg-color: #f5f5f7;
             --text-main: #1d1d1f;
             --text-muted: rgba(0, 0, 0, 0.4);
             --text-sub: rgba(0, 0, 0, 0.7);
-            
-            --glass-bg-base: linear-gradient(150deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.3) 100%);
-            --glass-border-base: rgba(0, 0, 0, 0.06);
-            --glass-border-hover-top: rgba(255, 255, 255, 0.9);
-            --glass-border-hover-left: rgba(255, 255, 255, 0.7);
-            --glass-shadow-inset: inset 0 1px 2px rgba(255, 255, 255, 1), inset 0 -1px 2px rgba(0, 0, 0, 0.03);
-            --glass-shadow-drop: 0 20px 40px -5px rgba(0, 0, 0, 0.12);
-            
-            --title-gradient: linear-gradient(110deg, #1d1d1f 0%, #a1a1a6 30%, #1d1d1f 50%, #a1a1a6 70%, #1d1d1f 100%);
+
+            --glass-bg: linear-gradient(150deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.3) 100%);
+            --glass-border: rgba(0, 0, 0, 0.06);
+            --glass-hover-top: rgba(255, 255, 255, 0.9);
+            --glass-hover-left: rgba(255, 255, 255, 0.7);
+
+            --grad-text: linear-gradient(110deg, #1d1d1f 0%, #a1a1a6 30%, #1d1d1f 50%, #a1a1a6 70%, #1d1d1f 100%);
             --aurora-1: rgba(14, 165, 233, 0.15);
             --aurora-2: rgba(16, 185, 129, 0.12);
             --aurora-3: rgba(139, 92, 246, 0.1);
-            
-            --sheen-1: rgba(255, 255, 255, 0.6);
-            --sheen-2: rgba(255, 255, 255, 1);
-            --sheen-blend: normal;
-            --edge-glare: rgba(255, 255, 255, 1);
-            --surface-glare-1: rgba(255, 255, 255, 0.5);
-            --surface-glare-2: rgba(255, 255, 255, 0.15);
-            --glare-blend: normal;
-            --halo-color: rgba(0, 0, 0, 0.04);
-            
+
             --cursor-dot: #1d1d1f;
             --cursor-ring: rgba(0, 0, 0, 0.15);
-            --cursor-ring-hover: rgba(0, 0, 0, 0.05);
-            --cursor-ring-border-hover: rgba(0, 0, 0, 0.2);
-            --spotlight-bg: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.01) 30%, transparent 60%);
+            --cursor-hover: rgba(0, 0, 0, 0.05);
+            --cursor-border: rgba(0, 0, 0, 0.2);
+            --spotlight: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.01) 30%, transparent 60%);
+            --pulse-color: rgba(0, 0, 0, 0.05);
         }
 
         * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            cursor: none !important; outline: none !important; -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        ::selection { background: var(--cursor-ring); color: var(--text-main); }
+        body.custom-cursor-active,
+        body.custom-cursor-active * {
+            cursor: none !important;
+        }
+
+        ::selection {
+            background: var(--cursor-ring);
+            color: var(--text-main);
+        }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color); color: var(--text-main);
-            overflow-x: hidden; min-height: 100vh;
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility; scroll-behavior: smooth;
-            transition: background-color 0.8s var(--apple-ease), color 0.8s var(--apple-ease);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            transition: background-color 0.6s var(--ease-base), color 0.6s var(--ease-base);
         }
 
-        /* ========================================= */
-        /* TOP NAV: RESPONSIVE ALIGNMENT             */
-        /* ========================================= */
-        .nav-downloads-container { position: absolute; top: 1.25rem; left: 1.25rem; z-index: 100; perspective: 1200px; }
-        .theme-toggle-container { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 100; perspective: 1200px; }
-        
+        .nav-downloads-container {
+            position: absolute;
+            top: 1.25rem;
+            left: 1.25rem;
+            z-index: 100;
+            perspective: 1200px;
+        }
+
+        .theme-toggle-container {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            z-index: 100;
+            perspective: 1200px;
+        }
+
         @media (min-width: 640px) {
-            .nav-downloads-container { top: 2rem; left: 2rem; }
-            .theme-toggle-container { top: 2rem; right: 2rem; }
+            .nav-downloads-container {
+                top: 2rem;
+                left: 2rem;
+            }
+
+            .theme-toggle-container {
+                top: 2rem;
+                right: 2rem;
+            }
         }
 
-        /* ========================================= */
-        /* COMPACT SPATIAL TERMINAL SHORTCUT         */
-        /* ========================================= */
         .mini-terminal-btn {
-            --rotX: 0deg; --rotY: 0deg; --transX: 0px; --transY: 0px;
-            position: relative; display: flex; flex-direction: row; align-items: center; gap: 10px;
-            height: 36px; padding: 0 14px; border-radius: 12px; 
-            text-decoration: none; cursor: none;
-            transform-style: preserve-3d; will-change: transform;
-            transition: transform 0.6s var(--apple-spring);
-            animation: spatialPulse 4s ease-in-out infinite alternate;
-        }
-        
-        @keyframes spatialPulse {
-            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
-            100% { box-shadow: 0 0 20px 2px rgba(59, 130, 246, 0.15); }
-        }
-        [data-theme="light"] @keyframes spatialPulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
-            100% { box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.05); }
+            --rotX: 0deg;
+            --rotY: 0deg;
+            --transX: 0px;
+            --transY: 0px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 36px;
+            padding: 0 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.5s var(--ease-bounce);
+            animation: pulseShadow 4s ease-in-out infinite alternate;
         }
 
-        .mini-terminal-btn:hover { animation: none; }
-        
+        @keyframes pulseShadow {
+            0% {
+                box-shadow: 0 0 0 0 transparent;
+            }
+
+            100% {
+                box-shadow: 0 0 20px 2px var(--pulse-color);
+            }
+        }
+
+        .mini-terminal-btn:hover {
+            animation: none;
+        }
+
         .mini-terminal-btn:active {
             transform: perspective(800px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(0.95, 0.95, 0.95) !important;
-            transition: transform 0.15s var(--apple-ease) !important;
         }
-        
+
         .mini-terminal-btn .glass-pane {
-            position: absolute; inset: 0; border-radius: inherit;
-            background: var(--glass-bg-base);
-            backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid var(--glass-border-base);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 5px 15px rgba(0,0,0,0.15);
-            transition: all 0.6s var(--apple-ease); overflow: hidden; z-index: 1; transform-style: preserve-3d;
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 5px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s var(--ease-base);
+            overflow: hidden;
+            z-index: 1;
         }
+
         .mini-terminal-btn.is-tracking .glass-pane {
-            border-top-color: var(--glass-border-hover-top); border-left-color: var(--glass-border-hover-left);
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 15px 30px rgba(0,0,0,0.4);
+            border-top-color: var(--glass-hover-top);
+            border-left-color: var(--glass-hover-left);
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
         .mini-terminal-btn .dynamic-glare {
-            position: absolute; inset: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.25) 0%, transparent 60%);
-            opacity: 0; z-index: 2; pointer-events: none; transition: opacity 0.4s var(--apple-ease);
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.2) 0%, transparent 60%);
         }
-        .mini-terminal-btn.is-tracking .dynamic-glare { opacity: 1; transition: none; }
 
-        .mini-mac-dots { 
-            position: relative; z-index: 10; display: flex; gap: 5px; 
-            transform: translateZ(5px); transition: transform 0.6s var(--apple-spring); 
+        .mini-terminal-btn.is-tracking .dynamic-glare {
+            opacity: 1;
         }
-        .mini-terminal-btn.is-tracking .mini-mac-dots { transform: translate3d(calc(var(--transX) * 0.3), calc(var(--transY) * 0.3), 10px); }
-        
-        .mini-dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: inset 0 1px 1px rgba(255,255,255,0.5), inset 0 -1px 1px rgba(0,0,0,0.3); }
-        .mini-dot.red { background: #ff5f56; } .mini-dot.yel { background: #ffbd2e; } .mini-dot.grn { background: #27c93f; }
+
+        .mini-mac-dots {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            gap: 5px;
+            transform: translateZ(5px);
+            transition: transform 0.5s var(--ease-bounce);
+        }
+
+        .mini-terminal-btn.is-tracking .mini-mac-dots {
+            transform: translate3d(calc(var(--transX) * 0.3), calc(var(--transY) * 0.3), 10px);
+        }
+
+        .mini-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5), inset 0 -1px 1px rgba(0, 0, 0, 0.3);
+        }
+
+        .mini-dot.red {
+            background: #ff5f56;
+        }
+
+        .mini-dot.yel {
+            background: #ffbd2e;
+        }
+
+        .mini-dot.grn {
+            background: #27c93f;
+        }
 
         .mini-term-body {
-            position: relative; z-index: 10; display: flex; align-items: center;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-main); font-weight: 600;
-            padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.1);
-            transform: translateZ(5px); transition: transform 0.6s var(--apple-spring); pointer-events: none;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-main);
+            font-weight: 600;
+            padding-left: 12px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateZ(5px);
+            transition: transform 0.5s var(--ease-bounce);
+            pointer-events: none;
         }
-        .mini-terminal-btn.is-tracking .mini-term-body { transform: translate3d(calc(var(--transX) * 0.6), calc(var(--transY) * 0.6), 15px); }
-        
-        [data-theme="light"] .mini-terminal-btn .glass-pane { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.1); box-shadow: inset 0 1px 2px rgba(255,255,255,1), 0 5px 15px rgba(0,0,0,0.05); }
-        [data-theme="light"] .mini-term-body { color: #000; border-left-color: rgba(0,0,0,0.15); }
-        [data-theme="light"] .mini-term-body .animate-pulse { color: #000; }
 
-        /* ========================================= */
-        /* SKEUOMORPHIC 3D GLASS TOGGLE              */
-        /* ========================================= */
-        .theme-toggle {
-            --toggle-width: 68px; --toggle-height: 36px; --toggle-padding: 3px;
-            position: relative; display: block; width: var(--toggle-width); height: var(--toggle-height);
-            border-radius: 99px; background: rgba(255, 255, 255, 0.05);
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.08), 0 1px 2px rgba(255,255,255,0.05);
-            cursor: none; transition: background 0.5s var(--apple-ease), box-shadow 0.5s var(--apple-ease);
+        .mini-terminal-btn.is-tracking .mini-term-body {
+            transform: translate3d(calc(var(--transX) * 0.6), calc(var(--transY) * 0.6), 15px);
         }
-        [data-theme="light"] .theme-toggle { background: rgba(0, 0, 0, 0.06); box-shadow: inset 0 2px 6px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(0,0,0,0.05), 0 1px 2px rgba(255,255,255,0.6); }
+
+        [data-theme="light"] .mini-terminal-btn .glass-pane {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .mini-term-body {
+            color: #000;
+            border-left-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-toggle {
+            --toggle-w: 64px;
+            --toggle-h: 34px;
+            --pad: 3px;
+            position: relative;
+            display: block;
+            width: var(--toggle-w);
+            height: var(--toggle-h);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+            transition: background 0.4s var(--ease-base);
+        }
+
+        [data-theme="light"] .theme-toggle {
+            background: rgba(0, 0, 0, 0.06);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
 
         .toggle-thumb {
-            position: absolute; top: var(--toggle-padding); left: var(--toggle-padding);
-            width: calc(var(--toggle-height) - (var(--toggle-padding) * 2)); height: calc(var(--toggle-height) - (var(--toggle-padding) * 2));
-            border-radius: 50%; background: linear-gradient(145deg, #d4d4d8, #71717a);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset -2px -2px 4px rgba(255,255,255,0.5), inset 2px 2px 4px rgba(0,0,0,0.3);
-            transition: transform 0.6s var(--apple-spring), background 0.5s var(--apple-ease); pointer-events: none;
+            position: absolute;
+            top: var(--pad);
+            left: var(--pad);
+            width: calc(var(--toggle-h) - (var(--pad) * 2));
+            height: calc(var(--toggle-h) - (var(--pad) * 2));
+            border-radius: 50%;
+            background: linear-gradient(145deg, #d4d4d8, #71717a);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.5s var(--ease-bounce), background 0.4s var(--ease-base);
+            pointer-events: none;
         }
-        [data-theme="light"] .toggle-thumb { transform: translateX(calc(var(--toggle-width) - var(--toggle-height))); background: linear-gradient(145deg, #ffffff, #e4e4e7); box-shadow: 0 4px 8px rgba(0,0,0,0.15), inset -2px -2px 4px rgba(255,255,255,1), inset 2px 2px 4px rgba(0,0,0,0.05); }
 
-        .toggle-thumb::after {
-            content: ''; position: absolute; top: 8%; left: 15%; width: 70%; height: 40%; border-radius: 50%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 100%); filter: blur(0.5px);
+        [data-theme="light"] .toggle-thumb {
+            transform: translateX(calc(var(--toggle-w) - var(--toggle-h)));
+            background: linear-gradient(145deg, #ffffff, #e4e4e7);
         }
 
-        /* ========================================= */
-        /* CUSTOM STEALTH SCROLLBAR                  */
-        /* ========================================= */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; cursor: none; }
-        ::-webkit-scrollbar-thumb { background: var(--cursor-ring); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--cursor-ring-hover); }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
 
-        /* ========================================= */
-        /* ZERO-LATENCY DOT & RING CURSOR            */
-        /* ========================================= */
-        #spotlight { display: none; }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--cursor-ring);
+            border-radius: 10px;
+        }
+
+        #spotlight {
+            display: none;
+        }
+
         @media (hover: hover) and (pointer: fine) {
             #cursor-dot {
-                width: 6px; height: 6px; background-color: var(--cursor-dot); border-radius: 50%;
-                position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
-                will-change: transform; transition: opacity 0.2s var(--apple-ease), background-color 0.8s var(--apple-ease);
+                width: 6px;
+                height: 6px;
+                background-color: var(--cursor-dot);
+                border-radius: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 10000;
+                transition: opacity 0.2s var(--ease-base);
             }
+
             #cursor-ring {
-                width: 36px; height: 36px; border: 1px solid var(--cursor-ring); border-radius: 50%;
-                position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
-                will-change: transform, width, height, border-color, background-color, box-shadow;
-                transition: width 0.4s var(--apple-spring), height 0.4s var(--apple-spring), border-color 0.4s var(--apple-ease), background-color 0.4s var(--apple-ease), box-shadow 0.4s var(--apple-ease);
+                width: 36px;
+                height: 36px;
+                border: 1px solid var(--cursor-ring);
+                border-radius: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9999;
+                transition: width 0.3s var(--ease-bounce), height 0.3s var(--ease-bounce), border-color 0.3s ease, background-color 0.3s ease;
             }
+
             #spotlight {
-                display: block; position: fixed; top: 0; left: 0; width: 1200px; height: 1200px; border-radius: 50%; pointer-events: none; z-index: 0;
-                background: var(--spotlight-bg); will-change: transform; transition: background 0.8s var(--apple-ease);
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 1200px;
+                height: 1200px;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                background: var(--spotlight);
             }
 
-            body.hovering-link #cursor-ring { width: 50px; height: 50px; background-color: var(--cursor-ring-hover); border-color: var(--cursor-ring-border-hover); backdrop-filter: blur(4px); }
-            body.hovering-link #cursor-dot { opacity: 0; }
-            
-            body.hovering-card #cursor-ring { width: 160px; height: 160px; background-color: transparent; border-color: var(--cursor-ring); box-shadow: 0 0 60px var(--cursor-ring-hover); backdrop-filter: none; }
-            body.hovering-card #cursor-dot { opacity: 0; }
-        }
-        @media (hover: none), (pointer: coarse) { #cursor-dot, #cursor-ring { display: none !important; } }
+            body.hovering-link #cursor-ring {
+                width: 50px;
+                height: 50px;
+                background-color: var(--cursor-hover);
+                border-color: var(--cursor-border);
+                backdrop-filter: blur(4px);
+            }
 
-        /* ========================================= */
-        /* VOLUMETRIC AURORA BACKGROUND 3.0          */
-        /* ========================================= */
+            body.hovering-link #cursor-dot {
+                opacity: 0;
+            }
+
+            body.hovering-card #cursor-ring {
+                width: 150px;
+                height: 150px;
+                background-color: transparent;
+                border-color: var(--cursor-ring);
+                box-shadow: 0 0 50px var(--cursor-hover);
+            }
+
+            body.hovering-card #cursor-dot {
+                opacity: 0;
+            }
+        }
+
+        @media (hover: none),
+        (pointer: coarse) {
+
+            #cursor-dot,
+            #cursor-ring {
+                display: none !important;
+            }
+        }
+
         .aurora-container {
-            position: fixed; inset: -20%; width: 140%; height: 140%;
-            z-index: -1; pointer-events: none; overflow: hidden; will-change: transform;
+            position: fixed;
+            inset: -20%;
+            width: 140%;
+            height: 140%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
         }
 
-        .aurora-blob-1, .aurora-blob-2, .aurora-blob-3 { position: absolute; border-radius: 50%; will-change: transform; }
+        .aurora-blob-1,
+        .aurora-blob-2,
+        .aurora-blob-3 {
+            position: absolute;
+            border-radius: 50%;
+        }
 
         .aurora-blob-1 {
-            width: 70vw; height: 70vw; top: -10%; left: 0%; background: radial-gradient(closest-side, var(--aurora-1) 0%, transparent 100%);
-            animation: floatAurora1 35s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate; transition: background 0.8s var(--apple-ease);
+            width: 70vw;
+            height: 70vw;
+            top: -10%;
+            left: 0%;
+            background: radial-gradient(closest-side, var(--aurora-1) 0%, transparent 100%);
+            animation: drift1 30s ease-in-out infinite alternate;
         }
+
         .aurora-blob-2 {
-            width: 80vw; height: 80vw; bottom: -10%; right: -10%; background: radial-gradient(closest-side, var(--aurora-2) 0%, transparent 100%);
-            animation: floatAurora2 40s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate-reverse; transition: background 0.8s var(--apple-ease);
+            width: 80vw;
+            height: 80vw;
+            bottom: -10%;
+            right: -10%;
+            background: radial-gradient(closest-side, var(--aurora-2) 0%, transparent 100%);
+            animation: drift2 35s ease-in-out infinite alternate-reverse;
         }
+
         .aurora-blob-3 {
-            width: 60vw; height: 60vw; top: 30%; left: 20%; background: radial-gradient(closest-side, var(--aurora-3) 0%, transparent 100%);
-            animation: floatAurora3 28s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate; transition: background 0.8s var(--apple-ease); mix-blend-mode: var(--glare-blend);
+            width: 60vw;
+            height: 60vw;
+            top: 30%;
+            left: 20%;
+            background: radial-gradient(closest-side, var(--aurora-3) 0%, transparent 100%);
+            animation: drift3 25s ease-in-out infinite alternate;
         }
 
-        @keyframes floatAurora1 { 0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); } 100% { transform: translate3d(8%, 12%, 0) scale(1.05) rotate(15deg); } }
-        @keyframes floatAurora2 { 0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); } 100% { transform: translate3d(-10%, -8%, 0) scale(1.03) rotate(-15deg); } }
-        @keyframes floatAurora3 { 0% { transform: translate3d(0, 0, 0) scale(1); } 100% { transform: translate3d(15%, -15%, 0) scale(1.1); } }
+        @keyframes drift1 {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
 
-        /* ========================================= */
-        /* APPLE TVOS SPATIAL CARDS                  */
-        /* ========================================= */
+            100% {
+                transform: translate3d(6%, 10%, 0);
+            }
+        }
+
+        @keyframes drift2 {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(-8%, -6%, 0);
+            }
+        }
+
+        @keyframes drift3 {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(12%, -12%, 0);
+            }
+        }
+
         .tvos-card {
-            --rotX: 0deg; --rotY: 0deg; --transX: 0px; --transY: 0px;
-            position: relative; height: 500px; transform-style: preserve-3d; will-change: transform;
-            transition: transform 0.6s var(--apple-spring), opacity 0.6s var(--apple-ease), filter 0.6s var(--apple-ease);
-            display: block; border-radius: 2rem; opacity: 1; z-index: 10;
+            --rotX: 0deg;
+            --rotY: 0deg;
+            --transX: 0px;
+            --transY: 0px;
+            position: relative;
+            height: 500px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s var(--ease-bounce), opacity 0.5s var(--ease-base), filter 0.5s ease;
+            display: block;
+            border-radius: 2rem;
+            opacity: 1;
+            z-index: 10;
         }
 
-        /* Ambient glowing shadow behind the card */
         .ambient-glow {
-            position: absolute; inset: 10%; border-radius: 50%; z-index: -1;
-            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-            opacity: 0; filter: blur(40px); transition: opacity 0.6s var(--apple-ease); pointer-events: none;
+            position: absolute;
+            inset: 10%;
+            border-radius: 50%;
+            z-index: -1;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%);
+            opacity: 0;
+            filter: blur(40px);
+            transition: opacity 0.5s ease;
+            pointer-events: none;
         }
-        [data-theme="light"] .ambient-glow { background: radial-gradient(circle, rgba(0,0,0,0.15), transparent 70%); }
-        .tvos-card.is-tracking .ambient-glow { opacity: 1; }
 
-        body.hovering-card .tvos-card:not(.is-tracking) { opacity: 0.4; filter: blur(4px); transform: scale3d(0.96, 0.96, 0.96); }
-        .tvos-card.is-tracking { z-index: 30; opacity: 1; filter: blur(0); }
-        .tvos-card:active { transform: perspective(1200px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(0.98, 0.98, 0.98) !important; transition: transform 0.15s var(--apple-ease) !important; }
+        [data-theme="light"] .ambient-glow {
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.15), transparent 70%);
+        }
+
+        .tvos-card.is-tracking .ambient-glow {
+            opacity: 1;
+        }
+
+        body.hovering-card .tvos-card:not(.is-tracking) {
+            opacity: 0.5;
+            filter: blur(3px);
+            transform: scale3d(0.97, 0.97, 0.97);
+        }
+
+        .tvos-card.is-tracking {
+            z-index: 30;
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        .tvos-card:active {
+            transform: perspective(1200px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(0.98, 0.98, 0.98) !important;
+        }
 
         .glass-pane {
-            position: absolute; inset: 0; border-radius: 2rem; background: var(--glass-bg-base);
-            backdrop-filter: blur(60px) saturate(180%); -webkit-backdrop-filter: blur(60px) saturate(180%);
-            box-shadow: var(--glass-shadow-inset), var(--glass-shadow-drop);
-            overflow: hidden; border: 1px solid var(--glass-border-base);
-            transition: border-color 0.6s var(--apple-ease), box-shadow 0.6s var(--apple-ease), background 0.8s var(--apple-ease); transform-style: preserve-3d; z-index: 1;
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 20px 40px -5px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: border-color 0.5s ease;
+            transform-style: preserve-3d;
+            z-index: 1;
         }
-        .tvos-card.is-tracking .glass-pane { border-top-color: var(--glass-border-hover-top); border-left-color: var(--glass-border-hover-left); }
+
+        .tvos-card.is-tracking .glass-pane {
+            border-top-color: var(--glass-hover-top);
+            border-left-color: var(--glass-hover-left);
+        }
 
         .liquid-sheen {
-            position: absolute; inset: -150%; background: linear-gradient(135deg, transparent 40%, var(--sheen-1) 48%, var(--sheen-2) 50%, var(--sheen-1) 52%, transparent 60%);
-            transform: translate(var(--sheenX, 0), var(--sheenY, 0)) rotate(25deg); opacity: 0; z-index: 2; pointer-events: none; mix-blend-mode: var(--sheen-blend);
-            transition: opacity 0.8s var(--apple-ease), background 0.8s var(--apple-ease); will-change: transform;
+            position: absolute;
+            inset: -150%;
+            background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.15) 48%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.15) 52%, transparent 60%);
+            transform: translate(var(--sheenX, 0), var(--sheenY, 0)) rotate(25deg);
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
         }
-        .tvos-card.is-tracking .liquid-sheen { opacity: 1; }
+
+        .tvos-card.is-tracking .liquid-sheen {
+            opacity: 1;
+        }
 
         .glass-pane::before {
-            content: ""; position: absolute; inset: -1px; border-radius: 2rem; padding: 1px;
-            background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--edge-glare), transparent 40%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0; z-index: 5;
-            transition: opacity 0.4s var(--apple-ease), background 0.8s var(--apple-ease);
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: 2rem;
+            padding: 1px;
+            background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.7), transparent 40%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 5;
+            transition: opacity 0.3s ease;
         }
-        .tvos-card.is-tracking .glass-pane::before { opacity: 1; }
+
+        .tvos-card.is-tracking .glass-pane::before {
+            opacity: 1;
+        }
 
         .shadow-layer {
-            position: absolute; inset: 0; border-radius: 2rem; box-shadow: var(--glass-shadow-deep); opacity: 0; pointer-events: none; z-index: 0;
-            transition: opacity 0.6s var(--apple-ease), transform 0.1s linear, box-shadow 0.8s var(--apple-ease); will-change: opacity, transform;
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.5s ease;
         }
-        .tvos-card.is-tracking .shadow-layer { opacity: 1; }
+
+        .tvos-card.is-tracking .shadow-layer {
+            opacity: 1;
+        }
 
         .film-grain {
-            position: absolute; inset: 0; border-radius: 2rem; overflow: hidden;
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            overflow: hidden;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.04; pointer-events: none; z-index: 3; mask-image: radial-gradient(white, black); -webkit-mask-image: -webkit-radial-gradient(white, black);
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 3;
+            mask-image: radial-gradient(white, black);
         }
 
         .dynamic-glare {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 2rem;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--surface-glare-1) 0%, var(--surface-glare-2) 20%, transparent 60%);
-            opacity: 0; transition: opacity 0.6s var(--apple-ease), background 0.8s var(--apple-ease); pointer-events: none; z-index: 4; mix-blend-mode: var(--glare-blend);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 2rem;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.12) 0%, rgba(150, 200, 255, 0.04) 20%, transparent 60%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 4;
         }
-        .tvos-card.is-tracking .dynamic-glare { opacity: 1; transition: none; }
+
+        .tvos-card.is-tracking .dynamic-glare {
+            opacity: 1;
+        }
 
         .device-halo {
-            position: absolute; top: 45%; left: 50%; width: 220px; height: 220px; background: radial-gradient(circle, var(--halo-color), transparent 60%);
-            transform: translate(-50%, -50%) translateZ(5px); border-radius: 50%; pointer-events: none; opacity: 1; transition: background 0.8s var(--apple-ease); z-index: 6;
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 60%);
+            transform: translate(-50%, -50%) translateZ(5px);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 6;
         }
 
-        @keyframes deviceFloat { 0% { transform: translate3d(0px, 0px, 15px); } 100% { transform: translate3d(0px, -8px, 15px); } }
+        @keyframes floatIdle {
+            0% {
+                transform: translate3d(0, 0, 15px);
+            }
+
+            100% {
+                transform: translate3d(0, -6px, 15px);
+            }
+        }
 
         .device-image-layer {
-            position: absolute; top: 2.5rem; left: 0; width: 100%; height: 280px; display: flex; justify-content: center; align-items: center;
-            transform: translate3d(0px, 0px, 15px); transition: transform 0.6s var(--apple-spring), filter 0.6s var(--apple-spring); pointer-events: none; z-index: 10;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); animation: deviceFloat 4s ease-in-out infinite alternate;
+            position: absolute;
+            top: 2.5rem;
+            left: 0;
+            width: 100%;
+            height: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translate3d(0, 0, 15px);
+            transition: transform 0.5s var(--ease-bounce), filter 0.5s ease;
+            pointer-events: none;
+            z-index: 10;
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.3));
+            animation: floatIdle 4s ease-in-out infinite alternate;
         }
+
         .tvos-card.is-tracking .device-image-layer {
-            animation: none; 
-            /* Enhanced Z-axis pop out effect */
-            transform: translate3d(var(--transX), var(--transY), 70px) scale(1.08); 
-            filter: drop-shadow(calc(var(--transX) * -1.5) calc(var(--transY) * -1.5 + 40px) 45px rgba(0,0,0,0.55));
+            animation: none;
+            transform: translate3d(var(--transX), var(--transY), 60px) scale(1.05);
+            filter: drop-shadow(calc(var(--transX) * -1) calc(var(--transY) * -1 + 30px) 35px rgba(0, 0, 0, 0.45));
         }
-        .device-image-layer img { max-height: 100%; width: auto; object-fit: contain; }
 
-        .content-layer { 
-            position: absolute; bottom: 0; left: 0; width: 100%; padding: 0 1.5rem 2.5rem 1.5rem; 
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            z-index: 15; transform: translate3d(0px, 0px, 5px); transition: transform 0.6s var(--apple-spring); pointer-events: none;
+        .device-image-layer img {
+            max-height: 100%;
+            width: auto;
+            object-fit: contain;
         }
-        .tvos-card.is-tracking .content-layer { transform: translate3d(calc(var(--transX) * 0.5), calc(var(--transY) * 0.5), 35px); }
 
-        .device-title { color: var(--text-main); transition: color 0.8s var(--apple-ease); }
-        .device-sub { color: var(--text-muted); transition: color 0.8s var(--apple-ease); }
-        .device-tag { color: var(--text-sub); transition: color 0.8s var(--apple-ease); }
-
-        /* ========================================= */
-        /* INVISIBLE PLATTER BUTTONS (Footer)        */
-        /* ========================================= */
-        .magnetic-clear { position: relative; display: inline-flex; cursor: none; transform-style: preserve-3d; will-change: transform; color: var(--text-sub); transition: color 0.8s var(--apple-ease); }
-        .nav-platter { position: absolute; inset: 0; border-radius: 99px; background: rgba(255, 255, 255, 0); transition: all 0.5s var(--apple-ease); z-index: 0; border: 1px solid transparent; }
-        .magnetic-clear:hover .nav-platter, .magnetic-clear.is-magnetized .nav-platter {
-            background: var(--glass-bg-base); backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
-            border-color: var(--glass-border-base); box-shadow: 0 10px 30px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        .content-layer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 0 1.5rem 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 15;
+            transform: translate3d(0, 0, 5px);
+            transition: transform 0.5s var(--ease-bounce);
+            pointer-events: none;
         }
-        .magnetic-clear:hover { color: var(--text-main); }
-        .magnetic-clear:active { transform: scale(0.96) !important; transition: transform 0.15s var(--apple-spring); }
 
-        /* ========================================= */
-        /* TITANIUM METALLIC GRADIENT TEXT           */
-        /* ========================================= */
-        .animate-gradient-text { 
-            background: var(--title-gradient); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: textShine 6s linear infinite; transition: background 0.8s var(--apple-ease);
+        .tvos-card.is-tracking .content-layer {
+            transform: translate3d(calc(var(--transX) * 0.4), calc(var(--transY) * 0.4), 25px);
         }
-        @keyframes textShine { 0% { background-position: 0% center; } 100% { background-position: -200% center; } }
 
-        /* ========================================= */
-        /* CINEMATIC CASCADING ENTRANCE ANIMATIONS   */
-        /* ========================================= */
-        .reveal { 
-            opacity: 0; transform: translateY(60px) scale(0.92) rotateX(15deg); filter: blur(15px); 
-            animation: revealAnim 1.6s forwards var(--apple-spring); animation-delay: var(--delay, 0s); transform-origin: top center; 
+        .device-title {
+            color: var(--text-main);
         }
-        @keyframes revealAnim { to { opacity: 1; transform: translateY(0) scale(1) rotateX(0deg); filter: blur(0); } }
 
+        .device-sub {
+            color: var(--text-muted);
+        }
+
+        .device-tag {
+            color: var(--text-sub);
+        }
+
+        .magnetic-clear {
+            position: relative;
+            display: inline-flex;
+            transform-style: preserve-3d;
+            color: var(--text-sub);
+            transition: color 0.4s ease;
+        }
+
+        .nav-platter {
+            position: absolute;
+            inset: 0;
+            border-radius: 99px;
+            background: transparent;
+            transition: all 0.4s ease;
+            z-index: 0;
+            border: 1px solid transparent;
+        }
+
+        .magnetic-clear:hover .nav-platter,
+        .magnetic-clear.is-magnetized .nav-platter {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-color: var(--glass-border);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .magnetic-clear:hover {
+            color: var(--text-main);
+        }
+
+        .magnetic-clear:active {
+            transform: scale(0.96) !important;
+        }
+
+        .animate-gradient-text {
+            background: var(--grad-text);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 6s linear infinite;
+        }
+
+        @keyframes textShine {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: -200% center;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.96);
+            animation: fadeUp 1.2s forwards var(--ease-base);
+            animation-delay: var(--delay, 0s);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
     </style>
 </head>
+
 <body class="flex flex-col items-center p-6 sm:p-14 relative">
 
     <div id="spotlight"></div>
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
-    
+
     <div class="aurora-container">
         <div class="aurora-blob-1"></div>
         <div class="aurora-blob-2"></div>
@@ -425,7 +776,8 @@
     </div>
 
     <div class="nav-downloads-container reveal" style="--delay: 0.1s;">
-        <a href="downloads.html" class="spatial-nav-element mini-terminal-btn interactive-el" id="nav-downloads" aria-label="Go to Downloads">
+        <a href="downloads.html" class="spatial-nav-element mini-terminal-btn interactive-el" id="nav-downloads"
+            aria-label="Go to Downloads">
             <div class="glass-pane">
                 <div class="dynamic-glare"></div>
             </div>
@@ -434,9 +786,8 @@
                 <div class="mini-dot yel"></div>
                 <div class="mini-dot grn"></div>
             </div>
-            <div class="mini-term-body">
-                <span style="color: #3b82f6; margin-right: 4px;">~</span>./dl<span class="animate-pulse ml-[2px]">_</span>
-            </div>
+            <div class="mini-term-body"><span style="color: #3b82f6; margin-right: 4px;">~</span>./dl<span
+                    class="animate-pulse ml-[2px]">_</span></div>
         </a>
     </div>
 
@@ -447,11 +798,11 @@
     </div>
 
     <main class="w-full max-w-6xl mt-12 mb-32 z-10 flex flex-col items-center">
-        
         <header class="mb-16 sm:mb-24 reveal flex flex-col items-center text-center" style="--delay: 0.05s;">
             <div class="flex items-center gap-4 mb-5">
                 <div class="h-[2px] w-6 bg-gray-400 rounded-full opacity-50"></div>
-                <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase device-sub">Project ReVork</span>
+                <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase device-sub">Project
+                    ReVork</span>
                 <div class="h-[2px] w-6 bg-gray-400 rounded-full opacity-50"></div>
             </div>
             <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter device-title">
@@ -460,8 +811,8 @@
         </header>
 
         <div id="glass-container" class="flex flex-wrap justify-center gap-x-10 gap-y-16 w-full max-w-[1150px]">
-            
-            <a href="lemonadep" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.2s;">
+            <a href="lemonadep" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el"
+                style="--delay: 0.2s;">
                 <div class="ambient-glow"></div>
                 <div class="shadow-layer"></div>
                 <div class="glass-pane">
@@ -469,20 +820,20 @@
                     <div class="dynamic-glare"></div>
                     <div class="film-grain"></div>
                 </div>
-                
                 <div class="device-halo"></div>
-                <div class="device-image-layer" style="animation-delay: 0s;">
-                    <img src="assets/9p_img.png" alt="OnePlus 9 Pro">
-                </div>
-
+                <div class="device-image-layer"><img src="assets/9p_img.png" alt="OnePlus 9 Pro"></div>
                 <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Hasselblad Edition</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 9 Pro</h2>
+                    <span
+                        class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Hasselblad
+                        Edition</span>
+                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">
+                        OnePlus 9 Pro</h2>
                     <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">LE2123 / lemonadep</span>
                 </div>
             </a>
 
-            <a href="lemonade" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.3s;">
+            <a href="lemonade" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el"
+                style="--delay: 0.25s;">
                 <div class="ambient-glow"></div>
                 <div class="shadow-layer"></div>
                 <div class="glass-pane">
@@ -490,20 +841,20 @@
                     <div class="dynamic-glare"></div>
                     <div class="film-grain"></div>
                 </div>
-                
                 <div class="device-halo"></div>
-                <div class="device-image-layer" style="animation-delay: -1s;">
-                    <img src="assets/9_img.png" alt="OnePlus 9">
-                </div>
-
+                <div class="device-image-layer" style="animation-delay: -1s;"><img src="assets/9_img.png"
+                        alt="OnePlus 9"></div>
                 <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Standard</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 9</h2>
+                    <span
+                        class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Standard</span>
+                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">
+                        OnePlus 9</h2>
                     <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">LE2113 / lemonade</span>
                 </div>
             </a>
 
-            <a href="lemonades" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.4s;">
+            <a href="lemonades" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el"
+                style="--delay: 0.3s;">
                 <div class="ambient-glow"></div>
                 <div class="shadow-layer"></div>
                 <div class="glass-pane">
@@ -511,20 +862,21 @@
                     <div class="dynamic-glare"></div>
                     <div class="film-grain"></div>
                 </div>
-                
                 <div class="device-halo"></div>
-                <div class="device-image-layer" style="animation-delay: -2s;">
-                    <img src="assets/9r_img.png" alt="OnePlus 9R">
-                </div>
-
+                <div class="device-image-layer" style="animation-delay: -2s;"><img src="assets/9r_img.png"
+                        alt="OnePlus 9R"></div>
                 <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Global Variant</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 9R</h2>
+                    <span
+                        class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Global
+                        Variant</span>
+                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">
+                        OnePlus 9R</h2>
                     <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">LE2101 / lemonades</span>
                 </div>
             </a>
 
-            <a href="instantnoodlep" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.5s;">
+            <a href="instantnoodlep" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el"
+                style="--delay: 0.35s;">
                 <div class="ambient-glow"></div>
                 <div class="shadow-layer"></div>
                 <div class="glass-pane">
@@ -532,20 +884,21 @@
                     <div class="dynamic-glare"></div>
                     <div class="film-grain"></div>
                 </div>
-                
                 <div class="device-halo"></div>
-                <div class="device-image-layer" style="animation-delay: -0.5s;">
-                    <img src="assets/8p_img.png" alt="OnePlus 8 Pro">
-                </div>
-
+                <div class="device-image-layer" style="animation-delay: -0.5s;"><img src="assets/8p_img.png"
+                        alt="OnePlus 8 Pro"></div>
                 <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Classic Pro</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 8 Pro</h2>
+                    <span
+                        class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Classic
+                        Pro</span>
+                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">
+                        OnePlus 8 Pro</h2>
                     <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">IN2023 / instantnoodlep</span>
                 </div>
             </a>
 
-            <a href="kebab" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.6s;">
+            <a href="kebab" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el"
+                style="--delay: 0.4s;">
                 <div class="ambient-glow"></div>
                 <div class="shadow-layer"></div>
                 <div class="glass-pane">
@@ -553,30 +906,32 @@
                     <div class="dynamic-glare"></div>
                     <div class="film-grain"></div>
                 </div>
-                
                 <div class="device-halo"></div>
-                <div class="device-image-layer" style="animation-delay: -1.5s;">
-                    <img src="assets/8t_img.png" alt="OnePlus 8T">
-                </div>
-
+                <div class="device-image-layer" style="animation-delay: -1.5s;"><img src="assets/8t_img.png"
+                        alt="OnePlus 8T"></div>
                 <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Performance</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 8T</h2>
+                    <span
+                        class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Performance</span>
+                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">
+                        OnePlus 8T</h2>
                     <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">KB2003 / kebab</span>
                 </div>
             </a>
-
         </div>
     </main>
 
-    <footer class="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center text-[10px] sm:text-[12px] device-sub font-extrabold tracking-[0.4em] reveal uppercase pt-8 pb-10 border-t border-gray-500/20 z-10 gap-6 sm:gap-0" style="--delay: 0.8s;">
+    <footer
+        class="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center text-[10px] sm:text-[12px] device-sub font-extrabold tracking-[0.4em] reveal uppercase pt-8 pb-10 border-t border-gray-500/20 z-10 gap-6 sm:gap-0"
+        style="--delay: 0.5s;">
         <span class="text-sub">© 2026 ReVork</span>
         <div class="flex gap-4 sm:gap-6">
-            <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
+            <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener noreferrer"
+                class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
                 <div class="nav-platter"></div>
                 <span class="relative z-10 transition-colors duration-300 group-hover:text-white">GitHub</span>
             </a>
-            <a href="https://t.me/ReVorkHub" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
+            <a href="https://t.me/ReVorkHub" target="_blank" rel="noopener noreferrer"
+                class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
                 <div class="nav-platter"></div>
                 <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Telegram</span>
             </a>
@@ -584,105 +939,83 @@
     </footer>
 
     <script>
-        // --- Theme Engine ---
         const themeToggle = document.getElementById('themeSwitcher');
         const htmlEl = document.documentElement;
-        
-        // Check saved theme
         const savedTheme = localStorage.getItem('revork-theme') || 'dark';
         htmlEl.setAttribute('data-theme', savedTheme);
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlEl.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            htmlEl.setAttribute('data-theme', newTheme);
-            localStorage.setItem('revork-theme', newTheme);
-        });
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = htmlEl.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                htmlEl.setAttribute('data-theme', newTheme);
+                localStorage.setItem('revork-theme', newTheme);
+            });
+        }
 
-        // --- Hardware Accelerated Zero-Latency Engine ---
         const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-        
+
         if (!isTouchDevice) {
+            document.body.classList.add('custom-cursor-active');
+
             const dot = document.getElementById('cursor-dot');
             const ring = document.getElementById('cursor-ring');
             const spotlight = document.getElementById('spotlight');
-            
+
             const cards = Array.from(document.querySelectorAll('.tvos-card'));
             const magneticElements = Array.from(document.querySelectorAll('.magnetic-clear'));
             const spatialNavs = Array.from(document.querySelectorAll('.spatial-nav-element'));
 
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
             let cursorX = mouseX, cursorY = mouseY;
-            
-            // Setup physical states
+
             cards.forEach(card => card.phys = { currRotX: 0, currRotY: 0, tarRotX: 0, tarRotY: 0, isHovered: false });
             magneticElements.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
             spatialNavs.forEach(nav => nav.phys = { currRotX: 0, currRotY: 0, tarRotX: 0, tarRotY: 0, isHovered: false });
 
-            window.addEventListener('mousemove', (e) => { 
-                mouseX = e.clientX; 
-                mouseY = e.clientY; 
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX; mouseY = e.clientY;
                 if (dot) dot.style.transform = `translate3d(${mouseX - 3}px, ${mouseY - 3}px, 0)`;
             }, { passive: true });
 
             function physicsTick() {
-                cursorX += (mouseX - cursorX) * 0.15; 
+                cursorX += (mouseX - cursorX) * 0.15;
                 cursorY += (mouseY - cursorY) * 0.15;
-                
+
                 const isHoveringCard = document.body.classList.contains('hovering-card');
                 const isHoveringLink = document.body.classList.contains('hovering-link');
                 const offset = isHoveringCard ? 75 : (isHoveringLink ? 25 : 19);
-                
-                if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
-                if (spotlight) spotlight.style.transform = `translate3d(${cursorX - 600}px, ${cursorY - 600}px, 0)`; // Increased spotlight size slightly
 
-                // Spatial Navigation (Mini Terminal) Engine
+                if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
+                if (spotlight) spotlight.style.transform = `translate3d(${cursorX - 600}px, ${cursorY - 600}px, 0)`;
+
                 spatialNavs.forEach(nav => {
                     if (nav.phys.isHovered) {
                         nav.phys.currRotX += (nav.phys.tarRotX - nav.phys.currRotX) * 0.2;
                         nav.phys.currRotY += (nav.phys.tarRotY - nav.phys.currRotY) * 0.2;
-                        
                         nav.style.setProperty('--rotX', `${nav.phys.currRotX}deg`);
                         nav.style.setProperty('--rotY', `${nav.phys.currRotY}deg`);
-                        
-                        const transX = nav.phys.currRotY * 0.8;
-                        const transY = nav.phys.currRotX * -0.8;
-                        nav.style.setProperty('--transX', `${transX}px`);
-                        nav.style.setProperty('--transY', `${transY}px`);
-
+                        nav.style.setProperty('--transX', `${nav.phys.currRotY * 0.8}px`);
+                        nav.style.setProperty('--transY', `${nav.phys.currRotX * -0.8}px`);
                         nav.style.transform = `perspective(800px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(1.05, 1.05, 1.05)`;
                     }
                 });
 
-                // Device Cards Engine (Sped up physics tracking)
                 cards.forEach(card => {
                     if (card.phys.isHovered) {
-                        card.phys.currRotX += (card.phys.tarRotX - card.phys.currRotX) * 0.15; // Increased responsiveness
-                        card.phys.currRotY += (card.phys.tarRotY - card.phys.currRotY) * 0.15; 
-                        
-                        // Pass live angles into the CSS variables
+                        card.phys.currRotX += (card.phys.tarRotX - card.phys.currRotX) * 0.15;
+                        card.phys.currRotY += (card.phys.tarRotY - card.phys.currRotY) * 0.15;
                         card.style.setProperty('--rotX', `${card.phys.currRotX}deg`);
                         card.style.setProperty('--rotY', `${card.phys.currRotY}deg`);
-                        
-                        // Calculate Lateral Parallax Translation
-                        const transX = card.phys.currRotY * 1.5;
-                        const transY = card.phys.currRotX * -1.5;
-                        card.style.setProperty('--transX', `${transX}px`);
-                        card.style.setProperty('--transY', `${transY}px`);
+                        card.style.setProperty('--transX', `${card.phys.currRotY * 1.5}px`);
+                        card.style.setProperty('--transY', `${card.phys.currRotX * -1.5}px`);
+                        card.style.transform = `perspective(1200px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(1.04, 1.04, 1.04)`;
 
-                        // We set the main transform using the variables so :active can override scale cleanly
-                        card.style.transform = `perspective(1200px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(1.04, 1.04, 1.04)`; // Enhanced scale
-                        
                         const shadowLayer = card.querySelector('.shadow-layer');
-                        if (shadowLayer) {
-                            const shadowX = card.phys.currRotY * -6;
-                            const shadowY = card.phys.currRotX * 6;
-                            shadowLayer.style.transform = `translate3d(${shadowX}px, ${shadowY}px, -20px)`;
-                        }
+                        if (shadowLayer) shadowLayer.style.transform = `translate3d(${card.phys.currRotY * -6}px, ${card.phys.currRotX * 6}px, -20px)`;
                     }
                 });
 
-                // Magnetic Footer Buttons Engine
                 magneticElements.forEach(btn => {
                     if (btn.phys.isHovered) {
                         btn.phys.currX += (btn.phys.tarX - btn.phys.currX) * 0.25;
@@ -693,130 +1026,72 @@
 
                 requestAnimationFrame(physicsTick);
             }
-            physicsTick(); 
+            physicsTick();
 
-            // Global hovering state for cursor morphing
             document.querySelectorAll('.interactive-el').forEach(el => {
                 el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
                 el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
             });
 
-            // Spatial Nav Event Listeners
             spatialNavs.forEach(nav => {
-                nav.addEventListener('mouseenter', () => { 
-                    nav.phys.isHovered = true; 
-                    nav.classList.add('is-tracking'); 
-                });
-                
+                nav.addEventListener('mouseenter', () => { nav.phys.isHovered = true; nav.classList.add('is-tracking'); });
                 nav.addEventListener('mousemove', (e) => {
                     const rect = nav.getBoundingClientRect();
-                    const x = e.clientX - rect.left, y = e.clientY - rect.top;
-                    const centerX = rect.width / 2, centerY = rect.height / 2;
-                    
-                    nav.phys.tarRotX = ((y - centerY) / centerY) * -15; // Enhanced tilt
-                    nav.phys.tarRotY = ((x - centerX) / centerX) * 15;
-                    
-                    const glassPane = nav.querySelector('.glass-pane');
-                    if (glassPane) {
-                        glassPane.style.setProperty('--mouse-x', `${x}px`);
-                        glassPane.style.setProperty('--mouse-y', `${y}px`);
-                    }
+                    nav.phys.tarRotX = (((e.clientY - rect.top) - rect.height / 2) / (rect.height / 2)) * -15;
+                    nav.phys.tarRotY = (((e.clientX - rect.left) - rect.width / 2) / (rect.width / 2)) * 15;
+                    const pane = nav.querySelector('.glass-pane');
+                    if (pane) { pane.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`); pane.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`); }
                 });
-                
-                nav.addEventListener('mouseleave', () => {
-                    nav.phys.isHovered = false; 
-                    nav.classList.remove('is-tracking');
-                    nav.style.transform = ''; 
-                });
+                nav.addEventListener('mouseleave', () => { nav.phys.isHovered = false; nav.classList.remove('is-tracking'); nav.style.transform = ''; });
             });
 
-            // Card Event Listeners
             cards.forEach(card => {
-                card.style.setProperty('--rotX', `0deg`);
-                card.style.setProperty('--rotY', `0deg`);
-                card.style.setProperty('--transX', `0px`);
-                card.style.setProperty('--transY', `0px`);
-
-                card.addEventListener('mouseenter', () => { 
-                    card.phys.isHovered = true; 
-                    card.classList.add('is-tracking'); 
-                    document.body.classList.add('hovering-card');
-                });
-                
+                card.style.setProperty('--rotX', `0deg`); card.style.setProperty('--rotY', `0deg`);
+                card.style.setProperty('--transX', `0px`); card.style.setProperty('--transY', `0px`);
+                card.addEventListener('mouseenter', () => { card.phys.isHovered = true; card.classList.add('is-tracking'); document.body.classList.add('hovering-card'); });
                 card.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left, y = e.clientY - rect.top;
-                    const centerX = rect.width / 2, centerY = rect.height / 2;
-                    
-                    // Controlled, elegant tilt (Max ~5 degrees)
-                    card.phys.tarRotX = ((y - centerY) / centerY) * -5; 
-                    card.phys.tarRotY = ((x - centerX) / centerX) * 5;
-
-                    const glassPane = card.querySelector('.glass-pane');
-                    if (glassPane) {
-                        glassPane.style.setProperty('--mouse-x', `${x}px`);
-                        glassPane.style.setProperty('--mouse-y', `${y}px`);
-                        
-                        const sheenX = ((centerX - x) / rect.width) * 100;
-                        const sheenY = ((centerY - y) / rect.height) * 100;
-                        glassPane.style.setProperty('--sheenX', `${sheenX}%`);
-                        glassPane.style.setProperty('--sheenY', `${sheenY}%`);
+                    card.phys.tarRotX = ((y - rect.height / 2) / (rect.height / 2)) * -5;
+                    card.phys.tarRotY = ((x - rect.width / 2) / (rect.width / 2)) * 5;
+                    const pane = card.querySelector('.glass-pane');
+                    if (pane) {
+                        pane.style.setProperty('--mouse-x', `${x}px`); pane.style.setProperty('--mouse-y', `${y}px`);
+                        pane.style.setProperty('--sheenX', `${((rect.width / 2 - x) / rect.width) * 100}%`);
+                        pane.style.setProperty('--sheenY', `${((rect.height / 2 - y) / rect.height) * 100}%`);
                     }
                 });
-                
                 card.addEventListener('mouseleave', () => {
-                    card.phys.isHovered = false; 
-                    card.classList.remove('is-tracking');
-                    document.body.classList.remove('hovering-card');
-                    
-                    card.style.transform = ''; 
-                    const shadowLayer = card.querySelector('.shadow-layer');
-                    if (shadowLayer) shadowLayer.style.transform = '';
+                    card.phys.isHovered = false; card.classList.remove('is-tracking'); document.body.classList.remove('hovering-card');
+                    card.style.transform = '';
+                    const shadow = card.querySelector('.shadow-layer'); if (shadow) shadow.style.transform = '';
                 });
             });
 
-            // Theme Toggle Magnetic effect
-            const themeToggleEl = document.getElementById('themeSwitcher');
-            if(themeToggleEl) {
-                themeToggleEl.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false };
-                magneticElements.push(themeToggleEl);
-                themeToggleEl.addEventListener('mouseenter', () => themeToggleEl.phys.isHovered = true);
-                themeToggleEl.addEventListener('mousemove', (e) => {
-                    const rect = themeToggleEl.getBoundingClientRect();
-                    const centerX = rect.left + rect.width / 2;
-                    const centerY = rect.top + rect.height / 2;
-                    themeToggleEl.phys.tarX = (e.clientX - centerX) * 0.15;
-                    themeToggleEl.phys.tarY = (e.clientY - centerY) * 0.3;
+            if (themeToggle) {
+                themeToggle.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false };
+                magneticElements.push(themeToggle);
+                themeToggle.addEventListener('mouseenter', () => themeToggle.phys.isHovered = true);
+                themeToggle.addEventListener('mousemove', (e) => {
+                    const rect = themeToggle.getBoundingClientRect();
+                    themeToggle.phys.tarX = (e.clientX - (rect.left + rect.width / 2)) * 0.15;
+                    themeToggle.phys.tarY = (e.clientY - (rect.top + rect.height / 2)) * 0.3;
                 });
-                themeToggleEl.addEventListener('mouseleave', () => {
-                    themeToggleEl.phys.isHovered = false;
-                    themeToggleEl.style.transform = '';
-                });
+                themeToggle.addEventListener('mouseleave', () => { themeToggle.phys.isHovered = false; themeToggle.style.transform = ''; });
             }
 
-            // Standard Magnetic Buttons
             magneticElements.forEach(btn => {
-                if(btn.id === 'themeSwitcher') return; // Handled above
-                btn.addEventListener('mouseenter', () => { 
-                    btn.phys.isHovered = true; 
-                    btn.classList.add('is-magnetized'); 
-                });
-                
+                if (btn.id === 'themeSwitcher') return;
+                btn.addEventListener('mouseenter', () => { btn.phys.isHovered = true; btn.classList.add('is-magnetized'); });
                 btn.addEventListener('mousemove', (e) => {
                     const rect = btn.getBoundingClientRect();
-                    const centerX = rect.left + rect.width / 2;
-                    const centerY = rect.top + rect.height / 2;
-                    btn.phys.tarX = (e.clientX - centerX) * 0.15;
-                    btn.phys.tarY = (e.clientY - centerY) * 0.3;
+                    btn.phys.tarX = (e.clientX - (rect.left + rect.width / 2)) * 0.15;
+                    btn.phys.tarY = (e.clientY - (rect.top + rect.height / 2)) * 0.3;
                 });
-                
-                btn.addEventListener('mouseleave', () => {
-                    btn.phys.isHovered = false; 
-                    btn.classList.remove('is-magnetized');
-                    btn.style.transform = ''; 
-                });
+                btn.addEventListener('mouseleave', () => { btn.phys.isHovered = false; btn.classList.remove('is-magnetized'); btn.style.transform = ''; });
             });
         }
     </script>
 </body>
+
 </html>
