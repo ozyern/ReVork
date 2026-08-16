@@ -287,7 +287,7 @@
     </div>
 
     <div class="nav-downloads-container reveal" style="--delay: 0.1s;">
-        <a href="downloads.html" class="spatial-nav-element mini-terminal-btn interactive-el" id="nav-downloads" aria-label="Go to Downloads">
+        <a href="downloads" class="spatial-nav-element mini-terminal-btn interactive-el" id="nav-downloads" aria-label="Go to Downloads">
             <div class="glass-pane"><div class="dynamic-glare"></div></div>
             <div class="mini-mac-dots"><div class="mini-dot red"></div><div class="mini-dot yel"></div><div class="mini-dot grn"></div></div>
             <div class="mini-term-body"><span style="color: #3b82f6; margin-right: 4px;">~</span>./dl<span class="animate-pulse ml-[2px]">_</span></div>
@@ -388,6 +388,12 @@
     </footer>
 
     <script>
+        // --- Clean URL Router (Strip .html) ---
+        if (window.location.pathname.endsWith('.html')) {
+            const cleanPath = window.location.pathname.replace(/\.html$/, '');
+            window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
+        }
+
         const themeToggle = document.getElementById('themeSwitcher');
         const htmlEl = document.documentElement;
         const savedTheme = localStorage.getItem('revork-theme') || 'dark';
