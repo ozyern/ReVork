@@ -112,15 +112,42 @@ A few decisions that aren't obvious from reading the code:
   Everything above it is component CSS, so a utility in the markup always wins.
   Move it back to the top and rules like `.card { display: block }` start
   silently beating `class="flex"` on the device pages.
+- **The reveal gate is written `:where(html.js) .reveal`.** `:where()` adds no
+  specificity, so the `.js` guard does not turn every reveal rule into something
+  that outranks the component styling underneath it. Without it the gate scored
+  (0,3,1) and quietly won every fight over `opacity` and `translate` it was
+  never meant to be in.
 - **The page background lives on `html`, not `body`.** The aurora is a
   `z-index: -1` child of the body; give the body its own opaque background and
   it paints straight over the aurora, leaving a flat black page.
 - **One rAF loop, and it stops.** All the tilt and magnet physics share a single
   animation frame callback that exits once everything has settled. An idle tab
   costs nothing.
-- **One `pointermove` listener for the whole page.** `event.target` is already the
-  topmost element under the cursor, so `closest()` identifies the hovered card
-  without needing enter/leave handlers on every one of them.
+- **One `pointermove` listener for the whole page**, and it only records. The
+  handler stores the pointer position and what it is over; picking the hovered
+  element, the class changes and every `getBoundingClientRect()` happen at the
+  top of the next frame, where the layout is still clean. Reading in the handler
+  meant a forced synchronous layout on every single move.
+- **Nothing animates a property that cannot be composited.** In practice that
+  rules out `box-shadow`, `background-position`, `filter`, `width`/`height` and
+  anything under a `mix-blend-mode` — each one repaints on every frame it runs,
+  and an infinite one repaints for as long as the tab is open. Fade the opacity
+  of a pseudo-element carrying a static shadow instead. Getting this wrong is
+  invisible until you profile: an animated `box-shadow` on the home page's
+  terminal button was on its own more than half of that page's idle CPU.
+- **The heading sheen is the one exception**, because a gradient moving across
+  `background-clip: text` has no composited equivalent. It sweeps for half its
+  cycle and holds still for the other half, and `initSheen` parks it whenever
+  the heading scrolls off screen. With it parked the pages sit at zero style
+  recalculations — everything else is on the compositor.
+- **The engine and CSS never drive the same transform at once.** While
+  `is-tracking`/`is-pulled` is set, the transform transition is switched off and
+  JS owns the property; dropping the class and the inline transform together is
+  what eases the element home. Leaving the transition on underneath restarted a
+  0.6s interpolation on every frame, which never arrived and dragged the tilt a
+  beat behind the cursor.
+- **Smoothing is scaled by frame time**, so the motion lands at the same speed on
+  a 144Hz panel as on a 60Hz one.
 - **Backdrop blur is gated on visibility.** An IntersectionObserver adds `.in-view`
   to cards well before they scroll in, and the stylesheet only allows
   `backdrop-filter` on those. Two dozen simultaneous live blurs is enough to drop

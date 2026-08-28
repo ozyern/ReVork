@@ -109,7 +109,33 @@ function initReveal() {
 }
 
 /* ---------------------------------------------------------------- *
+ * Park the heading sheen when it is off screen
+ *
+ * It is the one animation here that repaints rather than composites, so
+ * it is also the only reason the main thread renders on an idle page.
+ * Scrolling past the heading should stop costing anything.
+ * ---------------------------------------------------------------- */
+
+function initSheen() {
+  const headings = document.querySelectorAll('.sheen');
+  if (!headings.length || !('IntersectionObserver' in window)) return;
+
+  const watch = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.target.classList.toggle('sheen-paused', !entry.isIntersecting));
+  });
+
+  headings.forEach((heading) => watch.observe(heading));
+}
+
+/* ---------------------------------------------------------------- *
  * Pointer engine
+ *
+ * The event handler records where the pointer is and moves the cursor dot,
+ * and that is all. Picking the hovered element, the class changes and the
+ * getBoundingClientRect calls all happen at the top of the next frame,
+ * where the layout is still clean from the last one. Doing the reads in
+ * the handler meant every pointermove invalidated the style and then
+ * measured straight afterwards, forcing a synchronous layout per event.
  * ---------------------------------------------------------------- */
 
 // Tilt targets, most specific first — `closest` picks the first match.
@@ -126,6 +152,14 @@ const MAGNETS = [
   { selector: '.magnetic, .solid, .theme-switch', x: 0.15, y: 0.3 },
 ];
 
+const HOVERABLE = 'a, button, [role="tab"], .field-menu li';
+
+// The smoothing rates below are quoted per 60fps frame. Rescaling them
+// against the real frame time keeps the motion at the same speed on a
+// 144Hz panel as on a 60Hz one — the old fixed-step lerp ran more than
+// twice as fast on a high refresh rate display.
+const approach = (rate, dt) => 1 - (1 - rate) ** (dt / 16.667);
+
 function initPointer() {
   if (!fine.matches) return;
 
@@ -140,6 +174,11 @@ function initPointer() {
   let ry = py;
   let awake = false;
   let running = false;
+  let last = 0;
+
+  // Written by the event, read by the frame. The only thing that crosses.
+  let over = null;
+  let overDirty = false;
 
   const tilt = { el: null, cfg: null, rect: null, x: 0, y: 0, toX: 0, toY: 0 };
   const magnet = { el: null, cfg: null, rect: null, x: 0, y: 0, toX: 0, toY: 0 };
@@ -147,17 +186,25 @@ function initPointer() {
   function start() {
     if (running) return;
     running = true;
+    last = 0;
     requestAnimationFrame(frame);
   }
 
   function pick(list, target) {
-    for (const cfg of list) {
-      const el = target.closest(cfg.selector);
-      if (el) return { el, cfg };
+    if (target) {
+      for (const cfg of list) {
+        const el = target.closest(cfg.selector);
+        if (el) return { el, cfg };
+      }
     }
     return { el: null, cfg: null };
   }
 
+  // Hands the element back to CSS. The stylesheet keeps a transform
+  // transition on everything the engine drives and switches it off while
+  // `is-tracking`/`is-pulled` is set, so dropping the class and the inline
+  // transform together eases it home on the compositor. Nothing has to
+  // stay awake in JS for the settle.
   function releaseTilt() {
     if (!tilt.el) return;
     tilt.el.classList.remove('is-tracking');
@@ -175,9 +222,6 @@ function initPointer() {
     Object.assign(magnet, { el: null, cfg: null, rect: null, x: 0, y: 0, toX: 0, toY: 0 });
   }
 
-  // One listener does the lot: `event.target` is already the topmost element
-  // under the pointer, so `closest` tells us what is hovered without a
-  // mouseenter/mouseleave pair on every card on the page.
   addEventListener(
     'pointermove',
     (event) => {
@@ -193,51 +237,14 @@ function initPointer() {
         body.classList.add('cursor-on');
       }
 
+      // The one write left in here. The dot is meant to sit exactly on the
+      // pointer, and a transform write only dirties style — it reads
+      // nothing back — so keeping it immediate costs nothing.
       if (dot) dot.style.transform = `translate3d(${px - 3}px, ${py - 3}px, 0)`;
 
-      const target = event.target;
-      body.classList.toggle('on-link', Boolean(target.closest('a, button, [role="tab"], .field-menu li')));
-
-      const nextTilt = pick(TILTS, target);
-      if (nextTilt.el !== tilt.el) {
-        releaseTilt();
-        if (nextTilt.el) {
-          tilt.el = nextTilt.el;
-          tilt.cfg = nextTilt.cfg;
-          tilt.rect = nextTilt.el.getBoundingClientRect();
-          nextTilt.el.classList.add('is-tracking');
-          if (nextTilt.cfg.selector === '.card') body.classList.add('on-card');
-        }
-      }
-
-      if (tilt.el) {
-        const { rect, cfg } = tilt;
-        const localX = px - rect.left;
-        const localY = py - rect.top;
-        tilt.toX = ((localY - rect.height / 2) / (rect.height / 2)) * -cfg.max;
-        tilt.toY = ((localX - rect.width / 2) / (rect.width / 2)) * cfg.max;
-
-        // Written once, here. The glare and the lit rim are both pseudo
-        // elements further down the tree, and custom properties inherit.
-        tilt.el.style.setProperty('--px', `${localX}px`);
-        tilt.el.style.setProperty('--py', `${localY}px`);
-      }
-
-      const nextMagnet = pick(MAGNETS, target);
-      if (nextMagnet.el !== magnet.el) {
-        releaseMagnet();
-        if (nextMagnet.el) {
-          magnet.el = nextMagnet.el;
-          magnet.cfg = nextMagnet.cfg;
-          magnet.rect = nextMagnet.el.getBoundingClientRect();
-          nextMagnet.el.classList.add('is-pulled');
-        }
-      }
-
-      if (magnet.el) {
-        const { rect, cfg } = magnet;
-        magnet.toX = (px - (rect.left + rect.width / 2)) * cfg.x;
-        magnet.toY = (py - (rect.top + rect.height / 2)) * cfg.y;
+      if (event.target !== over) {
+        over = event.target;
+        overDirty = true;
       }
 
       start();
@@ -245,15 +252,16 @@ function initPointer() {
     { passive: true }
   );
 
-  // Rects go stale the moment the page moves under the pointer.
-  addEventListener(
-    'scroll',
-    () => {
-      if (tilt.el) tilt.rect = tilt.el.getBoundingClientRect();
-      if (magnet.el) magnet.rect = magnet.el.getBoundingClientRect();
-    },
-    { passive: true }
-  );
+  // Rects go stale the moment the page moves under the pointer. Blank them
+  // and let the frame re-measure, rather than measuring inside the handler.
+  function remeasure() {
+    tilt.rect = null;
+    magnet.rect = null;
+    if (tilt.el || magnet.el) start();
+  }
+
+  addEventListener('scroll', remeasure, { passive: true });
+  addEventListener('resize', remeasure, { passive: true });
 
   addEventListener('blur', () => {
     releaseTilt();
@@ -262,6 +270,8 @@ function initPointer() {
 
   document.addEventListener('pointerleave', () => {
     body.classList.remove('cursor-on');
+    over = null;
+    overDirty = true;
     releaseTilt();
     releaseMagnet();
   });
@@ -270,14 +280,56 @@ function initPointer() {
     if (awake) body.classList.add('cursor-on');
   });
 
-  function frame() {
+  // Rebind both slots to whatever is under the pointer. Measuring here is
+  // cheap: nothing has dirtied the layout since the last frame painted.
+  function rebind() {
+    overDirty = false;
+
+    const nextTilt = pick(TILTS, over);
+    if (nextTilt.el !== tilt.el) {
+      releaseTilt();
+      if (nextTilt.el) {
+        tilt.rect = nextTilt.el.getBoundingClientRect();
+        tilt.el = nextTilt.el;
+        tilt.cfg = nextTilt.cfg;
+        nextTilt.el.classList.add('is-tracking');
+        if (nextTilt.cfg.selector === '.card') body.classList.add('on-card');
+      }
+    }
+
+    const nextMagnet = pick(MAGNETS, over);
+    if (nextMagnet.el !== magnet.el) {
+      releaseMagnet();
+      if (nextMagnet.el) {
+        magnet.rect = nextMagnet.el.getBoundingClientRect();
+        magnet.el = nextMagnet.el;
+        magnet.cfg = nextMagnet.cfg;
+        nextMagnet.el.classList.add('is-pulled');
+      }
+    }
+
+    // Last, because it is the only write here that dirties style for the
+    // whole document. Measuring after it would force a layout.
+    body.classList.toggle('on-link', Boolean(over && over.closest(HOVERABLE)));
+  }
+
+  function frame(now) {
+    const dt = last ? Math.min(now - last, 50) : 16.667;
+    last = now;
+
+    if (overDirty) rebind();
+
+    // Deferred from a scroll or a resize.
+    if (tilt.el && !tilt.rect) tilt.rect = tilt.el.getBoundingClientRect();
+    if (magnet.el && !magnet.rect) magnet.rect = magnet.el.getBoundingClientRect();
+
     let busy = false;
 
     // The ring trails the dot. 0.28 is tight enough to feel attached but
     // still reads as a separate object.
-    rx = lerp(rx, px, 0.28);
-    ry = lerp(ry, py, 0.28);
-
+    const chase = approach(0.28, dt);
+    rx = lerp(rx, px, chase);
+    ry = lerp(ry, py, chase);
     if (Math.abs(px - rx) > 0.1 || Math.abs(py - ry) > 0.1) busy = true;
 
     const radius = body.classList.contains('on-card') ? 75 : body.classList.contains('on-link') ? 25 : 18;
@@ -286,11 +338,25 @@ function initPointer() {
 
     if (tilt.el) {
       busy = true;
-      const { cfg } = tilt;
-      tilt.x = lerp(tilt.x, tilt.toX, 0.15);
-      tilt.y = lerp(tilt.y, tilt.toY, 0.15);
+      const { rect, cfg, el } = tilt;
+      const localX = px - rect.left;
+      const localY = py - rect.top;
 
-      const style = tilt.el.style;
+      tilt.toX = ((localY - rect.height / 2) / (rect.height / 2)) * -cfg.max;
+      tilt.toY = ((localX - rect.width / 2) / (rect.width / 2)) * cfg.max;
+
+      const ease = approach(0.15, dt);
+      tilt.x = lerp(tilt.x, tilt.toX, ease);
+      tilt.y = lerp(tilt.y, tilt.toY, ease);
+
+      const style = el.style;
+
+      // The glare and the lit rim are pseudo elements further down the
+      // tree and custom properties inherit, so they are written once here.
+      // Both consume these as a translate, not as a gradient position:
+      // moving a gradient's origin repaints the whole card every frame.
+      style.setProperty('--px', `${localX}px`);
+      style.setProperty('--py', `${localY}px`);
       style.setProperty('--rot-x', `${tilt.x}deg`);
       style.setProperty('--rot-y', `${tilt.y}deg`);
 
@@ -304,7 +370,7 @@ function initPointer() {
         : `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`;
 
       if (cfg.shadow) {
-        const shadow = tilt.el.querySelector('.shadow');
+        const shadow = el.querySelector('.shadow');
         // Cast away from the light, i.e. opposite the tilt.
         if (shadow) shadow.style.transform = `translate3d(${tilt.y * -cfg.shadow}px, ${tilt.x * cfg.shadow}px, -20px)`;
       }
@@ -312,8 +378,13 @@ function initPointer() {
 
     if (magnet.el) {
       busy = true;
-      magnet.x = lerp(magnet.x, magnet.toX, 0.25);
-      magnet.y = lerp(magnet.y, magnet.toY, 0.25);
+      const { rect, cfg } = magnet;
+      magnet.toX = (px - (rect.left + rect.width / 2)) * cfg.x;
+      magnet.toY = (py - (rect.top + rect.height / 2)) * cfg.y;
+
+      const ease = approach(0.25, dt);
+      magnet.x = lerp(magnet.x, magnet.toX, ease);
+      magnet.y = lerp(magnet.y, magnet.toY, ease);
       magnet.el.style.transform = `translate3d(${magnet.x}px, ${magnet.y}px, 0)`;
     }
 
@@ -409,4 +480,5 @@ initTheme();
 initReveal();
 initTabs();
 initDrawers();
+initSheen();
 if (!stillness.matches) initPointer();
