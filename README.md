@@ -108,6 +108,13 @@ pipeline can be re-run at a different size later.
 
 A few decisions that aren't obvious from reading the code:
 
+- **`@tailwind utilities` is the last line of `src/revork.css`, deliberately.**
+  Everything above it is component CSS, so a utility in the markup always wins.
+  Move it back to the top and rules like `.card { display: block }` start
+  silently beating `class="flex"` on the device pages.
+- **The page background lives on `html`, not `body`.** The aurora is a
+  `z-index: -1` child of the body; give the body its own opaque background and
+  it paints straight over the aurora, leaving a flat black page.
 - **One rAF loop, and it stops.** All the tilt and magnet physics share a single
   animation frame callback that exits once everything has settled. An idle tab
   costs nothing.

@@ -1,5 +1,4 @@
 @tailwind base;
-@tailwind utilities;
 
 /* ---------------------------------------------------------------
    Tokens
@@ -88,19 +87,21 @@
 
 html {
   scroll-behavior: smooth;
-  /* Matches the body so overscroll does not flash white. */
+  /* The page background lives here, not on the body. The body must stay
+     transparent: the aurora is a z-index -1 child of it, and an opaque
+     body background would paint straight over it. */
   background-color: var(--bg);
+  transition: background-color 0.6s var(--ease);
 }
 
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: var(--bg);
   color: var(--fg);
   font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.6s var(--ease), color 0.6s var(--ease);
+  transition: color 0.6s var(--ease);
 }
 
 :focus-visible {
@@ -520,6 +521,11 @@ html.js .card:not(.in-view) .pane {
   animation-delay: var(--bob-offset, 0s);
   transition: transform 0.5s var(--ease-bounce), filter 0.5s var(--ease);
 }
+
+/* The <picture> has to get out of the way: it is an inline box with an
+   indefinite height, so a percentage max-height on the img inside it
+   resolves against nothing and the render overflows the card. */
+.device-shot picture { display: contents; }
 
 .device-shot img {
   width: auto;
@@ -1374,3 +1380,8 @@ html.js .reveal.shown {
   #cursor-ring,
   #spotlight { display: none !important; }
 }
+
+/* Last, so a utility in the markup always wins over the component styles
+   above it. Anything up there that has to survive a utility says so with
+   !important and a comment explaining what it is beating. */
+@tailwind utilities;
