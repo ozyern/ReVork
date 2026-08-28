@@ -6,7 +6,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-WLJ7DVSZW7');
     </script>
 
@@ -22,56 +21,79 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
         
         :root {
-            /* Authentic iOS / visionOS Spring Physics */
-            --apple-ease: cubic-bezier(0.25, 1, 0.5, 1); 
-            --apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.2); 
-            --apple-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-            /* RESTORED DEEP BLUE-BLACK ABYSS */
             --bg-color: #03050a;
             --text-main: #ffffff;
             --text-muted: #86868b;
             --text-sub: rgba(255, 255, 255, 0.5);
             
-            /* RESTORED HEAVY LIQUID GLASS */
             --glass-bg: linear-gradient(135deg, rgba(25, 30, 40, 0.45) 0%, rgba(10, 12, 16, 0.75) 100%);
             --glass-border: rgba(255, 255, 255, 0.12);
             --glass-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            --glass-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8), 0 30px 60px -30px rgba(0,0,0,0.6);
+            --glass-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8), 0 30px 60px -30px rgba(0, 0, 0, 0.6);
             
             --title-gradient: linear-gradient(110deg, #86868b 0%, #ffffff 30%, #86868b 50%, #ffffff 70%, #86868b 100%);
             
-            /* PREMIUM WHITE CURSOR */
             --cursor-dot: #ffffff;
-            --cursor-ring: rgba(255, 255, 255, 0.35);
-            --spotlight: radial-gradient(circle 800px at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+            --cursor-ring: rgba(255, 255, 255, 0.4);
+            --spotlight-bg: radial-gradient(circle, rgba(255, 255, 255, 0.055) 0%, transparent 60%);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; outline: none !important; -webkit-tap-highlight-color: transparent; }
-        ::selection { background: rgba(59, 130, 246, 0.3); color: #fff; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        html, body { max-width: 100vw; overflow-x: hidden; background-color: var(--bg-color); }
+        body.custom-cursor-active,
+        body.custom-cursor-active * {
+            cursor: none !important;
+        }
+
+        ::selection {
+            background: rgba(59, 130, 246, 0.3);
+            color: #ffffff;
+        }
+
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+        }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             color: var(--text-main);
             min-height: 100vh;
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             perspective: 1200px;
         }
 
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; cursor: none; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
 
-        /* DEEP BLUE-BLACK BACKGROUND */
+        /* Ambient background */
         .ambient-bg-wrapper {
-            position: fixed; inset: 0; overflow: hidden; z-index: -2; pointer-events: none;
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: -2;
+            pointer-events: none;
             background-color: var(--bg-color);
         }
         
         .cyber-grid {
-            position: absolute; inset: -50%; width: 200%; height: 200%;
+            position: absolute;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
             background-image: 
                 linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
@@ -81,249 +103,600 @@
             mask-image: radial-gradient(circle at center, black 5%, transparent 65%);
             -webkit-mask-image: radial-gradient(circle at center, black 5%, transparent 65%);
         }
-        @keyframes gridMove { 0% { transform: perspective(800px) rotateX(65deg) translateY(0) translateZ(-200px); } 100% { transform: perspective(800px) rotateX(65deg) translateY(60px) translateZ(-200px); } }
+
+        @keyframes gridMove {
+            0% { transform: perspective(800px) rotateX(65deg) translateY(0) translateZ(-200px); }
+            100% { transform: perspective(800px) rotateX(65deg) translateY(60px) translateZ(-200px); }
+        }
 
         .ambient-bg {
-            position: absolute; inset: -50%; width: 200%; height: 200%;
+            position: absolute;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
             background: 
                 radial-gradient(circle at 30% 40%, rgba(20, 50, 100, 0.25) 0%, transparent 45%),
                 radial-gradient(circle at 70% 60%, rgba(10, 30, 70, 0.2) 0%, transparent 45%),
                 radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 55%);
-            filter: blur(70px); animation: ambientPulse 18s ease-in-out infinite alternate;
+            filter: blur(70px);
+            animation: ambientPulse 18s ease-in-out infinite alternate;
         }
+
         @keyframes ambientPulse { 
             0% { transform: scale(1) translate(0, 0); opacity: 0.7; } 
             100% { transform: scale(1.05) translate(-2%, 2%); opacity: 1; } 
         }
 
-        /* ZERO-LATENCY CURSOR */
+        /* Hardware-accelerated cursor and spotlight */
         #spotlight { display: none; }
-        @media (hover: hover) and (pointer: fine) {
-            #cursor-dot { width: 5px; height: 5px; background-color: var(--cursor-dot); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000; transition: opacity 0.2s; box-shadow: 0 0 12px rgba(255,255,255,0.9); }
-            #cursor-ring { width: 36px; height: 36px; border: 1px solid var(--cursor-ring); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: width 0.3s var(--apple-bounce), height 0.3s var(--apple-bounce), border-color 0.3s; }
-            #spotlight { display: block; position: fixed; inset: 0; pointer-events: none; z-index: -1; background: var(--spotlight); opacity: 0; transition: opacity 0.8s var(--apple-ease); }
-            body.hovering-link #cursor-ring { width: 48px; height: 48px; background-color: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.9); backdrop-filter: blur(4px); box-shadow: 0 0 25px rgba(255,255,255,0.2); }
-            body.hovering-link #cursor-dot { opacity: 0; }
-        }
-        @media (hover: none), (pointer: coarse) { #cursor-dot, #cursor-ring { display: none !important; } }
 
-        /* DEEP LIQUID GLASS BACK BUTTON */
-        .magnetic-wrap { position: absolute; top: 1rem; left: 1rem; z-index: 100; display: inline-block; padding: 0.5rem; }
-        @media (min-width: 640px) { .magnetic-wrap { top: 2rem; left: 2rem; padding: 1rem; } }
+        #cursor-dot,
+        #cursor-ring {
+            opacity: 0;
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            #cursor-dot {
+                width: 6px;
+                height: 6px;
+                background-color: var(--cursor-dot);
+                border-radius: 50%;
+                z-index: 10000;
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+                will-change: transform;
+                transition: opacity 0.15s ease;
+            }
+
+            #cursor-ring {
+                width: 36px;
+                height: 36px;
+                border: 1px solid var(--cursor-ring);
+                border-radius: 50%;
+                z-index: 9999;
+                will-change: transform, width, height, background-color, border-color;
+                transition: width 0.25s var(--ease-spring), height 0.25s var(--ease-spring), border-color 0.25s ease, background-color 0.25s ease, opacity 0.15s ease;
+            }
+
+            #spotlight {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 1200px;
+                height: 1200px;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                background: var(--spotlight-bg);
+                opacity: 0;
+                will-change: transform;
+                transition: opacity 0.5s ease;
+            }
+
+            body.hovering-link #cursor-ring {
+                width: 48px;
+                height: 48px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(4px);
+                box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+            }
+
+            body.hovering-link #cursor-dot {
+                opacity: 0 !important;
+            }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            #cursor-dot, #cursor-ring, #spotlight { display: none !important; }
+        }
+
+        /* Navigation */
+        .magnetic-wrap {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 100;
+            display: inline-block;
+            padding: 0.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .magnetic-wrap {
+                top: 2rem;
+                left: 2rem;
+                padding: 1rem;
+            }
+        }
         
         .btn-liquid {
-            display: flex; align-items: center; gap: 0.6rem; 
-            padding: 0.75rem 1.25rem 0.75rem 1rem; border-radius: 999px;
-            color: var(--text-main); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
-            text-decoration: none; will-change: transform;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem; 
+            padding: 0.75rem 1.25rem 0.75rem 1rem;
+            border-radius: 999px;
+            color: var(--text-main);
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            will-change: transform;
             background: rgba(20, 30, 45, 0.4);
-            backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15);
-            transition: all 0.4s var(--apple-bounce);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+            transition: all 0.4s var(--ease-bounce);
         }
-        .btn-liquid:hover { 
-            background: rgba(40, 50, 70, 0.6); border-color: rgba(255,255,255,0.3);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.3);
-            color: #fff;
-        }
-        .btn-liquid svg { width: 1.25rem; height: 1.25rem; transition: transform 0.4s var(--apple-bounce); }
-        .magnetic-wrap:hover .btn-liquid svg { transform: translateX(-4px); }
 
-        /* TERMINAL WINDOW - RESTORED LIQUID GLASS & ANIMATIONS */
-        .terminal-container { width: 100%; max-width: 920px; z-index: 10; perspective: 1500px; }
+        .btn-liquid:hover { 
+            background: rgba(40, 50, 70, 0.6);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .btn-liquid svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.4s var(--ease-bounce);
+        }
+
+        .magnetic-wrap:hover .btn-liquid svg {
+            transform: translateX(-4px);
+        }
+
+        /* Terminal window container */
+        .terminal-container {
+            width: 100%;
+            max-width: 920px;
+            z-index: 10;
+            perspective: 1500px;
+        }
         
-        /* Floating Animation for the entire wrapper */
         .terminal-glow-wrapper { 
-            position: relative; width: 100%; border-radius: 24px; 
+            position: relative;
+            width: 100%;
+            border-radius: 24px; 
             animation: terminalFloat 6s ease-in-out infinite alternate;
             transition: box-shadow 0.8s ease; 
             box-shadow: 0 0 60px rgba(0, 0, 0, 0.7); 
         }
+
         @keyframes terminalFloat {
             0% { transform: translateY(0px); }
             100% { transform: translateY(-8px); }
         }
-        .terminal-glow-wrapper.is-ready { box-shadow: 0 0 100px rgba(255, 255, 255, 0.12) !important; }
+
+        .terminal-glow-wrapper.is-ready {
+            box-shadow: 0 0 100px rgba(255, 255, 255, 0.12) !important;
+        }
 
         .terminal-window {
-            position: relative; background: var(--glass-bg);
-            backdrop-filter: blur(50px) saturate(200%); -webkit-backdrop-filter: blur(50px) saturate(200%);
-            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.35);
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(50px) saturate(200%);
+            -webkit-backdrop-filter: blur(50px) saturate(200%);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
             box-shadow: var(--glass-shadow), var(--glass-highlight); 
             border-radius: 24px;
-            transform-style: preserve-3d; will-change: transform;
-            transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s var(--apple-ease);
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s var(--ease-smooth);
         }
 
-        /* Edge Reflection */
         .terminal-window::before {
-            content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.0) 70%, rgba(59,130,246,0.2) 100%);
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.0) 70%, rgba(59, 130, 246, 0.2) 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: 50;
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 50;
         }
 
-        /* Subtle Dark CRT Overlay */
         .crt-overlay {
-            position: absolute; inset: 0; border-radius: 24px; z-index: 40; pointer-events: none; overflow: hidden;
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            z-index: 40;
+            pointer-events: none;
+            overflow: hidden;
         }
+
         .crt-overlay::before {
-            content: ""; position: absolute; inset: 0;
+            content: "";
+            position: absolute;
+            inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
             mix-blend-mode: overlay;
         }
 
-        .terminal-window.is-tracking { box-shadow: 0 70px 140px -20px rgba(0, 0, 0, 1), inset 0 1px 2px rgba(255, 255, 255, 0.5); }
+        .terminal-window.is-tracking {
+            box-shadow: 0 70px 140px -20px rgba(0, 0, 0, 1), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
 
-        /* TITLE BAR */
+        /* Terminal header */
         .terminal-header {
-            display: flex; align-items: center; padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.25);
-            border-radius: 24px 24px 0 0; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); position: relative; z-index: 45;
+            display: flex;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 24px 24px 0 0;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 45;
         }
+
         .mac-dots { display: flex; gap: 9px; }
+
         .mac-dot { 
-            width: 13px; height: 13px; border-radius: 50%; opacity: 0;
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.6), inset 0 -1px 1px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.8);
-            transition: transform 0.3s var(--apple-bounce); position: relative;
-            animation: popIn 0.5s forwards var(--apple-bounce);
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), inset 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s var(--ease-bounce);
+            position: relative;
+            animation: popIn 0.5s forwards var(--ease-bounce);
         }
-        .mac-dot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; opacity: 0; transition: opacity 0.3s; box-shadow: 0 0 10px currentColor; }
+
         .mac-dot:hover { transform: scale(1.15); }
-        .mac-dot:hover::after { opacity: 0.8; }
         
         .dot-red { background-color: #ff5f56; color: #ff5f56; animation-delay: 0.4s; } 
         .dot-yel { background-color: #ffbd2e; color: #ffbd2e; animation-delay: 0.5s; } 
         .dot-grn { background-color: #27c93f; color: #27c93f; animation-delay: 0.6s; }
-        @keyframes popIn { to { opacity: 1; transform: scale(1); } from { opacity: 0; transform: scale(0.5); } }
-        
-        .terminal-title { position: absolute; left: 50%; transform: translateX(-50%); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; color: var(--text-muted); }
 
-        /* DROPDOWNS - SPACIOUS & PREMIUM */
-        .dropdown-container { position: relative; z-index: 100; padding: 1.5rem; }
-        @media (min-width: 640px) { .dropdown-container { padding: 2rem 2.5rem; } } 
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: scale(0.5); }
+        }
+        
+        .terminal-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        /* Dropdowns */
+        .dropdown-container {
+            position: relative;
+            z-index: 100;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .dropdown-container { padding: 2rem 2.5rem; }
+        }
+
         .footer-container { position: relative; z-index: 10; }
 
-        .custom-dd-wrapper { position: relative; width: 100%; transition: z-index 0s; }
+        .custom-dd-wrapper {
+            position: relative;
+            width: 100%;
+            transition: z-index 0s;
+        }
+
         .custom-dd-wrapper.is-active { z-index: 999 !important; }
 
         .custom-dd-btn {
-            width: 100%; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(10, 15, 25, 0.4); border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.05);
-            padding: 1.1rem 1.25rem; border-radius: 14px; color: var(--text-main); font-weight: 600; font-size: 0.85rem;
-            transition: all 0.4s var(--apple-bounce);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 15, 25, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.05);
+            padding: 1.1rem 1.25rem;
+            border-radius: 14px;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.4s var(--ease-bounce);
         }
-        @media (min-width: 640px) { .custom-dd-btn { padding: 1.25rem 1.5rem; font-size: 0.95rem; border-radius: 16px; } }
 
-        .custom-dd-btn:hover:not(.disabled) { background: rgba(30, 40, 60, 0.5); border-color: rgba(255, 255, 255, 0.35); box-shadow: inset 0 2px 5px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.4); transform: translateY(-2px); }
-        .custom-dd-btn.disabled { opacity: 0.4; pointer-events: none; background: rgba(0,0,0,0.3); box-shadow: none; }
-        .custom-dd-btn[aria-expanded="true"] { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.15); box-shadow: 0 0 25px rgba(255,255,255,0.15); transform: translateY(0); }
-        .custom-dd-btn svg { transition: transform 0.5s var(--apple-bounce); }
-        .custom-dd-btn[aria-expanded="true"] svg { transform: rotate(180deg); color: #fff; }
+        @media (min-width: 640px) {
+            .custom-dd-btn {
+                padding: 1.25rem 1.5rem;
+                font-size: 0.95rem;
+                border-radius: 16px;
+            }
+        }
+
+        .custom-dd-btn:hover:not(.disabled) {
+            background: rgba(30, 40, 60, 0.5);
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .custom-dd-btn.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: none;
+        }
+
+        .custom-dd-btn[aria-expanded="true"] {
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+            transform: translateY(0);
+        }
+
+        .custom-dd-btn svg {
+            transition: transform 0.5s var(--ease-bounce);
+        }
+
+        .custom-dd-btn[aria-expanded="true"] svg {
+            transform: rotate(180deg);
+            color: #ffffff;
+        }
         
         .custom-dd-menu {
-            position: absolute; top: calc(100% + 10px); left: 0; width: 100%; z-index: 1000;
-            background: #090b10; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 0.5rem;
-            opacity: 0; visibility: hidden; pointer-events: none;
-            transform-origin: top center; transform: translateY(-15px) scale(0.95);
-            transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.5s var(--apple-bounce);
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.05) inset, 0 50px 100px -10px rgba(0,0,0,1);
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: #090b10;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform-origin: top center;
+            transform: translateY(-15px) scale(0.95);
+            transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.5s var(--ease-bounce);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset, 0 50px 100px -10px rgba(0, 0, 0, 1);
         }
-        .custom-dd-menu.show { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); }
+
+        .custom-dd-menu.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
         
         .custom-dd-item { 
-            padding: 0.85rem 1rem; border-radius: 10px; cursor: none; color: var(--text-muted); 
-            font-size: 0.85rem; font-weight: 600; transition: all 0.3s var(--apple-bounce); 
-            opacity: 0; transform: translateX(-10px); 
+            padding: 0.85rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-muted); 
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s var(--ease-bounce); 
+            opacity: 0;
+            transform: translateX(-10px); 
         }
-        @media (min-width: 640px) { .custom-dd-item { font-size: 0.9rem; padding: 1rem 1.25rem; } }
-        
-        .custom-dd-menu.show .custom-dd-item { opacity: 1; transform: translateX(0); }
-        .custom-dd-menu.show .custom-dd-item:nth-child(1) { transition-delay: 0.05s; }
-        .custom-dd-menu.show .custom-dd-item:nth-child(2) { transition-delay: 0.1s; }
-        .custom-dd-menu.show .custom-dd-item:nth-child(3) { transition-delay: 0.15s; }
-        .custom-dd-menu.show .custom-dd-item:nth-child(4) { transition-delay: 0.2s; }
-        
-        .custom-dd-item:hover { background: rgba(255,255,255,0.12); color: #ffffff; transform: translateX(8px) !important; transition-delay: 0s !important; box-shadow: -4px 0 15px -5px rgba(255,255,255,0.2); }
 
-        /* TERMINAL CLI FOOTER */
+        @media (min-width: 640px) {
+            .custom-dd-item {
+                font-size: 0.9rem;
+                padding: 1rem 1.25rem;
+            }
+        }
+        
+        .custom-dd-menu.show .custom-dd-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .custom-dd-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            transform: translateX(8px) !important;
+            box-shadow: -4px 0 15px -5px rgba(255, 255, 255, 0.2);
+        }
+
+        /* CLI footer */
         .cli-footer {
             font-family: 'JetBrains Mono', monospace;
-            background: rgba(5, 5, 8, 0.7); border-top: 1px solid rgba(255,255,255,0.12);
-            border-radius: 0 0 24px 24px; padding: 1.5rem;
-            box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.9);
+            background: rgba(5, 5, 8, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 0 0 24px 24px;
+            padding: 1.5rem;
+            box-shadow: inset 0 20px 20px -20px rgba(0, 0, 0, 0.9);
         }
-        @media (min-width: 640px) { .cli-footer { padding: 1.5rem 2.5rem; } }
 
-        /* Crisp Terminal Output Colors */
-        .term-glow-green { color: #34d399; text-shadow: 0 0 8px rgba(52,211,153,0.4); }
-        .term-glow-blue { color: #60a5fa; text-shadow: 0 0 8px rgba(96,165,250,0.4); }
-        .term-glow-white { color: #ffffff; text-shadow: 0 0 5px rgba(255,255,255,0.4); }
-        .term-glow-red { color: #f87171; text-shadow: 0 0 8px rgba(248,113,113,0.4); }
-        .term-glow-yellow { color: #fbbf24; text-shadow: 0 0 8px rgba(251,191,36,0.4); }
+        @media (min-width: 640px) {
+            .cli-footer { padding: 1.5rem 2.5rem; }
+        }
+
+        .term-glow-green { color: #34d399; text-shadow: 0 0 8px rgba(52, 211, 153, 0.4); }
+        .term-glow-blue { color: #60a5fa; text-shadow: 0 0 8px rgba(96, 165, 250, 0.4); }
+        .term-glow-white { color: #ffffff; text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); }
+        .term-glow-red { color: #f87171; text-shadow: 0 0 8px rgba(248, 113, 113, 0.4); }
+        .term-glow-yellow { color: #fbbf24; text-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
         
-        .block-cursor { display: inline-block; width: 8px; height: 16px; background-color: #fff; vertical-align: middle; margin-left: 4px; box-shadow: 0 0 6px #fff; }
+        .block-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #ffffff;
+            vertical-align: middle;
+            margin-left: 4px;
+            box-shadow: 0 0 6px #ffffff;
+        }
 
-        /* RESTORED PREMIUM WHITE/SILVER EXECUTE BUTTON */
+        /* Action buttons */
         .btn-exec {
-            background: linear-gradient(135deg, #ffffff 0%, #e4e4e7 50%, #d4d4d8 100%); background-size: 200% 200%; color: #000;
-            font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; border-radius: 999px;
-            box-shadow: 0 4px 15px rgba(255,255,255,0.15), inset 0 1px 1px #fff;
-            transition: all 0.5s var(--apple-bounce), box-shadow 0.6s ease; position: relative; overflow: hidden;
+            background: linear-gradient(135deg, #ffffff 0%, #e4e4e7 50%, #d4d4d8 100%);
+            background-size: 200% 200%;
+            color: #000000;
+            font-weight: 800;
+            border-radius: 999px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15), inset 0 1px 1px #ffffff;
+            transition: all 0.5s var(--ease-bounce), box-shadow 0.6s ease;
+            position: relative;
+            overflow: hidden;
             border: none;
         }
         
-        /* Elegant White Liquid Pulse */
         .btn-exec.is-ready {
-            animation: readyPulsePremium 2s infinite alternate, gradientShift 4s ease infinite;
+            animation: readyPulse 2s infinite alternate, gradientShift 4s ease infinite;
         }
-        @keyframes readyPulsePremium {
-            0% { box-shadow: 0 4px 15px rgba(255,255,255,0.15), 0 0 0px rgba(255, 255, 255, 0), inset 0 1px 1px #fff; }
-            100% { box-shadow: 0 4px 15px rgba(255,255,255,0.25), 0 0 35px rgba(255, 255, 255, 0.6), inset 0 1px 1px #fff; }
+
+        @keyframes readyPulse {
+            0% { box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15), inset 0 1px 1px #ffffff; }
+            100% { box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25), 0 0 35px rgba(255, 255, 255, 0.6), inset 0 1px 1px #ffffff; }
         }
-        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         
         .btn-exec::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.9), transparent);
-            transform: rotate(45deg) translateY(-100%); transition: transform 0.6s var(--apple-bounce);
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+            transform: rotate(45deg) translateY(-100%);
+            transition: transform 0.6s var(--ease-bounce);
         }
-        .btn-exec:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 15px 30px rgba(255,255,255,0.35), 0 0 25px rgba(255,255,255,0.5), inset 0 1px 1px #fff !important; animation: gradientShift 4s ease infinite; color: #000; }
-        .btn-exec:hover::after { transform: rotate(45deg) translateY(100%); }
-        .btn-exec:active { transform: scale(0.95); box-shadow: 0 5px 15px rgba(255,255,255,0.3) !important; }
 
-        /* Secondary Clear Button */
+        .btn-exec:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.35), 0 0 25px rgba(255, 255, 255, 0.5), inset 0 1px 1px #ffffff !important;
+            color: #000000;
+        }
+
+        .btn-exec:hover::after {
+            transform: rotate(45deg) translateY(100%);
+        }
+
+        .btn-exec:active {
+            transform: scale(0.95);
+        }
+
         .btn-rst {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: var(--text-muted);
-            font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; border-radius: 999px;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            transition: all 0.4s var(--apple-bounce);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-muted);
+            font-weight: 700;
+            border-radius: 999px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.4s var(--ease-bounce);
         }
-        .btn-rst:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); color: #fff; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15); }
-        .btn-rst:active { transform: scale(0.95); }
 
-        /* INVISIBLE PLATTER BUTTONS */
-        .magnetic-clear { position: relative; display: inline-flex; cursor: none; transform-style: preserve-3d; will-change: transform; color: var(--text-sub); transition: color 0.5s ease; }
-        .nav-platter { position: absolute; inset: 0; border-radius: 99px; background: rgba(255, 255, 255, 0); transition: all 0.5s var(--apple-bounce); z-index: 0; border: 1px solid transparent; }
-        .magnetic-clear:hover .nav-platter, .magnetic-clear.is-magnetized .nav-platter { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.25); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
-        .magnetic-clear:hover { color: #fff; }
-        .magnetic-clear:active { transform: scale(0.95) !important; transition: transform 0.15s var(--apple-spring); }
+        .btn-rst:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        }
 
-        /* SMOOTH LIQUID BOOT ANIMATION */
-        .app-launch { opacity: 0; transform: scale(0.9) translateY(50px) rotateX(-12deg); filter: blur(25px); animation: liquidBoot 1.8s var(--apple-spring) forwards; animation-delay: 0.1s; }
-        @keyframes liquidBoot { to { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); filter: blur(0); } }
+        .btn-rst:active {
+            transform: scale(0.95);
+        }
 
-        .animate-gradient-text { background: var(--title-gradient); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textShine 6s linear infinite; }
-        @keyframes textShine { 0% { background-position: 0% center; } 100% { background-position: -200% center; } }
+        /* Magnetic links */
+        .magnetic-clear {
+            position: relative;
+            display: inline-flex;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            will-change: transform;
+            color: var(--text-sub);
+            transition: color 0.5s ease;
+        }
+
+        .nav-platter {
+            position: absolute;
+            inset: 0;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0);
+            transition: all 0.5s var(--ease-bounce);
+            z-index: 0;
+            border: 1px solid transparent;
+        }
+
+        .magnetic-clear:hover .nav-platter,
+        .magnetic-clear.is-magnetized .nav-platter {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .magnetic-clear:hover { color: #ffffff; }
+
+        /* Entrance animations */
+        .app-launch {
+            opacity: 0;
+            transform: scale(0.9) translateY(50px) rotateX(-12deg);
+            filter: blur(25px);
+            animation: appMount 1.8s var(--ease-spring) forwards;
+            animation-delay: 0.1s;
+        }
+
+        @keyframes appMount {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0) rotateX(0deg);
+                filter: blur(0);
+            }
+        }
+
+        .animate-gradient-text {
+            background: var(--title-gradient);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 6s linear infinite;
+        }
+
+        @keyframes textShine {
+            0% { background-position: 0% center; }
+            100% { background-position: -200% center; }
+        }
         
-        .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 1s forwards var(--apple-spring); }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards var(--ease-spring);
+        }
 
-        /* Stagger Classes */
-        .stagger-item { opacity: 0; transform: translateY(20px) scale(0.96); animation: cascadeIn 1s forwards var(--apple-spring); }
-        @keyframes cascadeIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(20px) scale(0.96);
+            animation: cascadeIn 1s forwards var(--ease-spring);
+        }
+
+        @keyframes cascadeIn {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
         .stagger-1 { animation-delay: 0.5s; }
         .stagger-2 { animation-delay: 0.65s; }
         .stagger-3 { animation-delay: 0.8s; }
@@ -387,12 +760,7 @@
                                     <span class="dd-text truncate">Select Device...</span>
                                     <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
                                 </button>
-                                <div class="custom-dd-menu">
-                                    <div class="custom-dd-item interactive-el" data-val="op9pro">OnePlus 9 Pro</div>
-                                    <div class="custom-dd-item interactive-el" data-val="op9">OnePlus 9</div>
-                                    <div class="custom-dd-item interactive-el" data-val="op8pro">OnePlus 8 Pro</div>
-                                    <div class="custom-dd-item interactive-el" data-val="op8t">OnePlus 8T</div>
-                                </div>
+                                <div class="custom-dd-menu" id="menu-device"></div>
                             </div>
 
                             <div class="custom-dd-wrapper stagger-item stagger-2" id="dd-component" style="z-index: 20;">
@@ -401,10 +769,7 @@
                                     <span class="dd-text text-gray-500 truncate">Awaiting Hardware...</span>
                                     <svg class="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
                                 </button>
-                                <div class="custom-dd-menu">
-                                    <div class="custom-dd-item interactive-el" data-val="super_empty">super_empty.img</div>
-                                    <div class="custom-dd-item interactive-el" data-val="recovery">Recovery Image</div>
-                                </div>
+                                <div class="custom-dd-menu" id="menu-component"></div>
                             </div>
 
                             <div class="custom-dd-wrapper stagger-item stagger-3" id="dd-variant" style="z-index: 10;">
@@ -413,10 +778,7 @@
                                     <span class="dd-text text-gray-500 truncate">Locked</span>
                                     <svg class="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
                                 </button>
-                                <div class="custom-dd-menu">
-                                    <div class="custom-dd-item interactive-el" data-val="orangefox">OrangeFox Project</div>
-                                    <div class="custom-dd-item interactive-el" data-val="twrp">TWRP Official</div>
-                                </div>
+                                <div class="custom-dd-menu" id="menu-variant"></div>
                             </div>
 
                         </div>
@@ -461,127 +823,275 @@
     </footer>
 
     <script>
-        // --- Clean URL Router (Strip .html) ---
-        if (window.location.pathname.endsWith('.html')) {
-            const cleanPath = window.location.pathname.replace(/\.html$/, '');
-            window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
-        }
+        // Clean URL routing: strip .html extension if on HTTP/HTTPS
+        try {
+            if (window.location.protocol.startsWith('http') && window.location.pathname.endsWith('.html')) {
+                const cleanPath = window.location.pathname.replace(/\.html$/, '');
+                window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
+            }
+        } catch (e) {}
 
-        // --- High Performance Cursor & Physics Engine ---
-        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-        
-        if (!isTouchDevice) {
-            const dot = document.getElementById('cursor-dot');
-            const ring = document.getElementById('cursor-ring');
-            const spotlight = document.getElementById('spotlight');
-            const cmdCenter = document.getElementById('cmd-center');
-            
-            const backWrap = document.querySelector('.magnetic-wrap');
-            const backBtn = document.getElementById('back-button');
-            const footerBtns = Array.from(document.querySelectorAll('.magnetic-clear'));
-            
-            footerBtns.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
-
-            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-            let cursorX = mouseX, cursorY = mouseY;
-            let cmdHover = false;
-            let backHover = false;
-            
-            let btnCurrX = 0, btnCurrY = 0, btnTarX = 0, btnTarY = 0;
-            let rotXCurr = 0, rotYCurr = 0, rotXTar = 0, rotYTar = 0;
-
-            window.addEventListener('mousemove', (e) => { 
-                mouseX = e.clientX; mouseY = e.clientY; 
-                if (dot) dot.style.transform = `translate3d(${mouseX - 2.5}px, ${mouseY - 2.5}px, 0)`;
-                if (spotlight) spotlight.style.setProperty('--mouse-x', `${mouseX}px`);
-                if (spotlight) spotlight.style.setProperty('--mouse-y', `${mouseY}px`);
-                
-                if(cmdHover) {
-                    const rect = cmdCenter.getBoundingClientRect();
-                    const x = mouseX - rect.left, y = mouseY - rect.top;
-                    const cX = rect.width / 2, cY = rect.height / 2;
-                    rotXTar = ((y - cY) / cY) * -2; 
-                    rotYTar = ((x - cX) / cX) * 2;
-                } else {
-                    rotXTar = 0; rotYTar = 0;
-                }
-
-                if(backHover) {
-                    const rect = backWrap.getBoundingClientRect();
-                    const cX = rect.left + rect.width / 2, cY = rect.top + rect.height / 2;
-                    btnTarX = (mouseX - cX) * 0.4; btnTarY = (mouseY - cY) * 0.4;
-                } else {
-                    btnTarX = 0; btnTarY = 0;
-                }
-
-                footerBtns.forEach(btn => {
-                    if(btn.phys.isHovered) {
-                        const rect = btn.getBoundingClientRect();
-                        const cX = rect.left + rect.width / 2;
-                        const cY = rect.top + rect.height / 2;
-                        btn.phys.tarX = (mouseX - cX) * 0.15;
-                        btn.phys.tarY = (mouseY - cY) * 0.3;
+        // Hardware payload registry
+        const fileDatabase = {
+            op9pro: {
+                name: 'OnePlus 9 Pro',
+                components: {
+                    super_empty: {
+                        label: 'super_empty.img',
+                        url: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_9p.img'
+                    },
+                    recovery: {
+                        label: 'Recovery Image',
+                        variants: {
+                            orangefox: {
+                                label: 'OrangeFox Project',
+                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9series.img'
+                            },
+                            twrp: {
+                                label: 'TWRP Official',
+                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_9series.img'
+                            }
+                        }
                     }
-                });
-            }, { passive: true });
+                }
+            },
+            op9: {
+                name: 'OnePlus 9',
+                components: {
+                    super_empty: {
+                        label: 'super_empty.img',
+                        url: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_9.img'
+                    },
+                    recovery: {
+                        label: 'Recovery Image',
+                        variants: {
+                            orangefox: {
+                                label: 'OrangeFox Project',
+                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9series.img'
+                            },
+                            twrp: {
+                                label: 'TWRP Official',
+                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_9series.img'
+                            }
+                        }
+                    }
+                }
+            },
+            op9r: {
+                name: 'OnePlus 9R',
+                components: {
+                    recovery: {
+                        label: 'Recovery Image',
+                        variants: {
+                            orangefox: {
+                                label: 'OrangeFox Project',
+                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9R.img'
+                            }
+                        }
+                    }
+                }
+            },
+            op8pro: {
+                name: 'OnePlus 8 Pro',
+                components: {
+                    super_empty: {
+                        label: 'super_empty.img',
+                        url: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_8p.img'
+                    },
+                    recovery: {
+                        label: 'Recovery Image',
+                        variants: {
+                            orangefox: {
+                                label: 'OrangeFox Project',
+                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_8series.img'
+                            },
+                            twrp: {
+                                label: 'TWRP Official',
+                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_8p.img'
+                            }
+                        }
+                    }
+                }
+            },
+            op8t: {
+                name: 'OnePlus 8T',
+                components: {
+                    super_empty: {
+                        label: 'super_empty.img',
+                        url: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_8t.img'
+                    },
+                    recovery: {
+                        label: 'Recovery Image',
+                        variants: {
+                            orangefox: {
+                                label: 'OrangeFox Project',
+                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_8series.img'
+                            },
+                            twrp: {
+                                label: 'TWRP Official',
+                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_8t.img'
+                            }
+                        }
+                    }
+                }
+            }
+        };
 
-            document.addEventListener('mouseenter', () => { if(spotlight) spotlight.style.opacity = '1'; });
-            document.addEventListener('mouseleave', () => { if(spotlight) spotlight.style.opacity = '0'; });
+        // Ultra-responsive cursor and 60/120fps physics engine
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        const spotlight = document.getElementById('spotlight');
+        const cmdCenter = document.getElementById('cmd-center');
+        
+        const backWrap = document.querySelector('.magnetic-wrap');
+        const backBtn = document.getElementById('back-button');
+        const footerBtns = Array.from(document.querySelectorAll('.magnetic-clear'));
+        
+        footerBtns.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false, rect: null });
 
-            cmdCenter.addEventListener('mouseenter', () => { cmdHover = true; cmdCenter.classList.add('is-tracking'); });
-            cmdCenter.addEventListener('mouseleave', () => { cmdHover = false; cmdCenter.classList.remove('is-tracking'); });
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let cursorX = mouseX, cursorY = mouseY;
+        let cmdHover = false, backHover = false, isCursorActive = false;
+        let cmdRect = null, backRect = null;
+        let btnCurrX = 0, btnCurrY = 0, btnTarX = 0, btnTarY = 0;
+        let rotXCurr = 0, rotYCurr = 0, rotXTar = 0, rotYTar = 0;
 
-            backWrap.addEventListener('mouseenter', () => backHover = true);
-            backWrap.addEventListener('mouseleave', () => backHover = false);
+        // Zero-overhead raw mouse listener
+        window.addEventListener('mousemove', (e) => { 
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Instantaneous dot positioning (0 latency)
+            if (dot) dot.style.transform = `translate3d(${mouseX - 3}px, ${mouseY - 3}px, 0)`;
+
+            if (!isCursorActive) {
+                isCursorActive = true;
+                cursorX = mouseX;
+                cursorY = mouseY;
+                document.body.classList.add('custom-cursor-active');
+                if (dot) dot.style.opacity = '1';
+                if (ring) ring.style.opacity = '1';
+                if (spotlight) spotlight.style.opacity = '1';
+            }
+
+            if (cmdHover && cmdRect) {
+                const x = mouseX - cmdRect.left, y = mouseY - cmdRect.top;
+                const cX = cmdRect.width / 2, cY = cmdRect.height / 2;
+                rotXTar = ((y - cY) / cY) * -2.5; 
+                rotYTar = ((x - cX) / cX) * 2.5;
+            }
+
+            if (backHover && backRect) {
+                const cX = backRect.left + backRect.width / 2;
+                const cY = backRect.top + backRect.height / 2;
+                btnTarX = (mouseX - cX) * 0.35;
+                btnTarY = (mouseY - cY) * 0.35;
+            }
 
             footerBtns.forEach(btn => {
-                btn.addEventListener('mouseenter', () => { 
-                    btn.phys.isHovered = true; 
-                    btn.classList.add('is-magnetized'); 
-                });
-                btn.addEventListener('mouseleave', () => {
-                    btn.phys.isHovered = false; 
-                    btn.classList.remove('is-magnetized');
-                    btn.style.transform = ''; 
-                });
+                if (btn.phys.isHovered && btn.phys.rect) {
+                    const cX = btn.phys.rect.left + btn.phys.rect.width / 2;
+                    const cY = btn.phys.rect.top + btn.phys.rect.height / 2;
+                    btn.phys.tarX = (mouseX - cX) * 0.2;
+                    btn.phys.tarY = (mouseY - cY) * 0.25;
+                }
             });
+        }, { passive: true });
 
-            function physicsTick() {
-                cursorX += (mouseX - cursorX) * 0.15; cursorY += (mouseY - cursorY) * 0.15;
-                const offset = document.body.classList.contains('hovering-link') ? 24 : 18;
+        document.addEventListener('mouseenter', () => { 
+            if (isCursorActive && spotlight) spotlight.style.opacity = '1'; 
+        });
+        document.addEventListener('mouseleave', () => { 
+            if (spotlight) spotlight.style.opacity = '0'; 
+        });
+
+        if (cmdCenter) {
+            cmdCenter.addEventListener('mouseenter', () => { 
+                cmdHover = true; 
+                cmdRect = cmdCenter.getBoundingClientRect();
+                cmdCenter.classList.add('is-tracking'); 
+            });
+            cmdCenter.addEventListener('mouseleave', () => { 
+                cmdHover = false; 
+                rotXTar = 0; 
+                rotYTar = 0;
+                cmdCenter.classList.remove('is-tracking'); 
+            });
+        }
+
+        if (backWrap) {
+            backWrap.addEventListener('mouseenter', () => {
+                backHover = true;
+                backRect = backWrap.getBoundingClientRect();
+            });
+            backWrap.addEventListener('mouseleave', () => {
+                backHover = false;
+                btnTarX = 0;
+                btnTarY = 0;
+            });
+        }
+
+        footerBtns.forEach(btn => {
+            btn.addEventListener('mouseenter', () => { 
+                btn.phys.isHovered = true; 
+                btn.phys.rect = btn.getBoundingClientRect();
+                btn.classList.add('is-magnetized'); 
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.phys.isHovered = false; 
+                btn.phys.tarX = 0;
+                btn.phys.tarY = 0;
+                btn.classList.remove('is-magnetized');
+                btn.style.transform = ''; 
+            });
+        });
+
+        // High-framerate physics loop
+        function physicsTick() {
+            if (isCursorActive) {
+                // Snappy 0.35 lerp: tight follow without sluggish drag
+                cursorX += (mouseX - cursorX) * 0.35;
+                cursorY += (mouseY - cursorY) * 0.35;
+                
+                const isHoverLink = document.body.classList.contains('hovering-link');
+                const offset = isHoverLink ? 24 : 18;
+                
                 if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
+                if (spotlight) spotlight.style.transform = `translate3d(${cursorX - 600}px, ${cursorY - 600}px, 0)`;
                 
-                rotXCurr += (rotXTar - rotXCurr) * 0.1;
-                rotYCurr += (rotYTar - rotYCurr) * 0.1;
-                if(cmdCenter) cmdCenter.style.transform = `rotateX(${rotXCurr}deg) rotateY(${rotYCurr}deg)`;
+                rotXCurr += (rotXTar - rotXCurr) * 0.15;
+                rotYCurr += (rotYTar - rotYCurr) * 0.15;
+                if (cmdCenter) cmdCenter.style.transform = `rotateX(${rotXCurr}deg) rotateY(${rotYCurr}deg)`;
                 
-                btnCurrX += (btnTarX - btnCurrX) * 0.2; btnCurrY += (btnTarY - btnCurrY) * 0.2;
-                if(backBtn) backBtn.style.transform = `translate3d(${btnCurrX}px, ${btnCurrY}px, 0)`;
+                btnCurrX += (btnTarX - btnCurrX) * 0.25;
+                btnCurrY += (btnTarY - btnCurrY) * 0.25;
+                if (backBtn) backBtn.style.transform = `translate3d(${btnCurrX}px, ${btnCurrY}px, 0)`;
 
                 footerBtns.forEach(btn => {
                     if (btn.phys.isHovered) {
-                        btn.phys.currX += (btn.phys.tarX - btn.phys.currX) * 0.2;
-                        btn.phys.currY += (btn.phys.tarY - btn.phys.currY) * 0.2;
+                        btn.phys.currX += (btn.phys.tarX - btn.phys.currX) * 0.25;
+                        btn.phys.currY += (btn.phys.tarY - btn.phys.currY) * 0.25;
                         btn.style.transform = `translate3d(${btn.phys.currX}px, ${btn.phys.currY}px, 0)`;
                     }
                 });
-
-                requestAnimationFrame(physicsTick);
             }
-            physicsTick(); 
 
-            document.querySelectorAll('.interactive-el').forEach(el => {
-                el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-            });
+            requestAnimationFrame(physicsTick);
         }
+        requestAnimationFrame(physicsTick); 
 
-        // --- Terminal CLI Typing Engine ---
+        document.querySelectorAll('.interactive-el').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+        });
+
+        // Terminal typewriter output simulator
         const cliOutput = document.getElementById('cli-output');
         let typeTimeout;
 
         function typeCommand(cmdText, colorClass = 'text-gray-400') {
             clearTimeout(typeTimeout);
+            if (!cliOutput) return;
             cliOutput.className = `font-medium truncate ml-1 ${colorClass}`;
             cliOutput.innerText = '';
             
@@ -590,33 +1100,29 @@
                 if (i < cmdText.length) {
                     cliOutput.innerText += cmdText.charAt(i);
                     i++;
-                    typeTimeout = setTimeout(typeChar, 15);
+                    typeTimeout = setTimeout(typeChar, 14);
                 }
             }
             typeChar();
         }
 
-        // Boot Sequence
         setTimeout(() => {
             typeCommand("init revork_shell... done. awaiting --hardware");
-        }, 1200);
+        }, 1000);
 
-        // --- Logic & Dropdown Engine ---
+        // State & Dropdown Management
         let state = { device: null, component: null, variant: null };
         const ddWrappers = document.querySelectorAll('.custom-dd-wrapper');
         const btnExec = document.getElementById('btn-resolve');
         const glowWrapper = document.getElementById('glow-wrapper');
 
         function checkReadyState() {
-            if (state.device && state.component) {
-                if (state.component === 'super_empty' || (state.component === 'recovery' && state.variant)) {
-                    btnExec.classList.add('is-ready');
-                    glowWrapper.classList.add('is-ready');
-                    return;
-                }
-            }
-            btnExec.classList.remove('is-ready');
-            glowWrapper.classList.remove('is-ready');
+            const dev = fileDatabase[state.device];
+            const comp = dev?.components?.[state.component];
+            const isReady = Boolean(comp && (comp.url || (comp.variants && state.variant && comp.variants[state.variant])));
+
+            btnExec.classList.toggle('is-ready', isReady);
+            glowWrapper.classList.toggle('is-ready', isReady);
         }
 
         function closeAllDropdowns() {
@@ -625,11 +1131,50 @@
             ddWrappers.forEach(w => w.classList.remove('is-active'));
         }
 
+        function setDropdownState(type, enabled, text, color) {
+            const wrapper = document.getElementById(`dd-${type}`);
+            const btn = wrapper.querySelector('.custom-dd-btn');
+            const textEl = wrapper.querySelector('.dd-text');
+            
+            btn.classList.toggle('disabled', !enabled);
+            if (text !== undefined) textEl.textContent = text;
+            textEl.style.color = color || (enabled ? '#ffffff' : 'var(--text-muted)');
+        }
+
+        function populateDropdown(type, items) {
+            const menu = document.getElementById(`menu-${type}`);
+            menu.innerHTML = '';
+            
+            items.forEach((item, idx) => {
+                const opt = document.createElement('div');
+                opt.className = 'custom-dd-item interactive-el';
+                opt.setAttribute('data-val', item.id);
+                opt.textContent = item.label;
+                opt.style.transitionDelay = `${0.04 * (idx + 1)}s`;
+                
+                opt.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
+                opt.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
+                
+                opt.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectOption(type, item.id, item.label);
+                });
+                
+                menu.appendChild(opt);
+            });
+        }
+
+        // Initialize Device list
+        const deviceList = Object.keys(fileDatabase).map(key => ({
+            id: key,
+            label: fileDatabase[key].name
+        }));
+        populateDropdown('device', deviceList);
+
+        // Bind dropdown open/close listeners
         ddWrappers.forEach((wrapper) => {
             const btn = wrapper.querySelector('.custom-dd-btn');
             const menu = wrapper.querySelector('.custom-dd-menu');
-            const text = wrapper.querySelector('.dd-text');
-            const type = wrapper.id.replace('dd-', '');
 
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -644,104 +1189,85 @@
                     menu.classList.add('show');
                 }
             });
-
-            menu.querySelectorAll('.custom-dd-item').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const val = item.getAttribute('data-val');
-                    const label = item.textContent;
-                    
-                    text.textContent = label;
-                    text.classList.remove('text-gray-500', 'text-gray-600'); text.style.color = '#fff';
-                    state[type] = val;
-                    
-                    closeAllDropdowns();
-                    handleLogicUpdate(type);
-                });
-            });
         });
 
         document.addEventListener('click', closeAllDropdowns);
 
-        const btnComp = document.querySelector('#dd-component .custom-dd-btn');
-        const textComp = document.querySelector('#dd-component .dd-text');
-        const btnVar = document.querySelector('#dd-variant .custom-dd-btn');
-        const textVar = document.querySelector('#dd-variant .dd-text');
+        function selectOption(type, value, label) {
+            closeAllDropdowns();
+            const textEl = document.querySelector(`#dd-${type} .dd-text`);
+            textEl.textContent = label;
+            textEl.style.color = '#ffffff';
 
-        function handleLogicUpdate(triggeredBy) {
-            if (triggeredBy === 'device') {
-                btnComp.classList.remove('disabled'); textComp.textContent = "Select Format..."; textComp.style.color = "var(--text-muted)";
+            if (type === 'device') {
+                state.device = value;
                 state.component = null;
-                btnVar.classList.add('disabled'); textVar.textContent = "Locked"; textVar.style.color = "var(--text-muted)";
                 state.variant = null;
-                typeCommand(`export TARGET="${state.device}"; awaiting --format`);
-            }
-            
-            if (triggeredBy === 'component') {
-                if (state.component === 'recovery') {
-                    btnVar.classList.remove('disabled'); textVar.textContent = "Select Variant..."; textVar.style.color = "var(--text-muted)";
-                    state.variant = null;
-                    typeCommand(`export COMPONENT="recovery"; awaiting --variant`);
-                } else if (state.component === 'super_empty') {
-                    btnVar.classList.add('disabled'); textVar.textContent = "Standard Output"; textVar.style.color = "white";
+
+                const compData = fileDatabase[value].components;
+                const compItems = Object.keys(compData).map(k => ({ id: k, label: compData[k].label }));
+                populateDropdown('component', compItems);
+
+                setDropdownState('component', true, 'Select Format...', 'var(--text-muted)');
+                setDropdownState('variant', false, 'Locked', 'var(--text-muted)');
+                populateDropdown('variant', []);
+
+                typeCommand(`export TARGET="${value}"; awaiting --format`);
+            } else if (type === 'component') {
+                state.component = value;
+                state.variant = null;
+
+                const comp = fileDatabase[state.device].components[value];
+                if (comp.variants) {
+                    const varItems = Object.keys(comp.variants).map(k => ({ id: k, label: comp.variants[k].label }));
+                    populateDropdown('variant', varItems);
+                    setDropdownState('variant', true, 'Select Variant...', 'var(--text-muted)');
+                    typeCommand(`export COMPONENT="${value}"; awaiting --variant`);
+                } else {
                     state.variant = 'default';
-                    typeCommand(`./resolve_link.sh --ready`, "term-glow-green");
+                    populateDropdown('variant', []);
+                    setDropdownState('variant', false, 'Standard Output', '#ffffff');
+                    typeCommand(`./resolve_link.sh --ready`, 'term-glow-green');
                 }
+            } else if (type === 'variant') {
+                state.variant = value;
+                typeCommand(`./resolve_link.sh --ready`, 'term-glow-green');
             }
 
-            if (triggeredBy === 'variant') {
-                typeCommand(`./resolve_link.sh --ready`, "term-glow-green");
-            }
             checkReadyState();
         }
 
         document.getElementById('btn-reset').addEventListener('click', () => {
             state = { device: null, component: null, variant: null };
             
-            const textDev = document.querySelector('#dd-device .dd-text');
-            textDev.textContent = "Select Device..."; textDev.style.color = "var(--text-main)";
+            setDropdownState('device', true, 'Select Device...', 'var(--text-main)');
+            setDropdownState('component', false, 'Awaiting Hardware...', 'var(--text-muted)');
+            setDropdownState('variant', false, 'Locked', 'var(--text-muted)');
             
-            btnComp.classList.add('disabled'); textComp.textContent = "Awaiting Hardware..."; textComp.style.color = "var(--text-muted)";
-            btnVar.classList.add('disabled'); textVar.textContent = "Locked"; textVar.style.color = "var(--text-muted)";
+            populateDropdown('component', []);
+            populateDropdown('variant', []);
             
             typeCommand("clear && reset_env; awaiting --hardware");
             checkReadyState();
         });
 
-        // STRICTLY OG 8/9 SERIES
-        const fileDatabase = {
-            'op9pro': { 
-                'super_empty': { default: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_9p.img' }, 
-                'recovery': { 'orangefox': 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9series.img', 'twrp': 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_9series.img' }
-            },
-            'op9': { 
-                'super_empty': { default: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_9.img' }, 
-                'recovery': { 'orangefox': 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9series.img', 'twrp': 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_9series.img' }
-            },
-            'op8pro': { 
-                'super_empty': { default: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_8p.img' }, 
-                'recovery': { 'orangefox': 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_8series.img', 'twrp': 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_8p.img' }
-            },
-            'op8t': { 
-                'super_empty': { default: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_8t.img' }, 
-                'recovery': { 'orangefox': 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_8series.img', 'twrp': 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_8t.img' }
-            }
-        };
-
         btnExec.addEventListener('click', () => {
             if (!state.device) return typeCommand("Error: Missing --hardware parameter", "term-glow-red");
             if (!state.component) return typeCommand("Error: Missing --format parameter", "term-glow-red");
-            if (state.component === 'recovery' && !state.variant) return typeCommand("Error: Missing --variant parameter", "term-glow-red");
 
-            const url = fileDatabase[state.device]?.[state.component]?.[state.variant];
+            const comp = fileDatabase[state.device]?.components?.[state.component];
+            if (!comp) return typeCommand("Error 404: Payload not found in remote repository.", "term-glow-red");
+            if (comp.variants && !state.variant) return typeCommand("Error: Missing --variant parameter", "term-glow-red");
+
+            const url = comp.url || comp.variants?.[state.variant]?.url;
             if (url) {
                 btnExec.classList.remove('is-ready');
                 glowWrapper.classList.remove('is-ready');
-                typeCommand(`wget -qO- fetching_payload...`, "term-glow-yellow");
+                typeCommand("wget -qO- fetching_payload...", "term-glow-yellow");
                 
                 setTimeout(() => {
-                    typeCommand(`200 OK: Payload found. Redirecting.`, "term-glow-green");
-                    setTimeout(() => window.location.href = url, 400); 
+                    typeCommand("200 OK: Payload found. Redirecting.", "term-glow-green");
+                    setTimeout(() => { window.location.href = url; }, 400); 
                 }, 600);
             } else {
                 typeCommand("Error 404: Payload not found in remote repository.", "term-glow-red");
