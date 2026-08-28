@@ -20,7 +20,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap"></noscript>
 <link rel="stylesheet" href="assets/revork.css">
 
 <script>
@@ -127,8 +128,8 @@
 
         <div class="cli relative z-10 flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center sm:gap-6">
 
-          <p class="flex w-full min-w-0 items-center overflow-hidden text-ellipsis whitespace-nowrap text-[12.5px] sm:w-auto sm:text-[14px]" aria-live="polite">
-            <span class="glow-green shrink-0 font-bold">admin@revork</span><span class="shrink-0 text-white">:</span><span class="glow-blue shrink-0 font-bold">~/bin</span><span class="glow-white mr-1 shrink-0 font-bold sm:mr-2">$</span>
+          <p class="flex w-full min-w-0 items-center overflow-hidden text-ellipsis whitespace-nowrap text-[11.5px] sm:w-auto sm:text-[14px]" aria-live="polite">
+            <span class="glow-green hidden shrink-0 font-bold sm:inline">admin@revork</span><span class="hidden shrink-0 text-white sm:inline">:</span><span class="glow-blue shrink-0 font-bold">~/bin</span><span class="glow-white mr-1 shrink-0 font-bold sm:mr-2">$</span>
             <span id="cli-out" class="ml-1 truncate font-medium text-dim"></span><span class="caret shrink-0" aria-hidden="true"></span>
           </p>
 

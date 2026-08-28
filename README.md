@@ -136,10 +136,26 @@ A few decisions that aren't obvious from reading the code:
   invisible until you profile: an animated `box-shadow` on the home page's
   terminal button was on its own more than half of that page's idle CPU.
 - **The heading sheen is the one exception**, because a gradient moving across
-  `background-clip: text` has no composited equivalent. It sweeps for half its
-  cycle and holds still for the other half, and `initSheen` parks it whenever
-  the heading scrolls off screen. With it parked the pages sit at zero style
-  recalculations — everything else is on the compositor.
+  `background-clip: text` has no composited equivalent. It is therefore the only
+  thing on the site that can keep the main thread rendering, and on a mid-range
+  phone it was, on its own, the entire idle cost of every page — about a third
+  of a core, indefinitely. So it has a beginning and an end: `initSheen` starts
+  it when the heading comes into view, gives it three passes on a desktop and
+  one quick one on a phone, then stops it. Scroll away and back and it plays
+  again. Once it stops the pages sit at zero style recalculations and zero
+  layouts — everything else is on the compositor.
+- **Nothing hover-shaped is built on a touch screen.** The lit rim, the glare,
+  the sweep and the cast shadow only ever appear under `.is-tracking`, which
+  needs a pointer, so under `(hover: none)` they are `display: none` rather than
+  invisible — a paint record per card, times two dozen cards, for nothing. The
+  arrow is the reverse case: it idles at 20% waiting for a hover that will never
+  arrive, so on touch it sits up and the press moves it instead.
+- **Every `:hover` rule has a touch-screen counterpart further down the file.**
+  Android hands `:hover` to whatever you last tapped and leaves it there until
+  you tap something else, which would strand a blurred platter under a footer
+  link or switch the terminal button's glow off for good. Those overrides have
+  to come after the components they override — they match at the same
+  specificity and win on source order alone.
 - **The engine and CSS never drive the same transform at once.** While
   `is-tracking`/`is-pulled` is set, the transform transition is switched off and
   JS owns the property; dropping the class and the inline transform together is
@@ -156,6 +172,25 @@ A few decisions that aren't obvious from reading the code:
   grid looked better and scrolled worse.
 - **`prefers-reduced-motion` turns off the custom cursor entirely**, along with the
   drifting background and every reveal.
+- **ColorOS is set in its own face.** The wordmark belongs to OPPO Sans, which
+  is not ours to ship, so `.os-coloros` puts Poppins in its place — the nearest
+  thing on Google Fonts, same geometric skeleton, same circular bowls. Plus
+  Jakarta Sans sets everything else here and it is a humanist face; next to the
+  real wordmark the difference is the first thing you see. The weight and the
+  tracking live in the class rather than as utilities in the markup, so only one
+  Poppins cut ever has to be downloaded.
+- **There is a `@font-face` in the stylesheet that downloads nothing.**
+  `Jakarta Fallback` is whatever local face the browser would have fallen back
+  to anyway, with `size-adjust: 110%` on it, because Plus Jakarta Sans sets
+  about a tenth wider than any of them. Without it the home page heading was
+  laid out in the fallback, fitted on one line where the real font needs two,
+  and pushed the whole card grid down 48px when the real font arrived — 0.09 of
+  layout shift, all of it from one heading. The number is measured, not guessed: 110 is the narrowest value
+  that reproduces the real font's line breaks at every phone width.
+- **The font stylesheet is loaded with `rel="preload"` and promoted on load**,
+  so it is not a render-blocking request to a third-party origin. That is only
+  safe because of the line above: text painted in the fallback lands where the
+  real font will put it, so the swap costs nothing.
 
 ## Licence
 

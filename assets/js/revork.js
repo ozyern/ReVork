@@ -109,19 +109,43 @@ function initReveal() {
 }
 
 /* ---------------------------------------------------------------- *
- * Park the heading sheen when it is off screen
+ * Give the heading sheen a beginning and an end
  *
- * It is the one animation here that repaints rather than composites, so
- * it is also the only reason the main thread renders on an idle page.
- * Scrolling past the heading should stop costing anything.
+ * It is the one animation on the site that repaints rather than composites,
+ * so it is also the only reason the main thread renders on an idle page. On
+ * a phone it was measurably the whole idle cost: about a third of a core,
+ * forever, for a shimmer that has said everything it has to say within a
+ * couple of passes.
+ *
+ * So it gets those passes when the heading arrives and then stops. Scroll
+ * away and back and it plays again.
  * ---------------------------------------------------------------- */
 
 function initSheen() {
   const headings = document.querySelectorAll('.sheen');
   if (!headings.length || !('IntersectionObserver' in window)) return;
 
+  // Straight from the stylesheet so the two cannot drift apart. The
+  // coarse-pointer rule shortens the pass, and this picks that up.
+  const spelled = getComputedStyle(headings[0]).animationDuration;
+  const pass = (parseFloat(spelled) || 9) * (spelled.endsWith('ms') ? 1 : 1000);
+  const passes = fine.matches ? 3 : 1;
+  const timers = new WeakMap();
+
   const watch = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => entry.target.classList.toggle('sheen-paused', !entry.isIntersecting));
+    entries.forEach((entry) => {
+      const heading = entry.target;
+      clearTimeout(timers.get(heading));
+
+      if (!entry.isIntersecting) {
+        heading.classList.add('sheen-idle');
+        return;
+      }
+
+      // Removing the class restarts the animation from the top.
+      heading.classList.remove('sheen-idle');
+      timers.set(heading, setTimeout(() => heading.classList.add('sheen-idle'), passes * pass));
+    });
   });
 
   headings.forEach((heading) => watch.observe(heading));

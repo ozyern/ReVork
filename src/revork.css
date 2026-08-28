@@ -78,6 +78,30 @@
 }
 
 /* ---------------------------------------------------------------
+   Fallback metrics
+
+   Plus Jakarta Sans sets about a tenth wider than the faces a browser
+   falls back to while it downloads. On a slow connection the home
+   page heading was laid out in the fallback, wrapped across a different
+   number of lines, and then jumped 48px when the real font arrived -
+   which was the whole of that page's layout shift.
+
+   This is the same fallback stretched to the width of the real thing, so
+   the swap lands in the same place. The percentage is measured rather
+   than guessed: 110 is the point at which the fallback breaks the home
+   page heading across the same two lines as the real font does, at every
+   phone width, and it is the narrowest value that does. If none of these
+   faces are installed the @font-face simply does not resolve and the
+   stack falls through to system-ui, exactly as it did before.
+   --------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Jakarta Fallback";
+  src: local("Arial"), local("Roboto"), local("Helvetica Neue");
+  size-adjust: 110%;
+}
+
+/* ---------------------------------------------------------------
    Base
    --------------------------------------------------------------- */
 
@@ -96,9 +120,10 @@ html {
 
 body {
   min-height: 100vh;
+  min-height: 100svh;
   overflow-x: hidden;
   color: var(--fg);
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-family: "Plus Jakarta Sans", "Jakarta Fallback", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: color 0.6s var(--ease);
@@ -221,6 +246,23 @@ body {
   #cursor-dot,
   #cursor-ring,
   #spotlight { display: none !important; }
+
+  /* None of these can ever be seen without a pointer: the lit rim, the
+     glare and the sweep only come up under `.is-tracking`, and the cast
+     shadow only exists to sell the tilt. Leaving them in the tree still
+     costs a phone a paint record per card, and the glare carries a
+     mix-blend-mode, which pulls its whole stacking context off the
+     compositor. So on touch they are not there at all. */
+  .pane::before,
+  .pane::after,
+  .card::before,
+  .term-btn::before,
+  .shadow { display: none; }
+
+  /* A blur costs the GPU roughly its radius. Phones have the most pixels
+     per pane and the least to spend on them, and at this size 12 and 20
+     are indistinguishable. */
+  :root { --blur: 12px; }
 }
 
 /* ---------------------------------------------------------------
@@ -305,6 +347,20 @@ body {
 .card:active {
   transform: perspective(1200px) rotateX(var(--rot-x)) rotateY(var(--rot-y)) scale3d(0.98, 0.98, 0.98) !important;
   transition: transform 0.15s var(--ease) !important;
+}
+
+@media (hover: none), (pointer: coarse) {
+  /* Deeper, and it takes the glass down with it, because on a touch screen
+     this press is the only feedback there is. */
+  .card:active {
+    transform: scale3d(0.965, 0.965, 0.965) !important;
+    transition: transform 0.12s var(--ease) !important;
+  }
+
+  .card:active .pane {
+    border-color: var(--glass-edge-left);
+    transition: border-color 0.12s var(--ease);
+  }
 }
 
 /* Everything that is not the hovered card recedes. Cards use opacity and
@@ -925,6 +981,20 @@ body.on-card .dims {
    Type + badges
    --------------------------------------------------------------- */
 
+/* ColorOS sets its own name in OPPO Sans, which is not ours to ship, so
+   the nearest thing on Google Fonts stands in for it: the same geometric
+   skeleton, the same circular bowls, the same stubby r. Plus Jakarta Sans
+   sets everything else on this site and it is a humanist face - next to
+   the real wordmark the difference is the first thing you see.
+
+   Weight and tracking are declared here rather than as utilities in the
+   markup so that only the one Poppins cut ever has to be downloaded. */
+.os-coloros {
+  font-family: "Poppins", "Plus Jakarta Sans", "Jakarta Fallback", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
 .sheen {
   display: inline-block;
   background: var(--title-sheen);
@@ -935,22 +1005,40 @@ body.on-card .dims {
   animation: sheen 9s linear infinite;
 }
 
-.sheen-paused { animation-play-state: paused; }
-
 /* A gradient moving across background-clip: text is the one effect on this
    site that cannot be composited — every frame it runs repaints the whole
-   heading, and on a page that is otherwise entirely on the compositor that
-   was the only thing keeping the main thread rendering at all.
+   heading, and on a page that is otherwise entirely on the compositor it
+   is, measurably, the only thing keeping the main thread rendering at all.
+   On a mid-range phone that one animation was the entire idle cost of the
+   page: about a third of a core, spent on a shimmer nobody is looking at.
 
    So it sweeps for the back half of the cycle and holds still for the
    front half. -200% is exactly one tile of the 200% background, so the
    hold position and the end of the sweep are the same pixels and the loop
-   stays seamless. The observer in revork.js parks it while the heading is
-   off screen, which on the device pages is most of the time. */
+   stays seamless. initSheen in revork.js gives it a few passes when the
+   heading comes into view and then stops it; scrolling back up starts it
+   over. */
 @keyframes sheen {
   0%, 45% { background-position: 0% center; }
   100%    { background-position: -200% center; }
 }
+
+@media (hover: none), (pointer: coarse) {
+  /* One quick pass, no hold. There is no cursor here for the shimmer to
+     answer, so it is a flourish on arrival and nothing after that. */
+  .sheen { animation: sheen-once 2.6s var(--ease); }
+}
+
+@keyframes sheen-once {
+  from { background-position: 0% center; }
+  to   { background-position: -200% center; }
+}
+
+/* Stopping it, rather than pausing it, is deliberate: with no animation the
+   gradient sits back at 0%, which is where a pass ends anyway, so nothing
+   visibly moves when it stops. Last in this block so it wins over the
+   coarse-pointer rule above. */
+.sheen-idle { animation: none; }
 
 .badge { position: relative; display: inline-block; animation: bob-badge 3s ease-in-out infinite; }
 
@@ -1068,6 +1156,10 @@ body.on-card .dims {
   to   { transform: perspective(800px) rotateX(65deg) translate3d(0, 60px, -200px); }
 }
 
+/* Twice the viewport in each direction, blurred by 70px. On a desktop that
+   is a big texture; on a phone at 3x it is a very big one, for a glow whose
+   edges nobody can locate. Small screens get a smaller, softer version of
+   the same thing. */
 .haze {
   position: absolute;
   inset: -50%;
@@ -1077,6 +1169,10 @@ body.on-card .dims {
     radial-gradient(circle at 50% 50%, rgb(59 130 246 / 0.08), transparent 55%);
   filter: blur(70px);
   animation: haze-pulse 18s ease-in-out infinite alternate;
+}
+
+@media (max-width: 640px) {
+  .haze { inset: -20%; filter: blur(45px); }
 }
 
 @keyframes haze-pulse {
@@ -1222,12 +1318,23 @@ body.on-card .dims {
 
 .shell-title {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   color: var(--fg-muted);
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.05em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .shell-bar { padding: 1rem 1.15rem; }
+  .shell-title { font-size: 0.68rem; letter-spacing: 0.02em; }
 }
 
 /* Dropdowns ---------------------------------------------------- */
@@ -1437,6 +1544,57 @@ body.on-card .dims {
 @keyframes boot {
   from { opacity: 0; transform: scale(0.94) translateY(40px); }
   to   { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------------
+   Touch
+   Has to sit down here, after the components: these are overrides of
+   hover states declared above, at the same specificity, so they only
+   win on source order.
+   --------------------------------------------------------------- */
+
+@media (hover: none), (pointer: coarse) {
+  /* Android hands :hover to whatever you last tapped and keeps it there
+     until you tap something else. Every hover state on this page would
+     stick to it - a footer link left blurred, a tab left scaled up, the
+     terminal button's glow switched off for good. On a touch screen
+     :active is the only state that means anything. */
+  .tab:hover,
+  .shell-dots i:hover { transform: none; }
+
+  .magnetic:hover { color: var(--fg-sub); }
+
+  .magnetic:hover .platter {
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .solid:hover {
+    border-color: var(--glass-edge);
+    box-shadow: 0 4px 20px rgb(0 0 0 / 0.05);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .term-btn:hover::after { animation: idle-glow 4s ease-in-out infinite alternate; }
+
+  /* The arrow is the entire affordance on a build card, and it spends its
+     life at 20% waiting for a hover that is never coming. Here it sits up
+     from the start and the press is what moves it - down, the direction it
+     is pointing. */
+  .arrow {
+    opacity: 0.55;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .card:active .arrow {
+    opacity: 1;
+    transform: translate3d(0, 5px, 0);
+    transition: opacity 0.15s var(--ease), transform 0.25s var(--ease-bounce);
+  }
 }
 
 /* ---------------------------------------------------------------
