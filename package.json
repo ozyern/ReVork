@@ -1,0 +1,21 @@
+{
+  "name": "revork-site",
+  "private": true,
+  "description": "Source for the ReVork download site (ozyern.me)",
+  "license": "MIT",
+  "repository": "github:ozyern/ReVork",
+  "scripts": {
+    "build": "tailwindcss -i src/revork.css -o assets/revork.css --minify",
+    "watch": "tailwindcss -i src/revork.css -o assets/revork.css --watch",
+    "serve": "http-server . -p 8080 -c-1",
+    "images": "node tools/images.mjs",
+    "test": "node tools/smoke.mjs"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "jsdom": "^30.0.1",
+    "puppeteer-core": "^25.9.0",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^3.4.17"
+  }
+}

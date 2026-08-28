@@ -1,551 +1,193 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLJ7DVSZW7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-WLJ7DVSZW7');
-    </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReVork | Select Device</title>
+<meta name="description" content="Ported OxygenOS 16 and ColorOS 16 builds for the OnePlus 9, 9 Pro, 9R, 8 Pro and 8T. Pick your device to see every available build.">
+<link rel="canonical" href="https://ozyern.me/">
+<meta name="theme-color" content="#000000">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReVork | Select Device</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ReVork">
+<meta property="og:description" content="Ported OxygenOS 16 and ColorOS 16 builds for OnePlus flagships.">
+<meta property="og:url" content="https://ozyern.me/">
+<meta property="og:image" content="https://ozyern.me/assets/apple-touch-icon.png">
+<meta name="twitter:card" content="summary">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@600&display=swap');
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-        :root {
-            --ease-base: cubic-bezier(0.25, 1, 0.5, 1);
-            --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.15);
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/revork.css">
 
-            --bg-color: #000000;
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.4);
-            --text-sub: rgba(255, 255, 255, 0.7);
+<script>
+  // Inline and blocking on purpose: both of these have to land before the
+  // first paint or you get a flash of the wrong theme / a reveal that has
+  // already finished by the time the observer starts watching.
+  document.documentElement.classList.add('js');
+  try {
+    document.documentElement.dataset.theme = localStorage.getItem('revork-theme') || 'dark';
+  } catch (e) {
+    document.documentElement.dataset.theme = 'dark';
+  }
+</script>
+<script type="module" src="assets/js/revork.js"></script>
 
-            --glass-bg: linear-gradient(150deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.005) 100%);
-            --glass-border: rgba(255, 255, 255, 0.06);
-            --glass-hover-top: rgba(255, 255, 255, 0.4);
-            --glass-hover-left: rgba(255, 255, 255, 0.25);
-            
-            --grad-text: linear-gradient(110deg, #86868b 0%, #ffffff 30%, #86868b 50%, #ffffff 70%, #86868b 100%);
-            --aurora-1: rgba(14, 165, 233, 0.07);
-            --aurora-2: rgba(16, 185, 129, 0.05);
-            --aurora-3: rgba(139, 92, 246, 0.06);
-
-            --cursor-dot: #ffffff;
-            --cursor-ring: rgba(255, 255, 255, 0.2);
-            --cursor-hover: rgba(255, 255, 255, 0.08);
-            --cursor-border: rgba(255, 255, 255, 0.4);
-            --spotlight: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(150, 200, 255, 0.005) 30%, transparent 60%);
-            --pulse-color: rgba(59, 130, 246, 0.15);
-        }
-
-        [data-theme="light"] {
-            --bg-color: #f5f5f7;
-            --text-main: #1d1d1f;
-            --text-muted: rgba(0, 0, 0, 0.4);
-            --text-sub: rgba(0, 0, 0, 0.7);
-
-            --glass-bg: linear-gradient(150deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.3) 100%);
-            --glass-border: rgba(0, 0, 0, 0.06);
-            --glass-hover-top: rgba(255, 255, 255, 0.9);
-            --glass-hover-left: rgba(255, 255, 255, 0.7);
-
-            --grad-text: linear-gradient(110deg, #1d1d1f 0%, #a1a1a6 30%, #1d1d1f 50%, #a1a1a6 70%, #1d1d1f 100%);
-            --aurora-1: rgba(14, 165, 233, 0.15);
-            --aurora-2: rgba(16, 185, 129, 0.12);
-            --aurora-3: rgba(139, 92, 246, 0.1);
-
-            --cursor-dot: #1d1d1f;
-            --cursor-ring: rgba(0, 0, 0, 0.15);
-            --cursor-hover: rgba(0, 0, 0, 0.05);
-            --cursor-border: rgba(0, 0, 0, 0.2);
-            --spotlight: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.01) 30%, transparent 60%);
-            --pulse-color: rgba(0, 0, 0, 0.05);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none !important; -webkit-tap-highlight-color: transparent; }
-
-        body.custom-cursor-active, body.custom-cursor-active * { cursor: none !important; }
-
-        ::selection { background: var(--cursor-ring); color: var(--text-main); }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color); color: var(--text-main);
-            overflow-x: hidden; min-height: 100vh;
-            -webkit-font-smoothing: antialiased; scroll-behavior: smooth;
-            transition: background-color 0.6s var(--ease-base), color 0.6s var(--ease-base);
-        }
-
-        .nav-downloads-container { position: absolute; top: 1.25rem; left: 1.25rem; z-index: 100; perspective: 1200px; }
-        .theme-toggle-container { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 100; perspective: 1200px; }
-        @media (min-width: 640px) {
-            .nav-downloads-container { top: 2rem; left: 2rem; }
-            .theme-toggle-container { top: 2rem; right: 2rem; }
-        }
-
-        .mini-terminal-btn {
-            --rotX: 0deg; --rotY: 0deg; --transX: 0px; --transY: 0px;
-            position: relative; display: flex; align-items: center; gap: 10px;
-            height: 36px; padding: 0 14px; border-radius: 12px; text-decoration: none;
-            transform-style: preserve-3d; will-change: transform; transition: transform 0.5s var(--ease-bounce);
-            animation: pulseShadow 4s ease-in-out infinite alternate;
-        }
-        @keyframes pulseShadow { 0% { box-shadow: 0 0 0 0 transparent; } 100% { box-shadow: 0 0 20px 2px var(--pulse-color); } }
-        .mini-terminal-btn:hover { animation: none; }
-        .mini-terminal-btn:active { transform: perspective(800px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(0.95, 0.95, 0.95) !important; }
-
-        .mini-terminal-btn .glass-pane {
-            position: absolute; inset: 0; border-radius: inherit; background: var(--glass-bg);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 5px 15px rgba(0, 0, 0, 0.15);
-            transition: all 0.5s var(--ease-base); overflow: hidden; z-index: 1;
-        }
-        .mini-terminal-btn.is-tracking .glass-pane {
-            border-top-color: var(--glass-hover-top); border-left-color: var(--glass-hover-left);
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-        .mini-terminal-btn .dynamic-glare {
-            position: absolute; inset: 0; opacity: 0; z-index: 2; pointer-events: none;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.2) 0%, transparent 60%);
-        }
-        .mini-terminal-btn.is-tracking .dynamic-glare { opacity: 1; }
-
-        .mini-mac-dots { position: relative; z-index: 10; display: flex; gap: 5px; transform: translateZ(5px); transition: transform 0.5s var(--ease-bounce); }
-        .mini-terminal-btn.is-tracking .mini-mac-dots { transform: translate3d(calc(var(--transX) * 0.3), calc(var(--transY) * 0.3), 10px); }
-        .mini-dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5), inset 0 -1px 1px rgba(0, 0, 0, 0.3); }
-        .mini-dot.red { background: #ff5f56; } .mini-dot.yel { background: #ffbd2e; } .mini-dot.grn { background: #27c93f; }
-
-        .mini-term-body {
-            position: relative; z-index: 10; display: flex; align-items: center; font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem; color: var(--text-main); font-weight: 600; padding-left: 12px;
-            border-left: 1px solid rgba(255, 255, 255, 0.1); transform: translateZ(5px); transition: transform 0.5s var(--ease-bounce); pointer-events: none;
-        }
-        .mini-terminal-btn.is-tracking .mini-term-body { transform: translate3d(calc(var(--transX) * 0.6), calc(var(--transY) * 0.6), 15px); }
-
-        [data-theme="light"] .mini-terminal-btn .glass-pane { background: rgba(255, 255, 255, 0.6); border-color: rgba(0, 0, 0, 0.1); }
-        [data-theme="light"] .mini-term-body { color: #000; border-left-color: rgba(0, 0, 0, 0.15); }
-
-        .theme-toggle {
-            --toggle-w: 64px; --toggle-h: 34px; --pad: 3px; position: relative; display: block;
-            width: var(--toggle-w); height: var(--toggle-h); border-radius: 50px; background: rgba(255, 255, 255, 0.05);
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.08); transition: background 0.4s var(--ease-base);
-        }
-        [data-theme="light"] .theme-toggle { background: rgba(0, 0, 0, 0.06); box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1); }
-
-        .toggle-thumb {
-            position: absolute; top: var(--pad); left: var(--pad);
-            width: calc(var(--toggle-h) - (var(--pad) * 2)); height: calc(var(--toggle-h) - (var(--pad) * 2));
-            border-radius: 50%; background: linear-gradient(145deg, #d4d4d8, #71717a);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); transition: transform 0.5s var(--ease-bounce), background 0.4s var(--ease-base); pointer-events: none;
-        }
-        [data-theme="light"] .toggle-thumb { transform: translateX(calc(var(--toggle-w) - var(--toggle-h))); background: linear-gradient(145deg, #ffffff, #e4e4e7); }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--cursor-ring); border-radius: 10px; }
-
-        #spotlight { display: none; }
-        @media (hover: hover) and (pointer: fine) {
-            #cursor-dot { width: 6px; height: 6px; background-color: var(--cursor-dot); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000; transition: opacity 0.2s var(--ease-base); }
-            #cursor-ring { width: 36px; height: 36px; border: 1px solid var(--cursor-ring); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: width 0.3s var(--ease-bounce), height 0.3s var(--ease-bounce), border-color 0.3s ease, background-color 0.3s ease; }
-            #spotlight { display: block; position: fixed; top: 0; left: 0; width: 1200px; height: 1200px; border-radius: 50%; pointer-events: none; z-index: 0; background: var(--spotlight); }
-
-            body.hovering-link #cursor-ring { width: 50px; height: 50px; background-color: var(--cursor-hover); border-color: var(--cursor-border); backdrop-filter: blur(4px); }
-            body.hovering-link #cursor-dot { opacity: 0; }
-            body.hovering-card #cursor-ring { width: 150px; height: 150px; background-color: transparent; border-color: var(--cursor-ring); box-shadow: 0 0 50px var(--cursor-hover); }
-            body.hovering-card #cursor-dot { opacity: 0; }
-        }
-        @media (hover: none), (pointer: coarse) { #cursor-dot, #cursor-ring { display: none !important; } }
-
-        .aurora-container { position: fixed; inset: -20%; width: 140%; height: 140%; z-index: -1; pointer-events: none; overflow: hidden; }
-        .aurora-blob-1, .aurora-blob-2, .aurora-blob-3 { position: absolute; border-radius: 50%; }
-        .aurora-blob-1 { width: 70vw; height: 70vw; top: -10%; left: 0%; background: radial-gradient(closest-side, var(--aurora-1) 0%, transparent 100%); animation: drift1 30s ease-in-out infinite alternate; }
-        .aurora-blob-2 { width: 80vw; height: 80vw; bottom: -10%; right: -10%; background: radial-gradient(closest-side, var(--aurora-2) 0%, transparent 100%); animation: drift2 35s ease-in-out infinite alternate-reverse; }
-        .aurora-blob-3 { width: 60vw; height: 60vw; top: 30%; left: 20%; background: radial-gradient(closest-side, var(--aurora-3) 0%, transparent 100%); animation: drift3 25s ease-in-out infinite alternate; }
-
-        @keyframes drift1 { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(6%, 10%, 0); } }
-        @keyframes drift2 { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-8%, -6%, 0); } }
-        @keyframes drift3 { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(12%, -12%, 0); } }
-
-        .tvos-card {
-            --rotX: 0deg; --rotY: 0deg; --transX: 0px; --transY: 0px;
-            position: relative; height: 500px; transform-style: preserve-3d;
-            transition: transform 0.5s var(--ease-bounce), opacity 0.5s var(--ease-base), filter 0.5s ease;
-            display: block; border-radius: 2rem; opacity: 1; z-index: 10;
-        }
-        .ambient-glow { position: absolute; inset: 10%; border-radius: 50%; z-index: -1; background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%); opacity: 0; filter: blur(40px); transition: opacity 0.5s ease; pointer-events: none; }
-        [data-theme="light"] .ambient-glow { background: radial-gradient(circle, rgba(0, 0, 0, 0.15), transparent 70%); }
-        .tvos-card.is-tracking .ambient-glow { opacity: 1; }
-
-        body.hovering-card .tvos-card:not(.is-tracking) { opacity: 0.5; filter: blur(3px); transform: scale3d(0.97, 0.97, 0.97); }
-        .tvos-card.is-tracking { z-index: 30; opacity: 1; filter: blur(0); }
-        .tvos-card:active { transform: perspective(1200px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(0.98, 0.98, 0.98) !important; }
-
-        .glass-pane {
-            position: absolute; inset: 0; border-radius: 2rem; background: var(--glass-bg);
-            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 20px 40px -5px rgba(0, 0, 0, 0.8);
-            overflow: hidden; border: 1px solid var(--glass-border); transition: border-color 0.5s ease; transform-style: preserve-3d; z-index: 1;
-        }
-        .tvos-card.is-tracking .glass-pane { border-top-color: var(--glass-hover-top); border-left-color: var(--glass-hover-left); }
-
-        .liquid-sheen {
-            position: absolute; inset: -150%; background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.15) 48%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.15) 52%, transparent 60%);
-            transform: translate(var(--sheenX, 0), var(--sheenY, 0)) rotate(25deg); opacity: 0; z-index: 2; pointer-events: none; transition: opacity 0.6s ease;
-        }
-        .tvos-card.is-tracking .liquid-sheen { opacity: 1; }
-
-        .glass-pane::before {
-            content: ""; position: absolute; inset: -1px; border-radius: 2rem; padding: 1px;
-            background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.7), transparent 40%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0; z-index: 5; transition: opacity 0.3s ease;
-        }
-        .tvos-card.is-tracking .glass-pane::before { opacity: 1; }
-
-        .shadow-layer { position: absolute; inset: 0; border-radius: 2rem; opacity: 0; pointer-events: none; z-index: 0; transition: opacity 0.5s ease; }
-        .tvos-card.is-tracking .shadow-layer { opacity: 1; }
-
-        .film-grain {
-            position: absolute; inset: 0; border-radius: 2rem; overflow: hidden;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.04; pointer-events: none; z-index: 3; mask-image: radial-gradient(white, black);
-        }
-
-        .dynamic-glare {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 2rem;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.12) 0%, rgba(150, 200, 255, 0.04) 20%, transparent 60%);
-            opacity: 0; pointer-events: none; z-index: 4;
-        }
-        .tvos-card.is-tracking .dynamic-glare { opacity: 1; }
-
-        .device-halo {
-            position: absolute; top: 45%; left: 50%; width: 220px; height: 220px; background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 60%);
-            transform: translate(-50%, -50%) translateZ(5px); border-radius: 50%; pointer-events: none; z-index: 6;
-        }
-
-        @keyframes floatIdle { 0% { transform: translate3d(0, 0, 15px); } 100% { transform: translate3d(0, -6px, 15px); } }
-
-        .device-image-layer {
-            position: absolute; top: 2.5rem; left: 0; width: 100%; height: 280px; display: flex; justify-content: center; align-items: center;
-            transform: translate3d(0, 0, 15px); transition: transform 0.5s var(--ease-bounce), filter 0.5s ease; pointer-events: none; z-index: 10;
-            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.3)); animation: floatIdle 4s ease-in-out infinite alternate;
-        }
-        .tvos-card.is-tracking .device-image-layer {
-            animation: none; transform: translate3d(var(--transX), var(--transY), 60px) scale(1.05);
-            filter: drop-shadow(calc(var(--transX) * -1) calc(var(--transY) * -1 + 30px) 35px rgba(0, 0, 0, 0.45));
-        }
-        .device-image-layer img { max-height: 100%; width: auto; object-fit: contain; }
-
-        .content-layer {
-            position: absolute; bottom: 0; left: 0; width: 100%; padding: 0 1.5rem 2.5rem 1.5rem;
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            z-index: 15; transform: translate3d(0, 0, 5px); transition: transform 0.5s var(--ease-bounce); pointer-events: none;
-        }
-        .tvos-card.is-tracking .content-layer { transform: translate3d(calc(var(--transX) * 0.4), calc(var(--transY) * 0.4), 25px); }
-
-        .device-title { color: var(--text-main); }
-        .device-sub { color: var(--text-muted); }
-        .device-tag { color: var(--text-sub); }
-
-        .magnetic-clear { position: relative; display: inline-flex; transform-style: preserve-3d; color: var(--text-sub); transition: color 0.4s ease; }
-        .nav-platter { position: absolute; inset: 0; border-radius: 99px; background: transparent; transition: all 0.4s ease; z-index: 0; border: 1px solid transparent; }
-        .magnetic-clear:hover .nav-platter, .magnetic-clear.is-magnetized .nav-platter {
-            background: var(--glass-bg); backdrop-filter: blur(15px); border-color: var(--glass-border); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        .magnetic-clear:hover { color: var(--text-main); }
-        .magnetic-clear:active { transform: scale(0.96) !important; }
-
-        .animate-gradient-text {
-            background: var(--grad-text); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: textShine 6s linear infinite;
-        }
-        @keyframes textShine { 0% { background-position: 0% center; } 100% { background-position: -200% center; } }
-
-        .reveal { opacity: 0; transform: translateY(40px) scale(0.96); animation: fadeUp 1.2s forwards var(--ease-base); animation-delay: var(--delay, 0s); }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0) scale(1); } }
-    </style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLJ7DVSZW7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-WLJ7DVSZW7');
+</script>
 </head>
 
-<body class="flex flex-col items-center p-6 sm:p-14 relative">
+<body class="relative flex flex-col items-center p-6 sm:p-14">
 
-    <div id="spotlight"></div>
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
+<div id="spotlight"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
 
-    <div class="aurora-container">
-        <div class="aurora-blob-1"></div>
-        <div class="aurora-blob-2"></div>
-        <div class="aurora-blob-3"></div>
-    </div>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
 
-    <div class="nav-downloads-container reveal" style="--delay: 0.1s;">
-        <a href="downloads" class="spatial-nav-element mini-terminal-btn interactive-el" id="nav-downloads" aria-label="Go to Downloads">
-            <div class="glass-pane"><div class="dynamic-glare"></div></div>
-            <div class="mini-mac-dots"><div class="mini-dot red"></div><div class="mini-dot yel"></div><div class="mini-dot grn"></div></div>
-            <div class="mini-term-body"><span style="color: #3b82f6; margin-right: 4px;">~</span>./dl<span class="animate-pulse ml-[2px]">_</span></div>
-        </a>
-    </div>
+<div class="absolute left-5 top-5 z-50 sm:left-8 sm:top-8" style="perspective: 1200px">
+  <a href="downloads" class="term-btn reveal" aria-label="Open the download terminal">
+    <span class="pane"></span>
+    <span class="term-dots" aria-hidden="true">
+      <i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i>
+    </span>
+    <span class="term-label"><span class="mr-1 text-blue-500">~</span>./dl<span class="blink">_</span></span>
+  </a>
+</div>
 
-    <div class="theme-toggle-container reveal" style="--delay: 0.15s;">
-        <div class="theme-toggle interactive-el" id="themeSwitcher"><div class="toggle-thumb"></div></div>
-    </div>
+<div class="absolute right-5 top-5 z-50 sm:right-8 sm:top-8">
+  <button type="button" class="theme-switch reveal" data-theme-toggle></button>
+</div>
 
-    <main class="w-full max-w-6xl mt-12 mb-32 z-10 flex flex-col items-center">
-        <header class="mb-16 sm:mb-24 reveal flex flex-col items-center text-center" style="--delay: 0.05s;">
-            <div class="flex items-center gap-4 mb-5">
-                <div class="h-[2px] w-6 bg-gray-400 rounded-full opacity-50"></div>
-                <span class="text-[10px] sm:text-[12px] font-extrabold tracking-[0.4em] uppercase device-sub">Project ReVork</span>
-                <div class="h-[2px] w-6 bg-gray-400 rounded-full opacity-50"></div>
-            </div>
-            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter device-title">
-                Select <span class="animate-gradient-text">Hardware.</span>
-            </h1>
-        </header>
+<main class="z-10 mb-32 mt-12 flex w-full max-w-6xl flex-col items-center">
 
-        <div id="glass-container" class="flex flex-wrap justify-center gap-x-10 gap-y-16 w-full max-w-[1150px]">
-            <a href="lemonadep" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.2s;">
-                <div class="ambient-glow"></div><div class="shadow-layer"></div>
-                <div class="glass-pane"><div class="liquid-sheen"></div><div class="dynamic-glare"></div><div class="film-grain"></div></div>
-                <div class="device-halo"></div>
-                <div class="device-image-layer"><img src="assets/9p_img.png" alt="OnePlus 9 Pro"></div>
-                <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Hasselblad Edition</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 9 Pro</h2>
-                    <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">LE2123 / lemonadep</span>
-                </div>
-            </a>
+  <header class="reveal mb-16 flex flex-col items-center text-center sm:mb-24">
+    <p class="mb-5 flex items-center gap-4">
+      <span class="h-px w-6 rounded-full bg-current opacity-30" aria-hidden="true"></span>
+      <span class="text-[10px] font-extrabold uppercase tracking-[0.4em] text-dim sm:text-xs">Project ReVork</span>
+      <span class="h-px w-6 rounded-full bg-current opacity-30" aria-hidden="true"></span>
+    </p>
+    <h1 class="text-5xl font-bold tracking-tighter text-title sm:text-7xl lg:text-8xl">
+      Select <span class="sheen">Hardware.</span>
+    </h1>
+  </header>
 
-            <a href="lemonade" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.25s;">
-                <div class="ambient-glow"></div><div class="shadow-layer"></div>
-                <div class="glass-pane"><div class="liquid-sheen"></div><div class="dynamic-glare"></div><div class="film-grain"></div></div>
-                <div class="device-halo"></div>
-                <div class="device-image-layer" style="animation-delay: -1s;"><img src="assets/9_img.png" alt="OnePlus 9"></div>
-                <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Standard</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 9</h2>
-                    <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">LE2113 / lemonade</span>
-                </div>
-            </a>
+  <div class="flex w-full max-w-[1150px] flex-wrap justify-center gap-x-10 gap-y-16">
 
-            <a href="lemonades" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.3s;">
-                <div class="ambient-glow"></div><div class="shadow-layer"></div>
-                <div class="glass-pane"><div class="liquid-sheen"></div><div class="dynamic-glare"></div><div class="film-grain"></div></div>
-                <div class="device-halo"></div>
-                <div class="device-image-layer" style="animation-delay: -2s;"><img src="assets/9r_img.png" alt="OnePlus 9R"></div>
-                <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Global Variant</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 9R</h2>
-                    <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">LE2101 / lemonades</span>
-                </div>
-            </a>
+    <a href="lemonadep" class="card device-card reveal w-full flex-none sm:w-[320px] lg:w-[340px]">
+      <span class="ambient"></span>
+      <span class="shadow"></span>
+      <span class="pane"></span>
+      <span class="halo"></span>
+      <span class="device-shot">
+        <picture>
+          <source srcset="assets/9p_img.webp" type="image/webp">
+          <img src="assets/9p_img.png" alt="OnePlus 9 Pro" width="461" height="541" decoding="async" fetchpriority="high">
+        </picture>
+      </span>
+      <span class="device-meta">
+        <span class="mb-2 block text-[9px] font-extrabold uppercase tracking-[0.4em] text-sub sm:text-[10px]">Hasselblad Edition</span>
+        <h2 class="mb-1 text-2xl font-extrabold leading-none tracking-tight text-title sm:text-[28px]">OnePlus 9 Pro</h2>
+        <span class="mt-1 block font-mono text-[10px] tracking-[0.2em] text-dim">LE2123 / lemonadep</span>
+      </span>
+    </a>
 
-            <a href="instantnoodlep" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.35s;">
-                <div class="ambient-glow"></div><div class="shadow-layer"></div>
-                <div class="glass-pane"><div class="liquid-sheen"></div><div class="dynamic-glare"></div><div class="film-grain"></div></div>
-                <div class="device-halo"></div>
-                <div class="device-image-layer" style="animation-delay: -0.5s;"><img src="assets/8p_img.png" alt="OnePlus 8 Pro"></div>
-                <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Classic Pro</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 8 Pro</h2>
-                    <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">IN2023 / instantnoodlep</span>
-                </div>
-            </a>
+    <a href="lemonade" class="card device-card reveal w-full flex-none sm:w-[320px] lg:w-[340px]">
+      <span class="ambient"></span>
+      <span class="shadow"></span>
+      <span class="pane"></span>
+      <span class="halo"></span>
+      <span class="device-shot" style="--bob-offset: -1s">
+        <picture>
+          <source srcset="assets/9_img.webp" type="image/webp">
+          <img src="assets/9_img.png" alt="OnePlus 9" width="574" height="640" decoding="async" loading="lazy">
+        </picture>
+      </span>
+      <span class="device-meta">
+        <span class="mb-2 block text-[9px] font-extrabold uppercase tracking-[0.4em] text-sub sm:text-[10px]">Standard</span>
+        <h2 class="mb-1 text-2xl font-extrabold leading-none tracking-tight text-title sm:text-[28px]">OnePlus 9</h2>
+        <span class="mt-1 block font-mono text-[10px] tracking-[0.2em] text-dim">LE2113 / lemonade</span>
+      </span>
+    </a>
 
-            <a href="kebab" class="tvos-card flex-none w-full sm:w-[320px] lg:w-[340px] reveal interactive-el" style="--delay: 0.4s;">
-                <div class="ambient-glow"></div><div class="shadow-layer"></div>
-                <div class="glass-pane"><div class="liquid-sheen"></div><div class="dynamic-glare"></div><div class="film-grain"></div></div>
-                <div class="device-halo"></div>
-                <div class="device-image-layer" style="animation-delay: -1.5s;"><img src="assets/8t_img.png" alt="OnePlus 8T"></div>
-                <div class="content-layer">
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase mb-2 block drop-shadow-sm device-tag">Performance</span>
-                    <h2 class="text-2xl sm:text-[28px] font-extrabold tracking-tight mb-1 leading-none device-title">OnePlus 8T</h2>
-                    <span class="text-[10px] font-mono tracking-[0.2em] mt-1 device-sub">KB2003 / kebab</span>
-                </div>
-            </a>
-        </div>
-    </main>
+    <a href="lemonades" class="card device-card reveal w-full flex-none sm:w-[320px] lg:w-[340px]">
+      <span class="ambient"></span>
+      <span class="shadow"></span>
+      <span class="pane"></span>
+      <span class="halo"></span>
+      <span class="device-shot" style="--bob-offset: -2s">
+        <picture>
+          <source srcset="assets/9r_img.webp" type="image/webp">
+          <img src="assets/9r_img.png" alt="OnePlus 9R" width="526" height="640" decoding="async" loading="lazy">
+        </picture>
+      </span>
+      <span class="device-meta">
+        <span class="mb-2 block text-[9px] font-extrabold uppercase tracking-[0.4em] text-sub sm:text-[10px]">Global Variant</span>
+        <h2 class="mb-1 text-2xl font-extrabold leading-none tracking-tight text-title sm:text-[28px]">OnePlus 9R</h2>
+        <span class="mt-1 block font-mono text-[10px] tracking-[0.2em] text-dim">LE2101 / lemonades</span>
+      </span>
+    </a>
 
-    <footer class="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center text-[10px] sm:text-[12px] device-sub font-extrabold tracking-[0.4em] reveal uppercase pt-8 pb-10 border-t border-gray-500/20 z-10 gap-6 sm:gap-0" style="--delay: 0.5s;">
-        <span class="text-sub">© 2026 ReVork</span>
-        <div class="flex gap-4 sm:gap-6">
-            <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
-                <div class="nav-platter"></div>
-                <span class="relative z-10 transition-colors duration-300 group-hover:text-white">GitHub</span>
-            </a>
-            <a href="https://t.me/ReVorkHub" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-6 rounded-full group interactive-el">
-                <div class="nav-platter"></div>
-                <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Telegram</span>
-            </a>
-        </div>
-    </footer>
+    <a href="instantnoodlep" class="card device-card reveal w-full flex-none sm:w-[320px] lg:w-[340px]">
+      <span class="ambient"></span>
+      <span class="shadow"></span>
+      <span class="pane"></span>
+      <span class="halo"></span>
+      <span class="device-shot" style="--bob-offset: -0.5s">
+        <picture>
+          <source srcset="assets/8p_img.webp" type="image/webp">
+          <img src="assets/8p_img.png" alt="OnePlus 8 Pro" width="500" height="500" decoding="async" loading="lazy">
+        </picture>
+      </span>
+      <span class="device-meta">
+        <span class="mb-2 block text-[9px] font-extrabold uppercase tracking-[0.4em] text-sub sm:text-[10px]">Classic Pro</span>
+        <h2 class="mb-1 text-2xl font-extrabold leading-none tracking-tight text-title sm:text-[28px]">OnePlus 8 Pro</h2>
+        <span class="mt-1 block font-mono text-[10px] tracking-[0.2em] text-dim">IN2023 / instantnoodlep</span>
+      </span>
+    </a>
 
-    <script>
-        // --- Clean URL Router (Strip .html) ---
-        if (window.location.pathname.endsWith('.html')) {
-            const cleanPath = window.location.pathname.replace(/\.html$/, '');
-            window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
-        }
+    <a href="kebab" class="card device-card reveal w-full flex-none sm:w-[320px] lg:w-[340px]">
+      <span class="ambient"></span>
+      <span class="shadow"></span>
+      <span class="pane"></span>
+      <span class="halo"></span>
+      <span class="device-shot" style="--bob-offset: -1.5s">
+        <picture>
+          <source srcset="assets/8t_img.webp" type="image/webp">
+          <img src="assets/8t_img.png" alt="OnePlus 8T" width="539" height="640" decoding="async" loading="lazy">
+        </picture>
+      </span>
+      <span class="device-meta">
+        <span class="mb-2 block text-[9px] font-extrabold uppercase tracking-[0.4em] text-sub sm:text-[10px]">Performance</span>
+        <h2 class="mb-1 text-2xl font-extrabold leading-none tracking-tight text-title sm:text-[28px]">OnePlus 8T</h2>
+        <span class="mt-1 block font-mono text-[10px] tracking-[0.2em] text-dim">KB2003 / kebab</span>
+      </span>
+    </a>
 
-        const themeToggle = document.getElementById('themeSwitcher');
-        const htmlEl = document.documentElement;
-        const savedTheme = localStorage.getItem('revork-theme') || 'dark';
-        htmlEl.setAttribute('data-theme', savedTheme);
+  </div>
+</main>
 
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = htmlEl.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                htmlEl.setAttribute('data-theme', newTheme);
-                localStorage.setItem('revork-theme', newTheme);
-            });
-        }
+<footer class="reveal z-10 flex w-full max-w-5xl flex-col items-center gap-6 hairline pb-10 pt-8 text-[10px] font-extrabold uppercase tracking-[0.4em] text-sub sm:flex-row sm:justify-between sm:gap-0 sm:text-xs">
+  <span>&copy; 2026 ReVork</span>
+  <nav class="flex gap-4 sm:gap-6">
+    <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener" class="magnetic group rounded-full px-6 py-3">
+      <span class="platter"></span>
+      <span class="relative z-10">GitHub</span>
+    </a>
+    <a href="https://t.me/ReVorkHub" target="_blank" rel="noopener" class="magnetic group rounded-full px-6 py-3">
+      <span class="platter"></span>
+      <span class="relative z-10">Telegram</span>
+    </a>
+  </nav>
+</footer>
 
-        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-
-        if (!isTouchDevice) {
-            document.body.classList.add('custom-cursor-active');
-
-            const dot = document.getElementById('cursor-dot');
-            const ring = document.getElementById('cursor-ring');
-            const spotlight = document.getElementById('spotlight');
-
-            const cards = Array.from(document.querySelectorAll('.tvos-card'));
-            const magneticElements = Array.from(document.querySelectorAll('.magnetic-clear'));
-            const spatialNavs = Array.from(document.querySelectorAll('.spatial-nav-element'));
-
-            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-            let cursorX = mouseX, cursorY = mouseY;
-
-            cards.forEach(card => card.phys = { currRotX: 0, currRotY: 0, tarRotX: 0, tarRotY: 0, isHovered: false });
-            magneticElements.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false });
-            spatialNavs.forEach(nav => nav.phys = { currRotX: 0, currRotY: 0, tarRotX: 0, tarRotY: 0, isHovered: false });
-
-            window.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX; mouseY = e.clientY;
-                if (dot) dot.style.transform = `translate3d(${mouseX - 3}px, ${mouseY - 3}px, 0)`;
-            }, { passive: true });
-
-            function physicsTick() {
-                cursorX += (mouseX - cursorX) * 0.15;
-                cursorY += (mouseY - cursorY) * 0.15;
-
-                const isHoveringCard = document.body.classList.contains('hovering-card');
-                const isHoveringLink = document.body.classList.contains('hovering-link');
-                const offset = isHoveringCard ? 75 : (isHoveringLink ? 25 : 19);
-
-                if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
-                if (spotlight) spotlight.style.transform = `translate3d(${cursorX - 600}px, ${cursorY - 600}px, 0)`;
-
-                spatialNavs.forEach(nav => {
-                    if (nav.phys.isHovered) {
-                        nav.phys.currRotX += (nav.phys.tarRotX - nav.phys.currRotX) * 0.2;
-                        nav.phys.currRotY += (nav.phys.tarRotY - nav.phys.currRotY) * 0.2;
-                        nav.style.setProperty('--rotX', `${nav.phys.currRotX}deg`);
-                        nav.style.setProperty('--rotY', `${nav.phys.currRotY}deg`);
-                        nav.style.setProperty('--transX', `${nav.phys.currRotY * 0.8}px`);
-                        nav.style.setProperty('--transY', `${nav.phys.currRotX * -0.8}px`);
-                        nav.style.transform = `perspective(800px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(1.05, 1.05, 1.05)`;
-                    }
-                });
-
-                cards.forEach(card => {
-                    if (card.phys.isHovered) {
-                        card.phys.currRotX += (card.phys.tarRotX - card.phys.currRotX) * 0.15;
-                        card.phys.currRotY += (card.phys.tarRotY - card.phys.currRotY) * 0.15;
-                        card.style.setProperty('--rotX', `${card.phys.currRotX}deg`);
-                        card.style.setProperty('--rotY', `${card.phys.currRotY}deg`);
-                        card.style.setProperty('--transX', `${card.phys.currRotY * 1.5}px`);
-                        card.style.setProperty('--transY', `${card.phys.currRotX * -1.5}px`);
-                        card.style.transform = `perspective(1200px) rotateX(var(--rotX)) rotateY(var(--rotY)) scale3d(1.04, 1.04, 1.04)`;
-
-                        const shadowLayer = card.querySelector('.shadow-layer');
-                        if (shadowLayer) shadowLayer.style.transform = `translate3d(${card.phys.currRotY * -6}px, ${card.phys.currRotX * 6}px, -20px)`;
-                    }
-                });
-
-                magneticElements.forEach(btn => {
-                    if (btn.phys.isHovered) {
-                        btn.phys.currX += (btn.phys.tarX - btn.phys.currX) * 0.25;
-                        btn.phys.currY += (btn.phys.tarY - btn.phys.currY) * 0.25;
-                        btn.style.transform = `translate3d(${btn.phys.currX}px, ${btn.phys.currY}px, 0)`;
-                    }
-                });
-
-                requestAnimationFrame(physicsTick);
-            }
-            physicsTick();
-
-            document.querySelectorAll('.interactive-el').forEach(el => {
-                el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-            });
-
-            spatialNavs.forEach(nav => {
-                nav.addEventListener('mouseenter', () => { nav.phys.isHovered = true; nav.classList.add('is-tracking'); });
-                nav.addEventListener('mousemove', (e) => {
-                    const rect = nav.getBoundingClientRect();
-                    nav.phys.tarRotX = (((e.clientY - rect.top) - rect.height / 2) / (rect.height / 2)) * -15;
-                    nav.phys.tarRotY = (((e.clientX - rect.left) - rect.width / 2) / (rect.width / 2)) * 15;
-                    const pane = nav.querySelector('.glass-pane');
-                    if (pane) { pane.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`); pane.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`); }
-                });
-                nav.addEventListener('mouseleave', () => { nav.phys.isHovered = false; nav.classList.remove('is-tracking'); nav.style.transform = ''; });
-            });
-
-            cards.forEach(card => {
-                card.style.setProperty('--rotX', `0deg`); card.style.setProperty('--rotY', `0deg`);
-                card.style.setProperty('--transX', `0px`); card.style.setProperty('--transY', `0px`);
-                card.addEventListener('mouseenter', () => { card.phys.isHovered = true; card.classList.add('is-tracking'); document.body.classList.add('hovering-card'); });
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left, y = e.clientY - rect.top;
-                    card.phys.tarRotX = ((y - rect.height / 2) / (rect.height / 2)) * -5;
-                    card.phys.tarRotY = ((x - rect.width / 2) / (rect.width / 2)) * 5;
-                    const pane = card.querySelector('.glass-pane');
-                    if (pane) {
-                        pane.style.setProperty('--mouse-x', `${x}px`); pane.style.setProperty('--mouse-y', `${y}px`);
-                        pane.style.setProperty('--sheenX', `${((rect.width / 2 - x) / rect.width) * 100}%`);
-                        pane.style.setProperty('--sheenY', `${((rect.height / 2 - y) / rect.height) * 100}%`);
-                    }
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.phys.isHovered = false; card.classList.remove('is-tracking'); document.body.classList.remove('hovering-card');
-                    card.style.transform = '';
-                    const shadow = card.querySelector('.shadow-layer'); if (shadow) shadow.style.transform = '';
-                });
-            });
-
-            if (themeToggle) {
-                themeToggle.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false };
-                magneticElements.push(themeToggle);
-                themeToggle.addEventListener('mouseenter', () => themeToggle.phys.isHovered = true);
-                themeToggle.addEventListener('mousemove', (e) => {
-                    const rect = themeToggle.getBoundingClientRect();
-                    themeToggle.phys.tarX = (e.clientX - (rect.left + rect.width / 2)) * 0.15;
-                    themeToggle.phys.tarY = (e.clientY - (rect.top + rect.height / 2)) * 0.3;
-                });
-                themeToggle.addEventListener('mouseleave', () => { themeToggle.phys.isHovered = false; themeToggle.style.transform = ''; });
-            }
-
-            magneticElements.forEach(btn => {
-                if (btn.id === 'themeSwitcher') return;
-                btn.addEventListener('mouseenter', () => { btn.phys.isHovered = true; btn.classList.add('is-magnetized'); });
-                btn.addEventListener('mousemove', (e) => {
-                    const rect = btn.getBoundingClientRect();
-                    btn.phys.tarX = (e.clientX - (rect.left + rect.width / 2)) * 0.15;
-                    btn.phys.tarY = (e.clientY - (rect.top + rect.height / 2)) * 0.3;
-                });
-                btn.addEventListener('mouseleave', () => { btn.phys.isHovered = false; btn.classList.remove('is-magnetized'); btn.style.transform = ''; });
-            });
-        }
-    </script>
 </body>
 </html>

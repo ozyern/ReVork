@@ -1,1278 +1,161 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" class="page-terminal" data-theme="dark">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLJ7DVSZW7"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-WLJ7DVSZW7');
-    </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ReVork | Download Terminal</title>
-    
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <meta name="theme-color" content="#03050a">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
-        
-        :root {
-            --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
-            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.2);
-            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-            --bg-color: #03050a;
-            --text-main: #ffffff;
-            --text-muted: #86868b;
-            --text-sub: rgba(255, 255, 255, 0.5);
-            
-            --glass-bg: linear-gradient(135deg, rgba(25, 30, 40, 0.45) 0%, rgba(10, 12, 16, 0.75) 100%);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            --glass-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8), 0 30px 60px -30px rgba(0, 0, 0, 0.6);
-            
-            --title-gradient: linear-gradient(110deg, #86868b 0%, #ffffff 30%, #86868b 50%, #ffffff 70%, #86868b 100%);
-            
-            --cursor-dot: #ffffff;
-            --cursor-ring: rgba(255, 255, 255, 0.4);
-            --spotlight-bg: radial-gradient(circle, rgba(255, 255, 255, 0.055) 0%, transparent 60%);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            outline: none !important;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body.custom-cursor-active,
-        body.custom-cursor-active * {
-            cursor: none !important;
-        }
-
-        ::selection {
-            background: rgba(59, 130, 246, 0.3);
-            color: #ffffff;
-        }
-
-        html, body {
-            max-width: 100vw;
-            overflow-x: hidden;
-            background-color: var(--bg-color);
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--text-main);
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            perspective: 1200px;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
-
-        /* Ambient background */
-        .ambient-bg-wrapper {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            z-index: -2;
-            pointer-events: none;
-            background-color: var(--bg-color);
-        }
-        
-        .cyber-grid {
-            position: absolute;
-            inset: -50%;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
-            transform: perspective(800px) rotateX(65deg) translateY(-100px) translateZ(-200px);
-            animation: gridMove 25s linear infinite;
-            mask-image: radial-gradient(circle at center, black 5%, transparent 65%);
-            -webkit-mask-image: radial-gradient(circle at center, black 5%, transparent 65%);
-        }
-
-        @keyframes gridMove {
-            0% { transform: perspective(800px) rotateX(65deg) translateY(0) translateZ(-200px); }
-            100% { transform: perspective(800px) rotateX(65deg) translateY(60px) translateZ(-200px); }
-        }
-
-        .ambient-bg {
-            position: absolute;
-            inset: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 30% 40%, rgba(20, 50, 100, 0.25) 0%, transparent 45%),
-                radial-gradient(circle at 70% 60%, rgba(10, 30, 70, 0.2) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 55%);
-            filter: blur(70px);
-            animation: ambientPulse 18s ease-in-out infinite alternate;
-        }
-
-        @keyframes ambientPulse { 
-            0% { transform: scale(1) translate(0, 0); opacity: 0.7; } 
-            100% { transform: scale(1.05) translate(-2%, 2%); opacity: 1; } 
-        }
-
-        /* Hardware-accelerated cursor and spotlight */
-        #spotlight { display: none; }
-
-        #cursor-dot,
-        #cursor-ring {
-            opacity: 0;
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-            #cursor-dot {
-                width: 6px;
-                height: 6px;
-                background-color: var(--cursor-dot);
-                border-radius: 50%;
-                z-index: 10000;
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
-                will-change: transform;
-                transition: opacity 0.15s ease;
-            }
-
-            #cursor-ring {
-                width: 36px;
-                height: 36px;
-                border: 1px solid var(--cursor-ring);
-                border-radius: 50%;
-                z-index: 9999;
-                will-change: transform, width, height, background-color, border-color;
-                transition: width 0.25s var(--ease-spring), height 0.25s var(--ease-spring), border-color 0.25s ease, background-color 0.25s ease, opacity 0.15s ease;
-            }
-
-            #spotlight {
-                display: block;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 1200px;
-                height: 1200px;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 0;
-                background: var(--spotlight-bg);
-                opacity: 0;
-                will-change: transform;
-                transition: opacity 0.5s ease;
-            }
-
-            body.hovering-link #cursor-ring {
-                width: 48px;
-                height: 48px;
-                background-color: rgba(255, 255, 255, 0.1);
-                border-color: rgba(255, 255, 255, 0.85);
-                backdrop-filter: blur(4px);
-                box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
-            }
-
-            body.hovering-link #cursor-dot {
-                opacity: 0 !important;
-            }
-        }
-
-        @media (hover: none), (pointer: coarse) {
-            #cursor-dot, #cursor-ring, #spotlight { display: none !important; }
-        }
-
-        /* Navigation */
-        .magnetic-wrap {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            z-index: 100;
-            display: inline-block;
-            padding: 0.5rem;
-        }
-
-        @media (min-width: 640px) {
-            .magnetic-wrap {
-                top: 2rem;
-                left: 2rem;
-                padding: 1rem;
-            }
-        }
-        
-        .btn-liquid {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem; 
-            padding: 0.75rem 1.25rem 0.75rem 1rem;
-            border-radius: 999px;
-            color: var(--text-main);
-            font-size: 0.75rem;
-            font-weight: 800;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            text-decoration: none;
-            will-change: transform;
-            background: rgba(20, 30, 45, 0.4);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-            transition: all 0.4s var(--ease-bounce);
-        }
-
-        .btn-liquid:hover { 
-            background: rgba(40, 50, 70, 0.6);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-        }
-
-        .btn-liquid svg {
-            width: 1.25rem;
-            height: 1.25rem;
-            transition: transform 0.4s var(--ease-bounce);
-        }
-
-        .magnetic-wrap:hover .btn-liquid svg {
-            transform: translateX(-4px);
-        }
-
-        /* Terminal window container */
-        .terminal-container {
-            width: 100%;
-            max-width: 920px;
-            z-index: 10;
-            perspective: 1500px;
-        }
-        
-        .terminal-glow-wrapper { 
-            position: relative;
-            width: 100%;
-            border-radius: 24px; 
-            animation: terminalFloat 6s ease-in-out infinite alternate;
-            transition: box-shadow 0.8s ease; 
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.7); 
-        }
-
-        @keyframes terminalFloat {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-8px); }
-        }
-
-        .terminal-glow-wrapper.is-ready {
-            box-shadow: 0 0 100px rgba(255, 255, 255, 0.12) !important;
-        }
-
-        .terminal-window {
-            position: relative;
-            background: var(--glass-bg);
-            backdrop-filter: blur(50px) saturate(200%);
-            -webkit-backdrop-filter: blur(50px) saturate(200%);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 255, 255, 0.35);
-            box-shadow: var(--glass-shadow), var(--glass-highlight); 
-            border-radius: 24px;
-            transform-style: preserve-3d;
-            will-change: transform;
-            transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s var(--ease-smooth);
-        }
-
-        .terminal-window::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.0) 70%, rgba(59, 130, 246, 0.2) 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            z-index: 50;
-        }
-
-        .crt-overlay {
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
-            z-index: 40;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .crt-overlay::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            mix-blend-mode: overlay;
-        }
-
-        .terminal-window.is-tracking {
-            box-shadow: 0 70px 140px -20px rgba(0, 0, 0, 1), inset 0 1px 2px rgba(255, 255, 255, 0.5);
-        }
-
-        /* Terminal header */
-        .terminal-header {
-            display: flex;
-            align-items: center;
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 24px 24px 0 0;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            position: relative;
-            z-index: 45;
-        }
-
-        .mac-dots { display: flex; gap: 9px; }
-
-        .mac-dot { 
-            width: 13px;
-            height: 13px;
-            border-radius: 50%;
-            opacity: 0;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), inset 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.8);
-            transition: transform 0.3s var(--ease-bounce);
-            position: relative;
-            animation: popIn 0.5s forwards var(--ease-bounce);
-        }
-
-        .mac-dot:hover { transform: scale(1.15); }
-        
-        .dot-red { background-color: #ff5f56; color: #ff5f56; animation-delay: 0.4s; } 
-        .dot-yel { background-color: #ffbd2e; color: #ffbd2e; animation-delay: 0.5s; } 
-        .dot-grn { background-color: #27c93f; color: #27c93f; animation-delay: 0.6s; }
-
-        @keyframes popIn {
-            to { opacity: 1; transform: scale(1); }
-            from { opacity: 0; transform: scale(0.5); }
-        }
-        
-        .terminal-title {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-        }
-
-        /* Dropdowns */
-        .dropdown-container {
-            position: relative;
-            z-index: 100;
-            padding: 1.5rem;
-        }
-
-        @media (min-width: 640px) {
-            .dropdown-container { padding: 2rem 2.5rem; }
-        }
-
-        .footer-container { position: relative; z-index: 10; }
-
-        .custom-dd-wrapper {
-            position: relative;
-            width: 100%;
-            transition: z-index 0s;
-        }
-
-        .custom-dd-wrapper.is-active { z-index: 999 !important; }
-
-        .custom-dd-btn {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(10, 15, 25, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.05);
-            padding: 1.1rem 1.25rem;
-            border-radius: 14px;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.4s var(--ease-bounce);
-        }
-
-        @media (min-width: 640px) {
-            .custom-dd-btn {
-                padding: 1.25rem 1.5rem;
-                font-size: 0.95rem;
-                border-radius: 16px;
-            }
-        }
-
-        .custom-dd-btn:hover:not(.disabled) {
-            background: rgba(30, 40, 60, 0.5);
-            border-color: rgba(255, 255, 255, 0.35);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .custom-dd-btn.disabled {
-            opacity: 0.4;
-            pointer-events: none;
-            background: rgba(0, 0, 0, 0.3);
-            box-shadow: none;
-        }
-
-        .custom-dd-btn[aria-expanded="true"] {
-            border-color: rgba(255, 255, 255, 0.8);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
-            transform: translateY(0);
-        }
-
-        .custom-dd-btn svg {
-            transition: transform 0.5s var(--ease-bounce);
-        }
-
-        .custom-dd-btn[aria-expanded="true"] svg {
-            transform: rotate(180deg);
-            color: #ffffff;
-        }
-        
-        .custom-dd-menu {
-            position: absolute;
-            top: calc(100% + 10px);
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: #090b10;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            padding: 0.5rem;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transform-origin: top center;
-            transform: translateY(-15px) scale(0.95);
-            transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.5s var(--ease-bounce);
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset, 0 50px 100px -10px rgba(0, 0, 0, 1);
-        }
-
-        .custom-dd-menu.show {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-            transform: translateY(0) scale(1);
-        }
-        
-        .custom-dd-item { 
-            padding: 0.85rem 1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            color: var(--text-muted); 
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.3s var(--ease-bounce); 
-            opacity: 0;
-            transform: translateX(-10px); 
-        }
-
-        @media (min-width: 640px) {
-            .custom-dd-item {
-                font-size: 0.9rem;
-                padding: 1rem 1.25rem;
-            }
-        }
-        
-        .custom-dd-menu.show .custom-dd-item {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .custom-dd-item:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            transform: translateX(8px) !important;
-            box-shadow: -4px 0 15px -5px rgba(255, 255, 255, 0.2);
-        }
-
-        /* CLI footer */
-        .cli-footer {
-            font-family: 'JetBrains Mono', monospace;
-            background: rgba(5, 5, 8, 0.7);
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 0 0 24px 24px;
-            padding: 1.5rem;
-            box-shadow: inset 0 20px 20px -20px rgba(0, 0, 0, 0.9);
-        }
-
-        @media (min-width: 640px) {
-            .cli-footer { padding: 1.5rem 2.5rem; }
-        }
-
-        .term-glow-green { color: #34d399; text-shadow: 0 0 8px rgba(52, 211, 153, 0.4); }
-        .term-glow-blue { color: #60a5fa; text-shadow: 0 0 8px rgba(96, 165, 250, 0.4); }
-        .term-glow-white { color: #ffffff; text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); }
-        .term-glow-red { color: #f87171; text-shadow: 0 0 8px rgba(248, 113, 113, 0.4); }
-        .term-glow-yellow { color: #fbbf24; text-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
-        
-        .block-cursor {
-            display: inline-block;
-            width: 8px;
-            height: 16px;
-            background-color: #ffffff;
-            vertical-align: middle;
-            margin-left: 4px;
-            box-shadow: 0 0 6px #ffffff;
-        }
-
-        /* Action buttons */
-        .btn-exec {
-            background: linear-gradient(135deg, #ffffff 0%, #e4e4e7 50%, #d4d4d8 100%);
-            background-size: 200% 200%;
-            color: #000000;
-            font-weight: 800;
-            border-radius: 999px;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15), inset 0 1px 1px #ffffff;
-            transition: all 0.5s var(--ease-bounce), box-shadow 0.6s ease;
-            position: relative;
-            overflow: hidden;
-            border: none;
-        }
-        
-        .btn-exec.is-ready {
-            animation: readyPulse 2s infinite alternate, gradientShift 4s ease infinite;
-        }
-
-        @keyframes readyPulse {
-            0% { box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15), inset 0 1px 1px #ffffff; }
-            100% { box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25), 0 0 35px rgba(255, 255, 255, 0.6), inset 0 1px 1px #ffffff; }
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .btn-exec::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.9), transparent);
-            transform: rotate(45deg) translateY(-100%);
-            transition: transform 0.6s var(--ease-bounce);
-        }
-
-        .btn-exec:hover {
-            transform: translateY(-3px) scale(1.04);
-            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.35), 0 0 25px rgba(255, 255, 255, 0.5), inset 0 1px 1px #ffffff !important;
-            color: #000000;
-        }
-
-        .btn-exec:hover::after {
-            transform: rotate(45deg) translateY(100%);
-        }
-
-        .btn-exec:active {
-            transform: scale(0.95);
-        }
-
-        .btn-rst {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: var(--text-muted);
-            font-weight: 700;
-            border-radius: 999px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.4s var(--ease-bounce);
-        }
-
-        .btn-rst:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-        }
-
-        .btn-rst:active {
-            transform: scale(0.95);
-        }
-
-        /* Magnetic links */
-        .magnetic-clear {
-            position: relative;
-            display: inline-flex;
-            cursor: pointer;
-            transform-style: preserve-3d;
-            will-change: transform;
-            color: var(--text-sub);
-            transition: color 0.5s ease;
-        }
-
-        .nav-platter {
-            position: absolute;
-            inset: 0;
-            border-radius: 99px;
-            background: rgba(255, 255, 255, 0);
-            transition: all 0.5s var(--ease-bounce);
-            z-index: 0;
-            border: 1px solid transparent;
-        }
-
-        .magnetic-clear:hover .nav-platter,
-        .magnetic-clear.is-magnetized .nav-platter {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-        }
-
-        .magnetic-clear:hover { color: #ffffff; }
-
-        /* Entrance animations */
-        .app-launch {
-            opacity: 0;
-            transform: scale(0.9) translateY(50px) rotateX(-12deg);
-            filter: blur(25px);
-            animation: appMount 1.8s var(--ease-spring) forwards;
-            animation-delay: 0.1s;
-        }
-
-        @keyframes appMount {
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0) rotateX(0deg);
-                filter: blur(0);
-            }
-        }
-
-        .animate-gradient-text {
-            background: var(--title-gradient);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textShine 6s linear infinite;
-        }
-
-        @keyframes textShine {
-            0% { background-position: 0% center; }
-            100% { background-position: -200% center; }
-        }
-        
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s forwards var(--ease-spring);
-        }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .stagger-item {
-            opacity: 0;
-            transform: translateY(20px) scale(0.96);
-            animation: cascadeIn 1s forwards var(--ease-spring);
-        }
-
-        @keyframes cascadeIn {
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .stagger-1 { animation-delay: 0.5s; }
-        .stagger-2 { animation-delay: 0.65s; }
-        .stagger-3 { animation-delay: 0.8s; }
-        .stagger-4 { animation-delay: 0.95s; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReVork | Download Terminal</title>
+<meta name="description" content="Pick a device and grab the recovery image or super_empty.img you need to flash a ReVork build.">
+<link rel="canonical" href="https://ozyern.me/downloads">
+<meta name="theme-color" content="#03050a">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="ReVork | Download Terminal">
+<meta property="og:description" content="Recovery images and super_empty payloads for every supported OnePlus.">
+<meta property="og:url" content="https://ozyern.me/downloads">
+<meta property="og:image" content="https://ozyern.me/assets/apple-touch-icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap">
+<link rel="stylesheet" href="assets/revork.css">
+
+<script>
+  document.documentElement.classList.add('js');
+</script>
+<script type="module" src="assets/js/revork.js"></script>
+<script type="module" src="assets/js/downloads.js"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLJ7DVSZW7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-WLJ7DVSZW7');
+</script>
 </head>
-<body class="flex flex-col items-center px-4 sm:px-14 relative justify-between min-h-screen max-w-full">
 
-    <div class="ambient-bg-wrapper">
-        <div class="cyber-grid"></div>
-        <div class="ambient-bg"></div>
-    </div>
-    
-    <div id="spotlight"></div>
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
+<body class="relative flex min-h-screen max-w-full flex-col items-center justify-between px-4 sm:px-14">
 
-    <div class="magnetic-wrap fade-in-up" style="animation-delay: 0.4s;">
-        <a href="index" class="btn-liquid interactive-el" id="back-button">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            Home
-        </a>
-    </div>
+<div class="backdrop" aria-hidden="true">
+  <div class="grid-floor"></div>
+  <div class="haze"></div>
+</div>
 
-    <main class="flex-1 w-full max-w-full flex flex-col items-center justify-center mt-24 sm:mt-0">
-        <div class="terminal-container flex flex-col items-center app-launch mx-auto">
-            
-            <header class="mb-6 sm:mb-10 flex flex-col items-center text-center w-full">
-                <div class="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
-                    <div class="h-[1px] w-6 sm:w-8 bg-gray-600 rounded-full opacity-50"></div>
-                    <span class="text-[9px] sm:text-[10px] font-extrabold tracking-[0.4em] uppercase text-gray-400 term-glow-white" style="animation: pulse 4s infinite alternate;">Terminal Shell</span>
-                    <div class="h-[1px] w-6 sm:w-8 bg-gray-600 rounded-full opacity-50"></div>
-                </div>
-                <h1 class="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tighter drop-shadow-2xl relative">
-                    Resolve <span class="animate-gradient-text">Packages.</span>
-                </h1>
-            </header>
+<div id="spotlight"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
 
-            <div class="terminal-glow-wrapper" id="glow-wrapper">
-                <div class="terminal-window w-full" id="cmd-center">
-                    <div class="crt-overlay"></div>
-                    
-                    <div class="terminal-header relative">
-                        <div class="mac-dots">
-                            <div class="mac-dot dot-red"></div>
-                            <div class="mac-dot dot-yel"></div>
-                            <div class="mac-dot dot-grn"></div>
-                        </div>
-                        <div class="terminal-title flex items-center gap-2">
-                            <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-                            revork — -zsh — 80x24
-                        </div>
-                    </div>
+<div class="absolute left-4 top-4 z-50 p-2 sm:left-8 sm:top-8 sm:p-4">
+  <a href="index" class="back-link">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+    </svg>
+    Home
+  </a>
+</div>
 
-                    <div class="dropdown-container">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-1 relative">
-                            
-                            <div class="custom-dd-wrapper stagger-item stagger-1" id="dd-device" style="z-index: 30;">
-                                <label class="block text-[9px] sm:text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Target Hardware</label>
-                                <button class="custom-dd-btn interactive-el" aria-expanded="false">
-                                    <span class="dd-text truncate">Select Device...</span>
-                                    <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-                                </button>
-                                <div class="custom-dd-menu" id="menu-device"></div>
-                            </div>
+<main class="mt-24 flex w-full max-w-full flex-1 flex-col items-center justify-center sm:mt-0">
+  <div class="boot mx-auto flex w-full max-w-[920px] flex-col items-center" style="perspective: 1500px">
 
-                            <div class="custom-dd-wrapper stagger-item stagger-2" id="dd-component" style="z-index: 20;">
-                                <label class="block text-[9px] sm:text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Component</label>
-                                <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
-                                    <span class="dd-text text-gray-500 truncate">Awaiting Hardware...</span>
-                                    <svg class="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-                                </button>
-                                <div class="custom-dd-menu" id="menu-component"></div>
-                            </div>
+    <header class="mb-6 flex w-full flex-col items-center text-center sm:mb-10">
+      <p class="mb-2 flex items-center gap-3 sm:mb-3 sm:gap-4">
+        <span class="h-px w-6 rounded-full bg-gray-600 opacity-50 sm:w-8" aria-hidden="true"></span>
+        <span class="glow-white text-[9px] font-extrabold uppercase tracking-[0.4em] sm:text-[10px]">Terminal Shell</span>
+        <span class="h-px w-6 rounded-full bg-gray-600 opacity-50 sm:w-8" aria-hidden="true"></span>
+      </p>
+      <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl lg:text-7xl">
+        Resolve <span class="sheen">Packages.</span>
+      </h1>
+    </header>
 
-                            <div class="custom-dd-wrapper stagger-item stagger-3" id="dd-variant" style="z-index: 10;">
-                                <label class="block text-[9px] sm:text-[10px] font-extrabold tracking-[0.2em] text-gray-400 uppercase mb-2 ml-1 drop-shadow-md">Variant</label>
-                                <button class="custom-dd-btn disabled interactive-el" aria-expanded="false">
-                                    <span class="dd-text text-gray-500 truncate">Locked</span>
-                                    <svg class="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-                                </button>
-                                <div class="custom-dd-menu" id="menu-variant"></div>
-                            </div>
+    <div class="shell-frame" id="shell-frame">
+      <div class="shell w-full" id="shell">
+        <div class="crt" aria-hidden="true"></div>
 
-                        </div>
-                    </div>
+        <div class="shell-bar">
+          <span class="shell-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="shell-title flex items-center gap-2">
+            <svg class="h-3.5 w-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+            </svg>
+            revork &mdash; -zsh &mdash; 80x24
+          </span>
+        </div>
 
-                    <div class="footer-container">
-                        <div class="cli-footer stagger-item stagger-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6">
-                            
-                            <div class="text-[12.5px] sm:text-[14px] w-full sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap min-w-0 flex items-center">
-                                <span class="font-bold flex-shrink-0 term-glow-green">admin@revork</span><span class="text-white flex-shrink-0">:</span><span class="font-bold flex-shrink-0 term-glow-blue">~/bin</span><span class="term-glow-white font-bold mr-1 sm:mr-2 flex-shrink-0">$</span>
-                                <span id="cli-output" class="text-gray-400 font-medium truncate ml-1"></span><span class="animate-pulse block-cursor flex-shrink-0" style="animation-duration: 0.9s;"></span>
-                            </div>
-                            
-                            <div class="flex gap-3 w-full sm:w-auto flex-shrink-0 mt-2 sm:mt-0">
-                                <button id="btn-reset" class="btn-rst flex-1 sm:flex-none text-[11px] sm:text-xs tracking-widest px-5 sm:px-6 py-3 sm:py-3.5 interactive-el uppercase">
-                                    Clear
-                                </button>
-                                <button id="btn-resolve" class="btn-exec flex-[2] sm:flex-none text-[11px] sm:text-xs tracking-widest px-8 sm:px-10 py-3 sm:py-3.5 interactive-el uppercase">
-                                    Execute
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+        <div class="relative z-[100] p-6 sm:px-10 sm:py-8">
+          <div class="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3">
 
-                </div>
+            <div class="field" id="field-device" style="z-index: 30">
+              <label class="mb-2 ml-1 block text-[9px] font-extrabold uppercase tracking-[0.2em] text-gray-400 sm:text-[10px]" for="btn-device">Target hardware</label>
+              <button type="button" class="field-btn" id="btn-device" aria-expanded="false" aria-haspopup="listbox">
+                <span class="field-label truncate text-dim">Select device...</span>
+                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <ul class="field-menu" role="listbox" aria-labelledby="btn-device"></ul>
             </div>
+
+            <div class="field" id="field-part" style="z-index: 20">
+              <label class="mb-2 ml-1 block text-[9px] font-extrabold uppercase tracking-[0.2em] text-gray-400 sm:text-[10px]" for="btn-part">Component</label>
+              <button type="button" class="field-btn" id="btn-part" aria-expanded="false" aria-haspopup="listbox" disabled>
+                <span class="field-label truncate text-dim">Awaiting hardware...</span>
+                <svg class="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <ul class="field-menu" role="listbox" aria-labelledby="btn-part"></ul>
+            </div>
+
+            <div class="field" id="field-variant" style="z-index: 10">
+              <label class="mb-2 ml-1 block text-[9px] font-extrabold uppercase tracking-[0.2em] text-gray-400 sm:text-[10px]" for="btn-variant">Variant</label>
+              <button type="button" class="field-btn" id="btn-variant" aria-expanded="false" aria-haspopup="listbox" disabled>
+                <span class="field-label truncate text-dim">Locked</span>
+                <svg class="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <ul class="field-menu" role="listbox" aria-labelledby="btn-variant"></ul>
+            </div>
+
+          </div>
         </div>
-    </main>
 
-    <footer class="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center text-[10px] sm:text-[12px] text-gray-500 font-extrabold tracking-[0.4em] uppercase pt-6 sm:pt-8 pb-8 sm:pb-10 mt-10 sm:mt-16 border-t border-gray-700/40 z-10 gap-5 sm:gap-0 fade-in-up" style="animation-delay: 1.2s;">
-        <span class="text-sub">© 2026 ReVork</span>
-        <div class="flex gap-4 sm:gap-6">
-            <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-5 sm:px-6 rounded-full group interactive-el">
-                <div class="nav-platter"></div>
-                <span class="relative z-10 transition-colors duration-300">GitHub</span>
-            </a>
-            <a href="https://t.me/ReVorkHub" target="_blank" rel="noopener noreferrer" class="magnetic-clear py-3 px-5 sm:px-6 rounded-full group interactive-el">
-                <div class="nav-platter"></div>
-                <span class="relative z-10 transition-colors duration-300">Telegram</span>
-            </a>
+        <div class="cli relative z-10 flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center sm:gap-6">
+
+          <p class="flex w-full min-w-0 items-center overflow-hidden text-ellipsis whitespace-nowrap text-[12.5px] sm:w-auto sm:text-[14px]" aria-live="polite">
+            <span class="glow-green shrink-0 font-bold">admin@revork</span><span class="shrink-0 text-white">:</span><span class="glow-blue shrink-0 font-bold">~/bin</span><span class="glow-white mr-1 shrink-0 font-bold sm:mr-2">$</span>
+            <span id="cli-out" class="ml-1 truncate font-medium text-dim"></span><span class="caret shrink-0" aria-hidden="true"></span>
+          </p>
+
+          <div class="mt-2 flex w-full shrink-0 gap-3 sm:mt-0 sm:w-auto">
+            <button type="button" id="btn-clear" class="btn-clear flex-1 px-5 py-3 text-[11px] uppercase tracking-widest sm:flex-none sm:px-6 sm:py-3.5 sm:text-xs">Clear</button>
+            <button type="button" id="btn-run" class="btn-run flex-[2] px-8 py-3 text-[11px] uppercase tracking-widest sm:flex-none sm:px-10 sm:py-3.5 sm:text-xs">Execute</button>
+          </div>
         </div>
-    </footer>
 
-    <script>
-        // Clean URL routing: strip .html extension if on HTTP/HTTPS
-        try {
-            if (window.location.protocol.startsWith('http') && window.location.pathname.endsWith('.html')) {
-                const cleanPath = window.location.pathname.replace(/\.html$/, '');
-                window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
-            }
-        } catch (e) {}
+      </div>
+    </div>
+  </div>
+</main>
 
-        // Hardware payload registry
-        const fileDatabase = {
-            op9pro: {
-                name: 'OnePlus 9 Pro',
-                components: {
-                    super_empty: {
-                        label: 'super_empty.img',
-                        url: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_9p.img'
-                    },
-                    recovery: {
-                        label: 'Recovery Image',
-                        variants: {
-                            orangefox: {
-                                label: 'OrangeFox Project',
-                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9series.img'
-                            },
-                            twrp: {
-                                label: 'TWRP Official',
-                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_9series.img'
-                            }
-                        }
-                    }
-                }
-            },
-            op9: {
-                name: 'OnePlus 9',
-                components: {
-                    super_empty: {
-                        label: 'super_empty.img',
-                        url: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_9.img'
-                    },
-                    recovery: {
-                        label: 'Recovery Image',
-                        variants: {
-                            orangefox: {
-                                label: 'OrangeFox Project',
-                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9series.img'
-                            },
-                            twrp: {
-                                label: 'TWRP Official',
-                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_9series.img'
-                            }
-                        }
-                    }
-                }
-            },
-            op9r: {
-                name: 'OnePlus 9R',
-                components: {
-                    recovery: {
-                        label: 'Recovery Image',
-                        variants: {
-                            orangefox: {
-                                label: 'OrangeFox Project',
-                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_9R.img'
-                            }
-                        }
-                    }
-                }
-            },
-            op8pro: {
-                name: 'OnePlus 8 Pro',
-                components: {
-                    super_empty: {
-                        label: 'super_empty.img',
-                        url: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_8p.img'
-                    },
-                    recovery: {
-                        label: 'Recovery Image',
-                        variants: {
-                            orangefox: {
-                                label: 'OrangeFox Project',
-                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_8series.img'
-                            },
-                            twrp: {
-                                label: 'TWRP Official',
-                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_8p.img'
-                            }
-                        }
-                    }
-                }
-            },
-            op8t: {
-                name: 'OnePlus 8T',
-                components: {
-                    super_empty: {
-                        label: 'super_empty.img',
-                        url: 'https://github.com/ozyern/ReVork/releases/download/downloads/super_empty_8t.img'
-                    },
-                    recovery: {
-                        label: 'Recovery Image',
-                        variants: {
-                            orangefox: {
-                                label: 'OrangeFox Project',
-                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/orangefox_8series.img'
-                            },
-                            twrp: {
-                                label: 'TWRP Official',
-                                url: 'https://github.com/ozyern/ReVork/releases/download/downloads/twrp_8t.img'
-                            }
-                        }
-                    }
-                }
-            }
-        };
+<footer class="hairline z-10 mt-10 flex w-full max-w-5xl flex-col items-center gap-5 pb-8 pt-6 text-[10px] font-extrabold uppercase tracking-[0.4em] text-gray-500 sm:mt-16 sm:flex-row sm:justify-between sm:gap-0 sm:pb-10 sm:pt-8 sm:text-xs">
+  <span>&copy; 2026 ReVork</span>
+  <nav class="flex gap-4 sm:gap-6">
+    <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener" class="magnetic rounded-full px-5 py-3 sm:px-6">
+      <span class="platter"></span>
+      <span class="relative z-10">GitHub</span>
+    </a>
+    <a href="https://t.me/ReVorkHub" target="_blank" rel="noopener" class="magnetic rounded-full px-5 py-3 sm:px-6">
+      <span class="platter"></span>
+      <span class="relative z-10">Telegram</span>
+    </a>
+  </nav>
+</footer>
 
-        // Ultra-responsive cursor and 60/120fps physics engine
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-        const spotlight = document.getElementById('spotlight');
-        const cmdCenter = document.getElementById('cmd-center');
-        
-        const backWrap = document.querySelector('.magnetic-wrap');
-        const backBtn = document.getElementById('back-button');
-        const footerBtns = Array.from(document.querySelectorAll('.magnetic-clear'));
-        
-        footerBtns.forEach(btn => btn.phys = { currX: 0, currY: 0, tarX: 0, tarY: 0, isHovered: false, rect: null });
-
-        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-        let cursorX = mouseX, cursorY = mouseY;
-        let cmdHover = false, backHover = false, isCursorActive = false;
-        let cmdRect = null, backRect = null;
-        let btnCurrX = 0, btnCurrY = 0, btnTarX = 0, btnTarY = 0;
-        let rotXCurr = 0, rotYCurr = 0, rotXTar = 0, rotYTar = 0;
-
-        // Zero-overhead raw mouse listener
-        window.addEventListener('mousemove', (e) => { 
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-
-            // Instantaneous dot positioning (0 latency)
-            if (dot) dot.style.transform = `translate3d(${mouseX - 3}px, ${mouseY - 3}px, 0)`;
-
-            if (!isCursorActive) {
-                isCursorActive = true;
-                cursorX = mouseX;
-                cursorY = mouseY;
-                document.body.classList.add('custom-cursor-active');
-                if (dot) dot.style.opacity = '1';
-                if (ring) ring.style.opacity = '1';
-                if (spotlight) spotlight.style.opacity = '1';
-            }
-
-            if (cmdHover && cmdRect) {
-                const x = mouseX - cmdRect.left, y = mouseY - cmdRect.top;
-                const cX = cmdRect.width / 2, cY = cmdRect.height / 2;
-                rotXTar = ((y - cY) / cY) * -2.5; 
-                rotYTar = ((x - cX) / cX) * 2.5;
-            }
-
-            if (backHover && backRect) {
-                const cX = backRect.left + backRect.width / 2;
-                const cY = backRect.top + backRect.height / 2;
-                btnTarX = (mouseX - cX) * 0.35;
-                btnTarY = (mouseY - cY) * 0.35;
-            }
-
-            footerBtns.forEach(btn => {
-                if (btn.phys.isHovered && btn.phys.rect) {
-                    const cX = btn.phys.rect.left + btn.phys.rect.width / 2;
-                    const cY = btn.phys.rect.top + btn.phys.rect.height / 2;
-                    btn.phys.tarX = (mouseX - cX) * 0.2;
-                    btn.phys.tarY = (mouseY - cY) * 0.25;
-                }
-            });
-        }, { passive: true });
-
-        document.addEventListener('mouseenter', () => { 
-            if (isCursorActive && spotlight) spotlight.style.opacity = '1'; 
-        });
-        document.addEventListener('mouseleave', () => { 
-            if (spotlight) spotlight.style.opacity = '0'; 
-        });
-
-        if (cmdCenter) {
-            cmdCenter.addEventListener('mouseenter', () => { 
-                cmdHover = true; 
-                cmdRect = cmdCenter.getBoundingClientRect();
-                cmdCenter.classList.add('is-tracking'); 
-            });
-            cmdCenter.addEventListener('mouseleave', () => { 
-                cmdHover = false; 
-                rotXTar = 0; 
-                rotYTar = 0;
-                cmdCenter.classList.remove('is-tracking'); 
-            });
-        }
-
-        if (backWrap) {
-            backWrap.addEventListener('mouseenter', () => {
-                backHover = true;
-                backRect = backWrap.getBoundingClientRect();
-            });
-            backWrap.addEventListener('mouseleave', () => {
-                backHover = false;
-                btnTarX = 0;
-                btnTarY = 0;
-            });
-        }
-
-        footerBtns.forEach(btn => {
-            btn.addEventListener('mouseenter', () => { 
-                btn.phys.isHovered = true; 
-                btn.phys.rect = btn.getBoundingClientRect();
-                btn.classList.add('is-magnetized'); 
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.phys.isHovered = false; 
-                btn.phys.tarX = 0;
-                btn.phys.tarY = 0;
-                btn.classList.remove('is-magnetized');
-                btn.style.transform = ''; 
-            });
-        });
-
-        // High-framerate physics loop
-        function physicsTick() {
-            if (isCursorActive) {
-                // Snappy 0.35 lerp: tight follow without sluggish drag
-                cursorX += (mouseX - cursorX) * 0.35;
-                cursorY += (mouseY - cursorY) * 0.35;
-                
-                const isHoverLink = document.body.classList.contains('hovering-link');
-                const offset = isHoverLink ? 24 : 18;
-                
-                if (ring) ring.style.transform = `translate3d(${cursorX - offset}px, ${cursorY - offset}px, 0)`;
-                if (spotlight) spotlight.style.transform = `translate3d(${cursorX - 600}px, ${cursorY - 600}px, 0)`;
-                
-                rotXCurr += (rotXTar - rotXCurr) * 0.15;
-                rotYCurr += (rotYTar - rotYCurr) * 0.15;
-                if (cmdCenter) cmdCenter.style.transform = `rotateX(${rotXCurr}deg) rotateY(${rotYCurr}deg)`;
-                
-                btnCurrX += (btnTarX - btnCurrX) * 0.25;
-                btnCurrY += (btnTarY - btnCurrY) * 0.25;
-                if (backBtn) backBtn.style.transform = `translate3d(${btnCurrX}px, ${btnCurrY}px, 0)`;
-
-                footerBtns.forEach(btn => {
-                    if (btn.phys.isHovered) {
-                        btn.phys.currX += (btn.phys.tarX - btn.phys.currX) * 0.25;
-                        btn.phys.currY += (btn.phys.tarY - btn.phys.currY) * 0.25;
-                        btn.style.transform = `translate3d(${btn.phys.currX}px, ${btn.phys.currY}px, 0)`;
-                    }
-                });
-            }
-
-            requestAnimationFrame(physicsTick);
-        }
-        requestAnimationFrame(physicsTick); 
-
-        document.querySelectorAll('.interactive-el').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-        });
-
-        // Terminal typewriter output simulator
-        const cliOutput = document.getElementById('cli-output');
-        let typeTimeout;
-
-        function typeCommand(cmdText, colorClass = 'text-gray-400') {
-            clearTimeout(typeTimeout);
-            if (!cliOutput) return;
-            cliOutput.className = `font-medium truncate ml-1 ${colorClass}`;
-            cliOutput.innerText = '';
-            
-            let i = 0;
-            function typeChar() {
-                if (i < cmdText.length) {
-                    cliOutput.innerText += cmdText.charAt(i);
-                    i++;
-                    typeTimeout = setTimeout(typeChar, 14);
-                }
-            }
-            typeChar();
-        }
-
-        setTimeout(() => {
-            typeCommand("init revork_shell... done. awaiting --hardware");
-        }, 1000);
-
-        // State & Dropdown Management
-        let state = { device: null, component: null, variant: null };
-        const ddWrappers = document.querySelectorAll('.custom-dd-wrapper');
-        const btnExec = document.getElementById('btn-resolve');
-        const glowWrapper = document.getElementById('glow-wrapper');
-
-        function checkReadyState() {
-            const dev = fileDatabase[state.device];
-            const comp = dev?.components?.[state.component];
-            const isReady = Boolean(comp && (comp.url || (comp.variants && state.variant && comp.variants[state.variant])));
-
-            btnExec.classList.toggle('is-ready', isReady);
-            glowWrapper.classList.toggle('is-ready', isReady);
-        }
-
-        function closeAllDropdowns() {
-            document.querySelectorAll('.custom-dd-btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
-            document.querySelectorAll('.custom-dd-menu').forEach(m => m.classList.remove('show'));
-            ddWrappers.forEach(w => w.classList.remove('is-active'));
-        }
-
-        function setDropdownState(type, enabled, text, color) {
-            const wrapper = document.getElementById(`dd-${type}`);
-            const btn = wrapper.querySelector('.custom-dd-btn');
-            const textEl = wrapper.querySelector('.dd-text');
-            
-            btn.classList.toggle('disabled', !enabled);
-            if (text !== undefined) textEl.textContent = text;
-            textEl.style.color = color || (enabled ? '#ffffff' : 'var(--text-muted)');
-        }
-
-        function populateDropdown(type, items) {
-            const menu = document.getElementById(`menu-${type}`);
-            menu.innerHTML = '';
-            
-            items.forEach((item, idx) => {
-                const opt = document.createElement('div');
-                opt.className = 'custom-dd-item interactive-el';
-                opt.setAttribute('data-val', item.id);
-                opt.textContent = item.label;
-                opt.style.transitionDelay = `${0.04 * (idx + 1)}s`;
-                
-                opt.addEventListener('mouseenter', () => document.body.classList.add('hovering-link'));
-                opt.addEventListener('mouseleave', () => document.body.classList.remove('hovering-link'));
-                
-                opt.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    selectOption(type, item.id, item.label);
-                });
-                
-                menu.appendChild(opt);
-            });
-        }
-
-        // Initialize Device list
-        const deviceList = Object.keys(fileDatabase).map(key => ({
-            id: key,
-            label: fileDatabase[key].name
-        }));
-        populateDropdown('device', deviceList);
-
-        // Bind dropdown open/close listeners
-        ddWrappers.forEach((wrapper) => {
-            const btn = wrapper.querySelector('.custom-dd-btn');
-            const menu = wrapper.querySelector('.custom-dd-menu');
-
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (btn.classList.contains('disabled')) return;
-                
-                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-                closeAllDropdowns();
-                
-                if (!isExpanded) {
-                    wrapper.classList.add('is-active'); 
-                    btn.setAttribute('aria-expanded', 'true');
-                    menu.classList.add('show');
-                }
-            });
-        });
-
-        document.addEventListener('click', closeAllDropdowns);
-
-        function selectOption(type, value, label) {
-            closeAllDropdowns();
-            const textEl = document.querySelector(`#dd-${type} .dd-text`);
-            textEl.textContent = label;
-            textEl.style.color = '#ffffff';
-
-            if (type === 'device') {
-                state.device = value;
-                state.component = null;
-                state.variant = null;
-
-                const compData = fileDatabase[value].components;
-                const compItems = Object.keys(compData).map(k => ({ id: k, label: compData[k].label }));
-                populateDropdown('component', compItems);
-
-                setDropdownState('component', true, 'Select Format...', 'var(--text-muted)');
-                setDropdownState('variant', false, 'Locked', 'var(--text-muted)');
-                populateDropdown('variant', []);
-
-                typeCommand(`export TARGET="${value}"; awaiting --format`);
-            } else if (type === 'component') {
-                state.component = value;
-                state.variant = null;
-
-                const comp = fileDatabase[state.device].components[value];
-                if (comp.variants) {
-                    const varItems = Object.keys(comp.variants).map(k => ({ id: k, label: comp.variants[k].label }));
-                    populateDropdown('variant', varItems);
-                    setDropdownState('variant', true, 'Select Variant...', 'var(--text-muted)');
-                    typeCommand(`export COMPONENT="${value}"; awaiting --variant`);
-                } else {
-                    state.variant = 'default';
-                    populateDropdown('variant', []);
-                    setDropdownState('variant', false, 'Standard Output', '#ffffff');
-                    typeCommand(`./resolve_link.sh --ready`, 'term-glow-green');
-                }
-            } else if (type === 'variant') {
-                state.variant = value;
-                typeCommand(`./resolve_link.sh --ready`, 'term-glow-green');
-            }
-
-            checkReadyState();
-        }
-
-        document.getElementById('btn-reset').addEventListener('click', () => {
-            state = { device: null, component: null, variant: null };
-            
-            setDropdownState('device', true, 'Select Device...', 'var(--text-main)');
-            setDropdownState('component', false, 'Awaiting Hardware...', 'var(--text-muted)');
-            setDropdownState('variant', false, 'Locked', 'var(--text-muted)');
-            
-            populateDropdown('component', []);
-            populateDropdown('variant', []);
-            
-            typeCommand("clear && reset_env; awaiting --hardware");
-            checkReadyState();
-        });
-
-        btnExec.addEventListener('click', () => {
-            if (!state.device) return typeCommand("Error: Missing --hardware parameter", "term-glow-red");
-            if (!state.component) return typeCommand("Error: Missing --format parameter", "term-glow-red");
-
-            const comp = fileDatabase[state.device]?.components?.[state.component];
-            if (!comp) return typeCommand("Error 404: Payload not found in remote repository.", "term-glow-red");
-            if (comp.variants && !state.variant) return typeCommand("Error: Missing --variant parameter", "term-glow-red");
-
-            const url = comp.url || comp.variants?.[state.variant]?.url;
-            if (url) {
-                btnExec.classList.remove('is-ready');
-                glowWrapper.classList.remove('is-ready');
-                typeCommand("wget -qO- fetching_payload...", "term-glow-yellow");
-                
-                setTimeout(() => {
-                    typeCommand("200 OK: Payload found. Redirecting.", "term-glow-green");
-                    setTimeout(() => { window.location.href = url; }, 400); 
-                }, 600);
-            } else {
-                typeCommand("Error 404: Payload not found in remote repository.", "term-glow-red");
-            }
-        });
-    </script>
 </body>
 </html>

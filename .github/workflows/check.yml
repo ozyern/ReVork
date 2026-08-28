@@ -1,0 +1,27 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # assets/revork.css is committed because Pages serves the repo as-is.
+      # Rebuild it here and fail if the result differs, which is what happens
+      # when someone adds a utility class to a page and forgets `npm run build`.
+      - run: npm run build
+      - name: assets/revork.css is up to date
+        run: git diff --exit-code -- assets/revork.css
+
+      - run: npm test
