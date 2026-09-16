@@ -40,6 +40,7 @@ const CATALOG = {
       recovery: {
         label: 'Recovery Image',
         variants: {
+          orangefox_v12: { label: 'OrangeFox V12', url: asset('orangefox_8series_v12.zip') },
           orangefox: { label: 'OrangeFox Project', url: asset('orangefox_9R.img') },
         },
       },
@@ -52,6 +53,7 @@ const CATALOG = {
       recovery: {
         label: 'Recovery Image',
         variants: {
+          orangefox_v12: { label: 'OrangeFox V12', url: asset('orangefox_8series_v12.zip') },
           orangefox: { label: 'OrangeFox Project', url: asset('orangefox_8series.img') },
           twrp: { label: 'TWRP Official', url: asset('twrp_8p.img') },
         },
@@ -65,6 +67,7 @@ const CATALOG = {
       recovery: {
         label: 'Recovery Image',
         variants: {
+          orangefox_v12: { label: 'OrangeFox V12', url: asset('orangefox_8series_v12.zip') },
           orangefox: { label: 'OrangeFox Project', url: asset('orangefox_8series.img') },
           twrp: { label: 'TWRP Official', url: asset('twrp_8t.img') },
         },
