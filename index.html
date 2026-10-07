@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ReVork | Select Device</title>
+<title>ReVork | OxygenOS 16 &amp; ColorOS 16 Ports for OnePlus 8 and 9</title>
 <meta name="description" content="Ported OxygenOS 16 and ColorOS 16 builds for the OnePlus 9, 9 Pro, 9R, 8 Pro and 8T. Pick your device to see every available build.">
 <link rel="canonical" href="https://ozyern.me/">
 <meta name="theme-color" content="#000000">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="ReVork">
+<meta property="og:title" content="ReVork | OxygenOS 16 &amp; ColorOS 16 Ports for OnePlus 8 and 9">
 <meta property="og:description" content="Ported OxygenOS 16 and ColorOS 16 builds for OnePlus flagships.">
 <meta property="og:url" content="https://ozyern.me/">
 <meta property="og:image" content="https://ozyern.me/assets/apple-touch-icon.png">
@@ -78,8 +78,12 @@
       <span class="h-px w-6 rounded-full bg-current opacity-30" aria-hidden="true"></span>
     </p>
     <h1 class="text-5xl font-bold tracking-tighter text-title sm:text-7xl lg:text-8xl">
-      Select <span class="sheen">Hardware.</span>
+      Select Your <span class="sheen">Hardware.</span>
     </h1>
+    <p class="mt-6 max-w-xl text-sm leading-relaxed text-sub sm:text-base">
+      ReVork brings ported OxygenOS 16 and ColorOS 16 builds to the OnePlus 9 Pro, 9, 9R, 8 Pro and 8T.
+      Select your hardware below to see every build available for your phone.
+    </p>
   </header>
 
   <div class="flex w-full max-w-[1150px] flex-wrap justify-center gap-x-10 gap-y-16">
@@ -175,10 +179,47 @@
     </a>
 
   </div>
+
+  <section class="reveal mt-24 w-full max-w-3xl text-sm leading-relaxed text-sub sm:mt-32 sm:text-base" aria-labelledby="about-heading">
+    <h2 id="about-heading" class="mb-6 text-2xl font-extrabold tracking-tight text-title sm:text-3xl">About ReVork</h2>
+    <p class="mb-5">
+      ReVork is a community project that ports OxygenOS 16 and ColorOS 16 to OnePlus flagships that no longer
+      receive official updates. Each port is built for one specific phone, so the camera, modem, fingerprint
+      reader and display tuning keep working the way they did on stock firmware, while you get the newer
+      interface, features and security fixes of the latest OnePlus and OPPO software.
+    </p>
+    <p class="mb-5">
+      Every device has its own page with the full list of builds, newest first. The
+      <a href="lemonadep" class="underline underline-offset-4 hover:text-title">OnePlus 9 Pro ROM page</a> and the
+      <a href="lemonade" class="underline underline-offset-4 hover:text-title">OnePlus 9 ROM page</a> also carry
+      realmeUI 7 builds. The <a href="lemonades" class="underline underline-offset-4 hover:text-title">OnePlus 9R ROM page</a>,
+      the <a href="instantnoodlep" class="underline underline-offset-4 hover:text-title">OnePlus 8 Pro ROM page</a> and the
+      <a href="kebab" class="underline underline-offset-4 hover:text-title">OnePlus 8T ROM page</a> list OxygenOS 16 and ColorOS 16.
+    </p>
+    <p class="mb-5">
+      Before you flash a build you will usually need a custom recovery and, for some devices, a
+      <code class="font-mono text-[0.9em]">super_empty.img</code> payload. Both are collected in the
+      <a href="downloads" class="underline underline-offset-4 hover:text-title">recovery and super_empty download terminal</a>,
+      where you select your device, the component you need and the variant that matches your phone.
+    </p>
+    <p>
+      ROM builds are hosted on SourceForge and recovery images come from the project's GitHub releases.
+      Always back up your data and check that the model number on your phone matches the hardware you select
+      before you flash anything. Questions, bug reports and release announcements live in the ReVork Telegram group.
+    </p>
+  </section>
 </main>
 
 <footer class="reveal z-10 flex w-full max-w-5xl flex-col items-center gap-6 hairline pb-10 pt-8 text-[10px] font-extrabold uppercase tracking-[0.4em] text-sub sm:flex-row sm:justify-between sm:gap-0 sm:text-xs">
   <span>&copy; 2026 ReVork</span>
+  <nav class="flex flex-wrap justify-center gap-x-4 gap-y-2" aria-label="Devices">
+    <a href="lemonadep" class="hover:text-title">9 Pro</a>
+    <a href="lemonade" class="hover:text-title">9</a>
+    <a href="lemonades" class="hover:text-title">9R</a>
+    <a href="instantnoodlep" class="hover:text-title">8 Pro</a>
+    <a href="kebab" class="hover:text-title">8T</a>
+    <a href="downloads" class="hover:text-title">Recovery</a>
+  </nav>
   <nav class="flex gap-4 sm:gap-6">
     <a href="https://github.com/ozyern/ReVork" target="_blank" rel="noopener" class="magnetic group rounded-full px-6 py-3">
       <span class="platter"></span>
